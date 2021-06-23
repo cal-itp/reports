@@ -6,6 +6,10 @@
     @apply border-t-4 my-12;
   }
 }
+html {
+  scroll-behavior: smooth;
+}
+
 body {
   color: #323A45;
 }
@@ -19,13 +23,14 @@ a.btn {
   @apply border
         border-gray-400
         font-semibold
-        py-2 px-4
+        inline-block
+        py-1 px-4
         rounded
-        no-underline
         focus:outline-none
         focus:ring-4
         focus:ring-opacity-10
         hover:bg-gray-50;
+  text-decoration: none !important;
 }
 
 .responsive-prose {
