@@ -26,8 +26,8 @@
   },
   "scripts": {
     "build": "NODE_ENV=production npm-run-all html css",
-    "html": "python generate.py; echo 'html ready'",
-    "css": "npm-run-all css:clean css:sass css:postcss; echo 'css ready'",
+    "html": "echo 'processing html...'; if python generate.py -eq 0; then echo 'html ready'; else echo 'html failed'; fi",
+    "css": "echo 'processing css...'; npm-run-all css:clean css:sass css:postcss; echo 'css ready'",
     "css:clean": "rm -f build/css/*",
     "css:postcss": "postcss --ext min.css --dir build/css/ build/css/*.css",
     "css:sass": "sass --no-source-map assets/scss:build/css",
