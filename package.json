@@ -39,7 +39,7 @@
         "data",
         "templates"
       ],
-      "extensions": "json,html"
+      "extensions": "json,html,jinja"
     },
     "css": {
       "patterns": [
