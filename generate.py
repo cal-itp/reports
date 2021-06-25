@@ -11,6 +11,14 @@ env = Environment(
 )
 
 ################################################################################
+# site config data
+
+global_data = {
+    "SITE_PATH": "reports"
+}
+
+
+################################################################################
 # render index
 
 index_template = env.get_template('index.html.jinja')
@@ -19,7 +27,7 @@ index_data = {}
 with open('data/index_report.json') as file:
     index_data['reports'] = json.load(file)
 
-index_html = index_template.render(index_data)
+index_html = index_template.render({**global_data, **index_data})
 
 if not os.path.exists('build'):
     os.mkdir('build')
@@ -40,7 +48,7 @@ for json_file in glob('data/2021/07/*.json'):
     with open(json_file, 'r') as file:
         report_data[name] = json.load(file)
 
-report_html = report_template.render(report_data)
+report_html = report_template.render({**global_data, **report_data})
 
 if not os.path.exists('build/2021/07'):
     os.makedirs('build/2021/07')
