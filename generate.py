@@ -14,7 +14,7 @@ env = Environment(
 # site config data
 
 global_data = {
-    "SITE_PATH": "reports"
+    "SITE_PATH": "/reports"
 }
 
 
