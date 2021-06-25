@@ -34,6 +34,15 @@ jobs:
     - name: Build
       run: npm run build
 
+    # copy in reports ----
+    - uses: google-github-actions/setup-gcloud@master
+      with:
+        service_account_key: ${{ secrets.GCP_SA_KEY }}
+        export_default_credentials: true
+
+    - run: |
+        gsutil -m rsync -r gs://gtfs-data/report_gtfs_schedule/ build/gtfs_schedule/
+
     # deploy ----
     - name: Deploy
       uses: peaceiris/actions-gh-pages@v3
