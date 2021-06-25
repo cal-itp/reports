@@ -1,5 +1,7 @@
+# node ------------------------------------------------------------------------
 node_modules
 
+# python ----------------------------------------------------------------------
 # https://github.com/github/gitignore/blob/master/Python.gitignore
 
 # Byte-compiled / optimized / DLL files
