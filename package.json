@@ -1,0 +1,51 @@
+{
+  "name": "cal-itp-reports",
+  "version": "1.0.0",
+  "description": "GTFS data quality reports for California transit providers",
+  "main": "index.js",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/cal-itp/reports.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/cal-itp/reports/issues"
+  },
+  "homepage": "https://github.com/cal-itp/reports#readme",
+  "devDependencies": {
+    "@tailwindcss/typography": "^0.4.1",
+    "autoprefixer": "^10.2.6",
+    "cssnano": "^5.0.6",
+    "npm-run-all": "^4.1.5",
+    "npm-watch": "^0.10.0",
+    "postcss": "^8.3.5",
+    "postcss-cli": "^8.3.1",
+    "sass": "^1.35.1",
+    "tailwindcss": "^2.2.0"
+  },
+  "scripts": {
+    "build": "NODE_ENV=production npm-run-all html css",
+    "html": "echo 'processing html...'; if python generate.py -eq 0; then echo 'html ready'; else echo 'html failed'; fi",
+    "css": "echo 'processing css...'; npm-run-all css:clean css:sass css:postcss; echo 'css ready'",
+    "css:clean": "rm -f build/css/*",
+    "css:postcss": "postcss --ext min.css --dir build/css/ build/css/*.css",
+    "css:sass": "sass --no-source-map assets/scss:build/css",
+    "watch": "npm-watch"
+  },
+  "watch": {
+    "html": {
+      "patterns": [
+        "data",
+        "templates"
+      ],
+      "extensions": "json,html,jinja"
+    },
+    "css": {
+      "patterns": [
+        "assets/scss"
+      ],
+      "extensions": "scss"
+    }
+  }
+}

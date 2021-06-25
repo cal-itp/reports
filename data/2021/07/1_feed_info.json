@@ -1,0 +1,13 @@
+{
+    "feed_publisher_name": "National RTAP",
+    "feed_publisher_url": "http://www.nationalrtap.org",
+    "feed_lang": "en",
+    "default_lang": null,
+    "feed_start_date": "20120201",
+    "feed_end_date": "20201231",
+    "feed_version": "20170407",
+    "feed_contact_email": "rtree@ci.porterville.ca.us",
+    "feed_contact_url": "http://www.ridept.com",
+    "n_routes": 9,
+    "n_stops": 203
+}

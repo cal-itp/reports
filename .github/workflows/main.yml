@@ -1,0 +1,52 @@
+name: Build and Push to GH Pages
+
+on:
+  push:
+    branches:
+      - main
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+    steps:
+    - name: Check out repo
+      uses: actions/checkout@v2
+      with:
+        fetch-depth: 0
+
+    # set up python and node ----
+    - name: Set up Python
+      uses: actions/setup-python@v1
+      with:
+        python-version: 3.8
+    - uses: actions/setup-node@v2
+      with:
+        node-version: '14'
+
+    # install dependencies ----
+    - name: Install python packages
+      run: |
+        pip install -r requirements.txt
+    - name: Install node packages
+      run: npm install
+
+    # build ----
+    - name: Build
+      run: npm run build
+
+    # copy in reports ----
+    - uses: google-github-actions/setup-gcloud@master
+      with:
+        service_account_key: ${{ secrets.GCP_SA_KEY }}
+        export_default_credentials: true
+
+    - run: |
+        gsutil -m rsync -r gs://gtfs-data/report_gtfs_schedule/ build/gtfs_schedule/
+
+    # deploy ----
+    - name: Deploy
+      uses: peaceiris/actions-gh-pages@v3
+      with:
+        github_token: ${{ secrets.GITHUB_TOKEN }}
+        publish_dir: ./build
+        publish_branch: production

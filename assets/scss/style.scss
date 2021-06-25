@@ -1,0 +1,53 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+    hr {
+        @apply border-t-4 my-12;
+    }
+}
+
+$text-color: #323A45;
+
+html {
+    scroll-behavior: smooth;
+}
+
+body {
+    color: $text-color;
+}
+
+h1, h2, h3, h4 {
+    @apply font-serif;
+}
+
+.btn,
+a.btn {
+    @apply
+        border
+        border-gray-400
+        font-semibold
+        inline-block
+        py-1 px-4
+        rounded
+        focus:outline-none
+        focus:ring-4
+        focus:ring-opacity-10
+        hover:bg-gray-50;
+
+    text-decoration: none !important;
+}
+
+.responsive-prose {
+    @apply prose prose-sm sm:prose lg:prose-lg;
+
+    a {
+        color: inherit;
+        font: inherit;
+    }
+
+    &.max-w-none {
+        max-width: none;
+    }
+}

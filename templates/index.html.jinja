@@ -1,0 +1,144 @@
+{% extends "layout/default.html.jinja" %}
+
+{% macro anchor_link(target, iconCls, iconTitle) %}
+    <small class="ml-2 text-gray-500">
+        <a href="#{{ target }}">
+            <i title="{{ iconTitle }}" class="{{ iconCls }}"></i>
+        </a>
+    </small>
+{% endmacro %}
+
+{% block content %}
+<div class="responsive-prose max-w-none">
+    <h1>California GTFS Quality Dashboard</h1>
+    <div></div> <!-- preserve h1 margin -->
+</div>
+
+<div class="responsive-prose">
+    <p class="lead">
+        Welcome to California’s statewide dashboard for transit passenger
+        information quality. This tool is created and managed by the California
+        Integrated Travel Project (Cal-ITP), an initiative of Caltrans’ Division
+        of Rail and Mass Transportation to make travel simpler and more
+        cost-effective for everyone.
+    </p>
+
+    <p>
+        A key component of Cal-ITP is helping transit riders plan their trips
+        using data that is both complete and accurate. While transit data comes
+        in many forms, only one format—the General Transit Feed Specification
+        (GTFS)—lets any new or existing app easily consume and publish transit
+        data for riders. Cal-ITP has created this data dashboard to help ensure
+        that your GTFS data quality will meet your riders’ expectations for
+        convenience and reliability.
+    </p>
+
+    <h2 id="directory">
+        Directory of GTFS Quality Reports
+        {{ anchor_link('how-to-reports', 'far fa-question-circle', 'Help') }}
+    </h2>
+</div>
+
+<div class="responsive-prose max-w-none">
+
+    <br>
+
+    <!-- TODO: generate dynamically -->
+    <a href="{{SITE_PATH}}/{{PATH_GTFS_SCHEDULE}}/2021/05">May 2021</a>
+
+</div>
+
+<div class="responsive-prose">
+    <div></div> <!-- preserve h2 margin-->
+    <h2 id="quality">About GTFS data quality</h2>
+    <p>
+        Anyone planning a transit journey through their favorite trip planning
+        application is almost certainly using GTFS data. Transit providers can
+        publish this format to describe where their vehicles are supposed to go,
+        when they’re supposed to get there, and where they actually are in real
+        time, as well as other useful information like if vehicles accept
+        bicycles or what it will cost to board. Trip planning applications like
+        Google Maps and the Transit App turn this information into a
+        user-friendly experience for transit riders. But if there are unexpected
+        issues with that data, the rider may get incorrect information—or none
+        at all.
+    </p>
+
+    <p>
+        <a class="btn mr-2"
+            href="https://dot.ca.gov/programs/rail-and-mass-transportation/gtfs/gtfs-data-quality"
+            target="_blank">
+            <span class="font-semibold">
+                Read more
+                <i class="fas fa-external-link-alt ml-1"></i>
+            </span>
+        </a>
+        about what Caltrans considers good GTFS data and why.
+    </p>
+
+
+    <h2 id="how-to-website">How to use this website</h2>
+    <p>
+        To help detect such issues, MobilityData, which maintains the GTFS
+        standard, manages an open-source GTFS validator. This validator, used by
+        Google Maps and other major trip planning services, represents a wide
+        range of potential issues. Cal-ITP has deployed its own instance of the
+        validator for the benefit of all California transit providers. Each
+        month, Cal-ITP will run the validator on every California transit
+        provider’s GTFS feeds and compile results into a PDF report.
+    </p>
+
+    <p>
+        A complete archive of these reports is available in the directory.
+        Transit providers and their vendors can also request that these monthly
+        reports be automatically sent to them via email by contacting our GTFS
+        Helpdesk at GTFSRT@dot.ca.gov.
+    </p>
+
+    <h2 id="how-to-reports">
+        How to use these reports
+        {{ anchor_link('directory', 'fas fa-long-arrow-alt-up', 'Back to reports') }}
+    </h2>
+    <p>
+        Each report contains three sections:
+    </p>
+    <ol>
+        <li>
+            A summary of the service operations represented in the most recent
+            version of the GTFS feed. This identifies operations that have
+            been miscoded.
+        </li>
+        <li>
+            A list of validation issues identified by the canonical GTFS
+            Validator. Each error and warning references this set of
+            validation rules.
+        </li>
+        <li>
+            A check for files and fields that are recommended by the GTFS Best
+            Practices and California Minimum GTFS Guidelines. If data is
+            missing, ask the vendor if they have plans to include this data. If
+            they don’t, contact the Cal-ITP Helpdesk (GTFSRT@dot.ca.gov)
+            for support.
+        </li>
+    </ol>
+
+    <p>
+        These reports are intended to be shared with vendors and provide
+        actionable guidance for them to improve the data they produce on
+        California’s behalf.
+    </p>
+
+    <h2 id="not-listed">I’m a California transit provider and I don’t see my brand listed here</h2>
+    <p>
+        GTFS Schedule data currently can only represent fixed-route and
+        fixed-schedule transit operations, so entirely on-demand services such
+        as paratransit will not be listed on this dashboard. If you represent a
+        California transit provider with fixed route and fixed schedule service
+        with a GTFS feed that is missing from this list, please send the stable
+        URL for your GTFS Schedule data to the Cal-ITP Helpdesk at
+        GTFSRT@dot.ca.gov. If you’re a California agency that wants GTFS data
+        but doesn’t have it, or have related questions, contact the Helpdesk to
+        take advantage of our available technical services.
+    </p>
+</div>
+{% endblock %}
