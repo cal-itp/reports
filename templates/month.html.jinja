@@ -6,7 +6,7 @@
     {% for entry in crnt_entries -%}
     <tr>
         <td>{{ entry["agency_name"] }}</td>
-        <td><a href="{{SITE_PATH}}/{{PATH_GTFS_SCHEDULE}}/{{ entry["path"] }}">report</a></td>
+        <td><a href="{{SITE_PATH}}/{{PATH_GTFS_SCHEDULE}}/{{ entry["path"] }}/report.html">report</a></td>
     </tr>
     {% endfor %}
 </table>
