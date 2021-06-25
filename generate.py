@@ -16,8 +16,8 @@ env = Environment(
 # site config data
 
 global_data = {
-    "SITE_DOMAIN": "",
-    "SITE_PATH": "/",
+    "SITE_DOMAIN": "https://reports.calitp.org",
+    "SITE_PATH": "",
     # "SITE_DOMAIN": "http://localhost:8000",
     # "SITE_PATH": "",
     "PATH_GTFS_SCHEDULE": "gtfs_schedule"
