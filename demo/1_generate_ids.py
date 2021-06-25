@@ -83,3 +83,5 @@ index_report.to_json("index_report.json", orient="records")
 
 all_ids = list(ids_with_feeds.calitp_itp_id)
 " ".join(map(str,all_ids))
+
+(ids_with_feeds >> mutate(path = _.calitp_itp_id.transform(lambda s: "https://deploy-preview-5--cal-itp-reports.netlify.app/demo/output/%s/report.html" %s))).to_clipboard()
