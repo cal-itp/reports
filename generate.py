@@ -4,6 +4,7 @@ import re
 from datetime import date
 from glob import glob
 from jinja2 import Environment, FileSystemLoader, select_autoescape
+from pathlib import Path
 
 env = Environment(
     loader=FileSystemLoader('templates'),
@@ -14,7 +15,9 @@ env = Environment(
 # site config data
 
 global_data = {
-    "SITE_PATH": "/reports"
+    "SITE_DOMAIN": "http://localhost:8000",
+    "SITE_PATH": "",#"/reports"
+    "PATH_GTFS_SCHEDULE": "gtfs_schedule"
 }
 
 
@@ -33,6 +36,16 @@ if not os.path.exists('build'):
     os.mkdir('build')
 with open('build/index.html', 'w') as file:
     file.write(index_html)
+
+################################################################################
+# render monthly report index pages
+month_template = env.get_template('month.html.jinja')
+month_html = month_template.render({**global_data, **index_data})
+
+p_month = Path(f'build/{global_data["PATH_GTFS_SCHEDULE"]}/2021/05')
+p_month.mkdir(parents=True, exist_ok=True)
+(p_month / 'index.html').write_text(month_html)
+
 
 ################################################################################
 # render individual report for 2021/07

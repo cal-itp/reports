@@ -40,17 +40,12 @@
 </div>
 
 <div class="responsive-prose max-w-none">
-    <p>
-        <a class="btn mt-4" href="/2021/07/">Example report
-            <i class="fas fa-angle-right ml-1"></i>
-        </a>
-    </p>
-    <p>
-        {{ reports|map(attribute='agency_name')
-            |sort
-            |join(', ')
-        }}
-    </p>
+
+    <br>
+
+    <!-- TODO: generate dynamically -->
+    <a href="{{SITE_PATH}}/{{PATH_GTFS_SCHEDULE}}/2021/05">May 2021</a>
+
 </div>
 
 <div class="responsive-prose">
