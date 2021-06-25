@@ -3,7 +3,7 @@ name: Build and Push to GH Pages
 on:
   push:
     branches:
-      - feat-jinja-reports
+      - main
 
 jobs:
   deploy:
