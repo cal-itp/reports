@@ -1,6 +1,7 @@
 import json
 import os
 import re
+
 from datetime import date
 from glob import glob
 from jinja2 import Environment, FileSystemLoader, select_autoescape
@@ -15,8 +16,10 @@ env = Environment(
 # site config data
 
 global_data = {
-    "SITE_DOMAIN": "http://localhost:8000",
-    "SITE_PATH": "",#"/reports"
+    "SITE_DOMAIN": "",
+    "SITE_PATH": "/reports",
+    # "SITE_DOMAIN": "http://localhost:8000",
+    # "SITE_PATH": "",
     "PATH_GTFS_SCHEDULE": "gtfs_schedule"
 }
 
