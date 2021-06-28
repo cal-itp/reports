@@ -59,7 +59,7 @@ report_template = env.get_template('report.html.jinja')
 report_data = {
     'date_generated': date.today()
 }
-for json_file in glob('data/2021/07/*.json'):
+for json_file in glob('data/example_data_itp_98/*.json'):
     name = re.sub(r'^\d+_(.+).json$', r'\1', os.path.basename(json_file))
     with open(json_file, 'r') as file:
         report_data[name] = json.load(file)

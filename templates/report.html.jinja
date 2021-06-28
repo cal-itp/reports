@@ -63,6 +63,20 @@
         <small class="text-gray-600">for feed downloaded {{ feed_info.feed_end_date }}</small>
     </h2>
 
+
+    <table>
+        {{ file_check["columns"] }}
+
+        {% for row in file_check["data"] %}
+            <br>
+            {% set rowspan = file_check["rowspan"][loop.index0] %}
+            {% if rowspan %}
+              NEW CATEGORY: {{rowspan}} rows
+            {% endif %}
+            <br>
+            {{row}}
+        {% endfor %}
+
     <table>
         <thead>
             <tr>
