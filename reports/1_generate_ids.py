@@ -1,42 +1,10 @@
-# +
 from calitp.tables import tbl
 from siuba import *
 import papermill as pm
 from pathlib import Path
 
-DATE_TODAY="2021-06-01"
-
-# +
-# workaround for external tables not showing up automatically
-from calitp import get_engine
-from siuba.sql import LazyTbl
-
-tbl_gtfs_status = LazyTbl(get_engine(), "gtfs_schedule_history.calitp_status")
-# -
-
-tbl_gtfs_status
-
-feeds = (
-    tbl.gtfs_schedule_type2.feed_info()
-    >> filter(
-        _.calitp_extracted_at <= DATE_TODAY,
-        _.calitp_deleted_at.fillna("2099-01-01") > DATE_TODAY,
-    )
-    >> distinct(_.calitp_itp_id, _.calitp_url_number)
-    >> collect()
-)
-
-tbl_status = tbl_gtfs_status >> filter(_.calitp_extracted_at == DATE_TODAY)
-
-tbl_status
-
 ids_with_feeds = (
-    tbl_status
-    >> filter(_.url_number==0)
-    >> rename(calitp_itp_id=_.itp_id, calitp_url_number=_.url_number)
-    >> collect()
-    >> inner_join(_, feeds, ["calitp_itp_id", "calitp_url_number"])
-    >> arrange(_.calitp_itp_id, _.calitp_url_number)
+    tbl.views.reports_gtfs_schedule_index() >> filter(_.use_for_report) >> collect()
 )
 
 # +
@@ -84,4 +52,13 @@ index_report.to_json("index_report.json", orient="records")
 all_ids = list(ids_with_feeds.calitp_itp_id)
 " ".join(map(str,all_ids))
 
-(ids_with_feeds >> mutate(path = _.calitp_itp_id.transform(lambda s: "https://deploy-preview-5--cal-itp-reports.netlify.app/demo/output/%s/report.html" %s))).to_clipboard()
+# +
+# (
+#     ids_with_feeds
+#     >> mutate(
+#         path=_.calitp_itp_id.transform(
+#             lambda s: "https://deploy-preview-5--cal-itp-reports.netlify.app/demo/output/%s/report.html"
+#             % s
+#         )
+#     )
+# ).to_clipboard()

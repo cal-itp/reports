@@ -1,6 +1,7 @@
 import json
 import os
 import re
+import shutil
 
 from datetime import date
 from glob import glob
@@ -66,7 +67,12 @@ for json_file in glob('data/example_data_itp_98/*.json'):
 
 report_html = report_template.render({**global_data, **report_data})
 
-if not os.path.exists('build/2021/07'):
-    os.makedirs('build/2021/07')
+build_dir = Path('build/2021/07')
+build_dir.mkdir(parents=True, exist_ok=True)
+
+for p_image in Path("data/example_data_itp_98").glob("*.png"):
+    shutil.copy(str(p_image), build_dir / p_image.name)
+
+
 with open('build/2021/07/index.html', 'w') as file:
     file.write(report_html)
