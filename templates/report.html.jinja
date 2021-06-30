@@ -1,5 +1,12 @@
 {% extends "layout/default.html.jinja" %}
 
+{% macro mark_exists(entry) %}
+    {% if entry %}
+    <i title="check" class="fas fa-check-circle text-green-500"></i>
+    {% endif %}
+{% endmacro %}
+
+
 {% block content %}
 <div class="responsive-prose">
     <h1>
@@ -65,18 +72,31 @@
 
 
     <table>
-        {{ file_check["columns"] }}
-
-        {% for row in file_check["data"] %}
-            <br>
-            {% set rowspan = file_check["rowspan"][loop.index0] %}
-            {% if rowspan %}
-              NEW CATEGORY: {{rowspan}} rows
-            {% endif %}
-            <br>
-            {{row}}
-        {% endfor %}
-
+        <thead>
+            <tr>
+                <th colspan="2">Do the following files/fields exist?</th>
+                <th> {{ file_check["columns"][2]}}</th>
+                 <th> {{ file_check["columns"][3]}}</th>
+                 <th> {{ file_check["columns"][4]}}</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for row in file_check["data"] %}
+            <tr>
+                {% set rowspan = file_check["rowspan"][loop.index0] %}
+                {% if rowspan %}
+                <th rowspan="{{rowspan}}">{{row[0]}}</th>
+                {% endif %} 
+                <td>{{row[1]}}</td>
+                <!-- these are the date columns -->   
+                <td>{{mark_exists(row[2])}}</td>
+                <td>{{mark_exists(row[3])}}</td>
+                <td>{{mark_exists(row[4])}}</td>
+            </tr>
+            {% endfor %}
+        </tbody>
+ 
+    </table>
     <table>
         <thead>
             <tr>
