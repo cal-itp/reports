@@ -14,8 +14,14 @@
     {% for entry in crnt_entries -%}
     <li>
         <a class="block p-4 hover:bg-itp-teal-light" href="{{SITE_PATH}}/{{PATH_GTFS_SCHEDULE}}/{{ entry['path'] }}">
-            <i class="fas fa-arrow-circle-right mr-1 text-itp-teal"></i>
-            {{ entry["agency_name"] }}
+            <div class="flex items-baseline">
+                <div class="pt-1 -mt-1 mr-2">
+                    <i class="fas fa-arrow-circle-right text-itp-teal"></i>
+                </div>
+                <div>
+                    {{ entry["agency_name"] }}
+                </div>
+            </div>
         </a>
     </li>
     {% endfor %}
