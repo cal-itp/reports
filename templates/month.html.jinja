@@ -1,15 +1,23 @@
 {% extends "layout/default.html.jinja" %}
 
 {% block content %}
-<table>
+<div class="responsive-prose">
+    {# TODO make dynamic #}
+    <h1>
+        GTFS Quality Reports<br>
+        <small>May 2021</small>
+    </h1>
+</div>
+
+<ul class="bg-white border overflow-hidden rounded-md divide-solid divide-y max-w-prose my-12">
     {% set crnt_entries = month["reports"] %}
     {% for entry in crnt_entries -%}
-    <tr>
-        <td>{{ entry["agency_name"] }}</td>
-        <td><a href="{{SITE_PATH}}/{{PATH_GTFS_SCHEDULE}}/{{ entry["path"] }}">report</a></td>
-    </tr>
+    <li>
+        <a class="block p-4 hover:bg-itp-teal-light" href="{{SITE_PATH}}/{{PATH_GTFS_SCHEDULE}}/{{ entry['path'] }}">
+            <i class="fas fa-arrow-circle-right mr-1 text-itp-teal"></i>
+            {{ entry["agency_name"] }}
+        </a>
+    </li>
     {% endfor %}
-</table>
-
-
+</ul>
 {% endblock %}
