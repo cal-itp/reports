@@ -16,6 +16,7 @@
   "devDependencies": {
     "@tailwindcss/typography": "^0.4.1",
     "autoprefixer": "^10.2.6",
+    "copy": "^0.3.2",
     "cssnano": "^5.0.6",
     "npm-run-all": "^4.1.5",
     "npm-watch": "^0.10.0",
@@ -25,12 +26,13 @@
     "tailwindcss": "^2.2.0"
   },
   "scripts": {
-    "build": "NODE_ENV=production npm-run-all html css",
+    "build": "NODE_ENV=production npm-run-all html css images",
     "html": "echo 'processing html...'; if python generate.py -eq 0; then echo 'html ready'; else echo 'html failed'; fi",
     "css": "echo 'processing css...'; npm-run-all css:clean css:sass css:postcss; echo 'css ready'",
     "css:clean": "rm -f build/css/*",
     "css:postcss": "postcss --ext min.css --dir build/css/ build/css/*.css",
     "css:sass": "sass --no-source-map assets/scss:build/css",
+    "images": "copy assets/images/**/*.{jpeg,jpg,png,gif,svg} build/images",
     "watch": "npm-watch"
   },
   "watch": {
@@ -43,9 +45,16 @@
     },
     "css": {
       "patterns": [
-        "assets/scss"
+        "assets/scss",
+        "build/html"
       ],
-      "extensions": "scss"
+      "extensions": "scss,html"
+    },
+    "images": {
+      "patterns": [
+        "assets/images"
+      ],
+      "extensions": "jpeg,jpg,png,gif,svg"
     }
   }
 }
