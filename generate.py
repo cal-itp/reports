@@ -50,7 +50,7 @@ p_basedir = Path(f"build/{global_data['PATH_GTFS_SCHEDULE']}")
 for year in index_data["reports"]:
     for month in year["months"]:
         p_month = (
-            p_basedir / f"{year['year']}/{month['month']}")
+            p_basedir / f"{year['year']}/{month['month']}"
         )
 
         month_html = month_template.render(**global_data, year=year, month=month)
