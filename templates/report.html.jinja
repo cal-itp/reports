@@ -2,19 +2,27 @@
 
 {% macro mark_exists(entry) %}
     {% if entry %}
-    <i title="check" class="fas fa-check-circle text-green-500"></i>
+    <i title="present" class="fas fa-lg fa-check-circle text-itp-green"></i>
+    {% else %}
+    <i title="missing" class="far fa-lg fa-circle text-itp-slate-light"></i>
     {% endif %}
 {% endmacro %}
 
+{% macro display_figure(label, value) %}
+    <figure>
+        <div class="text-4xl text-itp-teal-bold">{{value}}</div>
+        <figcaption class="text-itp-slate-bold">{{label}}</figcaption>
+    </figure>
+{% endmacro %}
 
 {% block content %}
 <div class="responsive-prose">
     <h1>
         Monthly GTFS Quality Report
         <br>
-        <small class="text-gray-600">
-            for <a href="{{ feed_info.feed_publisher_url }}">{{ feed_info.feed_publisher_name }}</a>
-            &middot;
+        <small>
+            <a href="{{ feed_info.feed_publisher_url }}">{{ feed_info.feed_publisher_name }}</a>
+            &hairsp;&middot;&hairsp;
             {{ date_generated }}
         </small>
     </h1>
@@ -27,37 +35,39 @@
 </div>
 
 <div class="my-8">
-    <a class="btn responsive-prose" href="{{ status.gtfs_schedule_url }}">Download Feed</a>
-    &emsp;
-    <span class="text-gray-400">{{ status.gtfs_schedule_url }}</span>
+    <a class="btn responsive-prose mr-4 mb-4" href="{{ status.gtfs_schedule_url }}">
+        <i class="fas fa-link mr-1 text-itp-slate-bold"></i>
+        Download Feed
+    </a>
 </div>
 
 <hr>
 
-<div class="flex gap-12">
-    <div class="flex-1 responsive-prose">
-        <h2>Overview</h2>
-        <ul>
-            <li>Date published: {{ feed_info.feed_version }}</li>
-            <li>Number of routes in any service: {{ feed_info.n_routes }}</li>
-            <li>Number of stops in service: {{ feed_info.n_stops }}</li>
-        </ul>
+<div class="flex flex-col lg:flex-row gap-12 lg:gap-16 xl:gap-24 2xl:gap-36">
+    <div>
+        <div class="flex flex-wrap lg:flex-col gap-12">
+            {{ display_figure('Feed Published', feed_info.feed_version) }}
+            {{ display_figure('Feed Downloaded', feed_info.feed_end_date) }}
+            {{ display_figure('Days Expired', n_expired_days.n) }}
+            {{ display_figure('Routes', feed_info.n_routes) }}
+            {{ display_figure('Stops', feed_info.n_stops) }}
+        </div>
+        <hr class="lg:hidden mb-0">
     </div>
 
     <div class="flex-1 responsive-prose">
         <h2>Aggregated metrics for&nbsp;[Month]</h2>
         <ul>
-            <li>Days when the active feed was expired: {{ n_expired_days.n }}</li>
-            <li>Service hours per day in the active feed: </li>
+            <li>Service hours per day in the active&nbsp;feed:</li>
         </ul>
         <img src="2_service_hours.png">
     </div>
 
     <div class="flex-1 responsive-prose">
-        <h2>Changes since the previous&nbsp;month</h2>
+        <h2>Changes since [previous month]</h2>
         <ul>
-            <li>Percentage of stop and route IDs that have changed since the previous month.</li>
-            <li>More than 5% being new or dropped is a cause for attention.</li>
+            <li>Percentage of stop and route IDs that have changed since the previous&nbsp;month.</li>
+            <li>More than 5% being new or dropped is a cause for&nbsp;attention.</li>
         </ul>
         <img src="3_id_changes.png">
     </div>
@@ -66,20 +76,16 @@
 <hr>
 
 <div class="responsive-prose max-w-none">
-    <h2>
-        Consistency with the California GTFS Minimum Guidelines
-        <br>
-        <small class="text-gray-600">for feed downloaded {{ feed_info.feed_end_date }}</small>
-    </h2>
+    <h2>Consistency with the California GTFS Minimum Guidelines</h2>
 
 
     <table>
         <thead>
             <tr>
                 <th colspan="2">Do the following files/fields exist?</th>
-                <th> {{ file_check["columns"][2]}}</th>
-                 <th> {{ file_check["columns"][3]}}</th>
-                 <th> {{ file_check["columns"][4]}}</th>
+                <th>{{ file_check["columns"][2]}}</th>
+                <th>{{ file_check["columns"][3]}}</th>
+                <th>{{ file_check["columns"][4]}}</th>
             </tr>
         </thead>
         <tbody>
@@ -87,61 +93,15 @@
             <tr>
                 {% set rowspan = file_check["rowspan"][loop.index0] %}
                 {% if rowspan %}
-                <th rowspan="{{rowspan}}">{{row[0]}}</th>
-                {% endif %} 
+                <th class="font-normal text-itp-slate-bold" rowspan="{{rowspan}}">{{row[0]}}</th>
+                {% endif %}
                 <td>{{row[1]}}</td>
-                <!-- these are the date columns -->   
+                <!-- these are the date columns -->
                 <td>{{mark_exists(row[2])}}</td>
                 <td>{{mark_exists(row[3])}}</td>
                 <td>{{mark_exists(row[4])}}</td>
             </tr>
             {% endfor %}
-        </tbody>
- 
-    </table>
-    <table>
-        <thead>
-            <tr>
-                <th colspan="2">Do the following files/fields exist?</th>
-                <th>[First Date]</th>
-                <th>[Second Date]</th>
-                <th>[Third Date]</th>
-            </tr>
-        </thead>
-        <tbody>
-            <tr>
-                <th>Visual display</th>
-                <td>shapes.txt</td>
-                <td><i title="check" class="fas fa-check-circle text-green-500"></i></td>
-                <td><i title="check" class="fas fa-check-circle text-green-500"></i></td>
-                <td><i title="check" class="fas fa-check-circle text-green-500"></i></td>
-            </tr>
-            <tr>
-                <th rowspan="2">Navigation</th>
-                <td>pathways.txt</td>
-                <td><i title="check" class="fas fa-check-circle text-green-500"></i></td>
-                <td><i title="check" class="fas fa-check-circle text-green-500"></i></td>
-                <td><i title="check" class="fas fa-check-circle text-green-500"></i></td>
-            </tr>
-            <tr>
-                <td>levels.txt</td>
-                <td><i title="check" class="fas fa-check-circle text-green-500"></i></td>
-                <td><i title="check" class="fas fa-check-circle text-green-500"></i></td>
-                <td><i title="check" class="fas fa-check-circle text-green-500"></i></td>
-            </tr>
-            <tr>
-                <th rowspan="2">Fares</th>
-                <td>Fare_rules.txt</td>
-                <td><i title="check" class="fas fa-check-circle text-green-500"></i></td>
-                <td><i title="check" class="fas fa-check-circle text-green-500"></i></td>
-                <td><i title="check" class="fas fa-check-circle text-green-500"></i></td>
-            </tr>
-            <tr>
-                <td>Fare_leg_rules.txt</td>
-                <td><i title="check" class="fas fa-check-circle text-green-500"></i></td>
-                <td><i title="check" class="fas fa-check-circle text-green-500"></i></td>
-                <td><i title="check" class="fas fa-check-circle text-green-500"></i></td>
-            </tr>
         </tbody>
     </table>
 </div>
