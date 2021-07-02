@@ -14,19 +14,22 @@ from collections import defaultdict
 df_report_index = (
     ids_with_feeds
     >> select(
-        -_.status, -_.calitp_extracted_at, -_.calitp_url_number, -_.gtfs_schedule_url
+        -_.status, -_.calitp_extracted_at, -_.gtfs_schedule_url
     )
     >> mutate(
         year=2021,
         month=5,
-        path=_.apply(
-            lambda d: f"{d.year}/{d.month:02d}/{d.calitp_itp_id}.html", axis=1
+        dir_path=_.apply(
+            lambda d: f"{d.year}/{d.month:02d}/{d.calitp_itp_id}", axis=1
+        ),
+        report_path=_.apply(
+            lambda d: f"{d.dir_path}/index.html", axis=1
         ),
     )
     # >> pipe(_.to_json("index_report.json", orient="records"))
 )
 
-cols_to_keep = ["agency_name", "itp_id", "path"]
+cols_to_keep = ["agency_name", "itp_id", "report_path"]
 
 index_report = (
     df_report_index
@@ -42,7 +45,7 @@ index_report = (
     )
 )
 
-index_report.to_json("index_report.json", orient="records")
+index_report.to_json("outputs/index_report.json", orient="records")
 # report_index = defaultdict(lambda: defaultdict(lambda: {}))
 # for (year, month), g in df_report_index.groupby(["year", "month"]):
 #     # note that year and month are originally numpy.int64...
@@ -62,3 +65,25 @@ all_ids = list(ids_with_feeds.calitp_itp_id)
 #         )
 #     )
 # ).to_clipboard()
+# -
+
+# ## Save each report's parameters
+
+# +
+from pathlib import Path
+root_dir = Path("outputs")
+
+date_cols = ["publish_date", "date_start", "date_end"]
+
+fixed_dates = (
+    df_report_index
+    >> mutate(**{name: _[name].astype(str) for name in date_cols})
+)
+
+for ii, row in fixed_dates.iterrows():
+    p_params = root_dir / row["dir_path"] / "parameters.json"
+    p_params.parent.mkdir(parents=True, exist_ok=True)
+    row.index = row.index.str.upper()
+    row.to_json(p_params)
+
+    
