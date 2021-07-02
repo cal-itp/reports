@@ -1,0 +1,54 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+@layer base {
+  hr {
+    @apply border-t-4 border-itp-yellow-light my-12;
+  }
+}
+html {
+  scroll-behavior: smooth;
+}
+
+body {
+  color: #323A45;
+}
+
+h1, h2, h3, h4 {
+  @apply font-serif;
+}
+h1 small, h2 small, h3 small, h4 small {
+  @apply text-itp-slate-bold;
+}
+
+.btn,
+a.btn {
+  @apply border
+        border-itp-slate
+        font-semibold
+        inline-block
+        py-1 px-4
+        rounded
+        text-itp-teal-bold
+        focus:outline-none
+        focus:ring-4
+        focus:ring-opacity-30
+        focus:ring-itp-teal
+        hover:border-itp-teal
+        hover:bg-itp-teal-light;
+  text-decoration: none !important;
+}
+
+.responsive-prose {
+  @apply prose prose-sm sm:prose lg:prose-lg;
+}
+.responsive-prose a {
+  color: inherit;
+  font: inherit;
+}
+.responsive-prose.max-w-none {
+  max-width: none;
+}
+.responsive-prose th[rowspan] + td {
+  padding-left: 0;
+}
