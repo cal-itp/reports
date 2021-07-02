@@ -2,7 +2,7 @@
 
 {% block content %}
 <table>
-    {% set crnt_entries = reports[0]["months"][0]["reports"] %}
+    {% set crnt_entries = month["reports"] %}
     {% for entry in crnt_entries -%}
     <tr>
         <td>{{ entry["agency_name"] }}</td>

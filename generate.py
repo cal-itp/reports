@@ -31,7 +31,7 @@ global_data = {
 index_template = env.get_template('index.html.jinja')
 
 index_data = {}
-with open('data/index_report.json') as file:
+with open('reports/outputs/index_report.json') as file:
     index_data['reports'] = json.load(file)
 
 index_html = index_template.render({**global_data, **index_data})
@@ -43,12 +43,20 @@ with open('build/index.html', 'w') as file:
 
 ################################################################################
 # render monthly report index pages
-month_template = env.get_template('month.html.jinja')
-month_html = month_template.render({**global_data, **index_data})
 
-p_month = Path(f'build/{global_data["PATH_GTFS_SCHEDULE"]}/2021/05')
-p_month.mkdir(parents=True, exist_ok=True)
-(p_month / 'index.html').write_text(month_html)
+month_template = env.get_template('month.html.jinja')
+
+p_basedir = Path(f"build/{global_data['PATH_GTFS_SCHEDULE']}")
+for year in index_data["reports"]:
+    for month in year["months"]:
+        p_month = (
+            p_basedir / f"{year['year']}/{month['month']}")
+        )
+
+        month_html = month_template.render(**global_data, year=year, month=month)
+
+        p_month.mkdir(parents=True, exist_ok=True)
+        (p_month / 'index.html').write_text(month_html)
 
 
 ################################################################################
@@ -76,3 +84,8 @@ for p_image in Path("data/example_data_itp_98").glob("*.png"):
 
 with open('build/2021/07/index.html', 'w') as file:
     file.write(report_html)
+
+
+################################################################################
+# render all reports
+
