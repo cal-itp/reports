@@ -118,7 +118,7 @@ Monthly GTFS Quality Reports: {{parameters["DATE_MONTH_YEAR"]}} {{parameters["AG
             {% for row in validation_notices["data"] %}
             <tr>
                 {% for col in row %}
-                <td>{{ col }}</td>
+                <td>{{ col | nl2br }}</td>
                 {% endfor %}
             </tr>
             {% endfor %}

@@ -5,13 +5,33 @@ import shutil
 
 from datetime import date, datetime
 from glob import glob
-from jinja2 import Environment, FileSystemLoader, select_autoescape
+from jinja2 import Environment, FileSystemLoader, select_autoescape, pass_eval_context
+from markupsafe import Markup, escape
 from pathlib import Path
 
 env = Environment(
     loader=FileSystemLoader('templates'),
     autoescape=select_autoescape()
 )
+
+# Copied from https://jinja.palletsprojects.com/en/3.0.x/api/
+# used as filter to convert newlines into <br>
+@pass_eval_context
+def nl2br(eval_ctx, value):
+    br = "<br>\n"
+
+    if eval_ctx.autoescape:
+        value = escape(value)
+        br = Markup(br)
+
+    result = "\n\n".join(
+        f"<p>{br.join(p.splitlines())}<\p>"
+        for p in re.split(r"(?:\r\n|\r(?!\n)|\n){2,}", value)
+    )
+    return Markup(result) if autoescape else result
+
+env.filters = {**env.filters, "nl2br": nl2br}
+
 
 def friendly_month(x): 
     return datetime.strptime(x, "%Y-%m-%d").strftime("%b")
@@ -21,6 +41,7 @@ def friendly_month_day(x):
 
 def friendly_month_year(x):
     return datetime.strptime(x, "%Y-%m-%d").strftime("%b %Y")
+
 
 ################################################################################
 # site config data
