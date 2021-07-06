@@ -51,7 +51,7 @@ Monthly GTFS Quality Reports: {{parameters["DATE_MONTH_YEAR"]}} {{parameters["AG
     <div>
         <div class="flex flex-wrap lg:flex-col gap-12">
             {{ display_figure('Feed Published', feed_info.feed_version) }}
-            {{ display_figure('Feed Downloaded', feed_info.feed_end_date) }}
+            {{ display_figure('Feed End Date', feed_info.feed_end_date) }}
             {{ display_figure('Days Expired', n_expired_days.n) }}
             {{ display_figure('Routes', feed_info.n_routes) }}
             {{ display_figure('Stops', feed_info.n_stops) }}
