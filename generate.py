@@ -28,7 +28,7 @@ def nl2br(eval_ctx, value):
         f"<p>{br.join(p.splitlines())}<\p>"
         for p in re.split(r"(?:\r\n|\r(?!\n)|\n){2,}", value)
     )
-    return Markup(result) if autoescape else result
+    return Markup(result) if eval_ctx.autoescape else result
 
 env.filters = {**env.filters, "nl2br": nl2br}
 

@@ -10,7 +10,7 @@
 
 {% macro display_figure(label, value) %}
     <figure>
-        <div class="text-4xl text-itp-teal-bold">{{value}}</div>
+        <div class="text-2xl text-itp-teal-bold">{{value}}</div>
         <figcaption class="text-itp-slate-bold">{{label}}</figcaption>
     </figure>
 {% endmacro %}
@@ -27,7 +27,7 @@ Monthly GTFS Quality Reports: {{parameters["DATE_MONTH_YEAR"]}} {{parameters["AG
         <small>
             <a href="{{ feed_info.feed_publisher_url }}">{{ parameters["AGENCY_NAME"] }}</a>
             &hairsp;&middot;&hairsp;
-            {{ date_generated }}
+            {{parameters["DATE_MONTH_YEAR"]}}
         </small>
     </h1>
     <p class="lead responsive-prose">
