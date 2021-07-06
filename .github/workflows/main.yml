@@ -33,6 +33,11 @@ jobs:
 
     # copy in reports ----
 
+    - uses: google-github-actions/setup-gcloud@master
+      with:
+        service_account_key: ${{ secrets.GCP_SA_KEY }}
+        export_default_credentials: true
+
     # development
     - name: Copy development report data
       if: ${{ github.ref == 'refs/heads/development' }}
@@ -51,11 +56,6 @@ jobs:
       run: npm run build
 
     # deploy ----
-
-    - uses: google-github-actions/setup-gcloud@master
-      with:
-        service_account_key: ${{ secrets.GCP_SA_KEY }}
-        export_default_credentials: true
 
     # development
     - name: Deploy development
