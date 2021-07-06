@@ -1,9 +1,15 @@
-NOTEBOOKS=$(subst parameters.json,index.html,$(wildcard outputs/2021/05/*/parameters.json))
+NOTEBOOKS=$(subst parameters.json,index.html,$(wildcard outputs/2021/06/*/parameters.json))
+
+
+.SECONDARY:
 
 all: $(NOTEBOOKS)
 
 clean:
 	rm -rf outputs/*
+
+sync:
+	gsutil -m rsync -r -d outputs/ gs://gtfs-data-test/report_gtfs_schedule/
 
 generate_parameters:
 	python 1_generate_ids.py

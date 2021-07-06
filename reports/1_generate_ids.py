@@ -17,8 +17,9 @@ df_report_index = (
         -_.status, -_.calitp_extracted_at, -_.gtfs_schedule_url
     )
     >> mutate(
-        year=2021,
-        month=5,
+        date_start=_.date_start.astype("datetime64[ns]"),
+        year=_.date_start.dt.year,
+        month=_.date_start.dt.month,
         dir_path=_.apply(
             lambda d: f"{d.year}/{d.month:02d}/{d.calitp_itp_id}", axis=1
         ),
@@ -34,7 +35,7 @@ cols_to_keep = ["agency_name", "itp_id", "report_path"]
 index_report = (
     df_report_index
     >> rename(itp_id = _.calitp_itp_id)
-    >> arrange(_.year, _.month)
+    >> arrange(_.year, _.month, _.agency_name)
     >> group_by(_.year, _.month)
     >> summarize(reports=lambda _: [_[cols_to_keep].to_dict(orient="records")])
     >> group_by(_.year)
