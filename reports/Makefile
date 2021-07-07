@@ -11,6 +11,10 @@ clean:
 sync:
 	gsutil -m rsync -r -d outputs/ gs://gtfs-data-test/report_gtfs_schedule/
 
+sync-prod:
+	gsutil -m rsync -r -d outputs/ gs://gtfs-data/report_gtfs_schedule/
+
+
 generate_parameters:
 	python 1_generate_ids.py
 
