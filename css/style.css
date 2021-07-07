@@ -3,7 +3,7 @@
 @tailwind utilities;
 @layer base {
   hr {
-    @apply border-t-4 my-12;
+    @apply border-t-4 border-itp-yellow-light my-12;
   }
 }
 html {
@@ -17,19 +17,25 @@ body {
 h1, h2, h3, h4 {
   @apply font-serif;
 }
+h1 small, h2 small, h3 small, h4 small {
+  @apply text-itp-slate-bold;
+}
 
 .btn,
 a.btn {
   @apply border
-        border-gray-400
+        border-itp-slate
         font-semibold
         inline-block
         py-1 px-4
         rounded
+        text-itp-teal-bold
         focus:outline-none
         focus:ring-4
-        focus:ring-opacity-10
-        hover:bg-gray-50;
+        focus:ring-opacity-30
+        focus:ring-itp-teal
+        hover:border-itp-teal
+        hover:bg-itp-teal-light;
   text-decoration: none !important;
 }
 
@@ -42,4 +48,7 @@ a.btn {
 }
 .responsive-prose.max-w-none {
   max-width: none;
+}
+.responsive-prose th[rowspan] + td {
+  padding-left: 0;
 }
