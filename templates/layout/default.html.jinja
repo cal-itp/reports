@@ -16,11 +16,23 @@
 </head>
 
 <body>
+    {% block logo %}
+    <div class="container pb-8">
+        <a href="{{SITE_DOMAIN}}/">
+            <img class="inline-block h-12 mt-6" src="{{SITE_DOMAIN}}{{SITE_PATH}}/images/calitp-logo.svg" alt="Cal-ITP">
+        </a>
+    </div>
+    {% endblock %}
+
     {% block body %}
-    <div class="container my-16 mb-96">
+    <div class="container my-12 mb-24">
         {% block content %}{% endblock %}
     </div>
     {% endblock %}
+
+    <div class="bg-gray-800 pb-96">
+        <!-- Footer or overscroll area -->
+    </div>
 
     <!-- Global site tag (gtag.js) - Google Analytics -->
     <script async src="https://www.googletagmanager.com/gtag/js?id=G-Q4W9YVZW3C"></script>
@@ -28,9 +40,7 @@
       window.dataLayer = window.dataLayer || [];
       function gtag(){dataLayer.push(arguments);}
       gtag('js', new Date());
-    
       gtag('config', 'G-Q4W9YVZW3C');
     </script>
-
 </body>
 </html>

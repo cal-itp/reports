@@ -13,6 +13,7 @@ black==21.5b1
 bleach==3.3.0
 boltons==20.2.1
 cachetools==4.2.1
+calitp==0.0.1
 certifi==2020.12.5
 cffi==1.14.5
 chardet==4.0.0
@@ -120,7 +121,7 @@ requests-oauthlib==1.3.0
 rsa==4.7.2
 scipy==1.5.4
 Send2Trash==1.5.0
-git+git://github.com/machow/siuba@feat-bigquery#egg=siuba
+git+git://github.com/machow/siuba@ca708d023cffae4208b239f549e6ef30159b61b7#egg=siuba
 six==1.15.0
 sniffio==1.2.0
 SQLAlchemy==1.3.24

@@ -4,6 +4,7 @@ on:
   push:
     branches:
       - main
+      - development
 
 jobs:
   deploy:
@@ -30,21 +31,44 @@ jobs:
     - name: Install node packages
       run: npm install
 
-    # build ----
-    - name: Build
-      run: npm run build
-
     # copy in reports ----
+
     - uses: google-github-actions/setup-gcloud@master
       with:
         service_account_key: ${{ secrets.GCP_SA_KEY }}
         export_default_credentials: true
 
-    - run: |
-        gsutil -m rsync -r gs://gtfs-data/report_gtfs_schedule/ build/gtfs_schedule/
+    # development
+    - name: Copy development report data
+      if: ${{ github.ref == 'refs/heads/development' }}
+      run: |
+        gsutil -m rsync -r gs://gtfs-data-test/report_gtfs_schedule/ reports/outputs/
+
+    # production
+    - name: Copy production report data
+      if: ${{ github.ref == 'refs/heads/main' }}
+      run: |
+        gsutil -m rsync -r gs://gtfs-data/report_gtfs_schedule/ reports/outputs/
+
+
+    # build ----
+    - name: Build
+      run: npm run build
 
     # deploy ----
-    - name: Deploy
+
+    # development
+    - name: Deploy development
+      if: ${{ github.ref == 'refs/heads/development' }}
+      uses: peaceiris/actions-gh-pages@v3
+      with:
+        github_token: ${{ secrets.GITHUB_TOKEN }}
+        publish_dir: ./build
+        publish_branch: development-build
+
+    # production
+    - name: Deploy production
+      if: ${{ github.ref == 'refs/heads/main' }}
       uses: peaceiris/actions-gh-pages@v3
       with:
         github_token: ${{ secrets.GITHUB_TOKEN }}
