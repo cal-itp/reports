@@ -24,4 +24,4 @@ GTFS data quality reports for California transit providers
 ### Build report
 
 1. `npm run build` to get a slim build or `npm run watch` to monitor the source files for changes and run dev builds automatically
-2. Load `build/index.html` in a browser, preferably via an HTTP server
+2. Load `build/index.html` in a browser, preferably via an HTTP server (e.g. `python -m http.server`)
