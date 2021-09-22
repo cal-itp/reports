@@ -107,11 +107,12 @@ Monthly GTFS Quality Reports: {{parameters["DATE_MONTH_YEAR"]}} {{parameters["AG
             </tr>
             {% endfor %}
         </tbody>
-    </table>
-    <table>
         <thead>
             <tr>
                 <th colspan="2">Validation errors observed</th>
+                <th>{{ validation_notices["columns"][2]}}</th>
+                <th>{{ validation_notices["columns"][3]}}</th>
+                <th>{{ validation_notices["columns"][4]}}</th>
             </tr>
         </thead>
         <tbody>

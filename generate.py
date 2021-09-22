@@ -2,6 +2,7 @@ import json
 import os
 import re
 import shutil
+import calendar
 
 from datetime import date, datetime
 from glob import glob
@@ -30,7 +31,12 @@ def nl2br(eval_ctx, value):
     )
     return Markup(result)
 
-env.filters = {**env.filters, "nl2br": nl2br}
+
+def month_name(month_number):
+    return calendar.month_name[month_number]
+
+
+env.filters = {**env.filters, "nl2br": nl2br, "month_name": month_name}
 
 
 def friendly_month(x): 

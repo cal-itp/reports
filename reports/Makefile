@@ -1,4 +1,5 @@
-NOTEBOOKS=$(subst parameters.json,index.html,$(wildcard outputs/2021/06/*/parameters.json))
+# $(wildcard outputs/2021/05/*/parameters.json)
+NOTEBOOKS=$(subst parameters.json,index.html,$(wildcard outputs/2021/08/*/parameters.json))
 
 
 .SECONDARY:
