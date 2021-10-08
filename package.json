@@ -13,6 +13,10 @@
     "url": "https://github.com/cal-itp/reports/issues"
   },
   "homepage": "https://github.com/cal-itp/reports#readme",
+  "engines": {
+    "node": ">=12",
+    "npm": ">=7"
+  },
   "devDependencies": {
     "@tailwindcss/typography": "^0.4.1",
     "autoprefixer": "^10.2.6",
