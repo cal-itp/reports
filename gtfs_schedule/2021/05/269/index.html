@@ -59,7 +59,7 @@
         <div class="flex flex-wrap lg:flex-col gap-12">
             
     <figure>
-        <div class="text-2xl text-itp-teal-bold">S1000186</div>
+        <div class="text-2xl text-itp-teal-bold"></div>
         <figcaption class="text-itp-slate-bold">Feed Published</figcaption>
     </figure>
 
@@ -114,8 +114,9 @@
 <div class="responsive-prose max-w-none">
     <h2>Consistency with the California GTFS Minimum Guidelines</h2>
 
-
     <table>
+
+        <!-- file checks -->
         <thead>
             <tr>
                 <th colspan="2">Do the following files/fields exist?</th>
@@ -201,7 +202,7 @@
                 
                 <th class="font-normal text-itp-slate-bold" rowspan="2">Fares</th>
                 
-                <td>fare_leg_rules</td>
+                <td>fare_leg_rules.txt</td>
                 <!-- these are the date columns -->
                 <td>
     
@@ -267,11 +268,17 @@
             </tr>
             
         </tbody>
-    </table>
-    <table>
+
+        <!-- validation errors -->
+
+        
+
         <thead>
             <tr>
                 <th colspan="2">Validation errors observed</th>
+                <th>2021-05-02</th>
+                <th>2021-05-16</th>
+                <th>2021-05-30</th>
             </tr>
         </thead>
         <tbody>
@@ -283,207 +290,180 @@
                 <td><p>The value in CSV file has leading or trailing whitespaces.</p></td>
                 
                 <td><p>trips.txt: South to Lake Elsinore  <br>
+trips.txt:  Counterclock to Moreno Valley Mall<br>
 trips.txt:  Clockwise to Moreno Valley Mall<br>
-trips.txt: South to Lake Elsinore  <br>
-trips.txt:  North to Montclair Express<br>
-trips.txt: South to Lake Elsinore  <br>
-trips.txt:  Counterclock to Moreno Valley Mall<br>
-trips.txt: South to Lake Elsinore  <br>
-trips.txt:  North to Montclair Express<br>
-trips.txt:  Clockwise to Moreno Valley Mall<br>
-trips.txt:  Counterclock to Moreno Valley Mall<br>
-trips.txt:  Counterclock to Moreno Valley Mall<br>
 trips.txt:  Clockwise to Moreno Valley Mall<br>
 trips.txt:  Counterclock to Moreno Valley Mall<br>
 trips.txt: South to Lake Elsinore  <br>
 trips.txt:  Clockwise to Moreno Valley Mall<br>
-trips.txt:  Clockwise to Moreno Valley Mall<br>
-trips.txt:  Counterclock to Moreno Valley Mall<br>
-trips.txt:  Counterclock to Moreno Valley Mall<br>
-trips.txt: South to Lake Elsinore  <br>
-trips.txt: South to Lake Elsinore  <br>
-trips.txt:  North to Montclair Express<br>
-trips.txt:  Clockwise to Moreno Valley Mall<br>
-trips.txt:  Clockwise to Moreno Valley Mall<br>
-trips.txt:  Clockwise to Moreno Valley Mall<br>
-trips.txt:  Counterclock to Moreno Valley Mall<br>
-trips.txt:  Counterclock to Moreno Valley Mall<br>
-trips.txt:  North to Montclair Express<br>
-trips.txt:  Counterclock to Moreno Valley Mall<br>
-trips.txt: South to Lake Elsinore  <br>
-trips.txt: South to Lake Elsinore  <br>
-trips.txt: South to Lake Elsinore  <br>
-trips.txt:  Clockwise to Moreno Valley Mall<br>
-trips.txt:  Clockwise to Moreno Valley Mall<br>
-trips.txt:  Clockwise to Moreno Valley Mall<br>
-trips.txt: South to Lake Elsinore  <br>
-trips.txt:  Clockwise to Moreno Valley Mall<br>
-trips.txt:  North to Montclair Express<br>
-trips.txt:  Counterclock to Moreno Valley Mall<br>
-trips.txt:  North to Montclair Express<br>
-trips.txt:  Clockwise to Moreno Valley Mall<br>
-trips.txt: South to Lake Elsinore  <br>
-trips.txt: South to Lake Elsinore  <br>
-trips.txt:  Clockwise to Moreno Valley Mall<br>
-trips.txt: South to Lake Elsinore  <br>
-trips.txt:  Counterclock to Moreno Valley Mall<br>
-trips.txt:  Clockwise to Moreno Valley Mall<br>
-trips.txt: South to Lake Elsinore  <br>
-trips.txt:  North to Montclair Express<br>
-trips.txt: South to Lake Elsinore  <br>
-trips.txt:  Clockwise to Moreno Valley Mall<br>
-trips.txt:  Counterclock to Moreno Valley Mall<br>
-trips.txt: South to Lake Elsinore  <br>
-trips.txt:  Clockwise to Moreno Valley Mall<br>
-trips.txt:  Counterclock to Moreno Valley Mall<br>
-trips.txt:  North to Montclair Express<br>
-trips.txt:  North to Montclair Express<br>
-trips.txt:  North to Montclair Express<br>
 trips.txt:  Counterclock to Moreno Valley Mall<br>
 trips.txt: South to Lake Elsinore  <br>
 trips.txt:  Clockwise to Moreno Valley Mall<br>
 trips.txt:  North to Montclair Express<br>
 trips.txt: South to Lake Elsinore  <br>
-trips.txt:  Counterclock to Moreno Valley Mall<br>
-trips.txt: South to Lake Elsinore  <br>
-trips.txt:  Counterclock to Moreno Valley Mall<br>
 trips.txt: South to Lake Elsinore  <br>
 trips.txt:  Clockwise to Moreno Valley Mall<br>
 trips.txt:  Counterclock to Moreno Valley Mall<br>
 trips.txt: South to Lake Elsinore  <br>
-trips.txt:  North to Montclair Express<br>
-trips.txt:  North to Montclair Express<br>
-trips.txt:  Clockwise to Moreno Valley Mall<br>
 trips.txt:  Counterclock to Moreno Valley Mall<br>
-trips.txt:  North to Montclair Express<br>
-trips.txt: South to Lake Elsinore  <br>
-trips.txt:  Counterclock to Moreno Valley Mall<br>
-trips.txt:  North to Montclair Express<br>
-trips.txt:  North to Montclair Express<br>
-trips.txt:  North to Montclair Express<br>
-trips.txt:  Clockwise to Moreno Valley Mall<br>
-trips.txt: South to Lake Elsinore  <br>
-trips.txt: South to Lake Elsinore  <br>
-trips.txt:  North to Montclair Express<br>
-trips.txt:  Counterclock to Moreno Valley Mall<br>
-trips.txt: South to Lake Elsinore  <br>
-trips.txt:  Clockwise to Moreno Valley Mall<br>
-trips.txt:  Clockwise to Moreno Valley Mall<br>
-trips.txt: South to Lake Elsinore  <br>
-trips.txt:  Clockwise to Moreno Valley Mall<br>
-trips.txt:  Counterclock to Moreno Valley Mall<br>
-trips.txt: South to Lake Elsinore  <br>
 trips.txt:  Counterclock to Moreno Valley Mall<br>
 trips.txt:  Counterclock to Moreno Valley Mall<br>
 trips.txt: South to Lake Elsinore  <br>
 trips.txt:  North to Montclair Express<br>
 trips.txt: South to Lake Elsinore  <br>
 trips.txt:  Counterclock to Moreno Valley Mall<br>
-trips.txt:  Counterclock to Moreno Valley Mall<br>
-trips.txt:  Counterclock to Moreno Valley Mall<br>
-trips.txt:  North to Montclair Express<br>
-trips.txt:  Clockwise to Moreno Valley Mall<br>
-trips.txt:  Clockwise to Moreno Valley Mall<br>
-trips.txt: South to Lake Elsinore  <br>
-trips.txt:  Clockwise to Moreno Valley Mall<br>
 trips.txt:  North to Montclair Express<br>
 trips.txt:  North to Montclair Express<br>
 trips.txt: South to Lake Elsinore  <br>
-trips.txt:  Clockwise to Moreno Valley Mall<br>
-trips.txt:  Clockwise to Moreno Valley Mall<br>
 trips.txt: South to Lake Elsinore  <br>
-trips.txt:  Counterclock to Moreno Valley Mall<br>
-trips.txt:  Counterclock to Moreno Valley Mall<br>
-trips.txt: South to Lake Elsinore  <br>
-trips.txt:  North to Montclair Express<br>
-trips.txt:  Counterclock to Moreno Valley Mall<br>
-trips.txt: South to Lake Elsinore  <br>
-trips.txt: South to Lake Elsinore  <br>
-trips.txt: South to Lake Elsinore  <br>
-trips.txt: South to Lake Elsinore  <br>
-trips.txt:  Clockwise to Moreno Valley Mall<br>
-trips.txt: South to Lake Elsinore  <br>
-trips.txt: South to Lake Elsinore  <br>
-trips.txt:  Clockwise to Moreno Valley Mall<br>
-trips.txt:  Clockwise to Moreno Valley Mall<br>
-trips.txt: South to Lake Elsinore  <br>
-trips.txt:  Clockwise to Moreno Valley Mall<br>
 trips.txt:  North to Montclair Express<br>
 trips.txt: South to Lake Elsinore  <br>
 trips.txt:  Clockwise to Moreno Valley Mall<br>
 trips.txt: South to Lake Elsinore  <br>
 trips.txt:  North to Montclair Express<br>
 trips.txt:  Counterclock to Moreno Valley Mall<br>
-trips.txt: South to Lake Elsinore  <br>
 trips.txt:  Clockwise to Moreno Valley Mall<br>
+trips.txt: South to Lake Elsinore  <br>
+trips.txt:  Counterclock to Moreno Valley Mall<br>
+trips.txt:  Clockwise to Moreno Valley Mall<br>
+trips.txt: South to Lake Elsinore  <br>
+trips.txt:  Counterclock to Moreno Valley Mall<br>
+trips.txt: South to Lake Elsinore  <br>
+trips.txt:  Counterclock to Moreno Valley Mall<br>
 trips.txt:  North to Montclair Express<br>
-trips.txt:  Clockwise to Moreno Valley Mall<br>
-trips.txt:  Counterclock to Moreno Valley Mall<br>
-trips.txt:  Counterclock to Moreno Valley Mall<br>
-trips.txt:  Clockwise to Moreno Valley Mall<br>
-trips.txt: South to Lake Elsinore  <br>
-trips.txt:  Counterclock to Moreno Valley Mall<br>
-trips.txt:  Clockwise to Moreno Valley Mall<br>
-trips.txt:  Clockwise to Moreno Valley Mall<br>
-trips.txt: South to Lake Elsinore  <br>
-trips.txt: South to Lake Elsinore  <br>
-trips.txt:  North to Montclair Express<br>
-trips.txt: South to Lake Elsinore  <br>
-trips.txt:  Clockwise to Moreno Valley Mall<br>
-trips.txt: South to Lake Elsinore  <br>
-trips.txt:  Clockwise to Moreno Valley Mall<br>
-trips.txt:  Counterclock to Moreno Valley Mall<br>
-trips.txt:  Counterclock to Moreno Valley Mall<br>
 trips.txt: South to Lake Elsinore  <br>
 trips.txt:  Counterclock to Moreno Valley Mall<br>
 trips.txt:  Counterclock to Moreno Valley Mall<br>
 trips.txt: South to Lake Elsinore  <br>
 trips.txt: South to Lake Elsinore  <br>
 trips.txt:  North to Montclair Express<br>
+trips.txt:  North to Montclair Express<br>
+trips.txt: South to Lake Elsinore  <br>
+trips.txt:  Clockwise to Moreno Valley Mall<br>
+trips.txt: South to Lake Elsinore  <br>
+trips.txt:  Counterclock to Moreno Valley Mall<br>
+trips.txt:  Counterclock to Moreno Valley Mall<br>
+trips.txt:  Clockwise to Moreno Valley Mall<br>
+trips.txt:  Clockwise to Moreno Valley Mall<br>
+trips.txt:  Clockwise to Moreno Valley Mall<br>
 trips.txt:  Clockwise to Moreno Valley Mall<br>
 trips.txt:  North to Montclair Express<br>
+trips.txt: South to Lake Elsinore  <br>
+trips.txt:  Counterclock to Moreno Valley Mall<br>
+trips.txt:  Clockwise to Moreno Valley Mall<br>
+trips.txt:  North to Montclair Express<br>
+trips.txt: South to Lake Elsinore  <br>
+trips.txt:  Counterclock to Moreno Valley Mall<br>
+trips.txt: South to Lake Elsinore  <br>
+trips.txt:  Clockwise to Moreno Valley Mall<br>
+trips.txt: South to Lake Elsinore  <br>
+trips.txt:  Clockwise to Moreno Valley Mall<br>
+trips.txt:  Clockwise to Moreno Valley Mall<br>
+trips.txt:  Counterclock to Moreno Valley Mall<br>
+trips.txt:  Clockwise to Moreno Valley Mall<br>
+trips.txt:  Clockwise to Moreno Valley Mall<br>
+trips.txt:  North to Montclair Express<br>
+trips.txt:  North to Montclair Express<br>
+trips.txt: South to Lake Elsinore  <br>
+trips.txt:  Clockwise to Moreno Valley Mall<br>
+trips.txt:  Clockwise to Moreno Valley Mall<br>
+trips.txt:  North to Montclair Express<br>
+trips.txt:  North to Montclair Express<br>
+trips.txt:  Clockwise to Moreno Valley Mall<br>
+trips.txt: South to Lake Elsinore  <br>
+trips.txt: South to Lake Elsinore  <br>
+trips.txt:  Clockwise to Moreno Valley Mall<br>
+trips.txt:  Clockwise to Moreno Valley Mall<br>
+trips.txt:  Counterclock to Moreno Valley Mall<br>
 trips.txt:  Counterclock to Moreno Valley Mall<br>
 trips.txt:  North to Montclair Express<br>
 trips.txt:  North to Montclair Express<br>
+trips.txt:  North to Montclair Express<br>
+trips.txt: South to Lake Elsinore  <br>
+trips.txt: South to Lake Elsinore  <br>
+trips.txt:  North to Montclair Express<br>
+trips.txt:  North to Montclair Express<br>
 trips.txt:  Counterclock to Moreno Valley Mall<br>
+trips.txt:  North to Montclair Express<br>
+trips.txt: South to Lake Elsinore  <br>
+trips.txt:  North to Montclair Express<br>
+trips.txt:  Clockwise to Moreno Valley Mall<br>
+trips.txt:  Clockwise to Moreno Valley Mall<br>
+trips.txt: South to Lake Elsinore  <br>
+trips.txt: South to Lake Elsinore  <br>
+trips.txt: South to Lake Elsinore  <br>
 trips.txt: South to Lake Elsinore  <br>
 trips.txt:  Counterclock to Moreno Valley Mall<br>
 trips.txt:  North to Montclair Express<br>
 trips.txt:  Counterclock to Moreno Valley Mall<br>
-trips.txt:  North to Montclair Express<br>
-trips.txt:  Counterclock to Moreno Valley Mall<br>
-trips.txt:  Clockwise to Moreno Valley Mall<br>
 trips.txt: South to Lake Elsinore  <br>
-trips.txt:  Clockwise to Moreno Valley Mall<br>
+trips.txt:  North to Montclair Express<br>
 trips.txt:  North to Montclair Express<br>
 trips.txt: South to Lake Elsinore  <br>
 trips.txt: South to Lake Elsinore  <br>
 trips.txt:  Clockwise to Moreno Valley Mall<br>
+trips.txt:  Clockwise to Moreno Valley Mall<br>
+trips.txt:  Counterclock to Moreno Valley Mall<br>
+trips.txt:  Clockwise to Moreno Valley Mall<br>
+trips.txt: South to Lake Elsinore  <br>
+trips.txt:  North to Montclair Express<br>
+trips.txt:  North to Montclair Express<br>
+trips.txt:  Clockwise to Moreno Valley Mall<br>
 trips.txt:  North to Montclair Express<br>
 trips.txt: South to Lake Elsinore  <br>
+trips.txt: South to Lake Elsinore  <br>
+trips.txt:  North to Montclair Express<br>
+trips.txt: South to Lake Elsinore  <br>
+trips.txt: South to Lake Elsinore  <br>
+trips.txt:  North to Montclair Express<br>
+trips.txt:  Clockwise to Moreno Valley Mall<br>
+trips.txt:  Counterclock to Moreno Valley Mall<br>
+trips.txt:  North to Montclair Express<br>
+trips.txt: South to Lake Elsinore  <br>
+trips.txt: South to Lake Elsinore  <br>
+trips.txt: South to Lake Elsinore  <br>
+trips.txt:  Clockwise to Moreno Valley Mall<br>
+trips.txt:  Clockwise to Moreno Valley Mall<br>
+trips.txt:  North to Montclair Express<br>
+trips.txt: South to Lake Elsinore  <br>
+trips.txt: South to Lake Elsinore  <br>
+trips.txt:  Counterclock to Moreno Valley Mall<br>
 trips.txt:  Clockwise to Moreno Valley Mall<br>
 trips.txt:  North to Montclair Express<br>
 trips.txt:  North to Montclair Express<br>
 trips.txt:  Counterclock to Moreno Valley Mall<br>
+trips.txt: South to Lake Elsinore  <br>
+trips.txt:  Clockwise to Moreno Valley Mall<br>
+trips.txt:  Counterclock to Moreno Valley Mall<br>
+trips.txt: South to Lake Elsinore  <br>
+trips.txt: South to Lake Elsinore  <br>
+trips.txt:  Clockwise to Moreno Valley Mall<br>
+trips.txt: South to Lake Elsinore  <br>
+trips.txt:  Clockwise to Moreno Valley Mall<br>
 trips.txt:  North to Montclair Express<br>
 trips.txt:  Clockwise to Moreno Valley Mall<br>
 trips.txt:  Counterclock to Moreno Valley Mall<br>
+trips.txt:  Clockwise to Moreno Valley Mall<br>
+trips.txt:  Clockwise to Moreno Valley Mall<br>
 trips.txt: South to Lake Elsinore  <br>
+trips.txt:  Counterclock to Moreno Valley Mall<br>
+trips.txt:  Counterclock to Moreno Valley Mall<br>
+trips.txt: South to Lake Elsinore  <br>
+trips.txt:  North to Montclair Express<br>
+trips.txt:  Counterclock to Moreno Valley Mall<br>
+trips.txt:  Clockwise to Moreno Valley Mall<br>
+trips.txt:  North to Montclair Express<br>
+trips.txt:  North to Montclair Express<br>
+trips.txt:  Clockwise to Moreno Valley Mall<br>
+trips.txt: South to Lake Elsinore  <br>
+trips.txt:  Clockwise to Moreno Valley Mall<br>
+trips.txt: South to Lake Elsinore  <br>
+trips.txt: South to Lake Elsinore  <br>
+trips.txt:  Counterclock to Moreno Valley Mall<br>
+trips.txt:  Counterclock to Moreno Valley Mall<br>
 trips.txt:  Clockwise to Moreno Valley Mall<br>
 trips.txt:  North to Montclair Express<br>
 trips.txt:  Counterclock to Moreno Valley Mall<br>
-trips.txt: South to Lake Elsinore  <br>
-trips.txt:  North to Montclair Express<br>
-trips.txt:  Counterclock to Moreno Valley Mall<br>
-trips.txt:  Clockwise to Moreno Valley Mall<br>
-trips.txt:  Clockwise to Moreno Valley Mall<br>
-trips.txt:  Counterclock to Moreno Valley Mall<br>
-trips.txt:  Counterclock to Moreno Valley Mall<br>
-trips.txt:  Counterclock to Moreno Valley Mall<br>
-trips.txt: South to Lake Elsinore  <br>
-trips.txt: South to Lake Elsinore  <br>
-trips.txt:  Clockwise to Moreno Valley Mall<br>
-trips.txt: South to Lake Elsinore  <br>
 trips.txt: South to Lake Elsinore  <br>
 trips.txt: South to Lake Elsinore  <br>
 trips.txt:  Counterclock to Moreno Valley Mall<br>
@@ -491,107 +471,86 @@ trips.txt:  Counterclock to Moreno Valley Mall<br>
 trips.txt:  Counterclock to Moreno Valley Mall<br>
 trips.txt: South to Lake Elsinore  <br>
 trips.txt:  North to Montclair Express<br>
-trips.txt:  Clockwise to Moreno Valley Mall<br>
 trips.txt:  Counterclock to Moreno Valley Mall<br>
-trips.txt:  North to Montclair Express<br>
-trips.txt:  North to Montclair Express<br>
-trips.txt:  Clockwise to Moreno Valley Mall<br>
-trips.txt:  North to Montclair Express<br>
-trips.txt:  North to Montclair Express<br>
 trips.txt: South to Lake Elsinore  <br>
 trips.txt:  Counterclock to Moreno Valley Mall<br>
-trips.txt:  Clockwise to Moreno Valley Mall</p></td>
+trips.txt:  Counterclock to Moreno Valley Mall<br>
+trips.txt:  Counterclock to Moreno Valley Mall<br>
+trips.txt:  Clockwise to Moreno Valley Mall<br>
+trips.txt:  North to Montclair Express<br>
+trips.txt:  North to Montclair Express<br>
+trips.txt:  Counterclock to Moreno Valley Mall<br>
+trips.txt: South to Lake Elsinore  <br>
+trips.txt:  Counterclock to Moreno Valley Mall<br>
+trips.txt: South to Lake Elsinore  <br>
+trips.txt:  Counterclock to Moreno Valley Mall<br>
+trips.txt: South to Lake Elsinore  <br>
+trips.txt:  Counterclock to Moreno Valley Mall<br>
+trips.txt:  Counterclock to Moreno Valley Mall<br>
+trips.txt:  North to Montclair Express<br>
+trips.txt: South to Lake Elsinore  <br>
+trips.txt:  North to Montclair Express<br>
+trips.txt:  Clockwise to Moreno Valley Mall<br>
+trips.txt:  Clockwise to Moreno Valley Mall<br>
+trips.txt:  Clockwise to Moreno Valley Mall<br>
+trips.txt:  Clockwise to Moreno Valley Mall<br>
+trips.txt:  Clockwise to Moreno Valley Mall<br>
+trips.txt:  Clockwise to Moreno Valley Mall<br>
+trips.txt:  Clockwise to Moreno Valley Mall<br>
+trips.txt: South to Lake Elsinore  <br>
+trips.txt:  Counterclock to Moreno Valley Mall<br>
+trips.txt: South to Lake Elsinore  <br>
+trips.txt:  Counterclock to Moreno Valley Mall<br>
+trips.txt:  Counterclock to Moreno Valley Mall<br>
+trips.txt:  Clockwise to Moreno Valley Mall<br>
+trips.txt:  Clockwise to Moreno Valley Mall<br>
+trips.txt:  Counterclock to Moreno Valley Mall<br>
+trips.txt:  North to Montclair Express<br>
+trips.txt:  Counterclock to Moreno Valley Mall<br>
+trips.txt:  Counterclock to Moreno Valley Mall</p></td>
                 
-                <td><p>trips.txt:  Clockwise to Moreno Valley Mall<br>
+                <td><p>trips.txt:  North to Montclair Express<br>
+trips.txt:  Counterclock to Moreno Valley Mall<br>
+trips.txt:  Counterclock to Moreno Valley Mall<br>
+trips.txt:  Clockwise to Moreno Valley Mall<br>
+trips.txt:  Counterclock to Moreno Valley Mall<br>
+trips.txt:  Counterclock to Moreno Valley Mall<br>
+trips.txt:  Counterclock to Moreno Valley Mall<br>
+trips.txt:  North to Montclair Express<br>
+trips.txt: South to Lake Elsinore  <br>
+trips.txt:  Counterclock to Moreno Valley Mall<br>
+trips.txt: South to Lake Elsinore  <br>
+trips.txt:  North to Montclair Express<br>
+trips.txt: South to Lake Elsinore  <br>
+trips.txt:  Clockwise to Moreno Valley Mall<br>
+trips.txt:  Clockwise to Moreno Valley Mall<br>
+trips.txt:  Clockwise to Moreno Valley Mall<br>
+trips.txt: South to Lake Elsinore  <br>
+trips.txt: South to Lake Elsinore  <br>
 trips.txt:  Clockwise to Moreno Valley Mall<br>
 trips.txt: South to Lake Elsinore  <br>
 trips.txt: South to Lake Elsinore  <br>
 trips.txt:  Clockwise to Moreno Valley Mall<br>
 trips.txt:  Counterclock to Moreno Valley Mall<br>
+trips.txt:  Counterclock to Moreno Valley Mall<br>
 trips.txt:  Clockwise to Moreno Valley Mall<br>
 trips.txt: South to Lake Elsinore  <br>
+trips.txt: South to Lake Elsinore  <br>
+trips.txt:  Clockwise to Moreno Valley Mall<br>
+trips.txt:  Counterclock to Moreno Valley Mall<br>
+trips.txt:  Counterclock to Moreno Valley Mall<br>
+trips.txt:  Counterclock to Moreno Valley Mall<br>
 trips.txt: South to Lake Elsinore  <br>
 trips.txt: South to Lake Elsinore  <br>
 trips.txt:  Counterclock to Moreno Valley Mall<br>
 trips.txt:  North to Montclair Express<br>
 trips.txt: South to Lake Elsinore  <br>
-trips.txt:  Clockwise to Moreno Valley Mall<br>
 trips.txt: South to Lake Elsinore  <br>
 trips.txt:  North to Montclair Express<br>
-trips.txt:  Clockwise to Moreno Valley Mall<br>
-trips.txt:  Counterclock to Moreno Valley Mall<br>
-trips.txt:  Counterclock to Moreno Valley Mall<br>
 trips.txt: South to Lake Elsinore  <br>
-trips.txt:  Clockwise to Moreno Valley Mall<br>
-trips.txt:  Clockwise to Moreno Valley Mall<br>
-trips.txt: South to Lake Elsinore  <br>
-trips.txt:  Counterclock to Moreno Valley Mall<br>
-trips.txt:  Clockwise to Moreno Valley Mall<br>
-trips.txt:  Counterclock to Moreno Valley Mall<br>
-trips.txt:  Counterclock to Moreno Valley Mall<br>
-trips.txt: South to Lake Elsinore  <br>
-trips.txt: South to Lake Elsinore  <br>
-trips.txt: South to Lake Elsinore  <br>
-trips.txt: South to Lake Elsinore  <br>
-trips.txt:  Clockwise to Moreno Valley Mall<br>
-trips.txt:  North to Montclair Express<br>
-trips.txt: South to Lake Elsinore  <br>
-trips.txt:  Clockwise to Moreno Valley Mall<br>
-trips.txt:  Clockwise to Moreno Valley Mall<br>
-trips.txt:  Counterclock to Moreno Valley Mall<br>
-trips.txt:  Counterclock to Moreno Valley Mall<br>
-trips.txt: South to Lake Elsinore  <br>
-trips.txt:  Counterclock to Moreno Valley Mall<br>
-trips.txt: South to Lake Elsinore  <br>
-trips.txt:  Counterclock to Moreno Valley Mall<br>
 trips.txt:  Counterclock to Moreno Valley Mall<br>
 trips.txt:  North to Montclair Express<br>
-trips.txt:  Counterclock to Moreno Valley Mall<br>
-trips.txt:  Counterclock to Moreno Valley Mall<br>
-trips.txt:  North to Montclair Express<br>
-trips.txt:  North to Montclair Express<br>
-trips.txt:  Counterclock to Moreno Valley Mall<br>
-trips.txt: South to Lake Elsinore  <br>
-trips.txt: South to Lake Elsinore  <br>
-trips.txt: South to Lake Elsinore  <br>
-trips.txt: South to Lake Elsinore  <br>
 trips.txt:  Clockwise to Moreno Valley Mall<br>
-trips.txt:  Clockwise to Moreno Valley Mall<br>
-trips.txt:  Counterclock to Moreno Valley Mall<br>
-trips.txt:  Clockwise to Moreno Valley Mall<br>
-trips.txt: South to Lake Elsinore  <br>
-trips.txt:  Clockwise to Moreno Valley Mall<br>
-trips.txt:  North to Montclair Express<br>
-trips.txt: South to Lake Elsinore  <br>
-trips.txt:  Clockwise to Moreno Valley Mall<br>
-trips.txt:  Counterclock to Moreno Valley Mall<br>
-trips.txt:  Clockwise to Moreno Valley Mall<br>
-trips.txt:  Counterclock to Moreno Valley Mall<br>
-trips.txt: South to Lake Elsinore  <br>
-trips.txt: South to Lake Elsinore  <br>
-trips.txt:  Counterclock to Moreno Valley Mall<br>
-trips.txt:  Counterclock to Moreno Valley Mall<br>
-trips.txt: South to Lake Elsinore  <br>
-trips.txt: South to Lake Elsinore  <br>
-trips.txt:  Counterclock to Moreno Valley Mall<br>
-trips.txt:  Counterclock to Moreno Valley Mall<br>
-trips.txt: South to Lake Elsinore  <br>
-trips.txt:  Clockwise to Moreno Valley Mall<br>
-trips.txt:  Clockwise to Moreno Valley Mall<br>
-trips.txt:  Clockwise to Moreno Valley Mall<br>
-trips.txt: South to Lake Elsinore  <br>
-trips.txt:  Clockwise to Moreno Valley Mall<br>
-trips.txt:  Counterclock to Moreno Valley Mall<br>
-trips.txt:  Clockwise to Moreno Valley Mall<br>
-trips.txt:  North to Montclair Express<br>
-trips.txt:  Counterclock to Moreno Valley Mall<br>
-trips.txt:  Counterclock to Moreno Valley Mall<br>
-trips.txt:  Clockwise to Moreno Valley Mall<br>
-trips.txt: South to Lake Elsinore  <br>
-trips.txt:  Clockwise to Moreno Valley Mall<br>
-trips.txt:  Clockwise to Moreno Valley Mall<br>
-trips.txt: South to Lake Elsinore  <br>
-trips.txt: South to Lake Elsinore  <br>
 trips.txt:  Counterclock to Moreno Valley Mall<br>
 trips.txt:  Counterclock to Moreno Valley Mall<br>
 trips.txt:  Clockwise to Moreno Valley Mall<br>
@@ -599,51 +558,36 @@ trips.txt:  Counterclock to Moreno Valley Mall<br>
 trips.txt:  Clockwise to Moreno Valley Mall<br>
 trips.txt:  North to Montclair Express<br>
 trips.txt:  Counterclock to Moreno Valley Mall<br>
-trips.txt: South to Lake Elsinore  <br>
-trips.txt: South to Lake Elsinore  <br>
+trips.txt:  Clockwise to Moreno Valley Mall<br>
 trips.txt:  Counterclock to Moreno Valley Mall<br>
-trips.txt:  Counterclock to Moreno Valley Mall<br>
-trips.txt:  Counterclock to Moreno Valley Mall<br>
+trips.txt:  Clockwise to Moreno Valley Mall<br>
+trips.txt:  Clockwise to Moreno Valley Mall<br>
 trips.txt:  Clockwise to Moreno Valley Mall<br>
 trips.txt:  North to Montclair Express<br>
 trips.txt: South to Lake Elsinore  <br>
-trips.txt:  Clockwise to Moreno Valley Mall<br>
-trips.txt:  Clockwise to Moreno Valley Mall<br>
-trips.txt: South to Lake Elsinore  <br>
-trips.txt:  Clockwise to Moreno Valley Mall<br>
-trips.txt: South to Lake Elsinore  <br>
-trips.txt: South to Lake Elsinore  <br>
-trips.txt: South to Lake Elsinore  <br>
-trips.txt:  Clockwise to Moreno Valley Mall<br>
-trips.txt:  Counterclock to Moreno Valley Mall<br>
-trips.txt:  Clockwise to Moreno Valley Mall<br>
-trips.txt:  North to Montclair Express<br>
-trips.txt: South to Lake Elsinore  <br>
-trips.txt: South to Lake Elsinore  <br>
-trips.txt:  Counterclock to Moreno Valley Mall<br>
-trips.txt:  Clockwise to Moreno Valley Mall<br>
 trips.txt:  Counterclock to Moreno Valley Mall<br>
 trips.txt: South to Lake Elsinore  <br>
 trips.txt: South to Lake Elsinore  <br>
-trips.txt:  Clockwise to Moreno Valley Mall<br>
-trips.txt:  Counterclock to Moreno Valley Mall<br>
-trips.txt:  Clockwise to Moreno Valley Mall<br>
 trips.txt: South to Lake Elsinore  <br>
 trips.txt: South to Lake Elsinore  <br>
 trips.txt:  Clockwise to Moreno Valley Mall<br>
+trips.txt: South to Lake Elsinore  <br>
+trips.txt:  Clockwise to Moreno Valley Mall<br>
+trips.txt: South to Lake Elsinore  <br>
+trips.txt: South to Lake Elsinore  <br>
+trips.txt: South to Lake Elsinore  <br>
+trips.txt: South to Lake Elsinore  <br>
 trips.txt:  Counterclock to Moreno Valley Mall<br>
+trips.txt:  Counterclock to Moreno Valley Mall<br>
+trips.txt: South to Lake Elsinore  <br>
 trips.txt:  North to Montclair Express<br>
 trips.txt:  Counterclock to Moreno Valley Mall<br>
-trips.txt:  Clockwise to Moreno Valley Mall<br>
+trips.txt: South to Lake Elsinore  <br>
+trips.txt: South to Lake Elsinore  <br>
+trips.txt: South to Lake Elsinore  <br>
+trips.txt: South to Lake Elsinore  <br>
 trips.txt:  Counterclock to Moreno Valley Mall<br>
 trips.txt: South to Lake Elsinore  <br>
-trips.txt:  Clockwise to Moreno Valley Mall<br>
-trips.txt:  Clockwise to Moreno Valley Mall<br>
-trips.txt:  Counterclock to Moreno Valley Mall<br>
-trips.txt:  Clockwise to Moreno Valley Mall<br>
-trips.txt: South to Lake Elsinore  <br>
-trips.txt:  Clockwise to Moreno Valley Mall<br>
-trips.txt:  Counterclock to Moreno Valley Mall<br>
 trips.txt:  Counterclock to Moreno Valley Mall<br>
 trips.txt: South to Lake Elsinore  <br>
 trips.txt: South to Lake Elsinore  <br>
@@ -652,141 +596,156 @@ trips.txt:  Clockwise to Moreno Valley Mall<br>
 trips.txt: South to Lake Elsinore  <br>
 trips.txt:  North to Montclair Express<br>
 trips.txt:  Counterclock to Moreno Valley Mall<br>
+trips.txt: South to Lake Elsinore  <br>
+trips.txt:  Clockwise to Moreno Valley Mall<br>
+trips.txt:  Clockwise to Moreno Valley Mall<br>
+trips.txt: South to Lake Elsinore  <br>
+trips.txt:  Clockwise to Moreno Valley Mall<br>
+trips.txt:  Counterclock to Moreno Valley Mall<br>
+trips.txt:  Clockwise to Moreno Valley Mall<br>
+trips.txt:  Clockwise to Moreno Valley Mall<br>
+trips.txt:  Clockwise to Moreno Valley Mall<br>
+trips.txt:  Clockwise to Moreno Valley Mall<br>
+trips.txt:  Counterclock to Moreno Valley Mall<br>
+trips.txt:  North to Montclair Express<br>
+trips.txt: South to Lake Elsinore  <br>
+trips.txt: South to Lake Elsinore  <br>
+trips.txt:  Clockwise to Moreno Valley Mall<br>
+trips.txt:  Clockwise to Moreno Valley Mall<br>
+trips.txt:  Counterclock to Moreno Valley Mall<br>
+trips.txt: South to Lake Elsinore  <br>
+trips.txt:  Clockwise to Moreno Valley Mall<br>
+trips.txt:  North to Montclair Express<br>
+trips.txt: South to Lake Elsinore  <br>
+trips.txt:  Clockwise to Moreno Valley Mall<br>
+trips.txt:  Counterclock to Moreno Valley Mall<br>
+trips.txt: South to Lake Elsinore  <br>
+trips.txt:  Clockwise to Moreno Valley Mall<br>
+trips.txt:  Counterclock to Moreno Valley Mall<br>
+trips.txt:  Clockwise to Moreno Valley Mall<br>
+trips.txt: South to Lake Elsinore  <br>
+trips.txt: South to Lake Elsinore  <br>
+trips.txt: South to Lake Elsinore  <br>
+trips.txt:  Clockwise to Moreno Valley Mall<br>
+trips.txt: South to Lake Elsinore  <br>
+trips.txt:  Clockwise to Moreno Valley Mall<br>
+trips.txt:  Clockwise to Moreno Valley Mall<br>
+trips.txt:  Clockwise to Moreno Valley Mall<br>
+trips.txt:  Counterclock to Moreno Valley Mall<br>
+trips.txt:  North to Montclair Express<br>
+trips.txt:  Counterclock to Moreno Valley Mall<br>
+trips.txt: South to Lake Elsinore  <br>
+trips.txt:  Counterclock to Moreno Valley Mall<br>
+trips.txt: South to Lake Elsinore  <br>
+trips.txt:  Counterclock to Moreno Valley Mall<br>
+trips.txt:  Counterclock to Moreno Valley Mall<br>
+trips.txt: South to Lake Elsinore  <br>
+trips.txt: South to Lake Elsinore  <br>
+trips.txt: South to Lake Elsinore  <br>
+trips.txt:  North to Montclair Express<br>
+trips.txt:  Clockwise to Moreno Valley Mall<br>
+trips.txt:  Clockwise to Moreno Valley Mall<br>
+trips.txt:  Counterclock to Moreno Valley Mall<br>
+trips.txt:  Clockwise to Moreno Valley Mall<br>
+trips.txt:  Clockwise to Moreno Valley Mall<br>
+trips.txt:  Clockwise to Moreno Valley Mall<br>
+trips.txt: South to Lake Elsinore  <br>
+trips.txt:  Counterclock to Moreno Valley Mall<br>
+trips.txt:  Clockwise to Moreno Valley Mall<br>
+trips.txt: South to Lake Elsinore  <br>
+trips.txt: South to Lake Elsinore  <br>
+trips.txt:  Counterclock to Moreno Valley Mall<br>
+trips.txt: South to Lake Elsinore  <br>
+trips.txt:  Clockwise to Moreno Valley Mall<br>
+trips.txt:  Counterclock to Moreno Valley Mall<br>
+trips.txt:  Counterclock to Moreno Valley Mall<br>
+trips.txt:  North to Montclair Express<br>
+trips.txt: South to Lake Elsinore  <br>
+trips.txt:  Clockwise to Moreno Valley Mall<br>
+trips.txt: South to Lake Elsinore  <br>
+trips.txt:  Counterclock to Moreno Valley Mall<br>
+trips.txt:  Counterclock to Moreno Valley Mall<br>
+trips.txt:  Counterclock to Moreno Valley Mall<br>
+trips.txt:  Clockwise to Moreno Valley Mall<br>
+trips.txt:  Counterclock to Moreno Valley Mall<br>
+trips.txt: South to Lake Elsinore  <br>
+trips.txt: South to Lake Elsinore  <br>
+trips.txt:  Clockwise to Moreno Valley Mall<br>
+trips.txt:  Clockwise to Moreno Valley Mall<br>
+trips.txt:  Counterclock to Moreno Valley Mall<br>
+trips.txt: South to Lake Elsinore  <br>
+trips.txt:  Counterclock to Moreno Valley Mall<br>
+trips.txt: South to Lake Elsinore  <br>
+trips.txt:  North to Montclair Express<br>
+trips.txt:  Clockwise to Moreno Valley Mall<br>
+trips.txt:  Clockwise to Moreno Valley Mall<br>
+trips.txt:  Clockwise to Moreno Valley Mall<br>
 trips.txt:  Counterclock to Moreno Valley Mall<br>
 trips.txt:  North to Montclair Express<br>
 trips.txt:  Clockwise to Moreno Valley Mall<br>
 trips.txt:  Counterclock to Moreno Valley Mall<br>
 trips.txt:  Clockwise to Moreno Valley Mall<br>
-trips.txt: South to Lake Elsinore  <br>
-trips.txt:  Clockwise to Moreno Valley Mall<br>
 trips.txt:  Counterclock to Moreno Valley Mall<br>
-trips.txt:  North to Montclair Express<br>
-trips.txt:  Clockwise to Moreno Valley Mall<br>
-trips.txt:  Counterclock to Moreno Valley Mall<br>
-trips.txt: South to Lake Elsinore  <br>
-trips.txt:  Counterclock to Moreno Valley Mall<br>
-trips.txt:  North to Montclair Express<br>
-trips.txt: South to Lake Elsinore  <br>
-trips.txt: South to Lake Elsinore  <br>
-trips.txt: South to Lake Elsinore  <br>
 trips.txt:  Clockwise to Moreno Valley Mall<br>
 trips.txt: South to Lake Elsinore  <br>
+trips.txt:  Counterclock to Moreno Valley Mall<br>
 trips.txt:  North to Montclair Express<br>
 trips.txt:  Counterclock to Moreno Valley Mall<br>
 trips.txt: South to Lake Elsinore  <br>
 trips.txt:  North to Montclair Express<br>
-trips.txt:  Clockwise to Moreno Valley Mall<br>
-trips.txt:  North to Montclair Express<br>
-trips.txt:  Counterclock to Moreno Valley Mall<br>
-trips.txt:  Clockwise to Moreno Valley Mall<br>
 trips.txt:  North to Montclair Express<br>
 trips.txt: South to Lake Elsinore  <br>
 trips.txt:  Counterclock to Moreno Valley Mall<br>
-trips.txt: South to Lake Elsinore  <br>
-trips.txt: South to Lake Elsinore  <br>
-trips.txt: South to Lake Elsinore  <br>
-trips.txt:  Clockwise to Moreno Valley Mall<br>
 trips.txt:  Counterclock to Moreno Valley Mall<br>
 trips.txt: South to Lake Elsinore  <br>
+trips.txt:  Counterclock to Moreno Valley Mall<br>
 trips.txt:  Clockwise to Moreno Valley Mall<br>
 trips.txt: South to Lake Elsinore  <br>
 trips.txt:  Clockwise to Moreno Valley Mall<br>
-trips.txt: South to Lake Elsinore  <br>
-trips.txt:  Counterclock to Moreno Valley Mall<br>
-trips.txt:  Counterclock to Moreno Valley Mall<br>
-trips.txt: South to Lake Elsinore  <br>
 trips.txt: South to Lake Elsinore  </p></td>
                 
-                <td><p>trips.txt:  Clockwise to Moreno Valley Mall<br>
+                <td><p>trips.txt:  North to Montclair Express<br>
+trips.txt:  Counterclock to Moreno Valley Mall<br>
+trips.txt:  Counterclock to Moreno Valley Mall<br>
+trips.txt:  Clockwise to Moreno Valley Mall<br>
+trips.txt:  Counterclock to Moreno Valley Mall<br>
+trips.txt:  Counterclock to Moreno Valley Mall<br>
+trips.txt:  Counterclock to Moreno Valley Mall<br>
+trips.txt:  North to Montclair Express<br>
+trips.txt: South to Lake Elsinore  <br>
+trips.txt:  Counterclock to Moreno Valley Mall<br>
+trips.txt: South to Lake Elsinore  <br>
+trips.txt:  North to Montclair Express<br>
+trips.txt: South to Lake Elsinore  <br>
+trips.txt:  Clockwise to Moreno Valley Mall<br>
+trips.txt:  Clockwise to Moreno Valley Mall<br>
+trips.txt:  Clockwise to Moreno Valley Mall<br>
+trips.txt: South to Lake Elsinore  <br>
+trips.txt: South to Lake Elsinore  <br>
 trips.txt:  Clockwise to Moreno Valley Mall<br>
 trips.txt: South to Lake Elsinore  <br>
 trips.txt: South to Lake Elsinore  <br>
 trips.txt:  Clockwise to Moreno Valley Mall<br>
 trips.txt:  Counterclock to Moreno Valley Mall<br>
+trips.txt:  Counterclock to Moreno Valley Mall<br>
 trips.txt:  Clockwise to Moreno Valley Mall<br>
 trips.txt: South to Lake Elsinore  <br>
+trips.txt: South to Lake Elsinore  <br>
+trips.txt:  Clockwise to Moreno Valley Mall<br>
+trips.txt:  Counterclock to Moreno Valley Mall<br>
+trips.txt:  Counterclock to Moreno Valley Mall<br>
+trips.txt:  Counterclock to Moreno Valley Mall<br>
 trips.txt: South to Lake Elsinore  <br>
 trips.txt: South to Lake Elsinore  <br>
 trips.txt:  Counterclock to Moreno Valley Mall<br>
 trips.txt:  North to Montclair Express<br>
 trips.txt: South to Lake Elsinore  <br>
-trips.txt:  Clockwise to Moreno Valley Mall<br>
 trips.txt: South to Lake Elsinore  <br>
 trips.txt:  North to Montclair Express<br>
-trips.txt:  Clockwise to Moreno Valley Mall<br>
-trips.txt:  Counterclock to Moreno Valley Mall<br>
-trips.txt:  Counterclock to Moreno Valley Mall<br>
 trips.txt: South to Lake Elsinore  <br>
-trips.txt:  Clockwise to Moreno Valley Mall<br>
-trips.txt:  Clockwise to Moreno Valley Mall<br>
-trips.txt: South to Lake Elsinore  <br>
-trips.txt:  Counterclock to Moreno Valley Mall<br>
-trips.txt:  Clockwise to Moreno Valley Mall<br>
-trips.txt:  Counterclock to Moreno Valley Mall<br>
-trips.txt:  Counterclock to Moreno Valley Mall<br>
-trips.txt: South to Lake Elsinore  <br>
-trips.txt: South to Lake Elsinore  <br>
-trips.txt: South to Lake Elsinore  <br>
-trips.txt: South to Lake Elsinore  <br>
-trips.txt:  Clockwise to Moreno Valley Mall<br>
-trips.txt:  North to Montclair Express<br>
-trips.txt: South to Lake Elsinore  <br>
-trips.txt:  Clockwise to Moreno Valley Mall<br>
-trips.txt:  Clockwise to Moreno Valley Mall<br>
-trips.txt:  Counterclock to Moreno Valley Mall<br>
-trips.txt:  Counterclock to Moreno Valley Mall<br>
-trips.txt: South to Lake Elsinore  <br>
-trips.txt:  Counterclock to Moreno Valley Mall<br>
-trips.txt: South to Lake Elsinore  <br>
-trips.txt:  Counterclock to Moreno Valley Mall<br>
 trips.txt:  Counterclock to Moreno Valley Mall<br>
 trips.txt:  North to Montclair Express<br>
-trips.txt:  Counterclock to Moreno Valley Mall<br>
-trips.txt:  Counterclock to Moreno Valley Mall<br>
-trips.txt:  North to Montclair Express<br>
-trips.txt:  North to Montclair Express<br>
-trips.txt:  Counterclock to Moreno Valley Mall<br>
-trips.txt: South to Lake Elsinore  <br>
-trips.txt: South to Lake Elsinore  <br>
-trips.txt: South to Lake Elsinore  <br>
-trips.txt: South to Lake Elsinore  <br>
 trips.txt:  Clockwise to Moreno Valley Mall<br>
-trips.txt:  Clockwise to Moreno Valley Mall<br>
-trips.txt:  Counterclock to Moreno Valley Mall<br>
-trips.txt:  Clockwise to Moreno Valley Mall<br>
-trips.txt: South to Lake Elsinore  <br>
-trips.txt:  Clockwise to Moreno Valley Mall<br>
-trips.txt:  North to Montclair Express<br>
-trips.txt: South to Lake Elsinore  <br>
-trips.txt:  Clockwise to Moreno Valley Mall<br>
-trips.txt:  Counterclock to Moreno Valley Mall<br>
-trips.txt:  Clockwise to Moreno Valley Mall<br>
-trips.txt:  Counterclock to Moreno Valley Mall<br>
-trips.txt: South to Lake Elsinore  <br>
-trips.txt: South to Lake Elsinore  <br>
-trips.txt:  Counterclock to Moreno Valley Mall<br>
-trips.txt:  Counterclock to Moreno Valley Mall<br>
-trips.txt: South to Lake Elsinore  <br>
-trips.txt: South to Lake Elsinore  <br>
-trips.txt:  Counterclock to Moreno Valley Mall<br>
-trips.txt:  Counterclock to Moreno Valley Mall<br>
-trips.txt: South to Lake Elsinore  <br>
-trips.txt:  Clockwise to Moreno Valley Mall<br>
-trips.txt:  Clockwise to Moreno Valley Mall<br>
-trips.txt:  Clockwise to Moreno Valley Mall<br>
-trips.txt: South to Lake Elsinore  <br>
-trips.txt:  Clockwise to Moreno Valley Mall<br>
-trips.txt:  Counterclock to Moreno Valley Mall<br>
-trips.txt:  Clockwise to Moreno Valley Mall<br>
-trips.txt:  North to Montclair Express<br>
-trips.txt:  Counterclock to Moreno Valley Mall<br>
-trips.txt:  Counterclock to Moreno Valley Mall<br>
-trips.txt:  Clockwise to Moreno Valley Mall<br>
-trips.txt: South to Lake Elsinore  <br>
-trips.txt:  Clockwise to Moreno Valley Mall<br>
-trips.txt:  Clockwise to Moreno Valley Mall<br>
-trips.txt: South to Lake Elsinore  <br>
-trips.txt: South to Lake Elsinore  <br>
 trips.txt:  Counterclock to Moreno Valley Mall<br>
 trips.txt:  Counterclock to Moreno Valley Mall<br>
 trips.txt:  Clockwise to Moreno Valley Mall<br>
@@ -794,51 +753,36 @@ trips.txt:  Counterclock to Moreno Valley Mall<br>
 trips.txt:  Clockwise to Moreno Valley Mall<br>
 trips.txt:  North to Montclair Express<br>
 trips.txt:  Counterclock to Moreno Valley Mall<br>
-trips.txt: South to Lake Elsinore  <br>
-trips.txt: South to Lake Elsinore  <br>
+trips.txt:  Clockwise to Moreno Valley Mall<br>
 trips.txt:  Counterclock to Moreno Valley Mall<br>
-trips.txt:  Counterclock to Moreno Valley Mall<br>
-trips.txt:  Counterclock to Moreno Valley Mall<br>
+trips.txt:  Clockwise to Moreno Valley Mall<br>
+trips.txt:  Clockwise to Moreno Valley Mall<br>
 trips.txt:  Clockwise to Moreno Valley Mall<br>
 trips.txt:  North to Montclair Express<br>
 trips.txt: South to Lake Elsinore  <br>
-trips.txt:  Clockwise to Moreno Valley Mall<br>
-trips.txt:  Clockwise to Moreno Valley Mall<br>
-trips.txt: South to Lake Elsinore  <br>
-trips.txt:  Clockwise to Moreno Valley Mall<br>
-trips.txt: South to Lake Elsinore  <br>
-trips.txt: South to Lake Elsinore  <br>
-trips.txt: South to Lake Elsinore  <br>
-trips.txt:  Clockwise to Moreno Valley Mall<br>
-trips.txt:  Counterclock to Moreno Valley Mall<br>
-trips.txt:  Clockwise to Moreno Valley Mall<br>
-trips.txt:  North to Montclair Express<br>
-trips.txt: South to Lake Elsinore  <br>
-trips.txt: South to Lake Elsinore  <br>
-trips.txt:  Counterclock to Moreno Valley Mall<br>
-trips.txt:  Clockwise to Moreno Valley Mall<br>
 trips.txt:  Counterclock to Moreno Valley Mall<br>
 trips.txt: South to Lake Elsinore  <br>
 trips.txt: South to Lake Elsinore  <br>
-trips.txt:  Clockwise to Moreno Valley Mall<br>
-trips.txt:  Counterclock to Moreno Valley Mall<br>
-trips.txt:  Clockwise to Moreno Valley Mall<br>
 trips.txt: South to Lake Elsinore  <br>
 trips.txt: South to Lake Elsinore  <br>
 trips.txt:  Clockwise to Moreno Valley Mall<br>
+trips.txt: South to Lake Elsinore  <br>
+trips.txt:  Clockwise to Moreno Valley Mall<br>
+trips.txt: South to Lake Elsinore  <br>
+trips.txt: South to Lake Elsinore  <br>
+trips.txt: South to Lake Elsinore  <br>
+trips.txt: South to Lake Elsinore  <br>
 trips.txt:  Counterclock to Moreno Valley Mall<br>
+trips.txt:  Counterclock to Moreno Valley Mall<br>
+trips.txt: South to Lake Elsinore  <br>
 trips.txt:  North to Montclair Express<br>
 trips.txt:  Counterclock to Moreno Valley Mall<br>
-trips.txt:  Clockwise to Moreno Valley Mall<br>
+trips.txt: South to Lake Elsinore  <br>
+trips.txt: South to Lake Elsinore  <br>
+trips.txt: South to Lake Elsinore  <br>
+trips.txt: South to Lake Elsinore  <br>
 trips.txt:  Counterclock to Moreno Valley Mall<br>
 trips.txt: South to Lake Elsinore  <br>
-trips.txt:  Clockwise to Moreno Valley Mall<br>
-trips.txt:  Clockwise to Moreno Valley Mall<br>
-trips.txt:  Counterclock to Moreno Valley Mall<br>
-trips.txt:  Clockwise to Moreno Valley Mall<br>
-trips.txt: South to Lake Elsinore  <br>
-trips.txt:  Clockwise to Moreno Valley Mall<br>
-trips.txt:  Counterclock to Moreno Valley Mall<br>
 trips.txt:  Counterclock to Moreno Valley Mall<br>
 trips.txt: South to Lake Elsinore  <br>
 trips.txt: South to Lake Elsinore  <br>
@@ -847,55 +791,124 @@ trips.txt:  Clockwise to Moreno Valley Mall<br>
 trips.txt: South to Lake Elsinore  <br>
 trips.txt:  North to Montclair Express<br>
 trips.txt:  Counterclock to Moreno Valley Mall<br>
+trips.txt: South to Lake Elsinore  <br>
+trips.txt:  Clockwise to Moreno Valley Mall<br>
+trips.txt:  Clockwise to Moreno Valley Mall<br>
+trips.txt: South to Lake Elsinore  <br>
+trips.txt:  Clockwise to Moreno Valley Mall<br>
+trips.txt:  Counterclock to Moreno Valley Mall<br>
+trips.txt:  Clockwise to Moreno Valley Mall<br>
+trips.txt:  Clockwise to Moreno Valley Mall<br>
+trips.txt:  Clockwise to Moreno Valley Mall<br>
+trips.txt:  Clockwise to Moreno Valley Mall<br>
+trips.txt:  Counterclock to Moreno Valley Mall<br>
+trips.txt:  North to Montclair Express<br>
+trips.txt: South to Lake Elsinore  <br>
+trips.txt: South to Lake Elsinore  <br>
+trips.txt:  Clockwise to Moreno Valley Mall<br>
+trips.txt:  Clockwise to Moreno Valley Mall<br>
+trips.txt:  Counterclock to Moreno Valley Mall<br>
+trips.txt: South to Lake Elsinore  <br>
+trips.txt:  Clockwise to Moreno Valley Mall<br>
+trips.txt:  North to Montclair Express<br>
+trips.txt: South to Lake Elsinore  <br>
+trips.txt:  Clockwise to Moreno Valley Mall<br>
+trips.txt:  Counterclock to Moreno Valley Mall<br>
+trips.txt: South to Lake Elsinore  <br>
+trips.txt:  Clockwise to Moreno Valley Mall<br>
+trips.txt:  Counterclock to Moreno Valley Mall<br>
+trips.txt:  Clockwise to Moreno Valley Mall<br>
+trips.txt: South to Lake Elsinore  <br>
+trips.txt: South to Lake Elsinore  <br>
+trips.txt: South to Lake Elsinore  <br>
+trips.txt:  Clockwise to Moreno Valley Mall<br>
+trips.txt: South to Lake Elsinore  <br>
+trips.txt:  Clockwise to Moreno Valley Mall<br>
+trips.txt:  Clockwise to Moreno Valley Mall<br>
+trips.txt:  Clockwise to Moreno Valley Mall<br>
+trips.txt:  Counterclock to Moreno Valley Mall<br>
+trips.txt:  North to Montclair Express<br>
+trips.txt:  Counterclock to Moreno Valley Mall<br>
+trips.txt: South to Lake Elsinore  <br>
+trips.txt:  Counterclock to Moreno Valley Mall<br>
+trips.txt: South to Lake Elsinore  <br>
+trips.txt:  Counterclock to Moreno Valley Mall<br>
+trips.txt:  Counterclock to Moreno Valley Mall<br>
+trips.txt: South to Lake Elsinore  <br>
+trips.txt: South to Lake Elsinore  <br>
+trips.txt: South to Lake Elsinore  <br>
+trips.txt:  North to Montclair Express<br>
+trips.txt:  Clockwise to Moreno Valley Mall<br>
+trips.txt:  Clockwise to Moreno Valley Mall<br>
+trips.txt:  Counterclock to Moreno Valley Mall<br>
+trips.txt:  Clockwise to Moreno Valley Mall<br>
+trips.txt:  Clockwise to Moreno Valley Mall<br>
+trips.txt:  Clockwise to Moreno Valley Mall<br>
+trips.txt: South to Lake Elsinore  <br>
+trips.txt:  Counterclock to Moreno Valley Mall<br>
+trips.txt:  Clockwise to Moreno Valley Mall<br>
+trips.txt: South to Lake Elsinore  <br>
+trips.txt: South to Lake Elsinore  <br>
+trips.txt:  Counterclock to Moreno Valley Mall<br>
+trips.txt: South to Lake Elsinore  <br>
+trips.txt:  Clockwise to Moreno Valley Mall<br>
+trips.txt:  Counterclock to Moreno Valley Mall<br>
+trips.txt:  Counterclock to Moreno Valley Mall<br>
+trips.txt:  North to Montclair Express<br>
+trips.txt: South to Lake Elsinore  <br>
+trips.txt:  Clockwise to Moreno Valley Mall<br>
+trips.txt: South to Lake Elsinore  <br>
+trips.txt:  Counterclock to Moreno Valley Mall<br>
+trips.txt:  Counterclock to Moreno Valley Mall<br>
+trips.txt:  Counterclock to Moreno Valley Mall<br>
+trips.txt:  Clockwise to Moreno Valley Mall<br>
+trips.txt:  Counterclock to Moreno Valley Mall<br>
+trips.txt: South to Lake Elsinore  <br>
+trips.txt: South to Lake Elsinore  <br>
+trips.txt:  Clockwise to Moreno Valley Mall<br>
+trips.txt:  Clockwise to Moreno Valley Mall<br>
+trips.txt:  Counterclock to Moreno Valley Mall<br>
+trips.txt: South to Lake Elsinore  <br>
+trips.txt:  Counterclock to Moreno Valley Mall<br>
+trips.txt: South to Lake Elsinore  <br>
+trips.txt:  North to Montclair Express<br>
+trips.txt:  Clockwise to Moreno Valley Mall<br>
+trips.txt:  Clockwise to Moreno Valley Mall<br>
+trips.txt:  Clockwise to Moreno Valley Mall<br>
 trips.txt:  Counterclock to Moreno Valley Mall<br>
 trips.txt:  North to Montclair Express<br>
 trips.txt:  Clockwise to Moreno Valley Mall<br>
 trips.txt:  Counterclock to Moreno Valley Mall<br>
 trips.txt:  Clockwise to Moreno Valley Mall<br>
-trips.txt: South to Lake Elsinore  <br>
-trips.txt:  Clockwise to Moreno Valley Mall<br>
 trips.txt:  Counterclock to Moreno Valley Mall<br>
-trips.txt:  North to Montclair Express<br>
-trips.txt:  Clockwise to Moreno Valley Mall<br>
-trips.txt:  Counterclock to Moreno Valley Mall<br>
-trips.txt: South to Lake Elsinore  <br>
-trips.txt:  Counterclock to Moreno Valley Mall<br>
-trips.txt:  North to Montclair Express<br>
-trips.txt: South to Lake Elsinore  <br>
-trips.txt: South to Lake Elsinore  <br>
-trips.txt: South to Lake Elsinore  <br>
 trips.txt:  Clockwise to Moreno Valley Mall<br>
 trips.txt: South to Lake Elsinore  <br>
+trips.txt:  Counterclock to Moreno Valley Mall<br>
 trips.txt:  North to Montclair Express<br>
 trips.txt:  Counterclock to Moreno Valley Mall<br>
 trips.txt: South to Lake Elsinore  <br>
 trips.txt:  North to Montclair Express<br>
-trips.txt:  Clockwise to Moreno Valley Mall<br>
-trips.txt:  North to Montclair Express<br>
-trips.txt:  Counterclock to Moreno Valley Mall<br>
-trips.txt:  Clockwise to Moreno Valley Mall<br>
 trips.txt:  North to Montclair Express<br>
 trips.txt: South to Lake Elsinore  <br>
 trips.txt:  Counterclock to Moreno Valley Mall<br>
-trips.txt: South to Lake Elsinore  <br>
-trips.txt: South to Lake Elsinore  <br>
-trips.txt: South to Lake Elsinore  <br>
-trips.txt:  Clockwise to Moreno Valley Mall<br>
 trips.txt:  Counterclock to Moreno Valley Mall<br>
 trips.txt: South to Lake Elsinore  <br>
+trips.txt:  Counterclock to Moreno Valley Mall<br>
 trips.txt:  Clockwise to Moreno Valley Mall<br>
 trips.txt: South to Lake Elsinore  <br>
 trips.txt:  Clockwise to Moreno Valley Mall<br>
-trips.txt: South to Lake Elsinore  <br>
-trips.txt:  Counterclock to Moreno Valley Mall<br>
-trips.txt:  Counterclock to Moreno Valley Mall<br>
-trips.txt: South to Lake Elsinore  <br>
 trips.txt: South to Lake Elsinore  </p></td>
                 
             </tr>
             
         </tbody>
+
+        
+
     </table>
+
+    
+
 </div>
 
 

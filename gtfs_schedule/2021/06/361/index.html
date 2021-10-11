@@ -59,7 +59,7 @@
         <div class="flex flex-wrap lg:flex-col gap-12">
             
     <figure>
-        <div class="text-2xl text-itp-teal-bold">January 2020 Route Changes (Corrected 09-11-2020 Final Schedule)</div>
+        <div class="text-2xl text-itp-teal-bold"></div>
         <figcaption class="text-itp-slate-bold">Feed Published</figcaption>
     </figure>
 
@@ -114,14 +114,15 @@
 <div class="responsive-prose max-w-none">
     <h2>Consistency with the California GTFS Minimum Guidelines</h2>
 
-
     <table>
+
+        <!-- file checks -->
         <thead>
             <tr>
                 <th colspan="2">Do the following files/fields exist?</th>
-                <th>2021-05-02</th>
-                <th>2021-05-16</th>
-                <th>2021-05-30</th>
+                <th>2021-06-06</th>
+                <th>2021-06-20</th>
+                <th></th>
             </tr>
         </thead>
         <tbody>
@@ -145,7 +146,7 @@
 </td>
                 <td>
     
-    <i title="present" class="fas fa-lg fa-check-circle text-itp-green"></i>
+    <i title="missing" class="far fa-lg fa-circle text-itp-slate-light"></i>
     
 </td>
             </tr>
@@ -201,7 +202,7 @@
                 
                 <th class="font-normal text-itp-slate-bold" rowspan="2">Fares</th>
                 
-                <td>fare_leg_rules</td>
+                <td>fare_leg_rules.txt</td>
                 <!-- these are the date columns -->
                 <td>
     
@@ -261,17 +262,23 @@
 </td>
                 <td>
     
-    <i title="present" class="fas fa-lg fa-check-circle text-itp-green"></i>
+    <i title="missing" class="far fa-lg fa-circle text-itp-slate-light"></i>
     
 </td>
             </tr>
             
         </tbody>
-    </table>
-    <table>
+
+        <!-- validation errors -->
+
+        
+
         <thead>
             <tr>
                 <th colspan="2">Validation errors observed</th>
+                <th>2021-06-06</th>
+                <th>2021-06-20</th>
+                <th></th>
             </tr>
         </thead>
         <tbody>
@@ -282,22 +289,16 @@
                 
                 <td><p>The value in CSV file has leading or trailing whitespaces.</p></td>
                 
-                <td><p>stops.txt: Demaree @ Palmer <br>
-stops.txt:  Demaree / Oriole<br>
+                <td><p>stops.txt:  Demaree / Oriole<br>
 stops.txt: Court & Murray <br>
 stops.txt: Caldwell & Ben Maddox (E) <br>
+stops.txt: Demaree @ Palmer <br>
 stops.txt: Ave 310 & Robinson </p></td>
                 
-                <td><p>stops.txt: Demaree @ Palmer <br>
-stops.txt:  Demaree / Oriole<br>
+                <td><p>stops.txt:  Demaree / Oriole<br>
 stops.txt: Court & Murray <br>
 stops.txt: Caldwell & Ben Maddox (E) <br>
-stops.txt: Ave 310 & Robinson </p></td>
-                
-                <td><p>stops.txt: Demaree @ Palmer <br>
-stops.txt:  Demaree / Oriole<br>
-stops.txt: Court & Murray <br>
-stops.txt: Caldwell & Ben Maddox (E) <br>
+stops.txt: Demaree @ Palmer <br>
 stops.txt: Ave 310 & Robinson </p></td>
                 
             </tr>
@@ -307,8 +308,6 @@ stops.txt: Ave 310 & Robinson </p></td>
                 <td><p>missing_feed_info_date</p></td>
                 
                 <td><p>Even though feed_info.start_date and feed_info.end_date are optional, if one field is provided the second one should also be provided.</p></td>
-                
-                <td><p>X</p></td>
                 
                 <td><p>X</p></td>
                 
@@ -326,12 +325,16 @@ stops.txt: Ave 310 & Robinson </p></td>
                 
                 <td><p>X</p></td>
                 
-                <td><p>X</p></td>
-                
             </tr>
             
         </tbody>
+
+        
+
     </table>
+
+    
+
 </div>
 
 

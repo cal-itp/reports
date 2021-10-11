@@ -59,7 +59,7 @@
         <div class="flex flex-wrap lg:flex-col gap-12">
             
     <figure>
-        <div class="text-2xl text-itp-teal-bold">144-08/01/2020 - No Trippers,143-5/10/2021,152-6/4/2021,142-8/3/2020 Version 4,149-Covid Schedule No Trippers v2,147-Effective 11/28/18,153-Fixed Route + Trolley Service,139-July 2021 Service Package,148-VCTC-Ojai 7.2.21 [Downtown route addition]</div>
+        <div class="text-2xl text-itp-teal-bold"></div>
         <figcaption class="text-itp-slate-bold">Feed Published</figcaption>
     </figure>
 
@@ -114,14 +114,15 @@
 <div class="responsive-prose max-w-none">
     <h2>Consistency with the California GTFS Minimum Guidelines</h2>
 
-
     <table>
+
+        <!-- file checks -->
         <thead>
             <tr>
                 <th colspan="2">Do the following files/fields exist?</th>
-                <th>2021-05-02</th>
-                <th>2021-05-16</th>
-                <th>2021-05-30</th>
+                <th>2021-07-04</th>
+                <th>2021-07-18</th>
+                <th></th>
             </tr>
         </thead>
         <tbody>
@@ -145,7 +146,7 @@
 </td>
                 <td>
     
-    <i title="present" class="fas fa-lg fa-check-circle text-itp-green"></i>
+    <i title="missing" class="far fa-lg fa-circle text-itp-slate-light"></i>
     
 </td>
             </tr>
@@ -201,7 +202,7 @@
                 
                 <th class="font-normal text-itp-slate-bold" rowspan="2">Fares</th>
                 
-                <td>fare_leg_rules</td>
+                <td>fare_leg_rules.txt</td>
                 <!-- these are the date columns -->
                 <td>
     
@@ -261,17 +262,23 @@
 </td>
                 <td>
     
-    <i title="present" class="fas fa-lg fa-check-circle text-itp-green"></i>
+    <i title="missing" class="far fa-lg fa-circle text-itp-slate-light"></i>
     
 </td>
             </tr>
             
         </tbody>
-    </table>
-    <table>
+
+        <!-- validation errors -->
+
+        
+
         <thead>
             <tr>
                 <th colspan="2">Validation errors observed</th>
+                <th>2021-07-04</th>
+                <th>2021-07-18</th>
+                <th></th>
             </tr>
         </thead>
         <tbody>
@@ -282,161 +289,109 @@
                 
                 <td><p>The value in CSV file has leading or trailing whitespaces.</p></td>
                 
-                <td><p>stops.txt: Hwy 33 & Casitas <br>
-routes.txt: Route 19 <br>
-stops.txt: Ventura Ave & Warner <br>
-stops.txt: Lemon Drive and Alamo <br>
-stops.txt: St. John's Hsp. <br>
-stops.txt: Tapo Street and Alamo Street <br>
-stops.txt: Santa Fe St. & Reading St. <br>
-stops.txt: Ventura Ave & McKee <br>
-stops.txt: Ventura Rd & Pleasant Valley <br>
-stops.txt: HWY 150 & HWY 33 <br>
-stops.txt: Ventura Ave & Los Cabos <br>
-stops.txt: Royal Ave at Madera Road <br>
-stops.txt: Hwy 33 & Oak View <br>
-stops.txt: Hwy 33 & Cntry Village Mob Home <br>
-stops.txt: Hwy 33 & Barbara <br>
-stops.txt: Hwy 33 & Arroyo Mob Home <br>
+                <td><p>stops.txt: Ventura Ave & DeAnza <br>
 stops.txt: Pleasant Valley Hospital <br>
-stops.txt: Hwy 33 & Larmier <br>
-stops.txt: McCampbell St. & Wileman St. <br>
-routes.txt: Trolley <br>
-stops.txt: Ventura Ave & Park Row <br>
-stops.txt: Ventura Ave & Ramona <br>
-stops.txt: B St. & Wileman St. <br>
-stops.txt: Hwy 33 & Woodland <br>
-stops.txt: Ventura Ave & Shell <br>
-stops.txt: El Paso St. & Sierra Vista Ave. <br>
-stops.txt: Barbara Webster School <br>
-stops.txt: Ventura Ave & Canada Larga <br>
-stops.txt: Ventura Ave & Norway <br>
-stops.txt: Cochran and Stearns <br>
-stops.txt: Hwy 33 & Sycamore <br>
-stops.txt: Hwy 33 & Baldwin <br>
-stops.txt: Ventura & Clara <br>
-stops.txt: Hwy 33 & Sulphur <br>
-stops.txt: Hwy 33 & Oak Dell <br>
-stops.txt: Ventura Ave & Seneca <br>
-stops.txt: Hueneme & Surfside <br>
-stops.txt: Spur & Wagon Wheel <br>
-stops.txt: Royal Ave at Naples <br>
-routes.txt: Trolley <br>
-stops.txt: Ventura Cty. Public Health <br>
-stops.txt: Chatsworth Metrolink Station <br>
-stops.txt: Ventura Rd & Sunkist <br>
-stops.txt: Ventura Ave & Fraser <br>
-stops.txt: Ventura Ave & DeAnza <br>
-stops.txt: Ventura Ave & Center <br>
-stops.txt: Ventura Ave & Vince <br>
-stops.txt: Sespe Ave. & Burson Ln. <br>
-stops.txt: Ventura (Guitar Ctr) <br>
-stops.txt: Hwy 33 & Loma <br>
-stops.txt:   Moorpark College</p></td>
-                
-                <td><p>stops.txt: Hwy 33 & Barbara <br>
-stops.txt: Royal Ave at Naples <br>
-stops.txt: St. John's Hsp. <br>
-stops.txt: Ventura Ave & Norway <br>
-stops.txt: Sespe Ave. & Burson Ln. <br>
-stops.txt: B St. & Wileman St. <br>
-stops.txt: Tapo Street and Alamo Street <br>
-stops.txt: Hwy 33 & Sycamore <br>
-stops.txt: Hwy 33 & Larmier <br>
-stops.txt:   Moorpark College<br>
-stops.txt: Ventura Ave & Shell <br>
-stops.txt: El Paso St. & Sierra Vista Ave. <br>
-stops.txt: Barbara Webster School <br>
-stops.txt: Ventura Cty. Public Health <br>
-routes.txt: Route 19 <br>
-stops.txt: Ventura Ave & Fraser <br>
-stops.txt: Ventura Ave & DeAnza <br>
-stops.txt: Ventura Ave & Park Row <br>
-stops.txt: Hwy 33 & Woodland <br>
-stops.txt: Santa Fe St. & Reading St. <br>
-stops.txt: Ventura Ave & Canada Larga <br>
-stops.txt: Ventura Rd & Pleasant Valley <br>
-stops.txt: Hwy 33 & Cntry Village Mob Home <br>
-stops.txt: HWY 150 & HWY 33 <br>
-stops.txt: Spur & Wagon Wheel <br>
-stops.txt: Pleasant Valley Hospital <br>
-routes.txt: Trolley <br>
-stops.txt: Hwy 33 & Baldwin <br>
-stops.txt: Hwy 33 & Oak Dell <br>
-stops.txt: Hwy 33 & Oak View <br>
-stops.txt: Royal Ave at Madera Road <br>
-stops.txt: Ventura & Clara <br>
-stops.txt: McCampbell St. & Wileman St. <br>
-stops.txt: Hwy 33 & Casitas <br>
-stops.txt: Ventura Ave & McKee <br>
-stops.txt: Hwy 33 & Arroyo Mob Home <br>
-stops.txt: Ventura Ave & Center <br>
-stops.txt: Hwy 33 & Sulphur <br>
-stops.txt: Hwy 33 & Loma <br>
-stops.txt: Ventura Ave & Ramona <br>
-stops.txt: Ventura Ave & Los Cabos <br>
-stops.txt: Chatsworth Metrolink Station <br>
-stops.txt: Cochran and Stearns <br>
-stops.txt: Ventura Ave & Warner <br>
-stops.txt: Ventura (Guitar Ctr) <br>
-stops.txt: Ventura Ave & Vince <br>
-stops.txt: Ventura Ave & Seneca <br>
-stops.txt: Hueneme & Surfside <br>
-stops.txt: Ventura Rd & Sunkist <br>
-routes.txt: Trolley <br>
-stops.txt: Lemon Drive and Alamo </p></td>
-                
-                <td><p>stops.txt: Ventura & Clara <br>
 stops.txt: Ventura Ave & Norway <br>
 stops.txt: Hwy 33 & Barbara <br>
-stops.txt: Ventura Cty. Public Health <br>
-stops.txt: Ventura Ave & Park Row <br>
-stops.txt: Ventura Ave & Los Cabos <br>
-stops.txt: Ventura Rd & Sunkist <br>
-stops.txt: Tapo Street and Alamo Street <br>
-stops.txt: Hwy 33 & Casitas <br>
-stops.txt: Ventura Ave & McKee <br>
-stops.txt: Hwy 33 & Arroyo Mob Home <br>
-stops.txt: Ventura Ave & Vince <br>
-stops.txt: Hwy 33 & Sycamore <br>
-stops.txt: Hwy 33 & Cntry Village Mob Home <br>
-stops.txt: Ventura Ave & DeAnza <br>
+stops.txt: Hwy 33 & Loma <br>
+stops.txt: Royal Ave at Naples <br>
+stops.txt: HWY 150 & HWY 33 <br>
 stops.txt: St. John's Hsp. <br>
 stops.txt: Hwy 33 & Larmier <br>
-stops.txt: Hwy 33 & Woodland <br>
-stops.txt:   Moorpark College<br>
 stops.txt: Ventura Ave & Shell <br>
-stops.txt: Ventura (Guitar Ctr) <br>
+stops.txt: Hueneme & Surfside <br>
+stops.txt: Ventura Ave & Vince <br>
+stops.txt: Ventura Ave & Canada Larga <br>
+stops.txt: Tapo Street and Alamo Street <br>
+stops.txt: Spur & Wagon Wheel <br>
+stops.txt: Ventura Ave & Ramona <br>
+stops.txt: Ventura Ave & Park Row <br>
+stops.txt: Barbara Webster School <br>
+stops.txt: Santa Fe St. & Reading St. <br>
+stops.txt: Ventura Cty. Public Health <br>
 stops.txt: El Paso St. & Sierra Vista Ave. <br>
+stops.txt: Hwy 33 & Sulphur <br>
+stops.txt: Ventura Ave & Fraser <br>
+stops.txt: Royal Ave at Madera Road <br>
+stops.txt: Sespe Ave. & Burson Ln. <br>
+stops.txt:   Moorpark College<br>
+stops.txt: Hwy 33 & Arroyo Mob Home <br>
+stops.txt: McCampbell St. & Wileman St. <br>
+routes.txt: Route 19 <br>
+stops.txt: Ventura & Clara <br>
+stops.txt: Hwy 33 & Woodland <br>
+routes.txt: Trolley <br>
+routes.txt: Trolley <br>
+stops.txt: Hwy 33 & Casitas <br>
+stops.txt: Cochran and Stearns <br>
+stops.txt: Hwy 33 & Oak Dell <br>
+stops.txt: Ventura (Guitar Ctr) <br>
+stops.txt: Ventura Ave & McKee <br>
+stops.txt: Hwy 33 & Baldwin <br>
+stops.txt: Ventura Ave & Warner <br>
+stops.txt: Ventura Ave & Center <br>
+stops.txt: Ventura Rd & Pleasant Valley <br>
+stops.txt: Ventura Ave & Los Cabos <br>
+stops.txt: Ventura Ave & Seneca <br>
+stops.txt: Hwy 33 & Sycamore <br>
+stops.txt: B St. & Wileman St. <br>
+stops.txt: Ventura Rd & Sunkist <br>
+stops.txt: Chatsworth Metrolink Station <br>
+stops.txt: Hwy 33 & Cntry Village Mob Home <br>
+stops.txt: Lemon Drive and Alamo <br>
+stops.txt: Hwy 33 & Oak View </p></td>
+                
+                <td><p>stops.txt: Santa Fe St. & Reading St. <br>
+stops.txt: Ventura Ave & Shell <br>
+stops.txt: Hwy 33 & Sulphur <br>
+stops.txt: Hwy 33 & Barbara <br>
+stops.txt: Ventura (Guitar Ctr) <br>
+stops.txt: Hwy 33 & Larmier <br>
+stops.txt: Ventura Ave & DeAnza <br>
+stops.txt: Ventura Ave & Los Cabos <br>
+stops.txt: HWY 150 & HWY 33 <br>
+stops.txt: Cochran and Stearns <br>
+stops.txt: Ventura Rd & Pleasant Valley <br>
+stops.txt:   Moorpark College<br>
+stops.txt: Ventura Ave & Warner <br>
+stops.txt: Hwy 33 & Cntry Village Mob Home <br>
+stops.txt: Chatsworth Metrolink Station <br>
+routes.txt: Route 19 <br>
 stops.txt: Ventura Ave & Canada Larga <br>
 stops.txt: Ventura Ave & Seneca <br>
-stops.txt: Pleasant Valley Hospital <br>
-routes.txt: Trolley <br>
-stops.txt: Ventura Rd & Pleasant Valley <br>
-stops.txt: McCampbell St. & Wileman St. <br>
-stops.txt: Cochran and Stearns <br>
-stops.txt: Santa Fe St. & Reading St. <br>
-stops.txt: B St. & Wileman St. <br>
+stops.txt: Ventura Ave & Vince <br>
 stops.txt: Hwy 33 & Baldwin <br>
-stops.txt: HWY 150 & HWY 33 <br>
-stops.txt: Hwy 33 & Loma <br>
+stops.txt: Royal Ave at Naples <br>
 stops.txt: Barbara Webster School <br>
-routes.txt: Route 19 <br>
-stops.txt: Hwy 33 & Oak Dell <br>
+stops.txt: Ventura Cty. Public Health <br>
 stops.txt: Hueneme & Surfside <br>
 stops.txt: Ventura Ave & Ramona <br>
-stops.txt: Spur & Wagon Wheel <br>
-stops.txt: Ventura Ave & Fraser <br>
-stops.txt: Lemon Drive and Alamo <br>
+stops.txt: Ventura Ave & Norway <br>
+stops.txt: Hwy 33 & Oak Dell <br>
+stops.txt: Ventura Rd & Sunkist <br>
+stops.txt: Hwy 33 & Loma <br>
 stops.txt: Hwy 33 & Oak View <br>
-stops.txt: Ventura Ave & Center <br>
+stops.txt: St. John's Hsp. <br>
+stops.txt: Hwy 33 & Casitas <br>
 stops.txt: Royal Ave at Madera Road <br>
-stops.txt: Royal Ave at Naples <br>
-stops.txt: Chatsworth Metrolink Station <br>
-stops.txt: Sespe Ave. & Burson Ln. <br>
-stops.txt: Ventura Ave & Warner <br>
+stops.txt: Hwy 33 & Arroyo Mob Home <br>
+stops.txt: B St. & Wileman St. <br>
 routes.txt: Trolley <br>
-stops.txt: Hwy 33 & Sulphur </p></td>
+stops.txt: Sespe Ave. & Burson Ln. <br>
+stops.txt: Pleasant Valley Hospital <br>
+stops.txt: Ventura Ave & Fraser <br>
+stops.txt: Spur & Wagon Wheel <br>
+stops.txt: Ventura & Clara <br>
+stops.txt: Lemon Drive and Alamo <br>
+stops.txt: Hwy 33 & Woodland <br>
+stops.txt: Ventura Ave & Center <br>
+stops.txt: El Paso St. & Sierra Vista Ave. <br>
+stops.txt: Ventura Ave & Park Row <br>
+stops.txt: McCampbell St. & Wileman St. <br>
+stops.txt: Tapo Street and Alamo Street <br>
+stops.txt: Hwy 33 & Sycamore <br>
+routes.txt: Trolley <br>
+stops.txt: Ventura Ave & McKee </p></td>
                 
             </tr>
             
@@ -445,8 +400,6 @@ stops.txt: Hwy 33 & Sulphur </p></td>
                 <td><p>missing_feed_info_date</p></td>
                 
                 <td><p>Even though feed_info.start_date and feed_info.end_date are optional, if one field is provided the second one should also be provided.</p></td>
-                
-                <td><p>X</p></td>
                 
                 <td><p>X</p></td>
                 
@@ -464,12 +417,16 @@ stops.txt: Hwy 33 & Sulphur </p></td>
                 
                 <td><p>X</p></td>
                 
-                <td><p>X</p></td>
-                
             </tr>
             
         </tbody>
+
+        
+
     </table>
+
+    
+
 </div>
 
 

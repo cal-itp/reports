@@ -46,7 +46,7 @@
 </div>
 
 <div class="my-8">
-    <a class="btn responsive-prose mr-4 mb-4" href="http://api.511.org/transit/datafeeds?api_key=94ba868d-fe96-4b9b-b6b4-1df614d96e56&operator_id=SR">
+    <a class="btn responsive-prose mr-4 mb-4" href="http://api.511.org/transit/datafeeds?api_key=0eefcd07-b7d7-4a16-b454-bc7424dd0ff2&operator_id=SR">
         <i class="fas fa-link mr-1 text-itp-slate-bold"></i>
         Download Feed
     </a>
@@ -59,7 +59,7 @@
         <div class="flex flex-wrap lg:flex-col gap-12">
             
     <figure>
-        <div class="text-2xl text-itp-teal-bold">20210426</div>
+        <div class="text-2xl text-itp-teal-bold"></div>
         <figcaption class="text-itp-slate-bold">Feed Published</figcaption>
     </figure>
 
@@ -114,8 +114,9 @@
 <div class="responsive-prose max-w-none">
     <h2>Consistency with the California GTFS Minimum Guidelines</h2>
 
-
     <table>
+
+        <!-- file checks -->
         <thead>
             <tr>
                 <th colspan="2">Do the following files/fields exist?</th>
@@ -201,7 +202,7 @@
                 
                 <th class="font-normal text-itp-slate-bold" rowspan="2">Fares</th>
                 
-                <td>fare_leg_rules</td>
+                <td>fare_leg_rules.txt</td>
                 <!-- these are the date columns -->
                 <td>
     
@@ -267,11 +268,17 @@
             </tr>
             
         </tbody>
-    </table>
-    <table>
+
+        <!-- validation errors -->
+
+        
+
         <thead>
             <tr>
                 <th colspan="2">Validation errors observed</th>
+                <th>2021-05-02</th>
+                <th>2021-05-16</th>
+                <th>2021-05-30</th>
             </tr>
         </thead>
         <tbody>
@@ -291,7 +298,13 @@
             </tr>
             
         </tbody>
+
+        
+
     </table>
+
+    
+
 </div>
 
 
