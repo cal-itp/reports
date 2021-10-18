@@ -11,6 +11,8 @@ This repository is set up in two pieces:
 
 ## Generating reports data
 
+See [this screencast](https://www.loom.com/share/b45317053ff54b9fbb46b8159947c379) for a full walkthrough of building the reports.
+
 ### Creating data
 
 From the `reports` subfolder..
