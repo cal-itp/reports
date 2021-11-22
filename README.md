@@ -46,6 +46,9 @@ make sync
 
 # for pushing to production
 make sync-prod
+
+# or to copy from dev to prod
+gsutil -m rsync -r -d gs://gtfs-data-test/report_gtfs_schedule/ gs://gtfs-data/report_gtfs_schedule/
 ```
 
 ## Generating static site
