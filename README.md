@@ -24,7 +24,7 @@ pip install -r requirements
 # replace -j 8 with the number of notebooks to build in parallel
 # the build process is not computationally intensive, but requires waiting on 
 # http requests to google bigquery
-make genenrate_parameters
+make generate_parameters
 make all -j 8
 ```
 
