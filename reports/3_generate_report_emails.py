@@ -1,0 +1,150 @@
+# +
+from calitp.tables import tbl
+from siuba import *
+import sys
+from postmarker.core import PostmarkClient
+
+import pandas as pd
+
+
+
+# +
+if len(sys.argv) < 2:
+    raise Exception (
+        "2 arguments required: report publish date YYYY-MM-DD and Month"
+    )
+else:
+    REPORT_PUBLISH_DATE = sys.argv[1:]
+
+REPORT_PUBLISH_DATE = "2021-07-01"
+REPORT_PUBLISH_MONTH = "October"
+split_date = REPORT_PUBLISH_DATE.split("-")    
+PUBLISH_DATE_YEAR = split_date[0]
+PUBLISH_DATE_MONTH= split_date[1]
+
+REPORT_LINK_BASE = f'https://reports.calitp.org/gtfs_schedule/{PUBLISH_DATE_YEAR}/{PUBLISH_DATE_MONTH}'
+DEV_LINK_BASE = f'https://development-build--cal-itp-reports.netlify.app/gtfs_schedule/{PUBLISH_DATE_YEAR}/{PUBLISH_DATE_MONTH}'    
+
+
+# +
+df_crm_emails = pd.read_csv(
+    "https://docs.google.com/spreadsheets"
+    "/d/1AHFa5SKcEn7im374mPwULFCj7VlFchQr/export?gid=289636985&format=csv",
+    skiprows=1,
+)
+
+df_crm_emails.columns = df_crm_emails.columns.str.lower()
+
+# +
+tbl.gtfs_schedule.feed_info() >> count(missing_email = _.feed_contact_email.isna())
+
+tbl_report_emails = (
+    tbl.views.reports_gtfs_schedule_index()
+    >> left_join(
+        _,
+        tbl.gtfs_schedule.feed_info()
+        >> select(_.startswith("calitp"), _.feed_contact_email),
+        ["calitp_itp_id", "calitp_url_number"]
+    )
+    # NOTE: reports currently only use url number = 0, so we remove any others --
+    >> filter(_.publish_date == REPORT_PUBLISH_DATE,  _.calitp_url_number == 0)
+    >> select(_.startswith("calitp"), _.agency_name, _.use_for_report, _.feed_contact_email)
+)
+
+report_emails = tbl_report_emails >> collect()
+# -
+
+report_crm_emails = (
+    report_emails
+    >> full_join(
+        _,
+        df_crm_emails
+        >> filter(_.itp_id.notna())
+        >> mutate(itp_id=_.itp_id.astype(int)),
+        {"calitp_itp_id": "itp_id"},
+    )
+)
+
+report_crm_emails_inner = (
+    report_crm_emails
+    >> filter(_.calitp_itp_id.notna(), _.itp_id.notna())
+    >> select(-_.itp_id)
+    >> mutate(calitp_itp_id=_.calitp_itp_id.astype(int))
+)
+
+
+# +
+final_pipeline_emails = (report_emails
+   >> transmute(_.calitp_itp_id, _.calitp_url_number, email = _.feed_contact_email, origin = "feed_info.txt")
+   >> filter(_.email.notna())
+)
+
+final_crm_emails = (
+    report_crm_emails_inner
+    >> transmute(_.calitp_itp_id, _.calitp_url_number, email = _["main email"], origin = "CRM")
+    >> filter(_.email.notna())
+)
+
+final_all_emails = (
+    pd.concat([final_pipeline_emails, final_crm_emails], ignore_index = True)
+    >> mutate(
+        calitp_itp_id = _.calitp_itp_id.astype(int),
+        calitp_url_number = _.calitp_url_number.astype(int),
+        report_url = REPORT_LINK_BASE + "/" + _.calitp_itp_id.astype(str) + "/",
+        dev_url = DEV_LINK_BASE + "/" + _.calitp_itp_id.astype(str) + "/",
+    )
+)
+# -
+
+### send emails 
+final_all_emails
+
+# +
+postmark = PostmarkClient(server_token=SERVER_TOKEN)
+
+html_body = f"""
+        <html>
+            <body>Hello!<br> Greetings from the Cal-ITP team. As part of our work with the GTFS feeds for agencies across the state, we prepare a monthly report with some basic statistics and validation results for your agencies' feed.<br>
+            You can view your report for {REPORT_PUBLISH_MONTH} at"""
+html_body_2 = """. We are actively looking for opportunities to help transit agencies address issues with their GTFS feeds. If you would like to meet with our team to learn more about how we can help, or have any questions, please email our team at hello@calitp.org. <br>
+            <br>Thanks,<br>
+            The Cal-ITP Team<br>
+            <src> http://www.placeandpage.la/cal-itp_emlsig/cal-itp_sigblock_3.html>
+            https://reports.calitp.org/
+            </body>
+        </html>"""
+
+final_all_emails["body"] = html_body
+for k in final_all_emails:
+    result = final_all_emails.apply(lambda row:str(row["body"]) + " " + row["report_url"], axis =1)
+final_all_emails["body"] = result + html_body_2
+# -
+final_all_emails
+
+# +
+EMAIL = final_all_emails['email'].tolist()
+HTML_MESSAGE = final_all_emails['body'].tolist()
+
+postmark = PostmarkClient(server_token=SERVER_TOKEN)
+
+for EMAIL in final_all_emails:
+    postmark.emails.send(
+    From='general+cal-itp@jarv.us',
+    To=EMAIL,
+    Subject='GTFS Quality Reports from Cal-ITP',
+    HtmlBody= HTML_MESSAGE,
+    )
+
+
+
+# -
+
+
+# final_all_emails.to_csv(f"report_emails_{REPORT_PUBLISH_DATE}.csv")
+
+# +
+# import requests
+
+# for link in final_all_emails.dev_url.tolist():
+#     r = requests.get(link)
+#     r.raise_for_status()
