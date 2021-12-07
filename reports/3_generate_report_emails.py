@@ -16,8 +16,12 @@ if len(sys.argv) < 2:
 else:
     REPORT_PUBLISH_DATE = sys.argv[1:]
 
-REPORT_PUBLISH_DATE = "2021-07-01"
-REPORT_PUBLISH_MONTH = "October"
+#REPORT_PUBLISH_DATE = "2021-07-01"
+#REPORT_PUBLISH_MONTH = "October"
+REPORT_PUBLISH_DATE = str(sys.argv[1])
+REPORT_PUBLISH_MONTH = str(sys.argv[2])
+print("Report Publish Date is:",REPORT_PUBLISH_DATE)
+print("Report Publish Month is:",REPORT_PUBLISH_MONTH)
 split_date = REPORT_PUBLISH_DATE.split("-")    
 PUBLISH_DATE_YEAR = split_date[0]
 PUBLISH_DATE_MONTH= split_date[1]
@@ -99,48 +103,39 @@ final_all_emails = (
 ### send emails 
 final_all_emails
 
-# +
-postmark = PostmarkClient(server_token=SERVER_TOKEN)
 
-html_body = f"""
-        <html>
+# +
+def _html_body(col):
+    ##return a single formatted html for a single row of the table
+    return f"""<html>
             <body>Hello!<br> Greetings from the Cal-ITP team. As part of our work with the GTFS feeds for agencies across the state, we prepare a monthly report with some basic statistics and validation results for your agencies' feed.<br>
-            You can view your report for {REPORT_PUBLISH_MONTH} at"""
-html_body_2 = """. We are actively looking for opportunities to help transit agencies address issues with their GTFS feeds. If you would like to meet with our team to learn more about how we can help, or have any questions, please email our team at hello@calitp.org. <br>
+            You can view your report for {REPORT_PUBLISH_MONTH} at {col.report_url}. We are actively looking for opportunities to help transit agencies address issues with their GTFS feeds. If you would like to meet with our team to learn more about how we can help, or have any questions, please email our team at hello@calitp.org. <br>
             <br>Thanks,<br>
             The Cal-ITP Team<br>
-            <src> http://www.placeandpage.la/cal-itp_emlsig/cal-itp_sigblock_3.html>
             https://reports.calitp.org/
             </body>
         </html>"""
 
-final_all_emails["body"] = html_body
-for k in final_all_emails:
-    result = final_all_emails.apply(lambda row:str(row["body"]) + " " + row["report_url"], axis =1)
-final_all_emails["body"] = result + html_body_2
-# -
-final_all_emails
+HTML_MESSAGE = final_all_emails.apply(_html_body, axis =1)
+email_dict = dict(zip(final_all_emails.email,HTML_MESSAGE))
 
 # +
-EMAIL = final_all_emails['email'].tolist()
-HTML_MESSAGE = final_all_emails['body'].tolist()
-
 postmark = PostmarkClient(server_token=SERVER_TOKEN)
-
-for EMAIL in final_all_emails:
-    postmark.emails.send(
+email = postmark.emails.send(
     From='general+cal-itp@jarv.us',
-    To=EMAIL,
+    To={EMAIL},
     Subject='GTFS Quality Reports from Cal-ITP',
-    HtmlBody= HTML_MESSAGE,
-    )
+    HtmlBody={HTML_MESSAGE},
+)
+email.send()
+
+    
 
 
 
-# -
 
-
-# final_all_emails.to_csv(f"report_emails_{REPORT_PUBLISH_DATE}.csv")
+# +
+##final_all_emails.to_csv(f"report_emails_{REPORT_PUBLISH_DATE}.csv")
 
 # +
 # import requests
