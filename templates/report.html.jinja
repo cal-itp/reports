@@ -119,9 +119,16 @@ Monthly GTFS Quality Reports: {{parameters["DATE_MONTH_YEAR"]}} {{parameters["AG
         <thead>
             <tr>
                 <th colspan="2">Validation errors observed</th>
-                <th>{{ validation_notices["columns"][2]}}</th>
+                <th> Error Name</th>
+                <th> Error Description </th>
+                <th colspan="2"> Number of Errors</th>           
+            </tr>
+            <tr>
+            <th>{{ validation_notices["columns"][2]}}</th>
                 <th>{{ validation_notices["columns"][3]}}</th>
+                {% if validation_notices["columns][4]}
                 <th>{{ validation_notices["columns"][4]}}</th>
+                 {% endfor %}
             </tr>
         </thead>
         <tbody>
