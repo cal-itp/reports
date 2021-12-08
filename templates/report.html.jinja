@@ -107,7 +107,9 @@ Monthly GTFS Quality Reports: {{parameters["DATE_MONTH_YEAR"]}} {{parameters["AG
                 <!-- these are the date columns -->
                 <td>{{mark_exists(row[2])}}</td>
                 <td>{{mark_exists(row[3])}}</td>
+                {% if mark_exists["columns][4]}
                 <td>{{mark_exists(row[4])}}</td>
+                {% endfor %}
             </tr>
             {% endfor %}
         </tbody>
@@ -119,12 +121,12 @@ Monthly GTFS Quality Reports: {{parameters["DATE_MONTH_YEAR"]}} {{parameters["AG
         <thead>
             <tr>
                 <th colspan="2">Validation errors observed</th>
-                <th> Error Name</th>
-                <th> Error Description </th>
-                <th colspan="2"> Number of Errors</th>           
+                <th colspan="3"> Number of Errors</th>
             </tr>
             <tr>
-            <th>{{ validation_notices["columns"][2]}}</th>
+                <th>Error Name</th>
+                <th>Error Description</th>
+                <th>{{ validation_notices["columns"][2]}}</th>
                 <th>{{ validation_notices["columns"][3]}}</th>
                 {% if validation_notices["columns][4]}
                 <th>{{ validation_notices["columns"][4]}}</th>
