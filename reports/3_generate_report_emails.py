@@ -1,14 +1,15 @@
-# +
 from calitp.tables import tbl
 from siuba import *
 import sys
 from postmarker.core import PostmarkClient
-
+import os
 import pandas as pd
 
 
 
 # +
+SERVER_TOKEN=os.environ["POSTMARK_SERVER_TOKEN"]
+
 if len(sys.argv) < 2:
     raise Exception (
         "2 arguments required: report publish date YYYY-MM-DD and Month"
@@ -117,17 +118,28 @@ def _html_body(col):
         </html>"""
 
 HTML_MESSAGE = final_all_emails.apply(_html_body, axis =1)
-email_dict = dict(zip(final_all_emails.email,HTML_MESSAGE))
+EMAIL = final_all_emails.email
+email_list = list(zip(EMAIL,HTML_MESSAGE))
+#email_dict = dict(zip(final_all_emails.email,HTML_MESSAGE))
+
 
 # +
 postmark = PostmarkClient(server_token=SERVER_TOKEN)
-email = postmark.emails.send(
-    From='general+cal-itp@jarv.us',
-    To={EMAIL},
-    Subject='GTFS Quality Reports from Cal-ITP',
-    HtmlBody={HTML_MESSAGE},
-)
-email.send()
+
+for EMAIL, HTML_MESSAGE in email_list:
+    email = postmark.emails.Email(
+        From='general+cal-itp@jarv.us',
+        To=EMAIL,
+        Subject='GTFS Quality Reports from Cal-ITP',
+        HtmlBody=HTML_MESSAGE,
+        )
+    email.send()
+  
+    
+    
+
+
+
 
     
 
