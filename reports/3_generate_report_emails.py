@@ -5,8 +5,6 @@ from postmarker.core import PostmarkClient
 import os
 import pandas as pd
 
-
-
 # +
 SERVER_TOKEN=os.environ["POSTMARK_SERVER_TOKEN"]
 
@@ -78,20 +76,10 @@ report_crm_emails_inner = (
 )
 
 
-# +
-final_pipeline_emails = (report_emails
-   >> transmute(_.calitp_itp_id, _.calitp_url_number, email = _.feed_contact_email, origin = "feed_info.txt")
-   >> filter(_.email.notna())
-)
-
-final_crm_emails = (
+final_all_emails = (
     report_crm_emails_inner
     >> transmute(_.calitp_itp_id, _.calitp_url_number, email = _["main email"], origin = "CRM")
     >> filter(_.email.notna())
-)
-
-final_all_emails = (
-    pd.concat([final_pipeline_emails, final_crm_emails], ignore_index = True)
     >> mutate(
         calitp_itp_id = _.calitp_itp_id.astype(int),
         calitp_url_number = _.calitp_url_number.astype(int),
@@ -99,17 +87,16 @@ final_all_emails = (
         dev_url = DEV_LINK_BASE + "/" + _.calitp_itp_id.astype(str) + "/",
     )
 )
-# -
 
-### send emails 
-final_all_emails
 
+# +
+### send emails using postmarks API
 
 # +
 def _html_body(col):
     ##return a single formatted html for a single row of the table
     return f"""<html>
-            <body>Hello!<br> Greetings from the Cal-ITP team. As part of our work with the GTFS feeds for agencies across the state, we prepare a monthly report with some basic statistics and validation results for your agencies' feed.<br>
+            <body>Hello!<br> Greetings from the Cal-ITP team.<br> As part of our work with the GTFS feeds for agencies across the state, we prepare a monthly report with some basic statistics and validation results for your agencies' feed.<br>
             You can view your report for {REPORT_PUBLISH_MONTH} at {col.report_url}. We are actively looking for opportunities to help transit agencies address issues with their GTFS feeds. If you would like to meet with our team to learn more about how we can help, or have any questions, please email our team at hello@calitp.org. <br>
             <br>Thanks,<br>
             The Cal-ITP Team<br>
