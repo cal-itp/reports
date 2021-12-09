@@ -1,6 +1,8 @@
 # A helper script that executes all necessary commands to generate reports for multiple
 # year and month combinations
 
+from pathlib import Path
+
 import multiprocessing
 import subprocess
 
@@ -15,27 +17,15 @@ report_months = [{
 # generate the IDs
 subprocess.run(['make generate_parameters'], check=True, shell=True)
 
-# read original Makefile contents
-with open('Makefile', 'r') as f:
-  originalContents = f.readlines()
-
-def rewriteMakefileForYearAndMonth(year, month):
-  newlines = originalContents.copy()
-  if month < 10:
-    month = f"0{month}"
-
-  newlines[1] = f"NOTEBOOKS=$(subst parameters.json,index.html,$(wildcard outputs/{year}/{month}/*/parameters.json))"
-  with open('Makefile', 'w') as f:
-    f.writelines(newlines)
-
-
-# iterate through each year and month combo to generate reports
+# iterate through each year and month combo to create make arguments
+make_arguments = []
 for year in report_months:
   for month in year['months']:
-    rewriteMakefileForYearAndMonth(year['year'], month)
-    
-    subprocess.run([f"make all -j {parellelization}"], check=True, shell=True)
+    if month < 10:
+        month = f'0{month}'
+    year_month_dirs = list(Path("outputs").glob(f"{year['year']}/{month}/*"))
+    year_month_args = [ymd / "index.html" for ymd in year_month_dirs]
+    make_arguments = [*make_arguments, *year_month_args]
 
-# rewrite original Makefile
-with open('Makefile', 'w') as f:
-    f.writelines(originalContents)
+# run all arguments
+subprocess.check_output(['make', '-j', str(parellelization), *make_arguments])
