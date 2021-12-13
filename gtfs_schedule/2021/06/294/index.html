@@ -280,32 +280,37 @@
             
             <tr>
                 
-                <td><p>leading_or_trailing_whitespaces</p></td>
+                <td><p>decreasing_or_equal_shape_distance</p></td>
                 
-                <td><p>The value in CSV file has leading or trailing whitespaces.</p></td>
+                <td><p>Two consecutive points in shapes.txt should have increasing values for shape_dist_traveled. If the values are equal, this is considered as an error.</p></td>
                 
-                <td><p>stops.txt: San Carlos & Bascom <br>
-routes.txt: California Avenue Caltrain - Palo Alto VA Hospital <br>
-stops.txt: Deer Creek & Mid Deer Creek <br>
-stops.txt: Monterey & Railroad Crossing <br>
-stops.txt: Santa Clara Transit Center </p></td>
+                <td><p>173</p></td>
                 
-                <td><p>stops.txt: Deer Creek & Mid Deer Creek <br>
-stops.txt: Monterey & Railroad Crossing <br>
-stops.txt: San Carlos & Bascom <br>
-stops.txt: Santa Clara Transit Center </p></td>
+                <td><p>136</p></td>
                 
             </tr>
             
             <tr>
                 
-                <td><p>route_color_contrast</p></td>
+                <td><p>duplicate_fare_rule_zone_id_fields</p></td>
                 
-                <td><p>Insufficient route color contrast.</p></td>
+                <td><p>Each of the following fields should be unique in fare_rules.txt: fare_rules.route_id, fare_rules.origin_id, fare_rules.contains_id and fare_rules.destination_id</p></td>
+                
+                <td><p>26</p></td>
+                
+                <td><p>29</p></td>
+                
+            </tr>
+            
+            <tr>
+                
+                <td><p>duplicate_route_name</p></td>
+                
+                <td><p>All routes of the same route_type with the same agency_id should have unique combinations of route_short_name and route_long_name.</p></td>
                 
                 <td><p></p></td>
                 
-                <td><p>X</p></td>
+                <td><p>2</p></td>
                 
             </tr>
             

@@ -268,11 +268,57 @@
 
         
 
+        <thead>
+            <tr>
+                <th colspan="2">Validation errors observed</th>
+                <th>2021-07-04</th>
+                <th>2021-07-18</th>
+                <th></th>
+            </tr>
+        </thead>
+        <tbody>
+            
+            <tr>
+                
+                <td><p>duplicate_fare_rule_zone_id_fields</p></td>
+                
+                <td><p>Each of the following fields should be unique in fare_rules.txt: fare_rules.route_id, fare_rules.origin_id, fare_rules.contains_id and fare_rules.destination_id</p></td>
+                
+                <td><p>8</p></td>
+                
+                <td><p>8</p></td>
+                
+            </tr>
+            
+            <tr>
+                
+                <td><p>stop_time_timepoint_without_times</p></td>
+                
+                <td><p>Any record with stop_times.timepoint set to 1 should define a value for stop_times.arrival_time and stop_times.departure_time fields.</p></td>
+                
+                <td><p>48</p></td>
+                
+                <td><p>48</p></td>
+                
+            </tr>
+            
+            <tr>
+                
+                <td><p>too_fast_travel</p></td>
+                
+                <td><p>As implemented in the original Google Python GTFS validator, the calculated speed between stops should not be greater than 150 km/h (42 m/s SI or 93 mph).</p></td>
+                
+                <td><p>26</p></td>
+                
+                <td><p>26</p></td>
+                
+            </tr>
+            
+        </tbody>
+
+        
+
     </table>
-
-    
-
-    <p><b>No validation errors detected.</b></p>
 
     
 

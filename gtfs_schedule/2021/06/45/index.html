@@ -268,11 +268,57 @@
 
         
 
+        <thead>
+            <tr>
+                <th colspan="2">Validation errors observed</th>
+                <th>2021-06-06</th>
+                <th>2021-06-20</th>
+                <th></th>
+            </tr>
+        </thead>
+        <tbody>
+            
+            <tr>
+                
+                <td><p>decreasing_or_equal_shape_distance</p></td>
+                
+                <td><p>Two consecutive points in shapes.txt should have increasing values for shape_dist_traveled. If the values are equal, this is considered as an error.</p></td>
+                
+                <td><p>1</p></td>
+                
+                <td><p>1</p></td>
+                
+            </tr>
+            
+            <tr>
+                
+                <td><p>feed_expiration_date</p></td>
+                
+                <td><p>At any time, the published GTFS dataset should be valid for at least the next 7 days, and ideally for as long as the operator is confident that the schedule will continue to be operated. If possible, the GTFS dataset should cover at least the next 30 days of service.</p></td>
+                
+                <td><p>1</p></td>
+                
+                <td><p>1</p></td>
+                
+            </tr>
+            
+            <tr>
+                
+                <td><p>stop_time_timepoint_without_times</p></td>
+                
+                <td><p>Any record with stop_times.timepoint set to 1 should define a value for stop_times.arrival_time and stop_times.departure_time fields.</p></td>
+                
+                <td><p>2640</p></td>
+                
+                <td><p>2640</p></td>
+                
+            </tr>
+            
+        </tbody>
+
+        
+
     </table>
-
-    
-
-    <p><b>No validation errors detected.</b></p>
 
     
 

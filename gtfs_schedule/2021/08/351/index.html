@@ -268,11 +268,63 @@
 
         
 
+        <thead>
+            <tr>
+                <th colspan="2">Validation errors observed</th>
+                <th>2021-08-01</th>
+                <th>2021-08-15</th>
+                <th>2021-08-29</th>
+            </tr>
+        </thead>
+        <tbody>
+            
+            <tr>
+                
+                <td><p>duplicate_route_name</p></td>
+                
+                <td><p>All routes of the same route_type with the same agency_id should have unique combinations of route_short_name and route_long_name.</p></td>
+                
+                <td><p>3</p></td>
+                
+                <td><p>1</p></td>
+                
+                <td><p>1</p></td>
+                
+            </tr>
+            
+            <tr>
+                
+                <td><p>stop_time_timepoint_without_times</p></td>
+                
+                <td><p>Any record with stop_times.timepoint set to 1 should define a value for stop_times.arrival_time and stop_times.departure_time fields.</p></td>
+                
+                <td><p>75468</p></td>
+                
+                <td><p>22132</p></td>
+                
+                <td><p>22132</p></td>
+                
+            </tr>
+            
+            <tr>
+                
+                <td><p>stop_too_far_from_trip_shape</p></td>
+                
+                <td><p>Per GTFS Best Practices, route alignments (in shapes.txt) should be within 100 meters of stop locations which a trip serves.</p></td>
+                
+                <td><p>2</p></td>
+                
+                <td><p>2</p></td>
+                
+                <td><p>2</p></td>
+                
+            </tr>
+            
+        </tbody>
+
+        
+
     </table>
-
-    
-
-    <p><b>No validation errors detected.</b></p>
 
     
 

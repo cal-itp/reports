@@ -268,11 +268,77 @@
 
         
 
+        <thead>
+            <tr>
+                <th colspan="2">Validation errors observed</th>
+                <th>2021-05-02</th>
+                <th>2021-05-16</th>
+                <th>2021-05-30</th>
+            </tr>
+        </thead>
+        <tbody>
+            
+            <tr>
+                
+                <td><p>duplicate_fare_rule_zone_id_fields</p></td>
+                
+                <td><p>Each of the following fields should be unique in fare_rules.txt: fare_rules.route_id, fare_rules.origin_id, fare_rules.contains_id and fare_rules.destination_id</p></td>
+                
+                <td><p>41</p></td>
+                
+                <td><p>41</p></td>
+                
+                <td><p>41</p></td>
+                
+            </tr>
+            
+            <tr>
+                
+                <td><p>feed_expiration_date</p></td>
+                
+                <td><p>At any time, the published GTFS dataset should be valid for at least the next 7 days, and ideally for as long as the operator is confident that the schedule will continue to be operated. If possible, the GTFS dataset should cover at least the next 30 days of service.</p></td>
+                
+                <td><p>1</p></td>
+                
+                <td><p></p></td>
+                
+                <td><p></p></td>
+                
+            </tr>
+            
+            <tr>
+                
+                <td><p>stop_time_timepoint_without_times</p></td>
+                
+                <td><p>Any record with stop_times.timepoint set to 1 should define a value for stop_times.arrival_time and stop_times.departure_time fields.</p></td>
+                
+                <td><p>56</p></td>
+                
+                <td><p>60</p></td>
+                
+                <td><p>60</p></td>
+                
+            </tr>
+            
+            <tr>
+                
+                <td><p>too_fast_travel</p></td>
+                
+                <td><p>As implemented in the original Google Python GTFS validator, the calculated speed between stops should not be greater than 150 km/h (42 m/s SI or 93 mph).</p></td>
+                
+                <td><p>1</p></td>
+                
+                <td><p>1</p></td>
+                
+                <td><p>1</p></td>
+                
+            </tr>
+            
+        </tbody>
+
+        
+
     </table>
-
-    
-
-    <p><b>No validation errors detected.</b></p>
 
     
 

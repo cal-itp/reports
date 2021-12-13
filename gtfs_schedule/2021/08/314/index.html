@@ -268,11 +268,49 @@
 
         
 
+        <thead>
+            <tr>
+                <th colspan="2">Validation errors observed</th>
+                <th>2021-08-01</th>
+                <th>2021-08-15</th>
+                <th>2021-08-29</th>
+            </tr>
+        </thead>
+        <tbody>
+            
+            <tr>
+                
+                <td><p>duplicate_route_name</p></td>
+                
+                <td><p>All routes of the same route_type with the same agency_id should have unique combinations of route_short_name and route_long_name.</p></td>
+                
+                <td><p>2</p></td>
+                
+                <td><p>2</p></td>
+                
+                <td><p>2</p></td>
+                
+            </tr>
+            
+            <tr>
+                
+                <td><p>too_fast_travel</p></td>
+                
+                <td><p>As implemented in the original Google Python GTFS validator, the calculated speed between stops should not be greater than 150 km/h (42 m/s SI or 93 mph).</p></td>
+                
+                <td><p>10</p></td>
+                
+                <td><p>10</p></td>
+                
+                <td><p>10</p></td>
+                
+            </tr>
+            
+        </tbody>
+
+        
+
     </table>
-
-    
-
-    <p><b>No validation errors detected.</b></p>
 
     
 

@@ -60,7 +60,7 @@
 
             
     <figure>
-        <div class="text-2xl text-itp-teal-bold">20221231</div>
+        <div class="text-2xl text-itp-teal-bold">20211231</div>
         <figcaption class="text-itp-slate-bold">Feed End Date</figcaption>
     </figure>
 
@@ -280,15 +280,155 @@
             
             <tr>
                 
-                <td><p>route_color_contrast</p></td>
+                <td><p>decreasing_or_equal_shape_distance</p></td>
                 
-                <td><p>Insufficient route color contrast.</p></td>
+                <td><p>Two consecutive points in shapes.txt should have increasing values for shape_dist_traveled. If the values are equal, this is considered as an error.</p></td>
                 
-                <td><p>X</p></td>
+                <td><p>4391</p></td>
                 
-                <td><p>X</p></td>
+                <td><p>6169</p></td>
                 
-                <td><p>X</p></td>
+                <td><p>5890</p></td>
+                
+            </tr>
+            
+            <tr>
+                
+                <td><p>decreasing_or_equal_stop_time_distance</p></td>
+                
+                <td><p>Two consecutive stop times in a trip should have increasing distance. If the values are equal, this is considered as an error.</p></td>
+                
+                <td><p>66</p></td>
+                
+                <td><p>126</p></td>
+                
+                <td><p>127</p></td>
+                
+            </tr>
+            
+            <tr>
+                
+                <td><p>duplicate_fare_rule_zone_id_fields</p></td>
+                
+                <td><p>Each of the following fields should be unique in fare_rules.txt: fare_rules.route_id, fare_rules.origin_id, fare_rules.contains_id and fare_rules.destination_id</p></td>
+                
+                <td><p>37</p></td>
+                
+                <td><p>33</p></td>
+                
+                <td><p></p></td>
+                
+            </tr>
+            
+            <tr>
+                
+                <td><p>feed_expiration_date</p></td>
+                
+                <td><p>At any time, the published GTFS dataset should be valid for at least the next 7 days, and ideally for as long as the operator is confident that the schedule will continue to be operated. If possible, the GTFS dataset should cover at least the next 30 days of service.</p></td>
+                
+                <td><p>8</p></td>
+                
+                <td><p>4</p></td>
+                
+                <td><p>5</p></td>
+                
+            </tr>
+            
+            <tr>
+                
+                <td><p>invalid_url</p></td>
+                
+                <td><p>A field contains a malformed URL.</p></td>
+                
+                <td><p>2</p></td>
+                
+                <td><p>2</p></td>
+                
+                <td><p>2</p></td>
+                
+            </tr>
+            
+            <tr>
+                
+                <td><p>more_than_one_entity</p></td>
+                
+                <td><p>A file that is expected to have only one row has more than one row.</p></td>
+                
+                <td><p>1</p></td>
+                
+                <td><p>1</p></td>
+                
+                <td><p>1</p></td>
+                
+            </tr>
+            
+            <tr>
+                
+                <td><p>number_out_of_range</p></td>
+                
+                <td><p>The values in the given column of the input rows are out of range.</p></td>
+                
+                <td><p>1</p></td>
+                
+                <td><p>1</p></td>
+                
+                <td><p>1</p></td>
+                
+            </tr>
+            
+            <tr>
+                
+                <td><p>route_short_and_long_name_equal</p></td>
+                
+                <td><p>Short and long name should not be identical.</p></td>
+                
+                <td><p>8</p></td>
+                
+                <td><p>8</p></td>
+                
+                <td><p>8</p></td>
+                
+            </tr>
+            
+            <tr>
+                
+                <td><p>route_short_name_too_long</p></td>
+                
+                <td><p>Short name of a route is too long (more than 12 characters). Note that major trip planning applications start truncating short names after seven characters.</p></td>
+                
+                <td><p>11</p></td>
+                
+                <td><p>12</p></td>
+                
+                <td><p>17</p></td>
+                
+            </tr>
+            
+            <tr>
+                
+                <td><p>stop_time_timepoint_without_times</p></td>
+                
+                <td><p>Any record with stop_times.timepoint set to 1 should define a value for stop_times.arrival_time and stop_times.departure_time fields.</p></td>
+                
+                <td><p>24</p></td>
+                
+                <td><p></p></td>
+                
+                <td><p></p></td>
+                
+            </tr>
+            
+            <tr>
+                
+                <td><p>wrong_parent_location_type</p></td>
+                
+                <td><p>Value of field location_type of parent found in field parent_station is invalid. Stops, Platforms, Entrance/exit, and generic nodes can only have a Station as a parent. Boarding Area can only have Platform as a parent. Stations cannot have a parent. All other combinations are prohibited.</p></td>
+                
+                <td><p>4</p></td>
+                
+                <td><p>4</p></td>
+                
+                <td><p></p></td>
                 
             </tr>
             

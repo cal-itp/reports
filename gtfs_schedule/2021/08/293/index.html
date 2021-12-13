@@ -280,15 +280,43 @@
             
             <tr>
                 
-                <td><p>route_color_contrast</p></td>
+                <td><p>block_trips_with_overlapping_stop_times</p></td>
                 
-                <td><p>Insufficient route color contrast.</p></td>
+                <td><p>Trips within the same block have overlapping stop times, which is not allowed.</p></td>
+                
+                <td><p></p></td>
+                
+                <td><p></p></td>
+                
+                <td><p>74</p></td>
+                
+            </tr>
+            
+            <tr>
+                
+                <td><p>duplicate_route_name</p></td>
+                
+                <td><p>All routes of the same route_type with the same agency_id should have unique combinations of route_short_name and route_long_name.</p></td>
+                
+                <td><p>12</p></td>
+                
+                <td><p>12</p></td>
+                
+                <td><p>12</p></td>
+                
+            </tr>
+            
+            <tr>
+                
+                <td><p>too_fast_travel</p></td>
+                
+                <td><p>As implemented in the original Google Python GTFS validator, the calculated speed between stops should not be greater than 150 km/h (42 m/s SI or 93 mph).</p></td>
                 
                 <td><p></p></td>
                 
                 <td><p></p></td>
                 
-                <td><p>X</p></td>
+                <td><p>418</p></td>
                 
             </tr>
             

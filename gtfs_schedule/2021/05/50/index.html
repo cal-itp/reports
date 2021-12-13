@@ -268,11 +268,63 @@
 
         
 
+        <thead>
+            <tr>
+                <th colspan="2">Validation errors observed</th>
+                <th>2021-05-02</th>
+                <th>2021-05-16</th>
+                <th>2021-05-30</th>
+            </tr>
+        </thead>
+        <tbody>
+            
+            <tr>
+                
+                <td><p>duplicate_fare_rule_zone_id_fields</p></td>
+                
+                <td><p>Each of the following fields should be unique in fare_rules.txt: fare_rules.route_id, fare_rules.origin_id, fare_rules.contains_id and fare_rules.destination_id</p></td>
+                
+                <td><p>66</p></td>
+                
+                <td><p>66</p></td>
+                
+                <td><p>66</p></td>
+                
+            </tr>
+            
+            <tr>
+                
+                <td><p>duplicate_route_name</p></td>
+                
+                <td><p>All routes of the same route_type with the same agency_id should have unique combinations of route_short_name and route_long_name.</p></td>
+                
+                <td><p>2</p></td>
+                
+                <td><p>2</p></td>
+                
+                <td><p>2</p></td>
+                
+            </tr>
+            
+            <tr>
+                
+                <td><p>route_short_name_too_long</p></td>
+                
+                <td><p>Short name of a route is too long (more than 12 characters). Note that major trip planning applications start truncating short names after seven characters.</p></td>
+                
+                <td><p>3</p></td>
+                
+                <td><p>3</p></td>
+                
+                <td><p>3</p></td>
+                
+            </tr>
+            
+        </tbody>
+
+        
+
     </table>
-
-    
-
-    <p><b>No validation errors detected.</b></p>
 
     
 

@@ -268,11 +268,57 @@
 
         
 
+        <thead>
+            <tr>
+                <th colspan="2">Validation errors observed</th>
+                <th>2021-06-06</th>
+                <th>2021-06-20</th>
+                <th></th>
+            </tr>
+        </thead>
+        <tbody>
+            
+            <tr>
+                
+                <td><p>missing_required_field</p></td>
+                
+                <td><p>A required field is blank.</p></td>
+                
+                <td><p></p></td>
+                
+                <td><p>12</p></td>
+                
+            </tr>
+            
+            <tr>
+                
+                <td><p>stop_too_far_from_trip_shape</p></td>
+                
+                <td><p>Per GTFS Best Practices, route alignments (in shapes.txt) should be within 100 meters of stop locations which a trip serves.</p></td>
+                
+                <td><p>3</p></td>
+                
+                <td><p></p></td>
+                
+            </tr>
+            
+            <tr>
+                
+                <td><p>wrong_parent_location_type</p></td>
+                
+                <td><p>Value of field location_type of parent found in field parent_station is invalid. Stops, Platforms, Entrance/exit, and generic nodes can only have a Station as a parent. Boarding Area can only have Platform as a parent. Stations cannot have a parent. All other combinations are prohibited.</p></td>
+                
+                <td><p></p></td>
+                
+                <td><p>83</p></td>
+                
+            </tr>
+            
+        </tbody>
+
+        
+
     </table>
-
-    
-
-    <p><b>No validation errors detected.</b></p>
 
     
 

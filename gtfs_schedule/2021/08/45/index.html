@@ -280,15 +280,71 @@
             
             <tr>
                 
-                <td><p>missing_feed_info_date</p></td>
+                <td><p>block_trips_with_overlapping_stop_times</p></td>
                 
-                <td><p>Even though feed_info.start_date and feed_info.end_date are optional, if one field is provided the second one should also be provided.</p></td>
+                <td><p>Trips within the same block have overlapping stop times, which is not allowed.</p></td>
                 
-                <td><p>X</p></td>
+                <td><p>6</p></td>
                 
-                <td><p>X</p></td>
+                <td><p>6</p></td>
                 
-                <td><p>X</p></td>
+                <td><p>6</p></td>
+                
+            </tr>
+            
+            <tr>
+                
+                <td><p>decreasing_or_equal_stop_time_distance</p></td>
+                
+                <td><p>Two consecutive stop times in a trip should have increasing distance. If the values are equal, this is considered as an error.</p></td>
+                
+                <td><p>97</p></td>
+                
+                <td><p>97</p></td>
+                
+                <td><p>97</p></td>
+                
+            </tr>
+            
+            <tr>
+                
+                <td><p>duplicate_key</p></td>
+                
+                <td><p>The values of the given key and rows are duplicates.</p></td>
+                
+                <td><p>52</p></td>
+                
+                <td><p>52</p></td>
+                
+                <td><p>52</p></td>
+                
+            </tr>
+            
+            <tr>
+                
+                <td><p>same_name_and_description_for_route</p></td>
+                
+                <td><p>The GTFS spec requires that a route_description is distinct from both the route short and long names.</p></td>
+                
+                <td><p>3</p></td>
+                
+                <td><p>3</p></td>
+                
+                <td><p>3</p></td>
+                
+            </tr>
+            
+            <tr>
+                
+                <td><p>stop_time_with_arrival_before_previous_departure_time</p></td>
+                
+                <td><p>The departure_time must not precede the arrival_time in stop_times.txt if both are given.</p></td>
+                
+                <td><p>48</p></td>
+                
+                <td><p>48</p></td>
+                
+                <td><p>48</p></td>
                 
             </tr>
             
