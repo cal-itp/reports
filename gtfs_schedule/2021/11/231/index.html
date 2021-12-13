@@ -117,7 +117,7 @@
                 <th colspan="2">Do the following files/fields exist?</th>
                 <th>2021-11-07</th>
                 <th>2021-11-21</th>
-                <th></th>
+                
             </tr>
         </thead>
         <tbody>
@@ -139,11 +139,7 @@
     <i title="present" class="fas fa-lg fa-check-circle text-itp-green"></i>
     
 </td>
-                <td>
-    
-    <i title="missing" class="far fa-lg fa-circle text-itp-slate-light"></i>
-    
-</td>
+                
             </tr>
             
             <tr>
@@ -163,11 +159,7 @@
     <i title="missing" class="far fa-lg fa-circle text-itp-slate-light"></i>
     
 </td>
-                <td>
-    
-    <i title="missing" class="far fa-lg fa-circle text-itp-slate-light"></i>
-    
-</td>
+                
             </tr>
             
             <tr>
@@ -185,11 +177,7 @@
     <i title="missing" class="far fa-lg fa-circle text-itp-slate-light"></i>
     
 </td>
-                <td>
-    
-    <i title="missing" class="far fa-lg fa-circle text-itp-slate-light"></i>
-    
-</td>
+                
             </tr>
             
             <tr>
@@ -209,11 +197,7 @@
     <i title="missing" class="far fa-lg fa-circle text-itp-slate-light"></i>
     
 </td>
-                <td>
-    
-    <i title="missing" class="far fa-lg fa-circle text-itp-slate-light"></i>
-    
-</td>
+                
             </tr>
             
             <tr>
@@ -231,11 +215,7 @@
     <i title="missing" class="far fa-lg fa-circle text-itp-slate-light"></i>
     
 </td>
-                <td>
-    
-    <i title="missing" class="far fa-lg fa-circle text-itp-slate-light"></i>
-    
-</td>
+                
             </tr>
             
             <tr>
@@ -255,11 +235,7 @@
     <i title="present" class="fas fa-lg fa-check-circle text-itp-green"></i>
     
 </td>
-                <td>
-    
-    <i title="missing" class="far fa-lg fa-circle text-itp-slate-light"></i>
-    
-</td>
+                
             </tr>
             
         </tbody>
@@ -271,58 +247,63 @@
         <thead>
             <tr>
                 <th colspan="2">Validation errors observed</th>
+                <th colspan="3"> Number of errors</th>
+            </tr>
+            <tr>
+                <th>Error Name</th>
+                <th>Error Description</th>
                 <th>2021-11-07</th>
                 <th>2021-11-21</th>
-                <th></th>
+                
             </tr>
         </thead>
         <tbody>
             
             <tr>
                 
-                <td><p>decreasing_or_equal_shape_distance</p></td>
+                <td>decreasing_or_equal_shape_distance</td>
                 
-                <td><p>Two consecutive points in shapes.txt should have increasing values for shape_dist_traveled. If the values are equal, this is considered as an error.</p></td>
+                <td>Two consecutive points in shapes.txt should have increasing values for shape_dist_traveled. If the values are equal, this is considered as an error.</td>
                 
-                <td><p>40</p></td>
+                <td>40</td>
                 
-                <td><p>40</p></td>
-                
-            </tr>
-            
-            <tr>
-                
-                <td><p>route_short_and_long_name_equal</p></td>
-                
-                <td><p>Short and long name should not be identical.</p></td>
-                
-                <td><p>17</p></td>
-                
-                <td><p>17</p></td>
+                <td>40</td>
                 
             </tr>
             
             <tr>
                 
-                <td><p>route_short_name_too_long</p></td>
+                <td>route_short_and_long_name_equal</td>
                 
-                <td><p>Short name of a route is too long (more than 12 characters). Note that major trip planning applications start truncating short names after seven characters.</p></td>
+                <td>Short and long name should not be identical.</td>
                 
-                <td><p>4</p></td>
+                <td>17</td>
                 
-                <td><p>4</p></td>
+                <td>17</td>
                 
             </tr>
             
             <tr>
                 
-                <td><p>same_name_and_description_for_route</p></td>
+                <td>route_short_name_too_long</td>
                 
-                <td><p>The GTFS spec requires that a route_description is distinct from both the route short and long names.</p></td>
+                <td>Short name of a route is too long (more than 12 characters). Note that major trip planning applications start truncating short names after seven characters.</td>
                 
-                <td><p>41</p></td>
+                <td>4</td>
                 
-                <td><p>41</p></td>
+                <td>4</td>
+                
+            </tr>
+            
+            <tr>
+                
+                <td>same_name_and_description_for_route</td>
+                
+                <td>The GTFS spec requires that a route_description is distinct from both the route short and long names.</td>
+                
+                <td>41</td>
+                
+                <td>41</td>
                 
             </tr>
             

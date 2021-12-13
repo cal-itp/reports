@@ -117,7 +117,9 @@
                 <th colspan="2">Do the following files/fields exist?</th>
                 <th>2021-08-01</th>
                 <th>2021-08-15</th>
-                <th>2021-08-29</th>
+                
+                    <th>2021-08-29</th>
+                
             </tr>
         </thead>
         <tbody>
@@ -139,11 +141,13 @@
     <i title="present" class="fas fa-lg fa-check-circle text-itp-green"></i>
     
 </td>
-                <td>
+                               
+                    <td>
     
     <i title="present" class="fas fa-lg fa-check-circle text-itp-green"></i>
     
 </td>
+                
             </tr>
             
             <tr>
@@ -163,11 +167,13 @@
     <i title="present" class="fas fa-lg fa-check-circle text-itp-green"></i>
     
 </td>
-                <td>
+                               
+                    <td>
     
     <i title="present" class="fas fa-lg fa-check-circle text-itp-green"></i>
     
 </td>
+                
             </tr>
             
             <tr>
@@ -185,11 +191,13 @@
     <i title="present" class="fas fa-lg fa-check-circle text-itp-green"></i>
     
 </td>
-                <td>
+                               
+                    <td>
     
     <i title="present" class="fas fa-lg fa-check-circle text-itp-green"></i>
     
 </td>
+                
             </tr>
             
             <tr>
@@ -209,11 +217,13 @@
     <i title="present" class="fas fa-lg fa-check-circle text-itp-green"></i>
     
 </td>
-                <td>
+                               
+                    <td>
     
     <i title="present" class="fas fa-lg fa-check-circle text-itp-green"></i>
     
 </td>
+                
             </tr>
             
             <tr>
@@ -231,11 +241,7 @@
     <i title="present" class="fas fa-lg fa-check-circle text-itp-green"></i>
     
 </td>
-                <td>
-    
-    <i title="missing" class="far fa-lg fa-circle text-itp-slate-light"></i>
-    
-</td>
+                
             </tr>
             
             <tr>
@@ -255,11 +261,13 @@
     <i title="present" class="fas fa-lg fa-check-circle text-itp-green"></i>
     
 </td>
-                <td>
+                               
+                    <td>
     
     <i title="present" class="fas fa-lg fa-check-circle text-itp-green"></i>
     
 </td>
+                
             </tr>
             
         </tbody>
@@ -271,164 +279,171 @@
         <thead>
             <tr>
                 <th colspan="2">Validation errors observed</th>
+                <th colspan="3"> Number of errors</th>
+            </tr>
+            <tr>
+                <th>Error Name</th>
+                <th>Error Description</th>
                 <th>2021-08-01</th>
                 <th>2021-08-15</th>
+                
                 <th>2021-08-29</th>
+                
             </tr>
         </thead>
         <tbody>
             
             <tr>
                 
-                <td><p>decreasing_or_equal_shape_distance</p></td>
+                <td>decreasing_or_equal_shape_distance</td>
                 
-                <td><p>Two consecutive points in shapes.txt should have increasing values for shape_dist_traveled. If the values are equal, this is considered as an error.</p></td>
+                <td>Two consecutive points in shapes.txt should have increasing values for shape_dist_traveled. If the values are equal, this is considered as an error.</td>
                 
-                <td><p>4391</p></td>
+                <td>4391</td>
                 
-                <td><p>6169</p></td>
+                <td>6169</td>
                 
-                <td><p>5890</p></td>
-                
-            </tr>
-            
-            <tr>
-                
-                <td><p>decreasing_or_equal_stop_time_distance</p></td>
-                
-                <td><p>Two consecutive stop times in a trip should have increasing distance. If the values are equal, this is considered as an error.</p></td>
-                
-                <td><p>66</p></td>
-                
-                <td><p>126</p></td>
-                
-                <td><p>127</p></td>
+                <td>5890</td>
                 
             </tr>
             
             <tr>
                 
-                <td><p>duplicate_fare_rule_zone_id_fields</p></td>
+                <td>decreasing_or_equal_stop_time_distance</td>
                 
-                <td><p>Each of the following fields should be unique in fare_rules.txt: fare_rules.route_id, fare_rules.origin_id, fare_rules.contains_id and fare_rules.destination_id</p></td>
+                <td>Two consecutive stop times in a trip should have increasing distance. If the values are equal, this is considered as an error.</td>
                 
-                <td><p>37</p></td>
+                <td>66</td>
                 
-                <td><p>33</p></td>
+                <td>126</td>
                 
-                <td><p></p></td>
-                
-            </tr>
-            
-            <tr>
-                
-                <td><p>feed_expiration_date</p></td>
-                
-                <td><p>At any time, the published GTFS dataset should be valid for at least the next 7 days, and ideally for as long as the operator is confident that the schedule will continue to be operated. If possible, the GTFS dataset should cover at least the next 30 days of service.</p></td>
-                
-                <td><p>8</p></td>
-                
-                <td><p>4</p></td>
-                
-                <td><p>5</p></td>
+                <td>127</td>
                 
             </tr>
             
             <tr>
                 
-                <td><p>invalid_url</p></td>
+                <td>duplicate_fare_rule_zone_id_fields</td>
                 
-                <td><p>A field contains a malformed URL.</p></td>
+                <td>Each of the following fields should be unique in fare_rules.txt: fare_rules.route_id, fare_rules.origin_id, fare_rules.contains_id and fare_rules.destination_id</td>
                 
-                <td><p>2</p></td>
+                <td>37</td>
                 
-                <td><p>2</p></td>
+                <td>33</td>
                 
-                <td><p>2</p></td>
-                
-            </tr>
-            
-            <tr>
-                
-                <td><p>more_than_one_entity</p></td>
-                
-                <td><p>A file that is expected to have only one row has more than one row.</p></td>
-                
-                <td><p>1</p></td>
-                
-                <td><p>1</p></td>
-                
-                <td><p>1</p></td>
+                <td></td>
                 
             </tr>
             
             <tr>
                 
-                <td><p>number_out_of_range</p></td>
+                <td>feed_expiration_date</td>
                 
-                <td><p>The values in the given column of the input rows are out of range.</p></td>
+                <td>At any time, the published GTFS dataset should be valid for at least the next 7 days, and ideally for as long as the operator is confident that the schedule will continue to be operated. If possible, the GTFS dataset should cover at least the next 30 days of service.</td>
                 
-                <td><p>1</p></td>
+                <td>8</td>
                 
-                <td><p>1</p></td>
+                <td>4</td>
                 
-                <td><p>1</p></td>
-                
-            </tr>
-            
-            <tr>
-                
-                <td><p>route_short_and_long_name_equal</p></td>
-                
-                <td><p>Short and long name should not be identical.</p></td>
-                
-                <td><p>8</p></td>
-                
-                <td><p>8</p></td>
-                
-                <td><p>8</p></td>
+                <td>5</td>
                 
             </tr>
             
             <tr>
                 
-                <td><p>route_short_name_too_long</p></td>
+                <td>invalid_url</td>
                 
-                <td><p>Short name of a route is too long (more than 12 characters). Note that major trip planning applications start truncating short names after seven characters.</p></td>
+                <td>A field contains a malformed URL.</td>
                 
-                <td><p>11</p></td>
+                <td>2</td>
                 
-                <td><p>12</p></td>
+                <td>2</td>
                 
-                <td><p>17</p></td>
-                
-            </tr>
-            
-            <tr>
-                
-                <td><p>stop_time_timepoint_without_times</p></td>
-                
-                <td><p>Any record with stop_times.timepoint set to 1 should define a value for stop_times.arrival_time and stop_times.departure_time fields.</p></td>
-                
-                <td><p>24</p></td>
-                
-                <td><p></p></td>
-                
-                <td><p></p></td>
+                <td>2</td>
                 
             </tr>
             
             <tr>
                 
-                <td><p>wrong_parent_location_type</p></td>
+                <td>more_than_one_entity</td>
                 
-                <td><p>Value of field location_type of parent found in field parent_station is invalid. Stops, Platforms, Entrance/exit, and generic nodes can only have a Station as a parent. Boarding Area can only have Platform as a parent. Stations cannot have a parent. All other combinations are prohibited.</p></td>
+                <td>A file that is expected to have only one row has more than one row.</td>
                 
-                <td><p>4</p></td>
+                <td>1</td>
                 
-                <td><p>4</p></td>
+                <td>1</td>
                 
-                <td><p></p></td>
+                <td>1</td>
+                
+            </tr>
+            
+            <tr>
+                
+                <td>number_out_of_range</td>
+                
+                <td>The values in the given column of the input rows are out of range.</td>
+                
+                <td>1</td>
+                
+                <td>1</td>
+                
+                <td>1</td>
+                
+            </tr>
+            
+            <tr>
+                
+                <td>route_short_and_long_name_equal</td>
+                
+                <td>Short and long name should not be identical.</td>
+                
+                <td>8</td>
+                
+                <td>8</td>
+                
+                <td>8</td>
+                
+            </tr>
+            
+            <tr>
+                
+                <td>route_short_name_too_long</td>
+                
+                <td>Short name of a route is too long (more than 12 characters). Note that major trip planning applications start truncating short names after seven characters.</td>
+                
+                <td>11</td>
+                
+                <td>12</td>
+                
+                <td>17</td>
+                
+            </tr>
+            
+            <tr>
+                
+                <td>stop_time_timepoint_without_times</td>
+                
+                <td>Any record with stop_times.timepoint set to 1 should define a value for stop_times.arrival_time and stop_times.departure_time fields.</td>
+                
+                <td>24</td>
+                
+                <td></td>
+                
+                <td></td>
+                
+            </tr>
+            
+            <tr>
+                
+                <td>wrong_parent_location_type</td>
+                
+                <td>Value of field location_type of parent found in field parent_station is invalid. Stops, Platforms, Entrance/exit, and generic nodes can only have a Station as a parent. Boarding Area can only have Platform as a parent. Stations cannot have a parent. All other combinations are prohibited.</td>
+                
+                <td>4</td>
+                
+                <td>4</td>
+                
+                <td></td>
                 
             </tr>
             

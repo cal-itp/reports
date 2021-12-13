@@ -117,7 +117,7 @@
                 <th colspan="2">Do the following files/fields exist?</th>
                 <th>2021-07-04</th>
                 <th>2021-07-18</th>
-                <th></th>
+                
             </tr>
         </thead>
         <tbody>
@@ -139,11 +139,7 @@
     <i title="present" class="fas fa-lg fa-check-circle text-itp-green"></i>
     
 </td>
-                <td>
-    
-    <i title="missing" class="far fa-lg fa-circle text-itp-slate-light"></i>
-    
-</td>
+                
             </tr>
             
             <tr>
@@ -163,11 +159,7 @@
     <i title="missing" class="far fa-lg fa-circle text-itp-slate-light"></i>
     
 </td>
-                <td>
-    
-    <i title="missing" class="far fa-lg fa-circle text-itp-slate-light"></i>
-    
-</td>
+                
             </tr>
             
             <tr>
@@ -185,11 +177,7 @@
     <i title="missing" class="far fa-lg fa-circle text-itp-slate-light"></i>
     
 </td>
-                <td>
-    
-    <i title="missing" class="far fa-lg fa-circle text-itp-slate-light"></i>
-    
-</td>
+                
             </tr>
             
             <tr>
@@ -209,11 +197,7 @@
     <i title="missing" class="far fa-lg fa-circle text-itp-slate-light"></i>
     
 </td>
-                <td>
-    
-    <i title="missing" class="far fa-lg fa-circle text-itp-slate-light"></i>
-    
-</td>
+                
             </tr>
             
             <tr>
@@ -231,11 +215,7 @@
     <i title="present" class="fas fa-lg fa-check-circle text-itp-green"></i>
     
 </td>
-                <td>
-    
-    <i title="missing" class="far fa-lg fa-circle text-itp-slate-light"></i>
-    
-</td>
+                
             </tr>
             
             <tr>
@@ -255,11 +235,7 @@
     <i title="present" class="fas fa-lg fa-check-circle text-itp-green"></i>
     
 </td>
-                <td>
-    
-    <i title="missing" class="far fa-lg fa-circle text-itp-slate-light"></i>
-    
-</td>
+                
             </tr>
             
         </tbody>
@@ -271,46 +247,51 @@
         <thead>
             <tr>
                 <th colspan="2">Validation errors observed</th>
+                <th colspan="3"> Number of errors</th>
+            </tr>
+            <tr>
+                <th>Error Name</th>
+                <th>Error Description</th>
                 <th>2021-07-04</th>
                 <th>2021-07-18</th>
-                <th></th>
+                
             </tr>
         </thead>
         <tbody>
             
             <tr>
                 
-                <td><p>decreasing_or_equal_shape_distance</p></td>
+                <td>decreasing_or_equal_shape_distance</td>
                 
-                <td><p>Two consecutive points in shapes.txt should have increasing values for shape_dist_traveled. If the values are equal, this is considered as an error.</p></td>
+                <td>Two consecutive points in shapes.txt should have increasing values for shape_dist_traveled. If the values are equal, this is considered as an error.</td>
                 
-                <td><p>188</p></td>
+                <td>188</td>
                 
-                <td><p>188</p></td>
-                
-            </tr>
-            
-            <tr>
-                
-                <td><p>duplicate_route_name</p></td>
-                
-                <td><p>All routes of the same route_type with the same agency_id should have unique combinations of route_short_name and route_long_name.</p></td>
-                
-                <td><p>1</p></td>
-                
-                <td><p>1</p></td>
+                <td>188</td>
                 
             </tr>
             
             <tr>
                 
-                <td><p>platform_without_parent_station</p></td>
+                <td>duplicate_route_name</td>
                 
-                <td><p>A platform has no parent_station field set.</p></td>
+                <td>All routes of the same route_type with the same agency_id should have unique combinations of route_short_name and route_long_name.</td>
                 
-                <td><p>2</p></td>
+                <td>1</td>
                 
-                <td><p>2</p></td>
+                <td>1</td>
+                
+            </tr>
+            
+            <tr>
+                
+                <td>platform_without_parent_station</td>
+                
+                <td>A platform has no parent_station field set.</td>
+                
+                <td>2</td>
+                
+                <td>2</td>
                 
             </tr>
             

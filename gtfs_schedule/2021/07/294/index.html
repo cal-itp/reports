@@ -117,7 +117,7 @@
                 <th colspan="2">Do the following files/fields exist?</th>
                 <th>2021-07-04</th>
                 <th>2021-07-18</th>
-                <th></th>
+                
             </tr>
         </thead>
         <tbody>
@@ -139,11 +139,7 @@
     <i title="present" class="fas fa-lg fa-check-circle text-itp-green"></i>
     
 </td>
-                <td>
-    
-    <i title="missing" class="far fa-lg fa-circle text-itp-slate-light"></i>
-    
-</td>
+                
             </tr>
             
             <tr>
@@ -163,11 +159,7 @@
     <i title="missing" class="far fa-lg fa-circle text-itp-slate-light"></i>
     
 </td>
-                <td>
-    
-    <i title="missing" class="far fa-lg fa-circle text-itp-slate-light"></i>
-    
-</td>
+                
             </tr>
             
             <tr>
@@ -185,11 +177,7 @@
     <i title="missing" class="far fa-lg fa-circle text-itp-slate-light"></i>
     
 </td>
-                <td>
-    
-    <i title="missing" class="far fa-lg fa-circle text-itp-slate-light"></i>
-    
-</td>
+                
             </tr>
             
             <tr>
@@ -209,11 +197,7 @@
     <i title="missing" class="far fa-lg fa-circle text-itp-slate-light"></i>
     
 </td>
-                <td>
-    
-    <i title="missing" class="far fa-lg fa-circle text-itp-slate-light"></i>
-    
-</td>
+                
             </tr>
             
             <tr>
@@ -231,11 +215,7 @@
     <i title="present" class="fas fa-lg fa-check-circle text-itp-green"></i>
     
 </td>
-                <td>
-    
-    <i title="missing" class="far fa-lg fa-circle text-itp-slate-light"></i>
-    
-</td>
+                
             </tr>
             
             <tr>
@@ -255,11 +235,7 @@
     <i title="present" class="fas fa-lg fa-check-circle text-itp-green"></i>
     
 </td>
-                <td>
-    
-    <i title="missing" class="far fa-lg fa-circle text-itp-slate-light"></i>
-    
-</td>
+                
             </tr>
             
         </tbody>
@@ -271,46 +247,51 @@
         <thead>
             <tr>
                 <th colspan="2">Validation errors observed</th>
+                <th colspan="3"> Number of errors</th>
+            </tr>
+            <tr>
+                <th>Error Name</th>
+                <th>Error Description</th>
                 <th>2021-07-04</th>
                 <th>2021-07-18</th>
-                <th></th>
+                
             </tr>
         </thead>
         <tbody>
             
             <tr>
                 
-                <td><p>decreasing_or_equal_shape_distance</p></td>
+                <td>decreasing_or_equal_shape_distance</td>
                 
-                <td><p>Two consecutive points in shapes.txt should have increasing values for shape_dist_traveled. If the values are equal, this is considered as an error.</p></td>
+                <td>Two consecutive points in shapes.txt should have increasing values for shape_dist_traveled. If the values are equal, this is considered as an error.</td>
                 
-                <td><p>136</p></td>
+                <td>136</td>
                 
-                <td><p>136</p></td>
-                
-            </tr>
-            
-            <tr>
-                
-                <td><p>duplicate_fare_rule_zone_id_fields</p></td>
-                
-                <td><p>Each of the following fields should be unique in fare_rules.txt: fare_rules.route_id, fare_rules.origin_id, fare_rules.contains_id and fare_rules.destination_id</p></td>
-                
-                <td><p>29</p></td>
-                
-                <td><p>29</p></td>
+                <td>136</td>
                 
             </tr>
             
             <tr>
                 
-                <td><p>duplicate_route_name</p></td>
+                <td>duplicate_fare_rule_zone_id_fields</td>
                 
-                <td><p>All routes of the same route_type with the same agency_id should have unique combinations of route_short_name and route_long_name.</p></td>
+                <td>Each of the following fields should be unique in fare_rules.txt: fare_rules.route_id, fare_rules.origin_id, fare_rules.contains_id and fare_rules.destination_id</td>
                 
-                <td><p>2</p></td>
+                <td>29</td>
                 
-                <td><p>2</p></td>
+                <td>29</td>
+                
+            </tr>
+            
+            <tr>
+                
+                <td>duplicate_route_name</td>
+                
+                <td>All routes of the same route_type with the same agency_id should have unique combinations of route_short_name and route_long_name.</td>
+                
+                <td>2</td>
+                
+                <td>2</td>
                 
             </tr>
             

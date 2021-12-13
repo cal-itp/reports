@@ -117,7 +117,7 @@
                 <th colspan="2">Do the following files/fields exist?</th>
                 <th>2021-09-05</th>
                 <th></th>
-                <th></th>
+                
             </tr>
         </thead>
         <tbody>
@@ -139,11 +139,7 @@
     <i title="missing" class="far fa-lg fa-circle text-itp-slate-light"></i>
     
 </td>
-                <td>
-    
-    <i title="missing" class="far fa-lg fa-circle text-itp-slate-light"></i>
-    
-</td>
+                
             </tr>
             
             <tr>
@@ -163,11 +159,7 @@
     <i title="missing" class="far fa-lg fa-circle text-itp-slate-light"></i>
     
 </td>
-                <td>
-    
-    <i title="missing" class="far fa-lg fa-circle text-itp-slate-light"></i>
-    
-</td>
+                
             </tr>
             
             <tr>
@@ -185,11 +177,7 @@
     <i title="missing" class="far fa-lg fa-circle text-itp-slate-light"></i>
     
 </td>
-                <td>
-    
-    <i title="missing" class="far fa-lg fa-circle text-itp-slate-light"></i>
-    
-</td>
+                
             </tr>
             
             <tr>
@@ -209,11 +197,7 @@
     <i title="missing" class="far fa-lg fa-circle text-itp-slate-light"></i>
     
 </td>
-                <td>
-    
-    <i title="missing" class="far fa-lg fa-circle text-itp-slate-light"></i>
-    
-</td>
+                
             </tr>
             
             <tr>
@@ -231,11 +215,7 @@
     <i title="missing" class="far fa-lg fa-circle text-itp-slate-light"></i>
     
 </td>
-                <td>
-    
-    <i title="missing" class="far fa-lg fa-circle text-itp-slate-light"></i>
-    
-</td>
+                
             </tr>
             
             <tr>
@@ -255,11 +235,7 @@
     <i title="missing" class="far fa-lg fa-circle text-itp-slate-light"></i>
     
 </td>
-                <td>
-    
-    <i title="missing" class="far fa-lg fa-circle text-itp-slate-light"></i>
-    
-</td>
+                
             </tr>
             
         </tbody>
@@ -271,46 +247,51 @@
         <thead>
             <tr>
                 <th colspan="2">Validation errors observed</th>
+                <th colspan="3"> Number of errors</th>
+            </tr>
+            <tr>
+                <th>Error Name</th>
+                <th>Error Description</th>
                 <th>2021-09-05</th>
                 <th>2021-09-19</th>
-                <th></th>
+                
             </tr>
         </thead>
         <tbody>
             
             <tr>
                 
-                <td><p>duplicate_route_name</p></td>
+                <td>duplicate_route_name</td>
                 
-                <td><p>All routes of the same route_type with the same agency_id should have unique combinations of route_short_name and route_long_name.</p></td>
+                <td>All routes of the same route_type with the same agency_id should have unique combinations of route_short_name and route_long_name.</td>
                 
-                <td><p>1</p></td>
+                <td>1</td>
                 
-                <td><p>1</p></td>
-                
-            </tr>
-            
-            <tr>
-                
-                <td><p>stop_time_timepoint_without_times</p></td>
-                
-                <td><p>Any record with stop_times.timepoint set to 1 should define a value for stop_times.arrival_time and stop_times.departure_time fields.</p></td>
-                
-                <td><p>22132</p></td>
-                
-                <td><p>96498</p></td>
+                <td>1</td>
                 
             </tr>
             
             <tr>
                 
-                <td><p>stop_too_far_from_trip_shape</p></td>
+                <td>stop_time_timepoint_without_times</td>
                 
-                <td><p>Per GTFS Best Practices, route alignments (in shapes.txt) should be within 100 meters of stop locations which a trip serves.</p></td>
+                <td>Any record with stop_times.timepoint set to 1 should define a value for stop_times.arrival_time and stop_times.departure_time fields.</td>
                 
-                <td><p>2</p></td>
+                <td>22132</td>
                 
-                <td><p>4</p></td>
+                <td>96498</td>
+                
+            </tr>
+            
+            <tr>
+                
+                <td>stop_too_far_from_trip_shape</td>
+                
+                <td>Per GTFS Best Practices, route alignments (in shapes.txt) should be within 100 meters of stop locations which a trip serves.</td>
+                
+                <td>2</td>
+                
+                <td>4</td>
                 
             </tr>
             

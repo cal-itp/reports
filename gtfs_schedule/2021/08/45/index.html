@@ -117,7 +117,9 @@
                 <th colspan="2">Do the following files/fields exist?</th>
                 <th>2021-08-01</th>
                 <th>2021-08-15</th>
-                <th>2021-08-29</th>
+                
+                    <th>2021-08-29</th>
+                
             </tr>
         </thead>
         <tbody>
@@ -139,11 +141,13 @@
     <i title="present" class="fas fa-lg fa-check-circle text-itp-green"></i>
     
 </td>
-                <td>
+                               
+                    <td>
     
     <i title="present" class="fas fa-lg fa-check-circle text-itp-green"></i>
     
 </td>
+                
             </tr>
             
             <tr>
@@ -163,11 +167,7 @@
     <i title="missing" class="far fa-lg fa-circle text-itp-slate-light"></i>
     
 </td>
-                <td>
-    
-    <i title="missing" class="far fa-lg fa-circle text-itp-slate-light"></i>
-    
-</td>
+                
             </tr>
             
             <tr>
@@ -185,11 +185,7 @@
     <i title="missing" class="far fa-lg fa-circle text-itp-slate-light"></i>
     
 </td>
-                <td>
-    
-    <i title="missing" class="far fa-lg fa-circle text-itp-slate-light"></i>
-    
-</td>
+                
             </tr>
             
             <tr>
@@ -209,11 +205,7 @@
     <i title="missing" class="far fa-lg fa-circle text-itp-slate-light"></i>
     
 </td>
-                <td>
-    
-    <i title="missing" class="far fa-lg fa-circle text-itp-slate-light"></i>
-    
-</td>
+                
             </tr>
             
             <tr>
@@ -231,11 +223,7 @@
     <i title="missing" class="far fa-lg fa-circle text-itp-slate-light"></i>
     
 </td>
-                <td>
-    
-    <i title="missing" class="far fa-lg fa-circle text-itp-slate-light"></i>
-    
-</td>
+                
             </tr>
             
             <tr>
@@ -255,11 +243,13 @@
     <i title="present" class="fas fa-lg fa-check-circle text-itp-green"></i>
     
 </td>
-                <td>
+                               
+                    <td>
     
     <i title="present" class="fas fa-lg fa-check-circle text-itp-green"></i>
     
 </td>
+                
             </tr>
             
         </tbody>
@@ -271,80 +261,87 @@
         <thead>
             <tr>
                 <th colspan="2">Validation errors observed</th>
+                <th colspan="3"> Number of errors</th>
+            </tr>
+            <tr>
+                <th>Error Name</th>
+                <th>Error Description</th>
                 <th>2021-08-01</th>
                 <th>2021-08-15</th>
+                
                 <th>2021-08-29</th>
+                
             </tr>
         </thead>
         <tbody>
             
             <tr>
                 
-                <td><p>block_trips_with_overlapping_stop_times</p></td>
+                <td>block_trips_with_overlapping_stop_times</td>
                 
-                <td><p>Trips within the same block have overlapping stop times, which is not allowed.</p></td>
+                <td>Trips within the same block have overlapping stop times, which is not allowed.</td>
                 
-                <td><p>6</p></td>
+                <td>6</td>
                 
-                <td><p>6</p></td>
+                <td>6</td>
                 
-                <td><p>6</p></td>
-                
-            </tr>
-            
-            <tr>
-                
-                <td><p>decreasing_or_equal_stop_time_distance</p></td>
-                
-                <td><p>Two consecutive stop times in a trip should have increasing distance. If the values are equal, this is considered as an error.</p></td>
-                
-                <td><p>97</p></td>
-                
-                <td><p>97</p></td>
-                
-                <td><p>97</p></td>
+                <td>6</td>
                 
             </tr>
             
             <tr>
                 
-                <td><p>duplicate_key</p></td>
+                <td>decreasing_or_equal_stop_time_distance</td>
                 
-                <td><p>The values of the given key and rows are duplicates.</p></td>
+                <td>Two consecutive stop times in a trip should have increasing distance. If the values are equal, this is considered as an error.</td>
                 
-                <td><p>52</p></td>
+                <td>97</td>
                 
-                <td><p>52</p></td>
+                <td>97</td>
                 
-                <td><p>52</p></td>
-                
-            </tr>
-            
-            <tr>
-                
-                <td><p>same_name_and_description_for_route</p></td>
-                
-                <td><p>The GTFS spec requires that a route_description is distinct from both the route short and long names.</p></td>
-                
-                <td><p>3</p></td>
-                
-                <td><p>3</p></td>
-                
-                <td><p>3</p></td>
+                <td>97</td>
                 
             </tr>
             
             <tr>
                 
-                <td><p>stop_time_with_arrival_before_previous_departure_time</p></td>
+                <td>duplicate_key</td>
                 
-                <td><p>The departure_time must not precede the arrival_time in stop_times.txt if both are given.</p></td>
+                <td>The values of the given key and rows are duplicates.</td>
                 
-                <td><p>48</p></td>
+                <td>52</td>
                 
-                <td><p>48</p></td>
+                <td>52</td>
                 
-                <td><p>48</p></td>
+                <td>52</td>
+                
+            </tr>
+            
+            <tr>
+                
+                <td>same_name_and_description_for_route</td>
+                
+                <td>The GTFS spec requires that a route_description is distinct from both the route short and long names.</td>
+                
+                <td>3</td>
+                
+                <td>3</td>
+                
+                <td>3</td>
+                
+            </tr>
+            
+            <tr>
+                
+                <td>stop_time_with_arrival_before_previous_departure_time</td>
+                
+                <td>The departure_time must not precede the arrival_time in stop_times.txt if both are given.</td>
+                
+                <td>48</td>
+                
+                <td>48</td>
+                
+                <td>48</td>
                 
             </tr>
             
