@@ -86,3 +86,16 @@ This site can be viewed at https://development-build--cal-itp-reports.netlify.ap
 
 In order to deploy the site, ensure the data was pushed to the production bucket,
 and merge any changes into the main branch.
+
+## Emailing Report to Agencies
+Once reports have been generated, we can use the postmark API to email the url to the various agencies
+
+1. 'pip install postmarker' to download the python library wrapper for Postmark
+
+## Using Postmark to send emails
+We are currently using the postmark API to send the reports via email to their respective clients
+1. Access to Postmark (contact for access to Bitwarden)
+2. Access the Postmark Server token- within the Postmark site, navigate to the existing servers 'gtfs reports.calip' is the transactional server used for sending out the emails and 'gtfs reports test' is the testing sandbox server used to test emails before sending to clients. Each server has its own respective Token within the API Token tab. Once you have the server API Token, set the variable in terminal using `export POSTMARK_SERVER_TOKEN=<"your token here">`
+4. Navigate to the reports subfolder, script requires 2 arguments Report Publish Date (YYYY-MM-DD) and Report Publish Month (Capitalized String)
+5. Run script- `python 3_generate_report_emails.py 2021-10-01 October`
+7. Verify email successfully sent in postmark account, within the tracking tab
