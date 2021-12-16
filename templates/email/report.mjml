@@ -12,7 +12,7 @@
   <mj-body background-color="#eee">
     <mj-section padding-bottom="8px" padding-top="8px">
       <mj-column>
-        <mj-image padding-left="10px" src="https://www.calitp.org/images/calitp_logo_MAIN.png" href="https://calitp.org" width="108" alt="Cal-ITP" align="left" />
+        <mj-image padding-left="10px" src="https://www.calitp.org/images/calitp_logo_MAIN.png" href="https://calitp.org" width="108px" alt="Cal-ITP" align="left" />
       </mj-column>
     </mj-section>
     <mj-section background-color="#fff">
