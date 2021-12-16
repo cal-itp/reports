@@ -4,6 +4,12 @@ import sys
 from postmarker.core import PostmarkClient
 import os
 import pandas as pd
+import configparser
+
+# read config from ini
+config = configparser.ConfigParser()
+config.read("config.ini")
+print({section: dict(config[section]) for section in config.sections()})
 
 # +
 SERVER_TOKEN=os.environ["POSTMARK_SERVER_TOKEN"]
