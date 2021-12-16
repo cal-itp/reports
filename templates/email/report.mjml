@@ -20,8 +20,8 @@
         <mj-text padding-bottom="0" color="#136C97" mj-class="display-font">
           <h2>Hello!</h2>
         </mj-text>
-        <mj-text>Greetings from Cal-ITP. As part of our work with the GTFS feeds for agencies across the state, we prepare a monthly report with some basic statistics and validation results for your agency’s feed. <strong>You can view your report for [MM]</strong> and past months at <a href="[[URL]]">[[URL]]</a>.</mj-text>
-        <mj-button href="[[URL]]">View Report</mj-button>
+        <mj-text>Greetings from Cal-ITP. As part of our work with the GTFS feeds for agencies across the state, we prepare a monthly report with some basic statistics and validation results for your agency’s feed. <strong>You can view your report for {{MONTH_NAME}}</strong> and past months at <a href="https://reports.calitp.org/">Reports</a>.</mj-text>
+        <mj-button href="{{URL}}">View Report</mj-button>
         <mj-text>We are actively looking for opportunities to help transit agencies address issues with their GTFS feeds. If you would like to meet with our team to learn more about how we can help, or have any questions, please email our team at <a href="mailto:hello@calitp.org">hello@calitp.org</a>.</mj-text>
         <mj-button background-color="#f6bf16" color="#136C97" href="mailto:hello@calitp.org">Contact Us</mj-button>
         <mj-text>Thanks,</mj-text>
