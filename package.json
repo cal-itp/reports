@@ -60,5 +60,8 @@
       ],
       "extensions": "jpeg,jpg,png,gif,svg"
     }
+  },
+  "dependencies": {
+    "mjml": "^4.11.0"
   }
 }
