@@ -31,7 +31,7 @@
     </mj-section>
     <mj-section>
       <mj-column>
-        <mj-text css-class="small-print" font-size="12px" color="#5D707C">Visit <a href="http://camobilitymarketplace.org/">CAMobilityMarketplace.org</a> for a catalog of code-compliant products and services for TransitProviders.</mj-text>
+        <mj-text css-class="small-print" font-size="12px" color="#5D707C">Visit <a href="http://camobilitymarketplace.org/">CAMobilityMarketplace.org</a> for a catalog of code-compliant products and services for Transit&nbsp;Providers.</mj-text>
         <mj-text css-class="small-print" font-size="12px" color="#2EA8CE">Subscribe to our <a href="https://lp.constantcontactpages.com/su/eLbtFoE/calitp?source_id=a41b99cd-7f28-4be8-a286-f9e75fc7bbce&source_type=em&c=">Mobility Newsletter</a> for the latest Cal-ITP and Caltrans&nbsp;updates.</mj-text>
       </mj-column>
     </mj-section>
