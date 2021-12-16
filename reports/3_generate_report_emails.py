@@ -11,8 +11,11 @@ config = configparser.ConfigParser()
 config.read("config.ini")
 print({section: dict(config[section]) for section in config.sections()})
 
-# +
-SERVER_TOKEN=os.environ["POSTMARK_SERVER_TOKEN"]
+# render MJML template
+stream = os.popen('npx mjml ../templates/email/report.mjml -s')
+template = stream.read()
+report_html = template.replace(('{{URL}}'), config['report']['report_url'])
+month_html = report_html.replace(('{{MONTH_NAME}}'), config['report']['month_name'])
 
 if len(sys.argv) < 2:
     raise Exception (
