@@ -28,8 +28,7 @@ config = parser["development"]
 # TODO: note this server token from environment. Michael recommends not putting it in the config,
 #       so we are not mixing sensitive info with configuration. Could also put it in a .env file that
 #       is .gitignored
-#SERVER_TOKEN=os.environ["POSTMARK_SERVER_TOKEN"]
-SERVER_TOKEN="test"
+SERVER_TOKEN=os.environ["POSTMARK_SERVER_TOKEN"]
 PUBLISH_DATE_YEAR = config['year']
 PUBLISH_DATE_MONTH = config['month']
 
