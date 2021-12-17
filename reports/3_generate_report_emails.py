@@ -28,7 +28,8 @@ config = parser["development"]
 # TODO: note this server token from environment. Michael recommends not putting it in the config,
 #       so we are not mixing sensitive info with configuration. Could also put it in a .env file that
 #       is .gitignored
-SERVER_TOKEN=os.environ["POSTMARK_SERVER_TOKEN"]
+#SERVER_TOKEN=os.environ["POSTMARK_SERVER_TOKEN"]
+SERVER_TOKEN="test"
 PUBLISH_DATE_YEAR = config['year']
 PUBLISH_DATE_MONTH = config['month']
 
@@ -37,14 +38,13 @@ DEV_LINK_BASE = f'https://development-build--cal-itp-reports.netlify.app/gtfs_sc
 # -
 # TODO: need to ensure that the test_emails.csv and production email sheet use the
 #       same column names
-tbl_report_emails = pd.read_csv(config["email_csv_path"])
+tbl_report_emails = pd.read_csv(config["email_csv_path"], skiprows=1)
 tbl_report_emails.columns = tbl_report_emails.columns.str.lower()
 tbl_report_emails.columns = tbl_report_emails.columns.str.replace(' ','_')
 report_emails = (
     tbl_report_emails
     >> collect()
     >> mutate (
-         #email = _.email.astype(str),
          calitp_itp_id = _.itp_id.astype(int),
          report_url = REPORT_LINK_BASE + "/" + _.itp_id.astype(str) + "/",
          dev_url = DEV_LINK_BASE + "/" + _.itp_id.astype(str) + "/",
@@ -67,7 +67,7 @@ def _generate_template(report_url):
     return completed
     
 html_message = report_emails.report_url.apply(_generate_template)
-all_emails = report_emails.main_email_
+all_emails = report_emails.main_email
 all_emails_list = list(zip(all_emails,html_message))
 
 
