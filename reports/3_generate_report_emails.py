@@ -1,7 +1,5 @@
-from calitp.tables import tbl
-from siuba import *
+# +
 import sys
-from postmarker.core import PostmarkClient
 import os
 import pandas as pd
 from calitp.tables import tbl
@@ -14,148 +12,88 @@ import configparser
 from jinja2 import Environment, StrictUndefined
 jinja_env = Environment(undefined=StrictUndefined)
 
+# +
 # read config from ini
-config = configparser.ConfigParser()
-config.read("config.ini")
-print({section: dict(config[section]) for section in config.sections()})
+parser = configparser.ConfigParser()
+parser.read("config.ini")
 
-# render MJML template
-stream = os.popen('npx mjml ../templates/email/report.mjml -s')
-template = stream.read()
-report_html = template.replace(('{{URL}}'), config['report']['report_url'])
-month_html = report_html.replace(('{{MONTH_NAME}}'), config['report']['month_name'])
+# TODO: how do people want to choose the config? Michael recommends using sys.argv
+#       so you could do e.g. python 3_generate_report_emails.py development
+config = parser["development"]
 
-if len(sys.argv) < 2:
-    raise Exception (
-        "2 arguments required: report publish date YYYY-MM-DD and Month"
-    )
-else:
-    REPORT_PUBLISH_DATE = sys.argv[1:]
+# +
+## Generate the report and dev link base to create report url 
 
-#REPORT_PUBLISH_DATE = "2021-07-01"
-#REPORT_PUBLISH_MONTH = "October"
-REPORT_PUBLISH_DATE = str(sys.argv[1])
-REPORT_PUBLISH_MONTH = str(sys.argv[2])
-print("Report Publish Date is:",REPORT_PUBLISH_DATE)
-print("Report Publish Month is:",REPORT_PUBLISH_MONTH)
-split_date = REPORT_PUBLISH_DATE.split("-")    
-PUBLISH_DATE_YEAR = split_date[0]
-PUBLISH_DATE_MONTH= split_date[1]
+# +
+# TODO: note this server token from environment. Michael recommends not putting it in the config,
+#       so we are not mixing sensitive info with configuration. Could also put it in a .env file that
+#       is .gitignored
+SERVER_TOKEN=os.environ["POSTMARK_SERVER_TOKEN"]
+PUBLISH_DATE_YEAR = config['year']
+PUBLISH_DATE_MONTH = config['month']
 
 REPORT_LINK_BASE = f'https://reports.calitp.org/gtfs_schedule/{PUBLISH_DATE_YEAR}/{PUBLISH_DATE_MONTH}'
 DEV_LINK_BASE = f'https://development-build--cal-itp-reports.netlify.app/gtfs_schedule/{PUBLISH_DATE_YEAR}/{PUBLISH_DATE_MONTH}'    
-
-
-# +
-df_crm_emails = pd.read_csv(
-    "https://docs.google.com/spreadsheets"
-    "/d/1AHFa5SKcEn7im374mPwULFCj7VlFchQr/export?gid=289636985&format=csv",
-    skiprows=1,
-)
-
-df_crm_emails.columns = df_crm_emails.columns.str.lower()
-
-# +
-tbl.gtfs_schedule.feed_info() >> count(missing_email = _.feed_contact_email.isna())
-
-tbl_report_emails = (
-    tbl.views.reports_gtfs_schedule_index()
-    >> left_join(
-        _,
-        tbl.gtfs_schedule.feed_info()
-        >> select(_.startswith("calitp"), _.feed_contact_email),
-        ["calitp_itp_id", "calitp_url_number"]
-    )
-    # NOTE: reports currently only use url number = 0, so we remove any others --
-    >> filter(_.publish_date == REPORT_PUBLISH_DATE,  _.calitp_url_number == 0)
-    >> select(_.startswith("calitp"), _.agency_name, _.use_for_report, _.feed_contact_email)
-)
-
-report_emails = tbl_report_emails >> collect()
 # -
-
-report_crm_emails = (
-    report_emails
-    >> full_join(
-        _,
-        df_crm_emails
-        >> filter(_.itp_id.notna())
-        >> mutate(itp_id=_.itp_id.astype(int)),
-        {"calitp_itp_id": "itp_id"},
-    )
-)
-
-report_crm_emails_inner = (
-    report_crm_emails
-    >> filter(_.calitp_itp_id.notna(), _.itp_id.notna())
-    >> select(-_.itp_id)
-    >> mutate(calitp_itp_id=_.calitp_itp_id.astype(int))
-)
+# TODO: need to ensure that the test_emails.csv and production email sheet use the
+#       same column names
+tbl_report_emails = pd.read_csv(config["email_csv_path"])
+tbl_report_emails.columns = tbl_report_emails.columns.str.lower()
+tbl_report_emails.columns = tbl_report_emails.columns.str.replace(' ','_')
+report_emails = (
+    tbl_report_emails
+    >> collect()
+    >> mutate (
+         #email = _.email.astype(str),
+         calitp_itp_id = _.itp_id.astype(int),
+         report_url = REPORT_LINK_BASE + "/" + _.itp_id.astype(str) + "/",
+         dev_url = DEV_LINK_BASE + "/" + _.itp_id.astype(str) + "/",
+       )
+     )
+report_emails
 
 
-final_all_emails = (
-    report_crm_emails_inner
-    >> transmute(_.calitp_itp_id, _.calitp_url_number, email = _["main email"], origin = "CRM")
-    >> filter(_.email.notna())
-    >> mutate(
-        calitp_itp_id = _.calitp_itp_id.astype(int),
-        calitp_url_number = _.calitp_url_number.astype(int),
-        report_url = REPORT_LINK_BASE + "/" + _.calitp_itp_id.astype(str) + "/",
-        dev_url = DEV_LINK_BASE + "/" + _.calitp_itp_id.astype(str) + "/",
-    )
-)
+{**config}
 
 
 # +
-### send emails using postmarks API
-
-# +
-def _html_body(col):
-    ##return a single formatted html for a single row of the table
-    return f"""<html>
-            <body>Hello!<br> Greetings from the Cal-ITP team.<br> As part of our work with the GTFS feeds for agencies across the state, we prepare a monthly report with some basic statistics and validation results for your agencies' feed.<br>
-            You can view your report for {REPORT_PUBLISH_MONTH} at {col.report_url}. We are actively looking for opportunities to help transit agencies address issues with their GTFS feeds. If you would like to meet with our team to learn more about how we can help, or have any questions, please email our team at hello@calitp.org. <br>
-            <br>Thanks,<br>
-            The Cal-ITP Team<br>
-            https://reports.calitp.org/
-            </body>
-        </html>"""
-
-HTML_MESSAGE = final_all_emails.apply(_html_body, axis =1)
-EMAIL = final_all_emails.email
-email_list = list(zip(EMAIL,HTML_MESSAGE))
-#email_dict = dict(zip(final_all_emails.email,HTML_MESSAGE))
+#for each row in report_emails, populate template
+def _generate_template(report_url):
+    stream = os.popen('npx mjml ../templates/email/report.mjml -s')
+    template = stream.read()
+    
+    # render variables in template which use e.g. {{ month_name }} by passing in config
+    completed = jinja_env.from_string(template).render(**config, url=report_url)
+    return completed
+    
+html_message = report_emails.report_url.apply(_generate_template)
+all_emails = report_emails.main_email_
+all_emails_list = list(zip(all_emails,html_message))
 
 
 # +
 postmark = PostmarkClient(server_token=SERVER_TOKEN)
 
-for EMAIL, HTML_MESSAGE in email_list:
+# Double check if we're on development that it is going to the sandbox ----
+if config["is_development"]:
+    server = postmark.server.get()
+    assert server.DeliveryType == "Sandbox"
+
+# Prompt user on whether to continue (if show_prompt specified) ----
+if config["show_prompt"]:
+    result = input(f"""
+You are about to email the following addresses: {", ".join(all_emails)}
+To continue, type yes.""")
+    
+    if result != "yes":
+        raise Exception("Need yes to continue")
+    
+
+for emails, html_message in all_emails_list:
     email = postmark.emails.Email(
-        From='general+cal-itp@jarv.us',
-        To=EMAIL,
-        Subject='GTFS Quality Reports from Cal-ITP',
-        HtmlBody=HTML_MESSAGE,
+        From=config['email_from'],
+        To=emails,
+        Subject=config['email_subject'],
+        HtmlBody=html_message,
         )
     email.send()
-  
-    
-    
-
-
-
-
-    
-
-
-
-
-# +
-##final_all_emails.to_csv(f"report_emails_{REPORT_PUBLISH_DATE}.csv")
-
-# +
-# import requests
-
-# for link in final_all_emails.dev_url.tolist():
-#     r = requests.get(link)
-#     r.raise_for_status()
