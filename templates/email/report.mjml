@@ -17,22 +17,23 @@
     </mj-section>
     <mj-section background-color="#fff">
       <mj-column>
-        <mj-text padding-bottom="0" color="#136C97" mj-class="display-font">
+        <mj-text padding-top="0" padding-bottom="0" color="#136C97" mj-class="display-font">
           <h2>Hello!</h2>
         </mj-text>
-        <mj-text>Greetings from Cal-ITP. As part of our work with the GTFS feeds for agencies across the state, we prepare a monthly report with some basic statistics and validation results for your agency’s feed. <strong>You can view your report for {{MONTH_NAME}}</strong> and past months at <a href="https://reports.calitp.org/">Reports</a>.</mj-text>
+        <mj-text>Greetings from Cal-ITP. As part of our work with the GTFS feeds for agencies across the state, we prepare a monthly report with some basic statistics and validation results for your agency’s feed. <strong>You can view your report for {{MONTH_NAME}}</strong> at <a href="{{URL}}">{{URL}}</a>.</mj-text>
         <mj-button href="{{URL}}">View Report</mj-button>
+        <mj-text>All previous reports are available at <a href="https://reports.calitp.org/">https://reports.calitp.org/</a>.</mj-text>
         <mj-text>We are actively looking for opportunities to help transit agencies address issues with their GTFS feeds. If you would like to meet with our team to learn more about how we can help, or have any questions, please email our team at <a href="mailto:hello@calitp.org">hello@calitp.org</a>.</mj-text>
         <mj-button background-color="#f6bf16" color="#136C97" href="mailto:hello@calitp.org">Contact Us</mj-button>
         <mj-text>Thanks,</mj-text>
-        <mj-text padding-top="0" color="#2EA8CE" mj-class="display-font" font-size="20px" padding-bottom="0">The Cal-ITP Team</mj-text>
+        <mj-text padding-top="0" padding-bottom="0" line-height="1" color="#2EA8CE" mj-class="display-font" font-size="20px" padding-bottom="0">The Cal-ITP Team</mj-text>
         <mj-text padding-top="0"><a href="http://calitp.org" style="font-size: 12px; letter-spacing: .03em; text-decoration: none; font-weight: bold;">calitp.org</a></mj-text>
       </mj-column>
     </mj-section>
     <mj-section>
       <mj-column>
         <mj-text css-class="small-print" font-size="12px" color="#5D707C">Visit <a href="http://camobilitymarketplace.org/">CAMobilityMarketplace.org</a> for a catalog of code-compliant products and services for Transit&nbsp;Providers.</mj-text>
-        <mj-text css-class="small-print" font-size="12px" color="#2EA8CE">Subscribe to our <a href="https://lp.constantcontactpages.com/su/eLbtFoE/calitp?source_id=a41b99cd-7f28-4be8-a286-f9e75fc7bbce&source_type=em&c=">Mobility Newsletter</a> for the latest Cal-ITP and Caltrans&nbsp;updates.</mj-text>
+        <mj-text css-class="small-print" font-size="12px" color="#2EA8CE">Subscribe to our <a href="https://lp.constantcontactpages.com/su/eLbtFoE/calitp?source_id=a41b99cd-7f28-4be8-a286-f9e75fc7bbce&amp;source_type=em&amp;c=">Mobility Newsletter</a> for the latest Cal-ITP and Caltrans&nbsp;updates.</mj-text>
       </mj-column>
     </mj-section>
   </mj-body>
