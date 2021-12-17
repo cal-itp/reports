@@ -4,7 +4,15 @@ import sys
 from postmarker.core import PostmarkClient
 import os
 import pandas as pd
+from calitp.tables import tbl
+from siuba import *
+from postmarker.core import PostmarkClient
 import configparser
+
+# This script generates a email body using mjml. The result itself has templated variables
+# of form {{SOME_VARIABLE_NAME}}, so we will use jinja to complete these email bodies
+from jinja2 import Environment, StrictUndefined
+jinja_env = Environment(undefined=StrictUndefined)
 
 # read config from ini
 config = configparser.ConfigParser()
