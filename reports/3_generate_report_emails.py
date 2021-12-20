@@ -32,8 +32,7 @@ SERVER_TOKEN=os.environ["POSTMARK_SERVER_TOKEN"]
 PUBLISH_DATE_YEAR = config['year']
 PUBLISH_DATE_MONTH = config['month']
 
-REPORT_LINK_BASE = f'https://reports.calitp.org/gtfs_schedule/{PUBLISH_DATE_YEAR}/{PUBLISH_DATE_MONTH}'
-DEV_LINK_BASE = f'https://development-build--cal-itp-reports.netlify.app/gtfs_schedule/{PUBLISH_DATE_YEAR}/{PUBLISH_DATE_MONTH}'    
+REPORT_LINK_BASE = f'https://reports.calitp.org/gtfs_schedule/{PUBLISH_DATE_YEAR}/{PUBLISH_DATE_MONTH}'  
 # -
 # TODO: need to ensure that the test_emails.csv and production email sheet use the
 #       same column names
@@ -46,7 +45,6 @@ report_emails = (
     >> mutate (
          calitp_itp_id = _.itp_id.astype(int),
          report_url = REPORT_LINK_BASE + "/" + _.itp_id.astype(str) + "/",
-         dev_url = DEV_LINK_BASE + "/" + _.itp_id.astype(str) + "/",
        )
      )
 report_emails
