@@ -63,9 +63,9 @@ def _generate_template(report_url):
     completed = jinja_env.from_string(template).render(**config, url=report_url)
     return completed
     
-html_message = report_emails.report_url.apply(_generate_template)
+html_messages = report_emails.report_url.apply(_generate_template)
 all_emails = report_emails.main_email
-all_emails_list = list(zip(all_emails,html_message))
+all_emails_list = list(zip(all_emails,html_messages))
 
 
 # +
@@ -86,11 +86,11 @@ To continue, type yes.""")
         raise Exception("Need yes to continue")
     
 
-for emails, html_message in all_emails_list:
+for emails, html_messages in all_emails_list:
     email = postmark.emails.Email(
         From=config['email_from'],
         To=emails,
         Subject=config['email_subject'],
-        HtmlBody=html_message,
+        HtmlBody=html_messages,
         )
     email.send()
