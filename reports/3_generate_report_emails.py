@@ -13,22 +13,26 @@ from jinja2 import Environment, StrictUndefined
 jinja_env = Environment(undefined=StrictUndefined)
 
 # +
+if len(sys.argv) > 1:
+    config_section_name = sys.argv[1]
+    print(f"Using config section: {config_section_name}")
+else:
+    raise ValueError("This script requires 1 argument, the section of config to use.")
+    
+
 # read config from ini
 parser = configparser.ConfigParser()
 parser.read("config.ini")
 
-# TODO: how do people want to choose the config? Michael recommends using sys.argv
-#       so you could do e.g. python 3_generate_report_emails.py development
-config = parser["development"]
+# select specific section to config
+config = parser[config_section_name]
 
 # +
 ## Generate the report and dev link base to create report url 
 
 # +
-# TODO: note this server token from environment. Michael recommends not putting it in the config,
-#       so we are not mixing sensitive info with configuration. Could also put it in a .env file that
-#       is .gitignored
-SERVER_TOKEN=os.environ["POSTMARK_SERVER_TOKEN"]
+SERVER_TOKEN = config['postmark_server_token']
+postmark = PostmarkClient(server_token=SERVER_TOKEN)
 PUBLISH_DATE_YEAR = config['year']
 PUBLISH_DATE_MONTH = config['month']
 
@@ -50,17 +54,16 @@ report_emails = (
 report_emails
 
 
-{**config}
-
-
 # +
+# generate mjml template
+stream = os.popen('npx mjml ../templates/email/report.mjml -s')
+mjml_template = stream.read()
+
+
 #for each row in report_emails, populate template
 def _generate_template(report_url):
-    stream = os.popen('npx mjml ../templates/email/report.mjml -s')
-    template = stream.read()
-    
     # render variables in template which use e.g. {{ month_name }} by passing in config
-    completed = jinja_env.from_string(template).render(**config, url=report_url)
+    completed = jinja_env.from_string(mjml_template).render(**config, url=report_url)
     return completed
     
 html_messages = report_emails.report_url.apply(_generate_template)
@@ -69,8 +72,6 @@ all_emails_list = list(zip(all_emails,html_messages))
 
 
 # +
-postmark = PostmarkClient(server_token=SERVER_TOKEN)
-
 # Double check if we're on development that it is going to the sandbox ----
 if config["is_development"]:
     server = postmark.server.get()
