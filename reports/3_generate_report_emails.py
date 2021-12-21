@@ -73,12 +73,15 @@ all_emails_list = list(zip(all_emails,html_messages))
 
 # +
 # Double check if we're on development that it is going to the sandbox ----
-if config["is_development"]:
+if config.getboolean("is_development"):
     server = postmark.server.get()
     assert server.DeliveryType == "Sandbox"
+    print("In sandbox environment")
+else:
+    print("In production environment")
 
 # Prompt user on whether to continue (if show_prompt specified) ----
-if config["show_prompt"]:
+if config.getboolean("show_prompt"):
     result = input(f"""
 You are about to email the following addresses: {", ".join(all_emails)}
 To continue, type yes.""")
