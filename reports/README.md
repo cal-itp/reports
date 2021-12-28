@@ -16,35 +16,16 @@ make generate_parameters
 make all -j 8
 ```
 
-Finally, to push report data to the production bucket, run the following.
-
-```
-# NOTE: currently need to replace gtfs-data-test with gtfs-data in Makefile
-# to push to production
-make sync
-```
-
 ## Using Postmark to send emails (SAFELY)
 We are currently using the postmark API to send the reports via email to their respective clients
 1. Access to Postmark (contact for access to Bitwarden)
     There is a Cal-ITP developer shared" collection in Bitwarden that contains keys for the reports sandbox server. An indivudal will not be given access to prod unless it is absolutely necessary. 
-2. Access the Postmark Server token- within the Postmark site, navigate to the existing servers 'gtfs reports.calip' is the transactional server used for sending out the emails and 'gtfs reports test' is the testing sandbox server used to test emails before sending to clients. Each server has its own respective Token within the API Token tab. Once you have the server API Token, set the variable in terminal using `export POSTMARK_SANDBOX_SERVER_TOKEN=<"your token here">` if you are one of the chosed few to be given production access use `POSTMARK_PRODUCTION_SERVER_TOKEN=<"your token here">` It is very important to label the tokens seperately if you have access to both (trust me). 
-3. Put in the code safeguards:
-If you are using the sandbox:
-It is a sandbox server meaning that it sends emails to a "blackhole" rather than actual clients. It is worth mentioning that while they are not actually delivered they are still processed by postmark and count towards the monthly sending volume
-Double check you are using the sandbox server token, then you can execute the code as expected. 
-4. Navigate to the reports subfolder, the script requires 2 arguments to generate the report link base, Report Publish Date (YYYY-MM-DD format) and Report Publish Month (October capitalized string format). The Report publish date is used to generate the url and the report publish month is used to populate the html message to the client.
-5. Navigate to the reports subfolder, script requires 2 arguments Report Publish Date (YYYY-MM-DD) and Report Publish Month (Capitalized String)
-6. Run script- `python 3_generate_report_emails.py 2021-10-01 October`
-7. Verify email successfully sent in postmark account, within the tracking tab.
-
-if you are using production:
-For some features of postmark, you will not be able to visualize the email bodies within the sandbox, URL Hypolinks for example. Then it is necessary to VERY CAREFULLY use the production api key:
-On line 117, comment out the for loop code and put in a simplified method.
-    ' postmark.emails.send(
-        From='general-email@jarv.us',
-        To='test-personal-email@test.com',
-        Subject='test-email',
-        HtmlBody='test-body'
-    )' 
-Once you have triple checked you are only using a single personal email, send an email to yourself. Once you have verified code works in VS Code, carefully add back in the POSTMARK_PRODUCTION_SERVER_TOKEN and the commented out for-loop
+2. Update the config file.
+    all code variables are stored in a config file. config-example.ini is an example config file that shows what the script is expecting in terms of inputs. Create your own config.ini using the example config as a template and populate accordingly. Some commonly updated variables would be month_name or email_subject. If the enviornment is development, you will paste in your sandbox server token in the 'postmark_server_token' spot. Same goes for production. Quotations are not needed for strings. The two different enviornments use two different data inputs. test_emails.csv is a test csv that mimics the production data without any actual client emails. The email_csv_path in production will be the URL from the google doc that will contain client emails. 
+3. Generate the template
+    We are using the mjml markup language to generate the html body and styling of the template. Both the report email and its compiled output is tored in the /templates/email. It is worth mentioning that mjml should use lowercase names to match the config file
+4. Swap out the variables using config file
+    We are using jinja in strict mode to swap out the MJML variables in the template. We use it in strict mode, so if a variable is incorrectly filled in (is misnamed, etc) it will raise an error
+5. Pass prompt checks
+    before sending out an email,  the "is_developement" config boolean will be checked to make sure it is going to the sandbox server. If you have the necessary permissions and have in production selected in the config file, a prompt will remind you that you are in production and it will print out your email recipients. Once all checks have been passed safely, the script will send out the emails.
+6. Verify emails successfully sent in postmark account, within the tracking tab.
