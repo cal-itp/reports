@@ -27,7 +27,8 @@
     "postcss": "^8.3.5",
     "postcss-cli": "^8.3.1",
     "sass": "^1.35.1",
-    "tailwindcss": "^2.2.0"
+    "tailwindcss": "^2.2.0",
+    "mjml": "^4.11.0"
   },
   "scripts": {
     "build": "NODE_ENV=production npm-run-all html css images",
