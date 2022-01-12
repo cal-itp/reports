@@ -97,4 +97,9 @@ for emails, html_messages in all_emails_list:
         Subject=config['email_subject'],
         HtmlBody=html_messages,
         )
+    try:
     email.send()
+    except BaseException as err :
+        print(f"failure to print to {emails}: {err}")
+
+    
