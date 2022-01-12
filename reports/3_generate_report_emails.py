@@ -83,7 +83,7 @@ else:
 # Prompt user on whether to continue (if show_prompt specified) ----
 if config.getboolean("show_prompt"):
     result = input(f"""
-You are about to email the following addresses: {", ".join(all_emails)}
+You are about to email the following {all_emails.count()} addresses: {", ".join(all_emails)}
 To continue, type yes.""")
     
     if result != "yes":
