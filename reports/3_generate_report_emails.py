@@ -97,7 +97,7 @@ for emails, html_messages in all_emails_list:
         HtmlBody=html_messages,
         )
     print(f"sending to emails: {emails}")
-try:
-    email.send()
-except BaseException as err:
-    print(f"failure to print to {emails}: {err}")
+    try:
+        email.send()
+    except BaseException as err:
+        print(f"failure to print to {emails}: {err}")
