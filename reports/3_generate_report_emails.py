@@ -84,8 +84,7 @@ else:
 if config.getboolean("show_prompt"):
     result = input(f"""
 You are about to email the following {all_emails.count()} addresses: {", ".join(all_emails)}
-To continue, type yes.""")
-    
+To continue, type yes.""") 
     if result != "yes":
         raise Exception("Need yes to continue")
     
@@ -98,7 +97,7 @@ for emails, html_messages in all_emails_list:
         HtmlBody=html_messages,
         )
     print(f"sending to emails: {emails}")
-    try:
+try:
     email.send()
 except BaseException as err:
-        print(f"failure to print to {emails}: {err}")
+    print(f"failure to print to {emails}: {err}")
