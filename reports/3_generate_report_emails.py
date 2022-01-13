@@ -102,7 +102,3 @@ for emails, html_messages in all_emails_list:
     email.send()
 except BaseException as err:
         print(f"failure to print to {emails}: {err}")
-    
-
-
-    
