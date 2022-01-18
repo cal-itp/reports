@@ -70,7 +70,7 @@ html_messages = report_emails.report_url.apply(_generate_template)
 all_emails = report_emails.main_email
 all_emails_list = list(zip(all_emails,html_messages))
 
-
+print("Using server token (Sandbox is f38...): " + config["postmark_server_token"])
 # +
 # Double check if we're on development that it is going to the sandbox ----
 if config.getboolean("is_development"):
@@ -83,9 +83,8 @@ else:
 # Prompt user on whether to continue (if show_prompt specified) ----
 if config.getboolean("show_prompt"):
     result = input(f"""
-You are about to email the following addresses: {", ".join(all_emails)}
-To continue, type yes.""")
-    
+You are about to email the following {all_emails.count()} addresses: {", ".join(all_emails)}
+To continue, type yes.""") 
     if result != "yes":
         raise Exception("Need yes to continue")
     
@@ -97,4 +96,8 @@ for emails, html_messages in all_emails_list:
         Subject=config['email_subject'],
         HtmlBody=html_messages,
         )
-    email.send()
+    print(f"sending to emails: {emails}")
+    try:
+        email.send()
+    except BaseException as err:
+        print(f"failure to print to {emails}: {err}")
