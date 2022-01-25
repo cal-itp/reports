@@ -24,9 +24,13 @@ python -m http.server
 - [ ] report month has been added to UI
 - [ ] find example of agency with no validation errors (avalon), with validation notices (santa clara), and with daily metric errors (sacrt)
 
+### Publishing to development website
+
+
 ### Review
 
-- [ ] Request review from Olivia
+- [ ] Request review of development site from Transit Data Quality Lead (@0-ram)
+- [ ] Receive approval from Cal-ITP technical lead (@evansiroky) to deploy website to production
 
 ### Deploy Reports
 
@@ -45,18 +49,18 @@ gsutil -m rsync -r -d gs://gtfs-data-test/report_gtfs_schedule/ gs://gtfs-data/r
 If there are no changes between development and production rerun the last github action workflow run on main.
 
 - [ ] verify in the github action that it is copying production report data
-
 - [ ] verify that production site has been updated with most up to date month
 
 ### Email reports
 
 #### Testing
 
-obtain test emails from evan. Verify with Olivia and calitp that email contents are correct. Update the config file
+Obtain test emails from Cal-ITP technical lead (@evansiroky). Verify with Transit Data Quality Lead (@o-ram) and Cal-ITP comms lead that email contents are correct. Update the config file.
 
+- [ ] Verify with Transit Data Quality Lead (@o-ram) and Comms Lead that email content is correct
 - [ ] update config file to have current month
-
-- [ ] verify from Olivia that email content is correct
+- [ ] Verify with Cal-ITP Technical Lead (@evansiroky) that test email list is correct
+- [ ] Verify with Transit Data Quality Lead (@o-ram) that production email list is correct
 
 ##### Generate the template (if needed)
 
@@ -66,8 +70,8 @@ script execution in development
 python 3_generate_report_emails.py development
 ```
 
-- [ ] send out emails to evan's test.csv using sandbox token.
-- [ ] send out emails to test.csv using production token
+- [ ] send out emails to test email list using sandbox token.
+- [ ] send out emails to test email list production token
 - [ ] verify that the emails pass visual inspection
 
 #### Production
@@ -80,6 +84,8 @@ python 3_generate_report_emails.py production
 
 pass prompt that asks if production is correct and verify email recipients are production
 send out emails
+
+- [ ] send out emails to production email list using production token
 
 ### Verify emails successfully sent
 
