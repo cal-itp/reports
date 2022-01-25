@@ -10,9 +10,9 @@ make generate_parameters
 make all -j 30
 ```
 
-- [ ] verifying that parameters are generated in subfolders
-- [ ] verify in outputs that reports were generated
-- [ ] verify that data subfolder is present
+- [ ] Verify that parameters are generated in subfolders
+- [ ] Verify in outputs that reports were generated
+- [ ] Verify that data subfolder is present
 
 ### Generate static site
 
@@ -21,8 +21,8 @@ npm run build
 python -m http.server
 ```
 
-- [ ] report month has been added to UI
-- [ ] find example of agency with no validation errors (avalon), with validation notices (santa clara), and with daily metric errors (sacrt)
+- [ ] Report month has been added to UI
+- [ ] Find example of agency with no validation errors (avalon), with validation notices (santa clara), and with daily metric errors (sacrt)
 
 ### Publishing to development website
 
@@ -48,8 +48,8 @@ gsutil -m rsync -r -d gs://gtfs-data-test/report_gtfs_schedule/ gs://gtfs-data/r
 
 If there are no changes between development and production rerun the last github action workflow run on main.
 
-- [ ] verify in the github action that it is copying production report data
-- [ ] verify that production site has been updated with most up to date month
+- [ ] Verify in the github action that it is copying production report data
+- [ ] Verify that production site has been updated with most up to date month
 
 ### Email reports
 
@@ -58,7 +58,7 @@ If there are no changes between development and production rerun the last github
 Obtain test emails from Cal-ITP technical lead (@evansiroky). Verify with Transit Data Quality Lead (@o-ram) and Cal-ITP comms lead that email contents are correct. Update the config file.
 
 - [ ] Verify with Transit Data Quality Lead (@o-ram) and Comms Lead that email content is correct
-- [ ] update config file to have current month
+- [ ] Update config file to have current month
 - [ ] Verify with Cal-ITP Technical Lead (@evansiroky) that test email list is correct
 - [ ] Verify with Transit Data Quality Lead (@o-ram) that production email list is correct
 
@@ -70,9 +70,9 @@ script execution in development
 python 3_generate_report_emails.py development
 ```
 
-- [ ] send out emails to test email list using sandbox token.
-- [ ] send out emails to test email list production token
-- [ ] verify that the emails pass visual inspection
+- [ ] Send out emails to test email list using sandbox token.
+- [ ] Send out emails to test email list production token
+- [ ] Verify that the emails pass visual inspection
 
 #### Production
 
@@ -85,9 +85,9 @@ python 3_generate_report_emails.py production
 pass prompt that asks if production is correct and verify email recipients are production
 send out emails
 
-- [ ] send out emails to production email list using production token
+- [ ] Send out emails to production email list using production token
 
 ### Verify emails successfully sent
 
-- [ ]  verify in postmark that email tracking has been selected
-- [ ]  verify in postmark that emails have been sent in the production server correctly and have not bounced etc
+- [ ]  Verify in postmark that email tracking has been selected
+- [ ]  Verify in postmark that emails have been sent in the production server correctly and have not bounced etc
