@@ -1,6 +1,6 @@
 # Checklist for monthly report generation
 
-## Process should being on the first of the month and reports emailed out no later than 2 weeks later
+## Process should begin on the first of the month and reports emailed out no later than 2 weeks after that
 
 ### Creating report data
 
@@ -58,7 +58,7 @@ and merge any changes into the main branch.
 
 If there are no changes between development and production rerun the last github action workflow run on main.
 
-- [ ] Verify in github action is is using gtfs-data (production) rather than gtfs-data-test (development)
+- [ ] Verify github action is using gtfs-data (production) rather than gtfs-data-test (development)
 - [ ] Verify in the github action that it is copying production report data
 - [ ] Verify that production site has been updated with most up to date month
 
