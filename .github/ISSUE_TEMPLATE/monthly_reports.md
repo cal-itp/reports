@@ -14,7 +14,15 @@ make all -j 30
 - [ ] Verify in outputs that reports were generated
 - [ ] Verify that data subfolder is present
 
+If needed update previous month's reports. Make sure that the hard-coded months are accurate.
+
+``` python
+python run_all_months.py
+```
+
 ### Generate static site
+
+From within the build subfolder
 
 ```python  
 npm run build
@@ -30,7 +38,12 @@ python -m http.server
 make sync
 ```
 
-Github actions automatically build and deploy any changes to the `development` branch.
+Github actions automatically build and deploy any changes to the `development` branch. May need to re-run github actions. If on the main branch, need to sync development and main branch.
+
+```python
+gsutil -m rsync -r -d gs://gtfs-data-test/report_gtfs_schedule/ gs://gtfs-data/report_gtfs_schedule/
+```
+
 The built HTML is pushed automatically as `development-build`.
 This site can be viewed at https://development-build--cal-itp-reports.netlify.app/.
 
