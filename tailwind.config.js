@@ -1,7 +1,10 @@
 module.exports = {
-  purge: [
-    'build/**/*.html'
-  ],
+  purge: {
+    enabled: process.env.NODE_ENV === 'production',
+    content: [
+      'build/**/*.html'
+    ],
+  },
   darkMode: false, // or 'media' or 'class'
   theme: {
     container: {

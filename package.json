@@ -17,27 +17,35 @@
     "node": ">=12",
     "npm": ">=7"
   },
+  "dependencies": {
+    "alpinejs": "^3.8.1"
+  },
   "devDependencies": {
+    "@rollup/plugin-node-resolve": "^13.1.3",
     "@tailwindcss/typography": "^0.4.1",
     "autoprefixer": "^10.2.6",
     "copy": "^0.3.2",
     "cssnano": "^5.0.6",
+    "mjml": "^4.11.0",
     "npm-run-all": "^4.1.5",
     "npm-watch": "^0.10.0",
     "postcss": "^8.3.5",
     "postcss-cli": "^8.3.1",
+    "rollup": "^2.67.1",
+    "rollup-plugin-terser": "^7.0.2",
     "sass": "^1.35.1",
     "tailwindcss": "^2.2.0",
-    "mjml": "^4.11.0"
+    "terser": "^5.10.0"
   },
   "scripts": {
-    "build": "NODE_ENV=production npm-run-all html css images",
+    "build": "NODE_ENV=production npm-run-all html css images js",
     "html": "echo 'processing html...'; if python generate.py -eq 0; then echo 'html ready'; else echo 'html failed' && exit 1; fi",
     "css": "echo 'processing css...'; npm-run-all css:clean css:sass css:postcss; echo 'css ready'",
     "css:clean": "rm -f build/css/*",
     "css:postcss": "postcss --ext min.css --dir build/css/ build/css/*.css",
     "css:sass": "sass --no-source-map assets/scss:build/css",
     "images": "copy assets/images/**/*.{jpeg,jpg,png,gif,svg} build/images",
+    "js": "rollup --config",
     "watch": "npm-watch"
   },
   "watch": {
@@ -60,6 +68,12 @@
         "assets/images"
       ],
       "extensions": "jpeg,jpg,png,gif,svg"
+    },
+    "js": {
+      "patterns": [
+        "assets/js"
+      ],
+      "extensions": "js"
     }
   }
 }
