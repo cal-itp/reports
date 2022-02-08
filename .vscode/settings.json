@@ -1,3 +1,5 @@
 {
-    "python.pythonPath": ".venv/bin/python"
+    "python.pythonPath": ".venv/bin/python",
+    "css.validate": false,
+    "scss.validate": false
 }
