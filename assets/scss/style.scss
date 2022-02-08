@@ -16,6 +16,7 @@ html {
 
 body {
     color: $text-color;
+    overflow: scroll; // prevent layout jumping when page height changes
 }
 
 h1, h2, h3, h4 {
@@ -46,6 +47,44 @@ a.btn {
     text-decoration: none !important;
 }
 
+input, select {
+    @apply
+        border
+        bg-white
+        px-4 py-2
+        rounded;
+}
+
+input {
+    @apply
+        shadow-inner;
+}
+
+select {
+    @apply
+        appearance-none
+        pr-9
+        shadow;
+
+    /*! icon from bootstrap | https://github.com/twbs/bootstrap/blob/8f11c52919fb9b7142ebf9b5797f9cc1538194d2/scss/_variables.scss#L930 */
+    background-image: url("data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 16'><path fill='none' stroke='%23343a40' stroke-linecap='round' stroke-linejoin='round' stroke-width='2' d='m2 5 6 6 6-6'/></svg>");
+    background-position: right .75rem center;
+    background-repeat: no-repeat;
+    background-size: 1em .75em;
+}
+
+input[type="search"] {
+    @apply
+        rounded-full
+        pl-12;
+
+    /*! icon from font awesome | https://fontawesome.com/v5.15/icons/search?style=solid */
+    background-image: url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"><path fill="hsl(220deg 13% 71%)" d="M505 442.7L405.3 343c-4.5-4.5-10.6-7-17-7H372c27.6-35.3 44-79.7 44-128C416 93.1 322.9 0 208 0S0 93.1 0 208s93.1 208 208 208c48.3 0 92.7-16.4 128-44v16.3c0 6.4 2.5 12.5 7 17l99.7 99.7c9.4 9.4 24.6 9.4 33.9 0l28.3-28.3c9.4-9.4 9.4-24.6.1-34zM208 336c-70.7 0-128-57.2-128-128 0-70.7 57.2-128 128-128 70.7 0 128 57.2 128 128 0 70.7-57.2 128-128 128z"></path></svg>');
+    background-position: 1.25em center;
+    background-repeat: no-repeat;
+    background-size: auto 1em;
+}
+
 .responsive-prose {
     @apply prose prose-sm sm:prose lg:prose-lg;
 
@@ -61,4 +100,25 @@ a.btn {
     th[rowspan] + td {
         padding-left: 0;
     }
+}
+
+.text-muted {
+    @apply
+        text-itp-slate-bold
+        text-opacity-60;
+}
+
+.list-group {
+    @apply
+        bg-white
+        divide-solid divide-y
+        overflow-hidden
+        rounded-md;
+
+        &__link {
+            @apply
+                block
+                hover:bg-itp-teal-light
+                p-4;
+        }
 }
