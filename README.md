@@ -58,6 +58,8 @@ gsutil -m rsync -r -d gs://gtfs-data-test/report_gtfs_schedule/ gs://gtfs-data/r
 - Python script `generate.py` loads JSON from `data` directory and applies it to `index.html` template
 - HTML template written with [Jinja](https://jinja.palletsprojects.com/en/3.0.x/)
 - CSS written with [SCSS](https://sass-lang.com/documentation/syntax#scss) and [Tailwind](https://tailwindcss.com/docs) via [PostCSS](https://postcss.org/)
+- JS behavior added with [Alpine.js](https://alpinejs.dev)
+  - Bundled with [Rollup](https://rollupjs.org/guide/en/)
 - Build scripts via [NPM](https://www.npmjs.com/)
 
 ### How to use it
