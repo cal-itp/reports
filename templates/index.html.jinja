@@ -1,7 +1,15 @@
 {% extends "layout/default.html.jinja" %}
-{% import 'macros.html.jinja' as macros %}
+
+{% macro anchor_link(target, iconCls, iconTitle) %}
+    <small class="ml-2">
+        <a href="#{{ target }}">
+            <i title="{{ iconTitle }}" class="text-itp-slate-bold {{ iconCls }}"></i>
+        </a>
+    </small>
+{% endmacro %}
 
 {% block title %}Monthly GTFS Quality Reports{% endblock %}
+ 
 
 {% block body %}
 <div class="container py-12">
@@ -32,40 +40,26 @@
 
 <div class="bg-itp-orange-light">
     <div class="container py-12">
-        <div class="responsive-prose mb-6">
+        <div class="responsive-prose">
             <h2 id="directory">
                 Directory of GTFS Quality Reports
-                {{ macros.anchor_link('how-to-reports', 'far fa-question-circle', 'Help') }}
+                {{ anchor_link('how-to-reports', 'far fa-question-circle', 'Help') }}
             </h2>
         </div>
 
-        {# Alpine.js component #}
-        <div class="mt-4" x-data="{ year: {{ reports[-1].year }} }">
-            <label>
-                <select class="border-0" id="report-list-year" aria-label="Year" aria-controls="report-list" x-model="year" x-cloak>
-                    {% for year in reports %}
-                        <option>{{ year.year }}</option>
-                    {% endfor %}
-                </select>
-            </label>
-
-            <ul id="report-list" class="list-group shadow mt-4 max-w-md">
-                {% for year in reports %}
-                  {% for month_entry in year["months"] %}
-                    <li :hidden="year != {{ year.year }}">
-                        <a class="list-group__link"
-                            href="{{SITE_PATH}}/{{PATH_GTFS_SCHEDULE}}/{{year.year}}/{{ '%02d' % month_entry.month }}">
-                            {{ macros.list_group_icon() }}
-                            {{ month_entry["month"] | month_name }}
-                            <span class="text-muted">{{ year["year"] }}</span>
-                        </a>
-                    </li>
-                  {% endfor %}
-                {% endfor %}
-            </ul>
-        </div>
-        {# /component #}
-
+        <ul class="bg-white shadow overflow-hidden rounded-md divide-solid divide-y max-w-sm mt-4">
+            <!-- TODO: generate dynamically -->
+            {% for year in reports %}
+              {% for month_entry in year["months"] %}
+                <li>
+                    <a class="block p-4 hover:bg-itp-teal-light" href="{{SITE_PATH}}/{{PATH_GTFS_SCHEDULE}}/{{year["year"]}}/{{ "%02d" % month_entry["month"] }}">
+                        <i class="fas fa-arrow-circle-right mr-1 text-itp-teal"></i>
+                        {{ month_entry["month"] | month_name }} {{ year["year"] }}
+                    </a>
+                </li>
+              {% endfor %}
+            {% endfor %}
+        </ul>
     </div>
 </div>
 
@@ -123,7 +117,7 @@
 
             <h2 id="how-to-reports">
                 How to use these reports
-                {{ macros.anchor_link('directory', 'fas fa-long-arrow-alt-up', 'Back to reports') }}
+                {{ anchor_link('directory', 'fas fa-long-arrow-alt-up', 'Back to reports') }}
             </h2>
             <p>
                 Each report contains three sections:

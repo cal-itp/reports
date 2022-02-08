@@ -1,57 +1,31 @@
 {% extends "layout/default.html.jinja" %}
-{% import 'macros.html.jinja' as macros %}
 
 {% block title %}Monthly GTFS Quality Reports: {{DATE_MONTH_YEAR}}{% endblock %}
 
 {% block content %}
 <div class="responsive-prose">
+    {# TODO make dynamic #}
     <h1>
         GTFS Quality Reports<br>
         <small>{{DATE_MONTH_YEAR}}</small>
     </h1>
 </div>
 
-{# Alpine.js component #}
-<div class="my-12" x-data="{
-        resultsCount: null,
-        rawQuery: '',
-        get query() { return this.rawQuery.trim().toLowerCase(); },
-    }" x-init="$watch('query', () => {
-        $nextTick(() => {
-            if (query == '') {
-                resultsCount = null;
-            } else {
-                resultsCount = document.querySelectorAll('#report-list li[data-report]:not([hidden])').length;
-            }
-        });
-    })">
-
-    <input class="w-full sm:max-w-sm" type="search" spellcheck="false" placeholder="Search for an agency&hellip;"
-        x-model="rawQuery">
-
-    <ul id="report-list" class="list-group border shadow-sm max-w-prose mt-4">
-        {% set crnt_entries = month["reports"] %}
-        {% for entry in crnt_entries -%}
-        <li data-report :hidden="query.length > 0 && !('{{ entry.agency_name }}'.toLowerCase().includes(query))">
-            <a class="list-group__link" href="{{SITE_PATH}}/{{PATH_GTFS_SCHEDULE}}/{{ entry['report_path'] }}">
-                {# use flex so wrapped items will stay aligned next to icon #}
-                <div class="flex items-baseline">
-                    <div class="pt-1 -mt-1 mr-2">
-                        {{ macros.list_group_icon() }}
-                    </div>
-                    <div>
-                        {{ entry["agency_name"] }}
-                    </div>
+<ul class="bg-white border overflow-hidden rounded-md divide-solid divide-y max-w-prose my-12">
+    {% set crnt_entries = month["reports"] %}
+    {% for entry in crnt_entries -%}
+    <li>
+        <a class="block p-4 hover:bg-itp-teal-light" href="{{SITE_PATH}}/{{PATH_GTFS_SCHEDULE}}/{{ entry['report_path'] }}">
+            <div class="flex items-baseline">
+                <div class="pt-1 -mt-1 mr-2">
+                    <i class="fas fa-arrow-circle-right text-itp-teal"></i>
                 </div>
-            </a>
-        </li>
-        {% endfor %}
-        <li :hidden="resultsCount !== 0">
-            <div class="p-4">
-                No reports match <strong class="whitespace-pre" x-text="rawQuery"></strong>
+                <div>
+                    {{ entry["agency_name"] }}
+                </div>
             </div>
-        </li>
-    </ul>
-</div>
-{# /component #}
+        </a>
+    </li>
+    {% endfor %}
+</ul>
 {% endblock %}

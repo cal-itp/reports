@@ -4,7 +4,6 @@
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <meta name="theme-color" content="rgba(31,41,55)">
     <title>{% block title %}Monthly GTFS Quality Report {% endblock %}</title>
     {% block css %}
     <link rel="stylesheet"
@@ -35,20 +34,13 @@
         <!-- Footer or overscroll area -->
     </div>
 
-    {% block js_bottom %}
-    <script src="{{SITE_DOMAIN}}{{SITE_PATH}}/js/bundle.js"></script>
-    {% endblock %}
-
-    {% block analytics %}
     <!-- Global site tag (gtag.js) - Google Analytics -->
     <script async src="https://www.googletagmanager.com/gtag/js?id=G-Q4W9YVZW3C"></script>
     <script>
-        window.dataLayer = window.dataLayer || [];
-        function gtag() { dataLayer.push(arguments); }
-        gtag('js', new Date());
-        gtag('config', 'G-Q4W9YVZW3C');
+      window.dataLayer = window.dataLayer || [];
+      function gtag(){dataLayer.push(arguments);}
+      gtag('js', new Date());
+      gtag('config', 'G-Q4W9YVZW3C');
     </script>
-    {% endblock %}
 </body>
-
 </html>
