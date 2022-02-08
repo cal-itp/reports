@@ -4,6 +4,7 @@
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="theme-color" content="rgba(31,41,55)">
     <title>Monthly GTFS Quality Reports: Jun 2021 Metro</title>
     
     <link rel="stylesheet"
@@ -34,7 +35,7 @@
         <small>
             <a href="https://www.metro.net">Metro</a>
             &hairsp;&middot;&hairsp;
-            Jun 2021
+            <span class="inline-block">Jun 2021</span>
         </small>
     </h1>
     <p class="lead responsive-prose">
@@ -109,142 +110,143 @@
 <div class="responsive-prose max-w-none">
     <h2>Consistency with the California GTFS Minimum Guidelines</h2>
 
-    <table>
-
-        <!-- file checks -->
-        <thead>
-            <tr>
-                <th colspan="2">Do the following files/fields exist?</th>
-                <th>2021-06-06</th>
-                <th>2021-06-20</th>
+    <div class="overflow-x-auto -mx-8 px-8">
+        <table>
+            <!-- file checks -->
+            <thead>
+                <tr>
+                    <th colspan="2">Do the following files/fields exist?</th>
+                    <th class="whitespace-nowrap">2021-06-06</th>
+                    <th class="whitespace-nowrap">2021-06-20</th>
+                    
+                </tr>
+            </thead>
+            <tbody>
                 
-            </tr>
-        </thead>
-        <tbody>
-            
-            <tr>
-                
-                
-                <th class="font-normal text-itp-slate-bold" rowspan="1">Visual display</th>
-                
-                <td>shapes.txt</td>
-                <!-- these are the date columns -->
-                <td>
+                <tr>
+                    
+                    
+                    <th class="font-normal text-itp-slate-bold" rowspan="1">Visual display</th>
+                    
+                    <td>shapes.txt</td>
+                    <!-- these are the date columns -->
+                    <td>
     
     <i title="present" class="fas fa-lg fa-check-circle text-itp-green"></i>
     
 </td>
-                <td>
+                    <td>
     
     <i title="present" class="fas fa-lg fa-check-circle text-itp-green"></i>
     
 </td>
+                    
+                </tr>
                 
-            </tr>
-            
-            <tr>
-                
-                
-                <th class="font-normal text-itp-slate-bold" rowspan="2">Navigation</th>
-                
-                <td>levels.txt</td>
-                <!-- these are the date columns -->
-                <td>
+                <tr>
+                    
+                    
+                    <th class="font-normal text-itp-slate-bold" rowspan="2">Navigation</th>
+                    
+                    <td>levels.txt</td>
+                    <!-- these are the date columns -->
+                    <td>
     
     <i title="missing" class="far fa-lg fa-circle text-itp-slate-light"></i>
     
 </td>
-                <td>
+                    <td>
     
     <i title="missing" class="far fa-lg fa-circle text-itp-slate-light"></i>
     
 </td>
+                    
+                </tr>
                 
-            </tr>
-            
-            <tr>
-                
-                
-                <td>pathways.txt</td>
-                <!-- these are the date columns -->
-                <td>
+                <tr>
+                    
+                    
+                    <td>pathways.txt</td>
+                    <!-- these are the date columns -->
+                    <td>
     
     <i title="missing" class="far fa-lg fa-circle text-itp-slate-light"></i>
     
 </td>
-                <td>
+                    <td>
     
     <i title="missing" class="far fa-lg fa-circle text-itp-slate-light"></i>
     
 </td>
+                    
+                </tr>
                 
-            </tr>
-            
-            <tr>
-                
-                
-                <th class="font-normal text-itp-slate-bold" rowspan="2">Fares</th>
-                
-                <td>fare_leg_rules.txt</td>
-                <!-- these are the date columns -->
-                <td>
+                <tr>
+                    
+                    
+                    <th class="font-normal text-itp-slate-bold" rowspan="2">Fares</th>
+                    
+                    <td>fare_leg_rules.txt</td>
+                    <!-- these are the date columns -->
+                    <td>
     
     <i title="missing" class="far fa-lg fa-circle text-itp-slate-light"></i>
     
 </td>
-                <td>
+                    <td>
     
     <i title="missing" class="far fa-lg fa-circle text-itp-slate-light"></i>
     
 </td>
+                    
+                </tr>
                 
-            </tr>
-            
-            <tr>
-                
-                
-                <td>fare_rules.txt</td>
-                <!-- these are the date columns -->
-                <td>
+                <tr>
+                    
+                    
+                    <td>fare_rules.txt</td>
+                    <!-- these are the date columns -->
+                    <td>
     
     <i title="missing" class="far fa-lg fa-circle text-itp-slate-light"></i>
     
 </td>
-                <td>
+                    <td>
     
     <i title="missing" class="far fa-lg fa-circle text-itp-slate-light"></i>
     
 </td>
+                    
+                </tr>
                 
-            </tr>
-            
-            <tr>
-                
-                
-                <th class="font-normal text-itp-slate-bold" rowspan="1">Technical contacts</th>
-                
-                <td>feed_info.txt</td>
-                <!-- these are the date columns -->
-                <td>
+                <tr>
+                    
+                    
+                    <th class="font-normal text-itp-slate-bold" rowspan="1">Technical contacts</th>
+                    
+                    <td>feed_info.txt</td>
+                    <!-- these are the date columns -->
+                    <td>
     
     <i title="present" class="fas fa-lg fa-check-circle text-itp-green"></i>
     
 </td>
-                <td>
+                    <td>
     
     <i title="present" class="fas fa-lg fa-check-circle text-itp-green"></i>
     
 </td>
+                    
+                </tr>
                 
-            </tr>
+            </tbody>
+
+            <!-- validation errors -->
+
             
-        </tbody>
 
-        <!-- validation errors -->
-
-        
-
-    </table>
+        </table>
+    </div>
 
     
 
@@ -263,13 +265,20 @@
         <!-- Footer or overscroll area -->
     </div>
 
+    
+    <script src="/js/bundle.js"></script>
+    
+
+    
     <!-- Global site tag (gtag.js) - Google Analytics -->
     <script async src="https://www.googletagmanager.com/gtag/js?id=G-Q4W9YVZW3C"></script>
     <script>
-      window.dataLayer = window.dataLayer || [];
-      function gtag(){dataLayer.push(arguments);}
-      gtag('js', new Date());
-      gtag('config', 'G-Q4W9YVZW3C');
+        window.dataLayer = window.dataLayer || [];
+        function gtag() { dataLayer.push(arguments); }
+        gtag('js', new Date());
+        gtag('config', 'G-Q4W9YVZW3C');
     </script>
+    
 </body>
+
 </html>
