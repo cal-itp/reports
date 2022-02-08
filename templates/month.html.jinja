@@ -1,5 +1,5 @@
 {% extends "layout/default.html.jinja" %}
-{% import 'macros.jinja' as macros %}
+{% import 'macros.html.jinja' as macros %}
 
 {% block title %}Monthly GTFS Quality Reports: {{DATE_MONTH_YEAR}}{% endblock %}
 
@@ -12,13 +12,11 @@
 </div>
 
 {# Alpine.js component #}
-<div class="my-12"
-    x-data="{
+<div class="my-12" x-data="{
         resultsCount: null,
         rawQuery: '',
         get query() { return this.rawQuery.trim().toLowerCase(); },
-    }"
-    x-init="$watch('query', () => {
+    }" x-init="$watch('query', () => {
         $nextTick(() => {
             if (query == '') {
                 resultsCount = null;
@@ -28,10 +26,7 @@
         });
     })">
 
-    <input class="w-full sm:max-w-sm"
-        type="search"
-        spellcheck="false"
-        placeholder="Search for an agency&hellip;"
+    <input class="w-full sm:max-w-sm" type="search" spellcheck="false" placeholder="Search for an agency&hellip;"
         x-model="rawQuery">
 
     <ul id="report-list" class="list-group border shadow-sm max-w-prose mt-4">
@@ -51,7 +46,7 @@
             </a>
         </li>
         {% endfor %}
-        <li :hidden="resultsCount != 0">
+        <li :hidden="resultsCount !== 0">
             <div class="p-4">
                 No reports match <strong class="whitespace-pre" x-text="rawQuery"></strong>
             </div>
