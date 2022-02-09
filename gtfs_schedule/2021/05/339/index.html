@@ -4,6 +4,7 @@
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="theme-color" content="rgba(31,41,55)">
     <title>Monthly GTFS Quality Reports: May 2021 Torrance Transit System</title>
     
     <link rel="stylesheet"
@@ -34,7 +35,7 @@
         <small>
             <a href="http://Transit.TorranceCA.gov">Torrance Transit System</a>
             &hairsp;&middot;&hairsp;
-            May 2021
+            <span class="inline-block">May 2021</span>
         </small>
     </h1>
     <p class="lead responsive-prose">
@@ -109,191 +110,192 @@
 <div class="responsive-prose max-w-none">
     <h2>Consistency with the California GTFS Minimum Guidelines</h2>
 
-    <table>
-
-        <!-- file checks -->
-        <thead>
-            <tr>
-                <th colspan="2">Do the following files/fields exist?</th>
-                <th>2021-05-16</th>
-                <th>2021-05-30</th>
+    <div class="overflow-x-auto -mx-8 px-8">
+        <table>
+            <!-- file checks -->
+            <thead>
+                <tr>
+                    <th colspan="2">Do the following files/fields exist?</th>
+                    <th class="whitespace-nowrap">2021-05-16</th>
+                    <th class="whitespace-nowrap">2021-05-30</th>
+                    
+                </tr>
+            </thead>
+            <tbody>
                 
-            </tr>
-        </thead>
-        <tbody>
-            
-            <tr>
-                
-                
-                <th class="font-normal text-itp-slate-bold" rowspan="1">Visual display</th>
-                
-                <td>shapes.txt</td>
-                <!-- these are the date columns -->
-                <td>
+                <tr>
+                    
+                    
+                    <th class="font-normal text-itp-slate-bold" rowspan="1">Visual display</th>
+                    
+                    <td>shapes.txt</td>
+                    <!-- these are the date columns -->
+                    <td>
     
     <i title="present" class="fas fa-lg fa-check-circle text-itp-green"></i>
     
 </td>
-                <td>
+                    <td>
     
     <i title="present" class="fas fa-lg fa-check-circle text-itp-green"></i>
     
 </td>
+                    
+                </tr>
                 
-            </tr>
-            
-            <tr>
-                
-                
-                <th class="font-normal text-itp-slate-bold" rowspan="2">Navigation</th>
-                
-                <td>levels.txt</td>
-                <!-- these are the date columns -->
-                <td>
+                <tr>
+                    
+                    
+                    <th class="font-normal text-itp-slate-bold" rowspan="2">Navigation</th>
+                    
+                    <td>levels.txt</td>
+                    <!-- these are the date columns -->
+                    <td>
     
     <i title="missing" class="far fa-lg fa-circle text-itp-slate-light"></i>
     
 </td>
-                <td>
+                    <td>
     
     <i title="missing" class="far fa-lg fa-circle text-itp-slate-light"></i>
     
 </td>
+                    
+                </tr>
                 
-            </tr>
-            
-            <tr>
-                
-                
-                <td>pathways.txt</td>
-                <!-- these are the date columns -->
-                <td>
+                <tr>
+                    
+                    
+                    <td>pathways.txt</td>
+                    <!-- these are the date columns -->
+                    <td>
     
     <i title="missing" class="far fa-lg fa-circle text-itp-slate-light"></i>
     
 </td>
-                <td>
+                    <td>
     
     <i title="missing" class="far fa-lg fa-circle text-itp-slate-light"></i>
     
 </td>
+                    
+                </tr>
                 
-            </tr>
-            
-            <tr>
-                
-                
-                <th class="font-normal text-itp-slate-bold" rowspan="2">Fares</th>
-                
-                <td>fare_leg_rules.txt</td>
-                <!-- these are the date columns -->
-                <td>
+                <tr>
+                    
+                    
+                    <th class="font-normal text-itp-slate-bold" rowspan="2">Fares</th>
+                    
+                    <td>fare_leg_rules.txt</td>
+                    <!-- these are the date columns -->
+                    <td>
     
     <i title="missing" class="far fa-lg fa-circle text-itp-slate-light"></i>
     
 </td>
-                <td>
+                    <td>
     
     <i title="missing" class="far fa-lg fa-circle text-itp-slate-light"></i>
     
 </td>
+                    
+                </tr>
                 
-            </tr>
-            
-            <tr>
-                
-                
-                <td>fare_rules.txt</td>
-                <!-- these are the date columns -->
-                <td>
+                <tr>
+                    
+                    
+                    <td>fare_rules.txt</td>
+                    <!-- these are the date columns -->
+                    <td>
     
     <i title="present" class="fas fa-lg fa-check-circle text-itp-green"></i>
     
 </td>
-                <td>
+                    <td>
     
     <i title="present" class="fas fa-lg fa-check-circle text-itp-green"></i>
     
 </td>
+                    
+                </tr>
                 
-            </tr>
-            
-            <tr>
-                
-                
-                <th class="font-normal text-itp-slate-bold" rowspan="1">Technical contacts</th>
-                
-                <td>feed_info.txt</td>
-                <!-- these are the date columns -->
-                <td>
+                <tr>
+                    
+                    
+                    <th class="font-normal text-itp-slate-bold" rowspan="1">Technical contacts</th>
+                    
+                    <td>feed_info.txt</td>
+                    <!-- these are the date columns -->
+                    <td>
     
     <i title="present" class="fas fa-lg fa-check-circle text-itp-green"></i>
     
 </td>
-                <td>
+                    <td>
     
     <i title="present" class="fas fa-lg fa-check-circle text-itp-green"></i>
     
 </td>
+                    
+                </tr>
                 
-            </tr>
+            </tbody>
+
+            <!-- validation errors -->
+
             
-        </tbody>
 
-        <!-- validation errors -->
-
-        
-
-        <thead>
-            <tr>
-                <th colspan="2">Validation errors observed</th>
-                <th colspan="3"> Number of errors</th>
-            </tr>
-            <tr>
-                <th>Error Name</th>
-                <th>Error Description</th>
-                <th>2021-05-02</th>
-                <th>2021-05-16</th>
+            <thead class="border-t">
+                <tr>
+                    <th class="pt-12" colspan="2">Validation errors observed</th>
+                    <th class="pt-12" colspan="3"> Number of errors</th>
+                </tr>
+                <tr>
+                    <th>Error Name</th>
+                    <th>Error Description</th>
+                    <th>2021-05-02</th>
+                    <th>2021-05-16</th>
+                    
+                    <th>2021-05-30</th>
+                    
+                </tr>
+            </thead>
+            <tbody>
                 
-                <th>2021-05-30</th>
+                <tr>
+                    
+                    <td>same_name_and_description_for_route</td>
+                    
+                    <td>The GTFS spec requires that a route_description is distinct from both the route short and long names.</td>
+                    
+                    <td>11</td>
+                    
+                    <td>11</td>
+                    
+                    <td>11</td>
+                    
+                </tr>
                 
-            </tr>
-        </thead>
-        <tbody>
+                <tr>
+                    
+                    <td>too_fast_travel</td>
+                    
+                    <td>As implemented in the original Google Python GTFS validator, the calculated speed between stops should not be greater than 150 km/h (42 m/s SI or 93 mph).</td>
+                    
+                    <td>2</td>
+                    
+                    <td>2</td>
+                    
+                    <td>2</td>
+                    
+                </tr>
+                
+            </tbody>
+
             
-            <tr>
-                
-                <td>same_name_and_description_for_route</td>
-                
-                <td>The GTFS spec requires that a route_description is distinct from both the route short and long names.</td>
-                
-                <td>11</td>
-                
-                <td>11</td>
-                
-                <td>11</td>
-                
-            </tr>
-            
-            <tr>
-                
-                <td>too_fast_travel</td>
-                
-                <td>As implemented in the original Google Python GTFS validator, the calculated speed between stops should not be greater than 150 km/h (42 m/s SI or 93 mph).</td>
-                
-                <td>2</td>
-                
-                <td>2</td>
-                
-                <td>2</td>
-                
-            </tr>
-            
-        </tbody>
 
-        
-
-    </table>
+        </table>
+    </div>
 
     
 
@@ -308,13 +310,20 @@
         <!-- Footer or overscroll area -->
     </div>
 
+    
+    <script src="/js/bundle.js"></script>
+    
+
+    
     <!-- Global site tag (gtag.js) - Google Analytics -->
     <script async src="https://www.googletagmanager.com/gtag/js?id=G-Q4W9YVZW3C"></script>
     <script>
-      window.dataLayer = window.dataLayer || [];
-      function gtag(){dataLayer.push(arguments);}
-      gtag('js', new Date());
-      gtag('config', 'G-Q4W9YVZW3C');
+        window.dataLayer = window.dataLayer || [];
+        function gtag() { dataLayer.push(arguments); }
+        gtag('js', new Date());
+        gtag('config', 'G-Q4W9YVZW3C');
     </script>
+    
 </body>
+
 </html>
