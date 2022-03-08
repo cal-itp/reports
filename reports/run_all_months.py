@@ -14,7 +14,7 @@ report_months = [{
   'months': [5, 6, 7, 8, 9, 10, 11, 12]
 },{
   'year': 2022,
-  'months': [1]
+  'months': [1, 2]
 }
 ]
 print(report_months)
