@@ -1,5 +1,14 @@
 <mjml>
   <mj-head>
+    <mj-raw>
+        <!-- Google Tag Manager -->
+      <script>(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':
+      new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],
+      j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
+      'https://www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);
+      })(window,document,'script','dataLayer','GTM-KXB2HS6');</script>
+      <!-- End Google Tag Manager -->
+    </mj-raw>
     <mj-font name="Nunito Sans" href="https://fonts.googleapis.com/css2?family=Nunito+Sans:wght@400;800" />
     <mj-font name="Raleway" href="https://fonts.googleapis.com/css2?family=Raleway:wght@700" />
     <mj-attributes>
@@ -10,6 +19,12 @@
     <mj-style> a { color: #136C97; } .small-print a { color: inherit; } </mj-style>
   </mj-head>
   <mj-body background-color="#eee">
+    <mj-raw>
+        <!-- Google Tag Manager (noscript) -->
+      <noscript><iframe src="https://www.googletagmanager.com/ns.html?id=GTM-KXB2HS6"
+      height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
+      <!-- End Google Tag Manager (noscript) -->
+    </mj-raw>
     <mj-section padding-bottom="8px" padding-top="8px">
       <mj-column>
         <mj-image padding-left="10px" src="https://www.calitp.org/images/calitp_logo_MAIN.png" href="https://calitp.org?utm_campaign=reports&amp;utm_source=reports-mailer&amp;utm_medium=email&amp;utm_content=logo-link" width="108px" alt="Cal-ITP" align="left" />
