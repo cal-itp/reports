@@ -33,7 +33,7 @@ jobs:
 
     # copy in reports ----
 
-    - uses: google-github-actions/setup-gcloud@master
+    - uses: google-github-actions/setup-gcloud@v0
       with:
         service_account_key: ${{ secrets.GCP_SA_KEY }}
         export_default_credentials: true
