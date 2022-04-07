@@ -118,17 +118,18 @@ Monthly GTFS Quality Reports: {{parameters["DATE_MONTH_YEAR"]}} {{parameters["AG
 
             <!-- validation severity errors -->
 
-            {% if validation_severity["data"] %}
+            {% if validation_severity is not defined %}
+
+            {% elif "data" in validation_severity %}
 
             <thead class="border-t">
                 <tr>
                     <th class="pt-12" colspan="2">Validation errors observed</th>
-                    <th class="pt-12" colspan="3"> Severity </th>
                 </tr>
                 <tr>
                     <th>Error Name</th>
                     <th>Error Description</th>
-                    <th>{{ validation_severity["columns"][2]}}</th>
+                    <th>{{ validation_severity["columns"][2] | title }}</th>
                     <th>{{ validation_severity["columns"][3]}}</th>
                 </tr>
             </thead>
@@ -141,16 +142,14 @@ Monthly GTFS Quality Reports: {{parameters["DATE_MONTH_YEAR"]}} {{parameters["AG
                 </tr>
                 {% endfor %}
             </tbody>
+            {% else %}
+
+             <p><b>No validation severity data is available for this period.</b></p>
 
             {% endif %}
 
     </div>
 
-    {% if not validation_severity["data"] %}
-
-    <p><b>No validation severity data is available for this period.</b></p>
-
-    {% endif %}
 
 </div>
 
@@ -160,7 +159,7 @@ Monthly GTFS Quality Reports: {{parameters["DATE_MONTH_YEAR"]}} {{parameters["AG
 
             <thead class="border-t">
                 <tr>
-                    <th class="pt-12" colspan="2">Validation errors observed</th>
+                    <th class="pt-12" colspan="2">Cal-ITP validation errors observed</th>
                     <th class="pt-12" colspan="3"> Number of errors</th>
                 </tr>
                 <tr>
