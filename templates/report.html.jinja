@@ -116,44 +116,6 @@ Monthly GTFS Quality Reports: {{parameters["DATE_MONTH_YEAR"]}} {{parameters["AG
                 {% endfor %}
             </tbody>
 
-            <!-- validation severity errors -->
-
-            {% if validation_severity["data"] %}
-
-            <thead class="border-t">
-                <tr>
-                    <th class="pt-12" colspan="2">Validation errors observed</th>
-                    <th class="pt-12" colspan="3"> Severity </th>
-                </tr>
-                <tr>
-                    <th>Error Name</th>
-                    <th>Error Description</th>
-                    <th>{{ validation_severity["columns"][2]}}</th>
-                    <th>{{ validation_severity["columns"][3]}}</th>
-                </tr>
-            </thead>
-            <tbody>
-                {% for row in validation_severity["data"] %}
-                <tr>
-                    {% for col in row %}
-                    <td>{{ col }}</td>
-                    {% endfor %}
-                </tr>
-                {% endfor %}
-            </tbody>
-
-            {% endif %}
-
-    </div>
-
-    {% if not validation_severity["data"] %}
-
-    <p><b>No validation severity data is available for this period.</b></p>
-
-    {% endif %}
-
-</div>
-
             <!-- validation errors -->
 
             {% if validation_notices["data"] %}
