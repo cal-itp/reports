@@ -32,7 +32,7 @@ Note that the folder also contains a `docker-compose.yml`, so you could run
 the build inside docker by running these commands first..
 
 ```shell
-docker-compose run reports /bin/bash
+docker-compose run calitp_reports /bin/bash
 cd app
 ```
 

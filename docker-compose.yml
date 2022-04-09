@@ -1,0 +1,13 @@
+version: '3'
+
+services:
+  calitp_reports:
+    container_name: calitp-reports
+    build:
+      context: .
+      dockerfile: config/docker/Dockerfile
+    volumes:
+      - $HOME/.config/gcloud:/home/reports/.config/gcloud
+      - $PWD/reports:/home/reports/app
+    environment:
+      - GOOGLE_APPLICATION_CREDENTIALS=/home/reports/.config/gcloud/service-account-file.json

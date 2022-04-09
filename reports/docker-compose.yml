@@ -1,9 +1,0 @@
-version: '3'
-
-services:
-  reports:
-    build:
-      context: .
-    volumes:
-      - $HOME/.config/gcloud:/home/reports/.config/gcloud
-      - $PWD:/home/reports/app
