@@ -9,27 +9,19 @@ This repository is set up in two pieces:
 - `reports/` subfolder - generates underlying GTFS data for each report.
 - root folder - uses `generate.py` and `templates/` to create the static reports website.
 
-## Generating reports data
+## Generating the reports
 
 See [this screencast](https://www.loom.com/share/b45317053ff54b9fbb46b8159947c379) for a full walkthrough of building the reports.
 
-### Creating data
+#### Running Locally
 Set up [google cloud authentication credentials](https://cloud.google.com/docs/authentication/getting-started).
 
 From the `reports` subfolder..
 
 ```shell
 pip install -r requirements
-
-# should produce notebooks, html and other assets in e.g. outputs/2021/05/10
-# replace -j 8 with the number of notebooks to build in parallel
-# the build process is not computationally intensive, but requires waiting on 
-# http requests to google bigquery
-make generate_parameters
-make all -j 8
 ```
-
-#### Docker Instructions
+### Running via Docker-compose
 Note that the folder also contains a `docker-compose.yml`, so you could run
 the build inside docker by running these commands first.
 
@@ -38,6 +30,15 @@ Save Google Cloud authentication credentials in `$HOME/.config/gcloud/service-ac
 ```shell
 docker-compose run calitp_reports /bin/bash
 cd app
+```
+### Executing Report Generation
+```
+# should produce notebooks, html and other assets in e.g. outputs/2021/05/10
+# replace -j 8 with the number of notebooks to build in parallel
+# the build process is not computationally intensive, but requires waiting on 
+# http requests to google bigquery
+make generate_parameters
+make all -j 8
 ```
 
 ### Pushing to google cloud
