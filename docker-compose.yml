@@ -9,5 +9,7 @@ services:
     volumes:
       - $HOME/.config/gcloud:/home/reports/.config/gcloud
       - $PWD/reports:/home/reports/app
+    ports:
+      - 8891:8891
     environment:
       - GOOGLE_APPLICATION_CREDENTIALS=/home/reports/.config/gcloud/service-account-file.json

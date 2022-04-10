@@ -28,8 +28,16 @@ the build inside docker by running these commands first.
 Save Google Cloud authentication credentials in `$HOME/.config/gcloud/service-account-file.json`
 
 ```shell
-docker-compose run calitp_reports /bin/bash
+docker-compose run --service-ports calitp_reports /bin/bash
 ```
+
+When debugging, a jupyter notebook server within the container can be started via:
+```
+jupyter notebook --ip 0.0.0.0 --port 8891
+```
+and connect to it by copying/pasting the connection information in the terminal.
+
+
 ### Executing Report Generation
 ```
 # should produce notebooks, html and other assets in e.g. outputs/2021/05/10
