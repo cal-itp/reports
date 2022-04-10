@@ -29,7 +29,6 @@ Save Google Cloud authentication credentials in `$HOME/.config/gcloud/service-ac
 
 ```shell
 docker-compose run calitp_reports /bin/bash
-cd app
 ```
 ### Executing Report Generation
 ```
