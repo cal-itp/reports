@@ -36,7 +36,7 @@ When debugging, a jupyter notebook server within the container can be started vi
 jupyter notebook --ip 0.0.0.0 --port 8891
 ```
 and connect to it by copying/pasting the connection information in the terminal.
-
+Here, port 8891 is used to avoid the default 8888 port for any prior jupyter servers.
 
 ### Executing Report Generation
 ```
