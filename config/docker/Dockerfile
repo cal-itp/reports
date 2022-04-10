@@ -7,14 +7,15 @@ WORKDIR /home/reports
 
 ADD requirements.txt requirements.txt
 
-RUN python3 -m venv venv
+ARG VIRTUAL_ENV=/home/reports/venv
+RUN python3 -m venv $VIRTUAL_ENV
+ENV PATH="$VIRTUAL_ENV/bin:$PATH"
 
 RUN mkdir -p ~/.config/matplotlib
 
-RUN . venv/bin/activate \
-  && python -m pip install -r requirements.txt \
+RUN python -m pip install -r requirements.txt \
   && ipython kernel install --user --name venv-notebooks \
   && ipython kernel install --user --name venv-calitp-py \
   && python -c "import matplotlib"
 
-
+WORKDIR /home/reports/app
