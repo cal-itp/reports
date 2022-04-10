@@ -14,6 +14,7 @@ This repository is set up in two pieces:
 See [this screencast](https://www.loom.com/share/b45317053ff54b9fbb46b8159947c379) for a full walkthrough of building the reports.
 
 ### Creating data
+Set up [google cloud authentication credentials](https://cloud.google.com/docs/authentication/getting-started).
 
 From the `reports` subfolder..
 
@@ -28,8 +29,11 @@ make generate_parameters
 make all -j 8
 ```
 
+#### Docker Instructions
 Note that the folder also contains a `docker-compose.yml`, so you could run
-the build inside docker by running these commands first..
+the build inside docker by running these commands first.
+
+Save Google Cloud authentication credentials in `$HOME/.config/gcloud/service-account-file.json`
 
 ```shell
 docker-compose run calitp_reports /bin/bash
