@@ -39,6 +39,19 @@ and connect to it by copying/pasting the connection information in the terminal.
 Here, port 8891 is used to avoid the default 8888 port for any prior jupyter servers.
 
 ### Executing Report Generation
+When looking for a clean start (i.e. start from scratch) run:
+```
+make clean
+```
+Next, update the makefile with the desired month. For example, for March 2022, change the line:
+```
+NOTEBOOKS=$(subst parameters.json,index.html,$(wildcard outputs/2021/09/*/parameters.json))
+```
+to:
+```
+NOTEBOOKS=$(subst parameters.json,index.html,$(wildcard outputs/2022/03/*/parameters.json))
+```
+Then, start the report generation:
 ```
 # should produce notebooks, html and other assets in e.g. outputs/2021/05/10
 # replace -j 8 with the number of notebooks to build in parallel
