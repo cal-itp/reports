@@ -95,6 +95,8 @@ for emails, html_messages in all_emails_list:
         To=emails,
         Subject=config['email_subject'],
         HtmlBody=html_messages,
+        TrackOpens=config['track_opens'],
+        TrackLinks=config['track_links']
         )
     print(f"sending to emails: {emails}")
     try:

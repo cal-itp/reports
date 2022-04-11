@@ -12,7 +12,7 @@
   <mj-body background-color="#eee">
     <mj-section padding-bottom="8px" padding-top="8px">
       <mj-column>
-        <mj-image padding-left="10px" src="https://www.calitp.org/images/calitp_logo_MAIN.png" href="https://calitp.org" width="108px" alt="Cal-ITP" align="left" />
+         <mj-image padding-left="10px" src="https://www.calitp.org/images/calitp_logo_MAIN.png" href="https://calitp.org?utm_campaign=reports&amp;utm_source=reports-mailer&amp;utm_medium=email&amp;utm_content=logo-link" width="108px" alt="Cal-ITP" align="left" />
       </mj-column>
     </mj-section>
     <mj-section background-color="#fff">
@@ -20,14 +20,14 @@
         <mj-text padding-top="0" padding-bottom="0" color="#136C97" mj-class="display-font">
           <h2>Hello!</h2>
         </mj-text>
-        <mj-text>Greetings from Cal-ITP. As part of our work with the GTFS feeds for agencies across the state, we prepare a monthly report with some basic statistics and validation results for your agency’s feed. <strong>You can view your report for {{month_name}}</strong> at <a href="{{url}}">{{url}}</a>.</mj-text>
-        <mj-button href="{{url}}">View Report</mj-button>
-        <mj-text>All previous reports are available at <a href="https://reports.calitp.org/">https://reports.calitp.org/</a>.</mj-text>
+        <mj-text>Greetings from Cal-ITP. As part of our work with the GTFS feeds for agencies across the state, we prepare a monthly report with some basic statistics and validation results for your agency’s feed. <strong>You can view your report for {{month_name}}</strong> at <a href="{{url}}?utm_campaign=reports&amp;utm_source=reports-mailer&amp;utm_medium=email&amp;utm_content=report-link">{{url}}</a>.</mj-text>
+        <mj-button href="{{url}}?utm_campaign=reports&amp;utm_source=reports-mailer&amp;utm_medium=email&amp;utm_content=report-button">View Report</mj-button>
+        <mj-text>All previous reports are available at <a href="https://reports.calitp.org/?utm_campaign=reports&amp;utm_source=reports-mailer&amp;utm_medium=email&amp;utm_content=all-reports-link">https://reports.calitp.org/</a>.</mj-text>
         <mj-text>We are actively looking for opportunities to help transit agencies address issues with their GTFS feeds. If you would like to meet with our team to learn more about how we can help, or have any questions, please email our team at <a href="mailto:hello@calitp.org">hello@calitp.org</a>.</mj-text>
         <mj-button background-color="#f6bf16" color="#136C97" href="mailto:hello@calitp.org">Contact Us</mj-button>
         <mj-text>Thanks,</mj-text>
         <mj-text padding-top="0" padding-bottom="0" line-height="1px" color="#2EA8CE" mj-class="display-font" font-size="20px" padding-bottom="0">The Cal-ITP Team</mj-text>
-        <mj-text padding-top="0"><a href="http://calitp.org" style="font-size: 12px; letter-spacing: .03em; text-decoration: none; font-weight: bold;">calitp.org</a></mj-text>
+        <mj-text padding-top="0"><a href="http://calitp.org?utm_campaign=reports&amp;utm_source=reports-mailer&amp;utm_medium=email&amp;utm_content=signature-link" style="font-size: 12px; letter-spacing: .03em; text-decoration: none; font-weight: bold;">calitp.org</a></mj-text>
       </mj-column>
     </mj-section>
     <mj-section>
