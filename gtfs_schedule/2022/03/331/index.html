@@ -28,7 +28,6 @@
 <noscript><iframe src="https://www.googletagmanager.com/ns.html?id=GTM-KXB2HS6"
 height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
 <!-- End Google Tag Manager (noscript) -->
-
     
     <div class="container pb-8">
         <a href="/">
@@ -253,13 +252,68 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
                 
             </tbody>
 
-            <!-- validation errors -->
+            <!-- validation severity errors -->
 
             
 
             <thead class="border-t">
                 <tr>
                     <th class="pt-12" colspan="2">Validation errors observed</th>
+                </tr>
+                <tr>
+                    <th>Error Name</th>
+                    <th>Error Description</th>
+                    <th>Severity</th>
+                    <th></th>
+                </tr>
+            </thead>
+            <tbody>
+                
+                <tr>
+                    
+                    <td>feed_expiration_date</td>
+                    
+                    <td>At any time, the published GTFS dataset should be valid for at least the next 7 days, and ideally for as long as the operator is confident that the schedule will continue to be operated. If possible, the GTFS dataset should cover at least the next 30 days of service.</td>
+                    
+                    <td>WARNING</td>
+                    
+                </tr>
+                
+                <tr>
+                    
+                    <td>stop_time_timepoint_without_times</td>
+                    
+                    <td>Any record with stop_times.timepoint set to 1 should define a value for stop_times.arrival_time and stop_times.departure_time fields.</td>
+                    
+                    <td>WARNING</td>
+                    
+                </tr>
+                
+                <tr>
+                    
+                    <td>too_fast_travel</td>
+                    
+                    <td>As implemented in the original Google Python GTFS validator, the calculated speed between stops should not be greater than 150 km/h (42 m/s SI or 93 mph).</td>
+                    
+                    <td>WARNING</td>
+                    
+                </tr>
+                
+            </tbody>
+            
+
+    </div>
+
+
+</div>
+
+            <!-- validation errors -->
+
+            
+
+            <thead class="border-t">
+                <tr>
+                    <th class="pt-12" colspan="2">Cal-ITP validation errors observed</th>
                     <th class="pt-12" colspan="3"> Number of errors</th>
                 </tr>
                 <tr>

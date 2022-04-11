@@ -28,7 +28,6 @@
 <noscript><iframe src="https://www.googletagmanager.com/ns.html?id=GTM-KXB2HS6"
 height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
 <!-- End Google Tag Manager (noscript) -->
-
     
     <div class="container pb-8">
         <a href="/">
@@ -253,13 +252,68 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
                 
             </tbody>
 
-            <!-- validation errors -->
+            <!-- validation severity errors -->
 
             
 
             <thead class="border-t">
                 <tr>
                     <th class="pt-12" colspan="2">Validation errors observed</th>
+                </tr>
+                <tr>
+                    <th>Error Name</th>
+                    <th>Error Description</th>
+                    <th>Severity</th>
+                    <th></th>
+                </tr>
+            </thead>
+            <tbody>
+                
+                <tr>
+                    
+                    <td>decreasing_or_equal_shape_distance</td>
+                    
+                    <td>Two consecutive points in shapes.txt should have increasing values for shape_dist_traveled. If the values are equal, this is considered as an error.</td>
+                    
+                    <td>ERROR</td>
+                    
+                </tr>
+                
+                <tr>
+                    
+                    <td>duplicate_fare_rule_zone_id_fields</td>
+                    
+                    <td>Each of the following fields should be unique in fare_rules.txt: fare_rules.route_id, fare_rules.origin_id, fare_rules.contains_id and fare_rules.destination_id</td>
+                    
+                    <td>ERROR</td>
+                    
+                </tr>
+                
+                <tr>
+                    
+                    <td>duplicate_route_name</td>
+                    
+                    <td>All routes of the same route_type with the same agency_id should have unique combinations of route_short_name and route_long_name.</td>
+                    
+                    <td>WARNING</td>
+                    
+                </tr>
+                
+            </tbody>
+            
+
+    </div>
+
+
+</div>
+
+            <!-- validation errors -->
+
+            
+
+            <thead class="border-t">
+                <tr>
+                    <th class="pt-12" colspan="2">Cal-ITP validation errors observed</th>
                     <th class="pt-12" colspan="3"> Number of errors</th>
                 </tr>
                 <tr>
