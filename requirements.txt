@@ -9,7 +9,7 @@ backcall==0.2.0
 black==21.8b0
 bleach==4.1.0
 cachetools==4.2.2
-calitp==0.0.6
+calitp==0.0.15
 certifi==2021.5.30
 cffi==1.14.5
 cfgv==3.3.0
@@ -87,7 +87,6 @@ py==1.10.0
 pyarrow==4.0.1
 pyasn1==0.4.8
 pyasn1-modules==0.2.8
-pybigquery==0.7.0
 pycparser==2.20
 pydata-google-auth==1.2.0
 Pygments==2.9.0
