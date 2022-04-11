@@ -87,7 +87,6 @@ py==1.10.0
 pyarrow==4.0.1
 pyasn1==0.4.8
 pyasn1-modules==0.2.8
-pybigquery==0.7.0
 pycparser==2.20
 pydata-google-auth==1.2.0
 Pygments==2.9.0
