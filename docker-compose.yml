@@ -17,4 +17,4 @@ services:
       # Set the service key path for calitp-py
       - CALITP_SERVICE_KEY_PATH=/home/reports/.config/gcloud/service-account-file.json
       # Set the GCP Bigquery max bytes value - needs to be larger than the calitp-py default
-      - CALITP_BQ_MAX_BYTES=5050000000
+      - CALITP_BQ_MAX_BYTES=6000000000
