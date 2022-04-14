@@ -13,7 +13,6 @@ services:
       # To run container jupyter notebooks on the host
       - 8891:8891
     environment:
-      - GOOGLE_APPLICATION_CREDENTIALS=/home/reports/.config/gcloud/service-account-file.json
       # Set the service key path for calitp-py
       - CALITP_SERVICE_KEY_PATH=/home/reports/.config/gcloud/service-account-file.json
       # Set the GCP Bigquery max bytes value - needs to be larger than the calitp-py default
