@@ -35,11 +35,11 @@ Note that with a user account authentication, the environment variable `CALITP_S
 
 ### Running Locally
 
-From the `reports` subfolder:
+#### Virtual environment
 
-```python
-pip install -r requirements.txt
-```
+1. `source .venv/bin/activate` to activate Python virtual environment
+2. `pip install -r requirements.txt` to download Python dependencies
+3. `npm install` to download npm dependencies
 
 ### Running via Docker-compose
 
@@ -61,6 +61,8 @@ Here, port 8891 is used to avoid the default 8888 port for any prior jupyter ser
 
 ### Executing Report Generation
 
+From within the reports subfolder
+
 When looking for a clean start (i.e. start from scratch) run:
 
 ```python
@@ -69,7 +71,11 @@ make clean
 
 #### Fetching report data
 
-Run `gsutil -m rsync -r gs://gtfs-data-test/report_gtfs_schedule/ reports/outputs/`. (Replace `gtfs-data-test` with `gtfs-data` for testing on production data)
+```shell
+gsutil -m copy gs://gtfs-data-test/report_gtfs_schedule/ reports/outputs/
+```
+
+ (Replace `gtfs-data-test` with `gtfs-data` for testing on production data)
 
 Next, update the makefile with the desired month. For example, for March 2022, change the line:
 
@@ -102,7 +108,7 @@ npm run build
 
 This will run the script in generate.py that will render the index.html, monthly report index pages, and the individual reports. It will also apply the various jinja templates to the reports, JS frameworks, and CSS styles. It is worth mentioning that `npm run build` will currently only execute if you have data from previous months.
 
-To copy data from previous months without generating the data manually run the following command
+To copy data from previous months without generating the data manually, run the following command
 
 ```shell
 gsutil -m copy -r gs://gtfs-data/report_gtfs_schedule/ outputs/
@@ -137,7 +143,7 @@ This site can be viewed at `https://development-build--cal-itp-reports.netlify.a
 
 Assuming that all the data is correct in development. The next step is to sync the development bucket with the production bucket.
 
-```python
+```shell
 gsutil -m rsync -r gs://gtfs-data-test/report_gtfs_schedule/ gs://gtfs-data/report_gtfs_schedule/
 ```
 
@@ -145,7 +151,6 @@ In order to deploy the site, ensure the data was pushed to the production bucket
 and merge any changes into the main branch.
 
 If there are no changes between development and production rerun the last github action workflow run on main.
-
 The production website should update shortly with the most recent month.
 
 ### A note about Netlify
