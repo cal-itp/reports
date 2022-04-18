@@ -13,9 +13,16 @@ This repository is set up in two pieces:
 
 See [this screencast](https://www.loom.com/share/b45317053ff54b9fbb46b8159947c379) for a full walkthrough of building the reports.
 
-#### Running Locally
+#### Set up google cloud credentials:
 Set up [google cloud authentication credentials](https://cloud.google.com/docs/authentication/getting-started).
 
+Specifically, download the SDK/CLI at the above link, install it, create a new terminal/source a .zshrc and be sure to run both:
+1. `gcloud init`
+2. `gcloud auth application-default login`
+
+Note that with a user account authentication, the environment variable `CALITP_SERVICE_KEY_PATH` should be unset.
+
+### Running Locally
 From the `reports` subfolder..
 
 ```shell
@@ -24,8 +31,6 @@ pip install -r requirements
 ### Running via Docker-compose
 Note that the folder also contains a `docker-compose.yml`, so you could run
 the build inside docker by running these commands first.
-
-Save Google Cloud authentication credentials in `$HOME/.config/gcloud/service-account-file.json`
 
 ```shell
 docker-compose run --service-ports calitp_reports /bin/bash
