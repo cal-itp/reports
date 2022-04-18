@@ -1,5 +1,16 @@
 # Generating reports
 
+## Running from outside the container
+
+```bash
+docker-compose run --service-ports calitp_reports make generate_parameters
+docker-compose run --service-ports calitp_reports make MONTH=02 all -j 8
+```
+
+Subsitute `MONTH` var for desired month.
+
+## Manually inside the container
+
 ```
 docker-compose run reports /bin/bash
 
@@ -8,12 +19,15 @@ docker-compose run reports /bin/bash
 . venv/bin/activate
 cd app
 
+# Generate parameters.json files.
+make generate_parameters
+
 # should produce notebooks, html and other assets in e.g. outputs/2021/05/10
 # replace -j 8 with the number of notebooks to build in parallel
 # the build process is not computationally intensive, but requires waiting on 
 # http requests to google bigquery
 make generate_parameters
-make all -j 8
+make MONTH=02 all -j 8
 ```
 
 ## Using Postmark to send emails (SAFELY)
