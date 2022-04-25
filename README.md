@@ -9,31 +9,61 @@ This repository is set up in two pieces:
 - `reports/` subfolder - generates underlying GTFS data for each report.
 - root folder - uses `generate.py` and `templates/` to create the static reports website.
 
-## Generating reports data
+## Generating the reports
 
 See [this screencast](https://www.loom.com/share/b45317053ff54b9fbb46b8159947c379) for a full walkthrough of building the reports.
 
-### Creating data
+#### Set up google cloud credentials:
+Set up [google cloud authentication credentials](https://cloud.google.com/docs/authentication/getting-started).
 
+Specifically, download the SDK/CLI at the above link, install it, create a new terminal/source a .zshrc and be sure to run both:
+1. `gcloud init`
+2. `gcloud auth application-default login`
+
+Note that with a user account authentication, the environment variable `CALITP_SERVICE_KEY_PATH` should be unset.
+
+### Running Locally
 From the `reports` subfolder..
 
 ```shell
 pip install -r requirements
+```
+### Running via Docker-compose
+Note that the folder also contains a `docker-compose.yml`, so you could run
+the build inside docker by running these commands first.
 
+```shell
+docker-compose run --service-ports calitp_reports /bin/bash
+```
+
+When debugging, a jupyter notebook server within the container can be started via:
+```
+jupyter notebook --ip 0.0.0.0 --port 8891
+```
+and connect to it by copying/pasting the connection information in the terminal.
+Here, port 8891 is used to avoid the default 8888 port for any prior jupyter servers.
+
+### Executing Report Generation
+When looking for a clean start (i.e. start from scratch) run:
+```
+make clean
+```
+Next, update the makefile with the desired month. For example, for March 2022, change the line:
+```
+NOTEBOOKS=$(subst parameters.json,index.html,$(wildcard outputs/2021/09/*/parameters.json))
+```
+to:
+```
+NOTEBOOKS=$(subst parameters.json,index.html,$(wildcard outputs/2022/03/*/parameters.json))
+```
+Then, start the report generation:
+```
 # should produce notebooks, html and other assets in e.g. outputs/2021/05/10
 # replace -j 8 with the number of notebooks to build in parallel
 # the build process is not computationally intensive, but requires waiting on 
 # http requests to google bigquery
 make generate_parameters
 make all -j 8
-```
-
-Note that the folder also contains a `docker-compose.yml`, so you could run
-the build inside docker by running these commands first..
-
-```shell
-docker-compose run reports /bin/bash
-cd app
 ```
 
 ### Pushing to google cloud

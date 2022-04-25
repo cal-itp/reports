@@ -1,0 +1,19 @@
+version: '3'
+
+services:
+  calitp_reports:
+    container_name: calitp-reports
+    build:
+      context: .
+      dockerfile: config/docker/Dockerfile
+    volumes:
+      - $HOME/.config/gcloud:/home/reports/.config/gcloud
+      - $PWD/reports:/home/reports/app
+    ports:
+      # To run container jupyter notebooks on the host
+      - 8891:8891
+    environment:
+      # Set the service key path for calitp-py
+      #- CALITP_SERVICE_KEY_PATH=/home/reports/.config/gcloud/application_default_credentials.json
+      # Set the GCP Bigquery max bytes value - needs to be larger than the calitp-py default
+      - CALITP_BQ_MAX_BYTES=20000000000
