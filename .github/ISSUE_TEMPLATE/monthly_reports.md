@@ -2,6 +2,11 @@
 
 ## Process should begin on the first of the month and reports emailed out no later than 2 weeks after that
 
+## Verify that development branch is synced with main
+
+- [ ] Verify development is synced with main
+- [ ] Switch to development branch
+
 ### Creating report data
 
 ``` python
