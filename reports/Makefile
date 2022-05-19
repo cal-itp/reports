@@ -17,7 +17,7 @@ sync-prod:
 
 
 generate_parameters:
-	python 1_generate_ids.py
+	python generate_ids.py
 
 
 outputs/%/parameters.json: generate_parameters

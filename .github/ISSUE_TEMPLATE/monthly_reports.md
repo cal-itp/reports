@@ -96,7 +96,7 @@ Obtain test emails from Cal-ITP technical lead (@evansiroky). Verify with Transi
 script execution in development
 
 ```python  
-python 3_generate_report_emails.py development
+python generate_report_emails.py development
 ```
 
 - [ ] Send out emails to test email list using sandbox token.
@@ -108,7 +108,7 @@ python 3_generate_report_emails.py development
 Once emails have passed visual inspection, change config file for production
 
 ```python  
-python 3_generate_report_emails.py production 
+python generate_report_emails.py production 
 ```
 
 pass prompt that asks if production is correct and verify email recipients are production
