@@ -47,8 +47,10 @@ Note that the folder also contains a `docker-compose.yml`, so you could run
 the build inside docker by running these commands first.
 
 ```shell
-docker-compose run --service-ports calitp_reports /bin/bash
+docker-compose run --rm --service-ports calitp_reports /bin/bash
 ```
+
+If google credentials are already configured on the host, the local credentials should already be mounted in the container, but it may only be necessary to run `gcloud auth application-default login`. 
 
 When debugging, a jupyter notebook server within the container can be started via:
 
@@ -61,7 +63,7 @@ Here, port 8891 is used to avoid the default 8888 port for any prior jupyter ser
 
 ### Executing Report Generation
 
-From within the reports subfolder
+From within the reports subfolder, i.e. (`cd reports`)
 
 When looking for a clean start (i.e. start from scratch) run:
 
@@ -72,7 +74,8 @@ make clean
 #### Fetching report data
 
 ```shell
-gsutil -m copy gs://gtfs-data-test/report_gtfs_schedule/ reports/outputs/
+mkdir outputs
+gsutil -m rsync -r gs://gtfs-data-test/report_gtfs_schedule outputs
 ```
 
  (Replace `gtfs-data-test` with `gtfs-data` for testing on production data)
@@ -93,16 +96,33 @@ Then, start the report generation:
 
 ```shell
 make generate_parameters
-make all -j 30
+make all -j 15
+```
+Where the number after `-j` is the number of parallel threads (`15` in this case). 
+
+This will create data for one month within the reports/outputs folder.
+
+Note that running too many threads (i.e. parallel queries, such as `30` or more) may not complete successfully if many other queries are happening simultaneously - [BigQuery has a limit of 100 concurrent queries](https://cloud.google.com/bigquery/quotas). If this is the case, try rerunning with fewer threads (i.e. `8`).
+
+If this still isn't successful, check each folder to see if both an index.html and 'data' folder exist. This can be done via:
+```shell
+find ./outputs/2022/04 -mindepth 1 -maxdepth 1 -type d '!' -exec test -e "{}/data" ';' -print
+
+>./outputs/2022/04/274
+```
+Where '2022/04' is the current month. This should provide a list of folders that didn't complete reports generation. For each folder, simply rereun the papermill generation for that particular ITPID:
+```shell
+papermill -f outputs/2022/04/274/parameters.json report.ipynb outputs/2022/04/274/index.ipynb
 ```
 
-This will create data for one month within the reports/outputs folder
 
-### Build report
 
-Navigate to the build subfolder
+### Build website
 
-```python  
+Navigate to the website folder and install dependencies and build the website
+
+```shell
+npm install 
 npm run build
 ```
 
@@ -110,17 +130,26 @@ This will run the script in generate.py that will render the index.html, monthly
 
 To copy data from previous months without generating the data manually, run the following command
 
+Note that the error:
 ```shell
-gsutil -m copy -r gs://gtfs-data/report_gtfs_schedule/ outputs/
+jinja2.exceptions.UndefinedError: 'feed_info' is undefined
+```
+May often be linked to a lack of generated reports. This can be remedied by rsyncing the reports from the upstream source
+
+```shell
+gsutil -m rsync -r gs://gtfs-data/report_gtfs_schedule outputs
 ```
 
 This will copy previous months report data from the production bucket into your local outputs folder to ensure that `generate.py` script will execute.
 
-To check that everything is rendered appropriately
+To check that everything is rendered appropriately, go into the website/build directory:
 
  ```shell
+cd build
 python -m http.server
 ```
+and open up a web browser, and navigate to:
+[localhost:8000](localhost:8000)
 
 ### Pushing to google cloud - Development
 

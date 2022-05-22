@@ -48,6 +48,8 @@ def friendly_month_day(x):
 def friendly_month_year(x):
     return datetime.strptime(x, "%Y-%m-%d").strftime("%b %Y")
 
+def friendly_month_day_year_from_string(x):
+    return datetime.strptime(x,'%Y%m%d').strftime('%m-%d-%Y')
 
 ################################################################################
 # site config data
@@ -115,6 +117,8 @@ def fetch_report_data(report_dir):
         name = re.sub(r'^\d+_(.+).json$', r'\1', json_file.name)
         with open(json_file, 'r') as file:
             report_data[name] = json.load(file)
+            if name == 'feed_info' and report_data[name]['feed_end_date'] is not None:
+                report_data[name]['feed_end_date'] = friendly_month_day_year_from_string(report_data[name]['feed_end_date'])
 
     # parameters file lives in {year}/{month}/{itp_id}
     parameters = json.load(open(Path(report_dir).parent / "parameters.json"))
