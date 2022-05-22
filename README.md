@@ -44,7 +44,7 @@ Note that with a user account authentication, the environment variable `CALITP_S
 ### Running via Docker-compose
 
 Note that the folder also contains a `docker-compose.yml`, so you could run
-the build inside docker by running these commands first.
+the build inside docker by running these commands first. Note that docker needs to be installed locally, setting resources as desired (i.e. enable 6 cores if you have an 8 core machine, etc).
 
 ```shell
 docker-compose run --rm --service-ports calitp_reports /bin/bash
