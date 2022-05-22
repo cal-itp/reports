@@ -18,10 +18,6 @@ USER reports
 
 WORKDIR /home/reports
 
-# Install node.js packages
-COPY --chown=reports:reports package*.json ./
-RUN yes | npm install
-
 # Create python virtual environment, install python packages
 COPY requirements.txt requirements.txt
 
