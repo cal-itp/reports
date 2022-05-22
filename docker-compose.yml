@@ -8,10 +8,12 @@ services:
       dockerfile: config/docker/Dockerfile
     volumes:
       - $HOME/.config/gcloud:/home/reports/.config/gcloud
-      - $PWD/reports:/home/reports/app
+      - $PWD:/home/reports/app
     ports:
       # To run container jupyter notebooks on the host
       - 8891:8891
+      # To access the website via host port 8000 when completed
+      - 8000:8000
     environment:
       # Set the service key path for calitp-py
       #- CALITP_SERVICE_KEY_PATH=/home/reports/.config/gcloud/application_default_credentials.json
