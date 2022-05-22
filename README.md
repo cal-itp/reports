@@ -7,7 +7,7 @@ GTFS data quality reports for California transit providers
 This repository is set up in two pieces:
 
 - `reports/` subfolder - generates underlying GTFS data for each report.
-- root folder - uses `generate.py` and `templates/` to create the static reports website.
+- `website/` subfolder - uses `generate.py` and `../templates/` to create the static reports website.
 
 ## Generating the reports
 
@@ -15,7 +15,7 @@ See [this screencast](https://www.loom.com/share/b45317053ff54b9fbb46b8159947c37
 
 ### How it works
 
-- Python script `generate.py` loads JSON from `data` directory and applies it to `index.html` template
+- Python script `generate.py` loads JSON from the reports/outputs/YYYY/MM/ITPID/`data` directory and applies it to `index.html` template
 - HTML templates written with [Jinja](https://jinja.palletsprojects.com/en/3.0.x/)
 - CSS written with [SCSS](https://sass-lang.com/documentation/syntax#scss) and [Tailwind](https://tailwindcss.com/docs) via [PostCSS](https://postcss.org/)
 - JS behavior added with [Alpine.js](https://alpinejs.dev)
@@ -67,11 +67,12 @@ From within the reports subfolder, i.e. (`cd reports`)
 
 When looking for a clean start (i.e. start from scratch) run:
 
-```python
+```shell
 make clean
 ```
 
 #### Fetching report data
+Make the 'outputs' folder within the reports folder, and run the gsutil rsync to update all the locally stored reports:
 
 ```shell
 mkdir outputs
@@ -80,7 +81,8 @@ gsutil -m rsync -r gs://gtfs-data-test/report_gtfs_schedule outputs
 
  (Replace `gtfs-data-test` with `gtfs-data` for testing on production data)
 
-Next, update the makefile with the desired month. For example, for March 2022, change the line:
+#### Generating reports
+Next, update the `Makefile` with the desired month. For example, for March 2022, change the line:
 
 ```shell
 NOTEBOOKS=$(subst parameters.json,index.html,$(wildcard outputs/2021/09/*/parameters.json))
@@ -102,7 +104,7 @@ Where the number after `-j` is the number of parallel threads (`15` in this case
 
 This will create data for one month within the reports/outputs folder.
 
-Note that running too many threads (i.e. parallel queries, such as `30` or more) may not complete successfully if many other queries are happening simultaneously - [BigQuery has a limit of 100 concurrent queries](https://cloud.google.com/bigquery/quotas). If this is the case, try rerunning with fewer threads (i.e. `8`).
+Note that running too many threads (i.e. parallel queries, such as `30` or more) may not complete successfully if many other BigQuery queries are happening simultaneously: [BigQuery has a limit of 100 concurrent queries](https://cloud.google.com/bigquery/quotas). If this is the case, try rerunning with fewer threads (i.e. `make all -j 8`).
 
 If this still isn't successful, check each folder to see if both an index.html and 'data' folder exist. This can be done via:
 ```shell
@@ -115,11 +117,9 @@ Where '2022/04' is the current month. This should provide a list of folders that
 papermill -f outputs/2022/04/274/parameters.json report.ipynb outputs/2022/04/274/index.ipynb
 ```
 
-
-
 ### Build website
 
-Navigate to the website folder and install dependencies and build the website
+Once every single report is generated, navigate to the website subfolder (i.e. `cd ../website`), install the npm dependencies, and build the website.
 
 ```shell
 npm install 
@@ -128,24 +128,15 @@ npm run build
 
 This will run the script in generate.py that will render the index.html, monthly report index pages, and the individual reports. It will also apply the various jinja templates to the reports, JS frameworks, and CSS styles. It is worth mentioning that `npm run build` will currently only execute if you have data from previous months.
 
-To copy data from previous months without generating the data manually, run the following command
-
 Note that the error:
 ```shell
 jinja2.exceptions.UndefinedError: 'feed_info' is undefined
 ```
-May often be linked to a lack of generated reports. This can be remedied by rsyncing the reports from the upstream source
+Is often due to a lack of generated reports. This can be remedied for prior months by rsyncing the reports from the upstream source (see [Fetching report data](#fetching-report-data)), and ensuring every single ITPID has a corresponding generated report for the current month (see [Generating reports](#generating-reports)).
 
-```shell
-gsutil -m rsync -r gs://gtfs-data/report_gtfs_schedule outputs
-```
-
-This will copy previous months report data from the production bucket into your local outputs folder to ensure that `generate.py` script will execute.
-
-To check that everything is rendered appropriately, go into the website/build directory:
+To check that everything is rendered appropriately, go into the website/build (i.e. `cd build`) directory:
 
  ```shell
-cd build
 python -m http.server
 ```
 and open up a web browser, and navigate to:
