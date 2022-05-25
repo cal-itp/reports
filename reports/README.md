@@ -25,7 +25,7 @@ We are currently using the postmark API to send the reports via email to their r
 3. Generate the template (if needed).
     - We are using the mjml markup language to generate the html body and styling of the template. Both the report email and its compiled output is stored in the /templates/email. If changes to the email contents are required, then the template should be updated. It is worth mentioning that mjml should use lowercase names to match the config file. 
 4. Script execution
-    - Within the reports subfolder run script with the config section name as an argument. It will be development or production depending on the need. For example:  `python 3_generate_report_emails.py development`
+    - Within the reports subfolder run script with the config section name as an argument. It will be development or production depending on the need. For example:  `python generate_report_emails.py development`
 5. Pass prompt checks.
     - Before sending out an email,  the `is_developement` config boolean will be checked to make sure it is going to the sandbox server. If you have the necessary permissions and have in production selected in the config file, a prompt will remind you that you are in production and it will print out your email recipients. Once all checks have been passed safely, the script will send out the emails.
 6. Verify emails successfully sent. 
