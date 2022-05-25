@@ -38,6 +38,20 @@ Monthly GTFS Quality Reports: {{parameters["DATE_MONTH_YEAR"]}} {{parameters["AG
     </p>
 </div>
 
+<hr>
+
+<div class="flex-1 responsive-prose gap-12 lg:gap-16">
+    <h2>Current GTFS Feed Info </h2>
+           <div class="flex flex-row lg:flex-row flex-wrap">
+            
+            {{ display_figure('Feed End Date', feed_info.feed_end_date) }}
+            {{ display_figure('Days With No Service', n_days_no_service.n) }}
+            {{ display_figure('Routes', feed_info.n_routes) }}
+            {{ display_figure('Stops', feed_info.n_stops) }}
+        </div>
+        <hr class="lg:hidden mb-0">
+    </div>
+
 {# Commented out until an ultimate resolution can be found for
   https://github.com/cal-itp/reports/issues/44
 <div class="my-8">
@@ -50,18 +64,8 @@ Monthly GTFS Quality Reports: {{parameters["DATE_MONTH_YEAR"]}} {{parameters["AG
 
 <hr>
 
-<div class="flex flex-col lg:flex-row gap-12 lg:gap-16 xl:gap-24 2xl:gap-36">
-    <div>
-        <div class="flex flex-wrap lg:flex-col gap-12">
-            {{ display_figure('Feed Published', feed_info.calitp_extracted_at) }}
-            {{ display_figure('Feed End Date', feed_info.feed_end_date) }}
-            {{ display_figure('Days With No Service', n_days_no_service.n) }}
-            {{ display_figure('Routes', feed_info.n_routes) }}
-            {{ display_figure('Stops', feed_info.n_stops) }}
-        </div>
-        <hr class="lg:hidden mb-0">
-    </div>
 
+<div class="flex flex-col lg:flex-row gap-12 lg:gap-16 xl:gap-24 2xl:gap-36">
     <div class="flex-1 responsive-prose">
         <h2>Aggregated metrics for&nbsp; {{parameters["DATE_MONTH"]}}</h2>
         <ul>
