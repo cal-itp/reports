@@ -73,11 +73,10 @@ make clean
 ```
 
 #### Fetching report data
-Make the 'outputs' folder within the reports folder, and run the gsutil rsync to update all the locally stored reports.
+Run the gsutil rsync to update all the locally stored reports.
 Note that `gtfs-data-test` can be replaced with `gtfs-data` for testing on production data:
 
 ```shell
-mkdir outputs
 gsutil -m rsync -r gs://gtfs-data-test/report_gtfs_schedule outputs
 ```
 
