@@ -6,7 +6,6 @@ argon2-cffi==21.1.0
 async-timeout==3.0.1
 attrs==21.2.0
 backcall==0.2.0
-black==21.8b0
 bleach==4.1.0
 cachetools==4.2.2
 calitp==0.0.15
@@ -70,7 +69,7 @@ packaging==20.9
 pandas==1.1.4
 pandas-gbq==0.14.1
 pandocfilters==1.4.3
-papermill==2.3.3
+papermill==2.3.4
 parso==0.8.2
 pathspec==0.9.0
 pexpect==4.8.0
