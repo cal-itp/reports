@@ -24,7 +24,7 @@ outputs/%/parameters.json: generate_parameters
 
 
 outputs/%/index.ipynb: report.ipynb outputs/%/parameters.json
-	papermill -f $(dir $@)parameters.json $< $@
+	papermill --log-level=ERROR -f $(dir $@)parameters.json $< $@
 
 
 outputs/%/index.html: outputs/%/index.ipynb
