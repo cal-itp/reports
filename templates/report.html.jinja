@@ -43,13 +43,11 @@ Monthly GTFS Quality Reports: {{parameters["DATE_MONTH_YEAR"]}} {{parameters["AG
 <div class="flex-1 responsive-prose gap-12 lg:gap-16">
     <h2>Current GTFS Feed Info </h2>
            <div class="flex flex-row lg:flex-row flex-wrap gap-24">
-            
             {{ display_figure('Feed End Date', feed_info.feed_end_date) }}
             {{ display_figure('Days With No Service', n_days_no_service.n) }}
             {{ display_figure('Routes', feed_info.n_routes) }}
             {{ display_figure('Stops', feed_info.n_stops) }}
         </div>
-        <hr class="lg:hidden mb-0">
     </div>
 
 {# Commented out until an ultimate resolution can be found for
