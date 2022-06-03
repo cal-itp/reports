@@ -281,12 +281,99 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
 
             
 
+            <thead class="border-t">
+                <tr>
+                    <th class="pt-12" colspan="2">Cal-ITP validation errors observed</th>
+                    <th class="pt-12" colspan="3"> Number of errors</th>
+                </tr>
+                <tr>
+                    <th>Error Name</th>
+                    <th>Error Description</th>
+                    <th>2022-03-06</th>
+                    <th>2022-03-20</th>
+                    
+                </tr>
+            </thead>
+            <tbody>
+                
+                <tr>
+                    
+                    <td>decreasing_or_equal_shape_distance</td>
+                    
+                    <td>Two consecutive points in shapes.txt should have increasing values for shape_dist_traveled. If the values are equal, this is considered as an error.</td>
+                    
+                    <td>15</td>
+                    
+                    <td>15</td>
+                    
+                </tr>
+                
+                <tr>
+                    
+                    <td>decreasing_or_equal_stop_time_distance</td>
+                    
+                    <td>Two consecutive stop times in a trip should have increasing distance. If the values are equal, this is considered as an error.</td>
+                    
+                    <td></td>
+                    
+                    <td>111</td>
+                    
+                </tr>
+                
+                <tr>
+                    
+                    <td>duplicate_route_name</td>
+                    
+                    <td>All routes of the same route_type with the same agency_id should have unique combinations of route_short_name and route_long_name.</td>
+                    
+                    <td>2</td>
+                    
+                    <td>2</td>
+                    
+                </tr>
+                
+                <tr>
+                    
+                    <td>feed_expiration_date</td>
+                    
+                    <td>At any time, the published GTFS dataset should be valid for at least the next 7 days, and ideally for as long as the operator is confident that the schedule will continue to be operated. If possible, the GTFS dataset should cover at least the next 30 days of service.</td>
+                    
+                    <td>1</td>
+                    
+                    <td></td>
+                    
+                </tr>
+                
+                <tr>
+                    
+                    <td>stop_too_far_from_trip_shape</td>
+                    
+                    <td>Per GTFS Best Practices, route alignments (in shapes.txt) should be within 100 meters of stop locations which a trip serves.</td>
+                    
+                    <td>2</td>
+                    
+                    <td>2</td>
+                    
+                </tr>
+                
+                <tr>
+                    
+                    <td>too_fast_travel</td>
+                    
+                    <td>As implemented in the original Google Python GTFS validator, the calculated speed between stops should not be greater than 150 km/h (42 m/s SI or 93 mph).</td>
+                    
+                    <td>92</td>
+                    
+                    <td>92</td>
+                    
+                </tr>
+                
+            </tbody>
+
+            
+
         </table>
     </div>
-
-    
-
-    <p><b>No validation errors detected.</b></p>
 
     
 
