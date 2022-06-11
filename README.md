@@ -81,25 +81,15 @@ gsutil -m rsync -r gs://gtfs-data-test/report_gtfs_schedule outputs
 ```
 
 #### Generating reports
-Next, update the `Makefile` with the desired month. For example, for March 2022, change the line:
-
-```shell
-NOTEBOOKS=$(subst parameters.json,index.html,$(wildcard outputs/2021/09/*/parameters.json))
-```
-
-to:
-
-```shell
-NOTEBOOKS=$(subst parameters.json,index.html,$(wildcard outputs/2022/03/*/parameters.json))
-```
-
-Then, start the report generation:
+Next, start the report generation:
 
 ```shell
 make generate_parameters
-make all -j 15
+make MONTH=02 all -j 15
 ```
-Where the number after `-j` is the number of parallel threads (`15` in this case). 
+Where:
+* the number after `MONTH=` is the desired numerical month (`02` in this case)
+* the number after `-j` is the number of parallel threads (`15` in this case)
 
 This will create data for one month within the reports/outputs folder.
 
