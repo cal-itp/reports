@@ -13,14 +13,28 @@ This repository is set up in two pieces:
 
 See [this screencast](https://www.loom.com/share/b45317053ff54b9fbb46b8159947c379) for a full walkthrough of building the reports.
 
-### How it works
+#### Generating Reports Data
 
-- Python script `generate.py` loads JSON from the `reports/outputs/YYYY/MM/ITPID/data` directory and applies it to `index.html` template
+The following steps are run within the `reports` folder.
+
+- `make generate_parameters` runs the `generate_ids.py` file which generates:
+  1. `outputs/index_report.json` - a file that lists every agency name and `outputs/YYYY/MM` folder
+  2. `outputs/YYYY/MM` for every agency
+- `make MONTH=02 all -j 15` runs the following commands:
+  1. `papermill --log-level=ERROR -f outputs/YYYY/MM/AGENCY_NUM/parameters.json report.ipynb outputs/YYYY/MM/AGENCY_NUM/index.ipynb` - creates a copy of the `report.ipynb` file, runs queries in the `report.ipynb` file, and outputs `outputs/YYYY/MM/AGENCY_NUM/data` directories
+  2. `jupyter nbconvert --to html --TagRemovePreprocessor.remove_input_tags="{'hide', 'injected-parameters'}" --TagRemovePreprocessor.remove_single_output_tags="{'hide', 'injected-parameters'}" --no-input --no-prompt outputs/YYYY/MM/AGENCY_NUM/index.ipynb` - creates an `outputs/YYYY/MM/AGENCY_NUM/index.html` file
+
+The files in each `outputs/YYYY/MM/AGENCY_NUM/data` directory are used to generate the static HTML (see below).
+
+#### Building the website
+
+- Python script `website/generate.py` loads JSON from the `reports/outputs/YYYY/MM/ITPID/data` directory and applies it to template files in `/templates`
 - HTML templates written with [Jinja](https://jinja.palletsprojects.com/en/3.0.x/)
 - CSS written with [SCSS](https://sass-lang.com/documentation/syntax#scss) and [Tailwind](https://tailwindcss.com/docs) via [PostCSS](https://postcss.org/)
 - JS behavior added with [Alpine.js](https://alpinejs.dev)
   - Bundled with [Rollup](https://rollupjs.org/guide/en/)
 - Build scripts via [NPM](https://www.npmjs.com/)
+
 
 ### Set up google cloud credentials
 
