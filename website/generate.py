@@ -11,7 +11,7 @@ from markupsafe import Markup, escape
 from pathlib import Path
 
 env = Environment(
-    loader=FileSystemLoader('templates'),
+    loader=FileSystemLoader('../templates'),
     autoescape=select_autoescape()
 )
 
@@ -69,7 +69,7 @@ global_data = {
 index_template = env.get_template('index.html.jinja')
 
 index_data = {}
-with open('reports/outputs/index_report.json') as file:
+with open('../reports/outputs/index_report.json') as file:
     index_data['reports'] = json.load(file)
 
 index_html = index_template.render({**global_data, **index_data})
@@ -130,7 +130,7 @@ def fetch_report_data(report_dir):
 
     return report_data
 
-REPORT_OUTPUTS_DIR = Path("reports/outputs")
+REPORT_OUTPUTS_DIR = Path("../reports/outputs")
 REPORT_BUILD_DIR = Path('build/gtfs_schedule')
 
 report_template = env.get_template('report.html.jinja')
