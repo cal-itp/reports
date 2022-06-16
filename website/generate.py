@@ -91,7 +91,7 @@ for year in index_data["reports"]:
                 p_basedir / f"{year['year']}/{month['month']:02d}"
         )
 
-        DATE_MONTH_YEAR = friendly_month_day(f"{year['year']}-{month['month']:02d}-01")
+        DATE_MONTH_YEAR = friendly_month_year(f"{year['year']}-{month['month']:02d}-01")
 
         month_html = month_template.render(**global_data, year=year, month=month, DATE_MONTH_YEAR=DATE_MONTH_YEAR)
 
@@ -128,8 +128,6 @@ def fetch_report_data(report_dir):
     parameters["END_MONTH_DAY"] = friendly_month_day(parameters["DATE_END"])
     report_data["parameters"] = parameters
 
-    #print(report_data)
-    #print(DATE_MONTH_YEAR)
 
     return report_data
 
