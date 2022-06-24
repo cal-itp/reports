@@ -40,13 +40,13 @@ env.filters = {**env.filters, "nl2br": nl2br, "month_name": month_name}
 
 
 def friendly_month(x): 
-    return datetime.strptime(x, "%Y-%m-%d").strftime("%b")
+    return datetime.strptime(x, "%Y-%m-%d").strftime("%B")
 
 def friendly_month_day(x): 
-    return datetime.strptime(x, "%Y-%m-%d").strftime("%b %d")
+    return datetime.strptime(x, "%Y-%m-%d").strftime("%B %d")
 
 def friendly_month_year(x):
-    return datetime.strptime(x, "%Y-%m-%d").strftime("%b %Y")
+    return datetime.strptime(x, "%Y-%m-%d").strftime("%B %Y")
 
 def friendly_month_day_year_from_string(x):
     return datetime.strptime(x,'%Y%m%d').strftime('%m-%d-%Y')
@@ -127,6 +127,7 @@ def fetch_report_data(report_dir):
     parameters["START_MONTH_DAY"] = friendly_month_day(parameters["DATE_START"])
     parameters["END_MONTH_DAY"] = friendly_month_day(parameters["DATE_END"])
     report_data["parameters"] = parameters
+
 
     return report_data
 
