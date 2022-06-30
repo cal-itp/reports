@@ -52,7 +52,6 @@ jobs:
       run: |
         gsutil -m rsync -r gs://gtfs-data/report_gtfs_schedule/ reports/outputs/
 
-
     # build ----
     - name: Build
       run: npm run build
@@ -62,11 +61,11 @@ jobs:
 
     # development
     - name: Deploy development
-      if: ${{ github.ref == 'refs/heads/development' }}
+      if: ${{ github.ref == 'refs/heads/fix-deploy' }}
       uses: peaceiris/actions-gh-pages@v3
       with:
         github_token: ${{ secrets.GITHUB_TOKEN }}
-        publish_dir: ./build
+        publish_dir: ./website/build
         publish_branch: development-build
 
     # production
@@ -75,5 +74,5 @@ jobs:
       uses: peaceiris/actions-gh-pages@v3
       with:
         github_token: ${{ secrets.GITHUB_TOKEN }}
-        publish_dir: ./build
+        publish_dir: ./website/build
         publish_branch: production
