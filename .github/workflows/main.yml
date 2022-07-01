@@ -5,7 +5,6 @@ on:
     branches:
       - main
       - development
-      - fix-deploy
 
 jobs:
   deploy:
@@ -42,7 +41,7 @@ jobs:
 
     # development
     - name: Copy development report data
-      if: ${{ github.ref == 'refs/heads/fix-deploy' }}
+      if: ${{ github.ref == 'refs/heads/development' }}
       run: |
         gsutil -m rsync -r gs://gtfs-data-test/report_gtfs_schedule/ reports/outputs/
 
@@ -61,7 +60,7 @@ jobs:
 
     # development
     - name: Deploy development
-      if: ${{ github.ref == 'refs/heads/fix-deploy' }}
+      if: ${{ github.ref == 'refs/heads/development' }}
       uses: peaceiris/actions-gh-pages@v3
       with:
         github_token: ${{ secrets.GITHUB_TOKEN }}
