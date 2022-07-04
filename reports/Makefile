@@ -1,4 +1,3 @@
-# NOTEBOOKS=$(wildcard outputs/2022/$(MONTH)/*/index.ipynb)
 NOTEBOOKS=$(subst parameters.json,index.ipynb,$(wildcard outputs/2022/$(MONTH)/*/parameters.json))
 
 .SECONDARY:
