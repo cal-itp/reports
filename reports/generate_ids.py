@@ -1,11 +1,24 @@
 from calitp.tables import tbl
+import pandas as pd
 from siuba import *
 import papermill as pm
 from pathlib import Path
 
-ids_with_feeds = (
-    tbl.views.reports_gtfs_schedule_index() >> filter(_.has_feed_info, _.use_for_report) >> collect()
+legacy_ids_with_feeds = (
+    tbl.views.reports_gtfs_schedule_index()
+    >> filter(_.has_feed_info, _.use_for_report)
+    >> filter(_.publish_date < '2022-06-01')
+    >> collect()
 )
+# run reports for feeds even without feed info, but only for May '22 onwards
+expanded_ids_with_feeds = (
+    tbl.views.reports_gtfs_schedule_index()
+    >> filter(_.use_for_report)
+    >> filter(_.publish_date >= '2022-06-01')
+    >> collect()
+)
+
+ids_with_feeds = pd.concat([legacy_ids_with_feeds, expanded_ids_with_feeds])
 
 # +
 # generate an index for the homepage
