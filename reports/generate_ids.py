@@ -4,7 +4,7 @@ import papermill as pm
 from pathlib import Path
 
 ids_with_feeds = (
-    tbl.views.reports_gtfs_schedule_index() >> filter(_.use_for_report) >> collect()
+    tbl.views.reports_gtfs_schedule_index() >> filter(_.has_feed_info, _.use_for_report) >> collect()
 )
 
 # +
