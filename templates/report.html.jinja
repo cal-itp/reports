@@ -25,7 +25,11 @@ Monthly GTFS Quality Reports: {{parameters["DATE_MONTH_YEAR"]}} {{parameters["AG
         Monthly GTFS Quality Report
         <br>
         <small>
+          {% if feed_info.has_feed_info %}
             <a href="{{ feed_info.feed_publisher_url }}">{{ parameters["AGENCY_NAME"] }}</a>
+          {% else %}
+            {{ parameters["AGENCY_NAME"] }}
+          {% endif %}
             &hairsp;&middot;&hairsp;
             <span class="inline-block">{{parameters["DATE_MONTH_YEAR"]}}</span>
         </small>
