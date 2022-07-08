@@ -45,7 +45,7 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
         <br>
         <small>
           
-            Commerce Municipal Bus Lines
+            <a href="https://gmvsyncromatics.com">Commerce Municipal Bus Lines</a>
           
             &hairsp;&middot;&hairsp;
             <span class="inline-block">December 2021</span>
@@ -78,24 +78,16 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
 
             
     <figure>
-        <div class="text-2xl text-itp-teal-bold">5</div>
+        <div class="text-2xl text-itp-teal-bold">10</div>
         <figcaption class="text-itp-slate-bold">Routes</figcaption>
     </figure>
 
             
     <figure>
-        <div class="text-2xl text-itp-teal-bold">177</div>
+        <div class="text-2xl text-itp-teal-bold">224</div>
         <figcaption class="text-itp-slate-bold">Stops</figcaption>
     </figure>
 
-        </div>
-        
-        <div class="flex flex-row lg:flex-row flex-wrap gap-24">
-            <ul>
-                <li>This feed appears to be missing&nbsp;<a href='https://gtfs.org/schedule/best-practices/#feed_infotxt'>feed_info.txt</a>.
-                <li>Including feed info is important to help data users easily find technical&nbsp;contacts.</li>
-                <li>Please reach out to our help desk at hello@calitp.org with any&nbsp;questions.</li>
-            </ul>
         </div>
         
     </div>
@@ -297,6 +289,70 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
 
             
 
+            <thead class="border-t">
+                <tr>
+                    <th class="pt-12" colspan="2">Validation errors observed</th>
+                </tr>
+                <tr>
+                    <th>Error Name</th>
+                    <th>Error Description</th>
+                    <th>Severity</th>
+                    <th></th>
+                </tr>
+            </thead>
+            <tbody>
+                
+                <tr>
+                    
+                    <td>decreasing_or_equal_stop_time_distance</td>
+                    
+                    <td>Two consecutive stop times in a trip should have increasing distance. If the values are equal, this is considered as an error.</td>
+                    
+                    <td>ERROR</td>
+                    
+                </tr>
+                
+                <tr>
+                    
+                    <td>empty_file</td>
+                    
+                    <td>Empty csv file found in the archive: file does not have any headers, or is a required file and does not have any data. The GTFS specification requires the first line of each file to contain field names and required files must have data.</td>
+                    
+                    <td>ERROR</td>
+                    
+                </tr>
+                
+                <tr>
+                    
+                    <td>feed_expiration_date</td>
+                    
+                    <td>At any time, the published GTFS dataset should be valid for at least the next 7 days, and ideally for as long as the operator is confident that the schedule will continue to be operated. If possible, the GTFS dataset should cover at least the next 30 days of service.</td>
+                    
+                    <td>WARNING</td>
+                    
+                </tr>
+                
+                <tr>
+                    
+                    <td>route_short_and_long_name_equal</td>
+                    
+                    <td>Short and long name should not be identical.</td>
+                    
+                    <td>WARNING</td>
+                    
+                </tr>
+                
+                <tr>
+                    
+                    <td>same_name_and_description_for_route</td>
+                    
+                    <td>The GTFS spec requires that a route_description is distinct from both the route short and long names.</td>
+                    
+                    <td>ERROR</td>
+                    
+                </tr>
+                
+            </tbody>
             
 
     </div>
