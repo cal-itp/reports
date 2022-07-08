@@ -12,7 +12,7 @@
     'https://www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);
     })(window,document,'script','dataLayer','GTM-KXB2HS6');</script>
     <!-- End Google Tag Manager -->
-    <title>Monthly GTFS Quality Reports: Jun 2021 San Francisco Bay Ferry</title>
+    <title>Monthly GTFS Quality Reports: June 2021 San Francisco Bay Ferry</title>
     
     <link rel="stylesheet"
         href="https://fonts.googleapis.com/css2?family=Poppins:wght@500;700&amp;family=Raleway:wght@800;900&amp;display=swap">
@@ -44,9 +44,11 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
         Monthly GTFS Quality Report
         <br>
         <small>
-            <a href="http://www.trilliumtransit.com">San Francisco Bay Ferry</a>
+          
+            San Francisco Bay Ferry
+          
             &hairsp;&middot;&hairsp;
-            <span class="inline-block">Jun 2021</span>
+            <span class="inline-block">June 2021</span>
         </small>
     </h1>
     <p class="lead responsive-prose">
@@ -61,7 +63,7 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
 
 <div class="flex-1 responsive-prose gap-12 lg:gap-16">
     <h2>Current GTFS Feed Info </h2>
-           <div class="flex flex-row lg:flex-row flex-wrap gap-24">
+        <div class="flex flex-row lg:flex-row flex-wrap gap-24">
             
     <figure>
         <div class="text-2xl text-itp-teal-bold">01-01-2022</div>
@@ -87,6 +89,15 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
     </figure>
 
         </div>
+        
+        <div class="flex flex-row lg:flex-row flex-wrap gap-24">
+            <ul>
+                <li>This feed appears to be missing&nbsp;<a href='https://gtfs.org/schedule/best-practices/#feed_infotxt'>feed_info.txt</a>.
+                <li>Including feed info is important to help data users easily find technical&nbsp;contacts.</li>
+                <li>Please reach out to our help desk at hello@calitp.org with any&nbsp;questions.</li>
+            </ul>
+        </div>
+        
     </div>
 
 
@@ -96,19 +107,52 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
 
 <div class="flex flex-col lg:flex-row gap-12 lg:gap-16 xl:gap-24 2xl:gap-36">
     <div class="flex-1 responsive-prose">
-        <h2>Aggregated metrics for&nbsp; Jun</h2>
+        <h2>About the June Daily Service Level&nbsp;Charts</h2>
         <ul>
-            <li>Service hours per day in the active&nbsp;feed:</li>
+            <li>These charts show the total hours of transit service described by the active feed for each&nbsp;day.</li>
+            <li>Since service levels often vary by the day of the week, it is split into three charts for weekdays, Saturdays, and&nbsp;Sundays.</li>
+            <li>Flat lines indicate consistent levels of service throughout the&nbsp;month.</li>
+            <li>Short drops may indicate temporary reduced service, such as for holidays, gaps in feed publishing, or potential&nbsp;inaccuracies.</li>
+            <li>Please reach out to our help desk at hello@calitp.org with any&nbsp;questions.</li>
         </ul>
-        <img src="2_service_hours.png">
     </div>
 
     <div class="flex-1 responsive-prose">
-        <h2>Changes from Jun 01 to Jun 30</h2>
+        <h2>Service hours per weekday in the active&nbsp;feed:</h2>
+        <img src="2_service_hours_wk.png">
+    </div>
+</div>
+
+<div class="flex flex-col lg:flex-row gap-12 lg:gap-16 xl:gap-24 2xl:gap-36">
+    <div class="flex-1 responsive-prose">
+        <h2>Service hours per Saturday in the active&nbsp;feed:</h2>
+        <img src="2_service_hours_sa.png">
+    </div>
+
+    <div class="flex-1 responsive-prose">
+        <h2>Service hours per Sunday in the active&nbsp;feed:</h2>
+        <img src="2_service_hours_su.png">
+    </div>
+
+</div>
+
+<hr>
+
+<div class="flex flex-col lg:flex-row gap-12 lg:gap-16 xl:gap-24 2xl:gap-36">
+
+    <div class="flex-1 responsive-prose">
+        <h2>About the June Identifier Change&nbsp;Charts</h2>
         <ul>
-            <li>Percentage of stop and route IDs that have changed since the previous&nbsp;month.</li>
-            <li>More than 5% being new or dropped is a cause for&nbsp;attention.</li>
+            <li>These charts show the percentage of stop and route IDs that have changed since the previous&nbsp;month.</li>
+            <li>Stop and route IDs are important identifiers for GTFS feed consumers to correctly parse&nbsp;feeds.</li>
+            <li>It is a <a href="https://gtfs.org/schedule/best-practices/#dataset-publishing-general-practices"> GTFS Best Practice </a> to keep these consistent between feed versions whenever&nbsp;possible.</li>
+            <li>More than 5% being new or dropped is a cause for attention, especially if there hasn't been a major service or route&nbsp;change.</li>
+            <li>Please reach out to our help desk at hello@calitp.org with any&nbsp;questions.</li>
         </ul>
+    </div>
+
+    <div class="flex-1 responsive-prose">
+        <h2>Changes from June 01 to June 30</h2>
         <img src="3_id_changes.png">
     </div>
 </div>
