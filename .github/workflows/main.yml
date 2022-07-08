@@ -30,6 +30,7 @@ jobs:
         pip install -r requirements.txt
     - name: Install node packages
       run: npm install
+      working-directory: website
 
     # copy in reports ----
 
@@ -50,10 +51,10 @@ jobs:
       run: |
         gsutil -m rsync -r gs://gtfs-data/report_gtfs_schedule/ reports/outputs/
 
-
     # build ----
     - name: Build
       run: npm run build
+      working-directory: website
 
     # deploy ----
 
@@ -63,7 +64,7 @@ jobs:
       uses: peaceiris/actions-gh-pages@v3
       with:
         github_token: ${{ secrets.GITHUB_TOKEN }}
-        publish_dir: ./build
+        publish_dir: ./website/build
         publish_branch: development-build
 
     # production
@@ -72,5 +73,5 @@ jobs:
       uses: peaceiris/actions-gh-pages@v3
       with:
         github_token: ${{ secrets.GITHUB_TOKEN }}
-        publish_dir: ./build
+        publish_dir: ./website/build
         publish_branch: production
