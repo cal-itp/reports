@@ -66,7 +66,7 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
         <div class="flex flex-row lg:flex-row flex-wrap gap-24">
             
     <figure>
-        <div class="text-2xl text-itp-teal-bold">12-30-2021</div>
+        <div class="text-2xl text-itp-teal-bold">None</div>
         <figcaption class="text-itp-slate-bold">Feed End Date</figcaption>
     </figure>
 
@@ -78,13 +78,13 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
 
             
     <figure>
-        <div class="text-2xl text-itp-teal-bold">656</div>
+        <div class="text-2xl text-itp-teal-bold">653</div>
         <figcaption class="text-itp-slate-bold">Routes</figcaption>
     </figure>
 
             
     <figure>
-        <div class="text-2xl text-itp-teal-bold">21870</div>
+        <div class="text-2xl text-itp-teal-bold">21855</div>
         <figcaption class="text-itp-slate-bold">Stops</figcaption>
     </figure>
 
@@ -329,6 +329,130 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
 
             
 
+            <thead class="border-t">
+                <tr>
+                    <th class="pt-12" colspan="2">Validation errors observed</th>
+                </tr>
+                <tr>
+                    <th>Error Name</th>
+                    <th>Error Description</th>
+                    <th>Severity</th>
+                    <th></th>
+                </tr>
+            </thead>
+            <tbody>
+                
+                <tr>
+                    
+                    <td>decreasing_or_equal_shape_distance</td>
+                    
+                    <td>Two consecutive points in shapes.txt should have increasing values for shape_dist_traveled. If the values are equal, this is considered as an error.</td>
+                    
+                    <td>ERROR</td>
+                    
+                </tr>
+                
+                <tr>
+                    
+                    <td>decreasing_or_equal_stop_time_distance</td>
+                    
+                    <td>Two consecutive stop times in a trip should have increasing distance. If the values are equal, this is considered as an error.</td>
+                    
+                    <td>ERROR</td>
+                    
+                </tr>
+                
+                <tr>
+                    
+                    <td>duplicate_fare_rule_zone_id_fields</td>
+                    
+                    <td>Each of the following fields should be unique in fare_rules.txt: fare_rules.route_id, fare_rules.origin_id, fare_rules.contains_id and fare_rules.destination_id</td>
+                    
+                    <td>ERROR</td>
+                    
+                </tr>
+                
+                <tr>
+                    
+                    <td>feed_expiration_date</td>
+                    
+                    <td>At any time, the published GTFS dataset should be valid for at least the next 7 days, and ideally for as long as the operator is confident that the schedule will continue to be operated. If possible, the GTFS dataset should cover at least the next 30 days of service.</td>
+                    
+                    <td>WARNING</td>
+                    
+                </tr>
+                
+                <tr>
+                    
+                    <td>invalid_url</td>
+                    
+                    <td>A field contains a malformed URL.</td>
+                    
+                    <td>ERROR</td>
+                    
+                </tr>
+                
+                <tr>
+                    
+                    <td>more_than_one_entity</td>
+                    
+                    <td>A file that is expected to have only one row has more than one row.</td>
+                    
+                    <td>WARNING</td>
+                    
+                </tr>
+                
+                <tr>
+                    
+                    <td>number_out_of_range</td>
+                    
+                    <td>The values in the given column of the input rows are out of range.</td>
+                    
+                    <td>ERROR</td>
+                    
+                </tr>
+                
+                <tr>
+                    
+                    <td>route_short_and_long_name_equal</td>
+                    
+                    <td>Short and long name should not be identical.</td>
+                    
+                    <td>WARNING</td>
+                    
+                </tr>
+                
+                <tr>
+                    
+                    <td>route_short_name_too_long</td>
+                    
+                    <td>Short name of a route is too long (more than 12 characters). Note that major trip planning applications start truncating short names after seven characters.</td>
+                    
+                    <td>WARNING</td>
+                    
+                </tr>
+                
+                <tr>
+                    
+                    <td>stop_time_timepoint_without_times</td>
+                    
+                    <td>Any record with stop_times.timepoint set to 1 should define a value for stop_times.arrival_time and stop_times.departure_time fields.</td>
+                    
+                    <td>WARNING</td>
+                    
+                </tr>
+                
+                <tr>
+                    
+                    <td>wrong_parent_location_type</td>
+                    
+                    <td>Value of field location_type of parent found in field parent_station is invalid. Stops, Platforms, Entrance/exit, and generic nodes can only have a Station as a parent. Boarding Area can only have Platform as a parent. Stations cannot have a parent. All other combinations are prohibited.</td>
+                    
+                    <td>ERROR</td>
+                    
+                </tr>
+                
+            </tbody>
             
 
     </div>

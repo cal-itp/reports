@@ -45,7 +45,7 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
         <br>
         <small>
           
-            Monterey-Salinas Transit
+            <a href="http://www.mst.org">Monterey-Salinas Transit</a>
           
             &hairsp;&middot;&hairsp;
             <span class="inline-block">July 2021</span>
@@ -78,24 +78,16 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
 
             
     <figure>
-        <div class="text-2xl text-itp-teal-bold">36</div>
+        <div class="text-2xl text-itp-teal-bold">32</div>
         <figcaption class="text-itp-slate-bold">Routes</figcaption>
     </figure>
 
             
     <figure>
-        <div class="text-2xl text-itp-teal-bold">1068</div>
+        <div class="text-2xl text-itp-teal-bold">1327</div>
         <figcaption class="text-itp-slate-bold">Stops</figcaption>
     </figure>
 
-        </div>
-        
-        <div class="flex flex-row lg:flex-row flex-wrap gap-24">
-            <ul>
-                <li>This feed appears to be missing&nbsp;<a href='https://gtfs.org/schedule/best-practices/#feed_infotxt'>feed_info.txt</a>.
-                <li>Including feed info is important to help data users easily find technical&nbsp;contacts.</li>
-                <li>Please reach out to our help desk at hello@calitp.org with any&nbsp;questions.</li>
-            </ul>
         </div>
         
     </div>
@@ -297,6 +289,30 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
 
             
 
+            <thead class="border-t">
+                <tr>
+                    <th class="pt-12" colspan="2">Validation errors observed</th>
+                </tr>
+                <tr>
+                    <th>Error Name</th>
+                    <th>Error Description</th>
+                    <th>Severity</th>
+                    <th></th>
+                </tr>
+            </thead>
+            <tbody>
+                
+                <tr>
+                    
+                    <td>stop_too_far_from_trip_shape</td>
+                    
+                    <td>Per GTFS Best Practices, route alignments (in shapes.txt) should be within 100 meters of stop locations which a trip serves.</td>
+                    
+                    <td>WARNING</td>
+                    
+                </tr>
+                
+            </tbody>
             
 
     </div>
