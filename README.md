@@ -67,13 +67,13 @@ docker-compose run --rm --service-ports calitp_reports /bin/bash
 
 If google credentials are already configured on the host, the local credential files should already be mounted in the container, but it may only be necessary to run `gcloud auth application-default login` from within the container.
 
-When debugging, a jupyter notebook server within the container can be started via:
+When debugging, a jupyter lab server within the container can be started via:
 
 ```shell
-jupyter notebook --ip 0.0.0.0 --port 8891
+jupyter lab --ip 0.0.0.0 --port 8891
 ```
 
-and connect to it by copying/pasting the connection information generated from the notebook server running in the container into a web browser URL.
+and connect to it by copying/pasting the connection information generated from the jupyter lab server running in the container into a web browser URL.
 Here, port 8891 is used to avoid the default 8888 port for any prior jupyter servers.
 
 ### Executing Report Generation
