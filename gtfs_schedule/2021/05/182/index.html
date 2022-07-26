@@ -348,12 +348,57 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
 
             
 
+            <thead class="border-t">
+                <tr>
+                    <th class="pt-12" colspan="2">Cal-ITP validation errors observed</th>
+                    <th class="pt-12" colspan="3"> Number of errors</th>
+                </tr>
+                <tr>
+                    <th>Error Name</th>
+                    <th>Error Description</th>
+                    <th>2021-05-02</th>
+                    <th>2021-05-16</th>
+                    
+                    <th>2021-05-30</th>
+                    
+                </tr>
+            </thead>
+            <tbody>
+                
+                <tr>
+                    
+                    <td>duplicate_route_name</td>
+                    
+                    <td>All routes of the same route_type with the same agency_id should have unique combinations of route_short_name and route_long_name.</td>
+                    
+                    <td>115</td>
+                    
+                    <td>115</td>
+                    
+                    <td>115</td>
+                    
+                </tr>
+                
+                <tr>
+                    
+                    <td>route_short_name_too_long</td>
+                    
+                    <td>Short name of a route is too long (more than 12 characters). Note that major trip planning applications start truncating short names after seven characters.</td>
+                    
+                    <td>2</td>
+                    
+                    <td>2</td>
+                    
+                    <td>2</td>
+                    
+                </tr>
+                
+            </tbody>
+
+            
+
         </table>
     </div>
-
-    
-
-    <p><b>No validation errors detected.</b></p>
 
     
 
