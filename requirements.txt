@@ -55,7 +55,7 @@ jupyterlab-widgets==1.0.1
 libcst==0.3.20
 MarkupSafe==2.0.1
 matplotlib-inline==0.1.2
-mistune==0.8.4
+mistune==2.0.3
 multidict==5.1.0
 mypy-extensions==0.4.3
 nbclient==0.5.4
