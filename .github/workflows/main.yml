@@ -59,12 +59,11 @@ jobs:
     # deploy ----
 
     # development
-    # netlify deploy --site=cal-itp-reports --dir=./website/build --alias=development-build
     - name: Deploy development to Netlify
       if: ${{ github.ref == 'refs/heads/development' }}
       run: |
         npm install netlify-cli
-        echo "would be deploying to development"
+        netlify deploy --site=cal-itp-reports --dir=./website/build --alias=development-build
       env:
         NETLIFY_AUTH_TOKEN: ${{ secrets.NETLIFY_PREVIEW_APP_AUTH_TOKEN }}
 
