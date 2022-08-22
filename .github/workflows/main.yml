@@ -59,13 +59,14 @@ jobs:
     # deploy ----
 
     # development
-    - name: Deploy development
+    # netlify deploy --site=cal-itp-reports --dir=./website/build --alias=development-build
+    - name: Deploy development to Netlify
       if: ${{ github.ref == 'refs/heads/development' }}
-      uses: peaceiris/actions-gh-pages@v3
-      with:
-        github_token: ${{ secrets.GITHUB_TOKEN }}
-        publish_dir: ./website/build
-        publish_branch: development-build
+      run: |
+        npm install netlify-cli
+        echo "would be deploying to development"
+      env:
+        NETLIFY_AUTH_TOKEN: ${{ secrets.NETLIFY_PREVIEW_APP_AUTH_TOKEN }}
 
     # production
     - name: Deploy production
