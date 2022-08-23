@@ -65,7 +65,7 @@ jobs:
         npm install netlify-cli
         netlify deploy --site=cal-itp-reports --dir=./website/build --alias=development-build
       env:
-        NETLIFY_AUTH_TOKEN: ${{ secrets.NETLIFY_PREVIEW_APP_AUTH_TOKEN }}
+        NETLIFY_AUTH_TOKEN: ${{ secrets.NETLIFY_AUTH_TOKEN }}
 
     # production
     - name: Deploy production
