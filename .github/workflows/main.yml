@@ -57,10 +57,10 @@ jobs:
         netlify deploy --site=cal-itp-reports --dir=./website/build --alias=development-build
       env:
         NETLIFY_AUTH_TOKEN: ${{ secrets.NETLIFY_AUTH_TOKEN }}
-#    - name: Deploy production to Netlify
-#      if: ${{ github.event_name == 'tag' }}
-#      run: |
-#        npm install netlify-cli
-#        netlify deploy --site=cal-itp-reports --dir=./website/build
-#      env:
-#        NETLIFY_AUTH_TOKEN: ${{ secrets.NETLIFY_AUTH_TOKEN }}
+    - name: Deploy production to Netlify
+      if: ${{ github.event_name == 'tag' }}
+      run: |
+        npm install netlify-cli
+        netlify deploy --site=cal-itp-reports --dir=./website/build
+      env:
+        NETLIFY_AUTH_TOKEN: ${{ secrets.NETLIFY_AUTH_TOKEN }}
