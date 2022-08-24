@@ -39,7 +39,7 @@ jobs:
       run: |
         gsutil -m rsync -r gs://gtfs-data-test/report_gtfs_schedule/ reports/outputs/
     - name: Copy production report data
-      if: ${{ github.ref == 'refs/heads/main' }}
+      if: ${{ github.event_name == 'tag' }}
       run: |
         gsutil -m rsync -r gs://gtfs-data/report_gtfs_schedule/ reports/outputs/
 
@@ -57,10 +57,10 @@ jobs:
         netlify deploy --site=cal-itp-reports --dir=./website/build --alias=development-build
       env:
         NETLIFY_AUTH_TOKEN: ${{ secrets.NETLIFY_AUTH_TOKEN }}
-#    - name: Deploy production
+#    - name: Deploy production to Netlify
 #      if: ${{ github.event_name == 'tag' }}
-#      uses: peaceiris/actions-gh-pages@v3
-#      with:
-#        github_token: ${{ secrets.GITHUB_TOKEN }}
-#        publish_dir: ./website/build
-#        publish_branch: production
+#      run: |
+#        npm install netlify-cli
+#        netlify deploy --site=cal-itp-reports --dir=./website/build
+#      env:
+#        NETLIFY_AUTH_TOKEN: ${{ secrets.NETLIFY_AUTH_TOKEN }}
