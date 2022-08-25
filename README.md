@@ -154,7 +154,9 @@ and open up a web browser, and navigate to:
 ### Pushing to google cloud - Development
 
 The next step is to update the development bucket in google cloud with the new data.
-In the case where data must be overwritten (please use caution!) a `-d` flag can be added to the above command:
+In the case where data must be overwritten (please use caution!) a `-d` flag can be added to the command
+to "mirror" the buckets, i.e. delete destination data that isn't being copied
+from the source.
 ```shell
 gsutil -m rsync -r [-d] outputs/ gs://gtfs-data-test/report_gtfs_schedule/
 ```
