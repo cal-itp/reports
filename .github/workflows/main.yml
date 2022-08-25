@@ -1,10 +1,11 @@
-name: Build and Push to GH Pages
+name: Build and deploy to Netlify
 
 on:
   push:
+    tags:
+      - '*'
     branches:
       - main
-      - development
 
 jobs:
   deploy:
@@ -14,8 +15,6 @@ jobs:
       uses: actions/checkout@v2
       with:
         fetch-depth: 0
-
-    # set up python and node ----
     - name: Set up Python
       uses: actions/setup-python@v1
       with:
@@ -23,31 +22,24 @@ jobs:
     - uses: actions/setup-node@v2
       with:
         node-version: '14'
-
-    # install dependencies ----
     - name: Install python packages
       run: |
         pip install -r requirements.txt
     - name: Install node packages
       run: npm install
       working-directory: website
-
-    # copy in reports ----
-
     - uses: google-github-actions/setup-gcloud@v0
       with:
         service_account_key: ${{ secrets.GCP_SA_KEY }}
         export_default_credentials: true
 
-    # development
+    # copy data ----
     - name: Copy development report data
-      if: ${{ github.ref == 'refs/heads/development' }}
+      if: ${{ github.event_name == 'push' }}
       run: |
         gsutil -m rsync -r gs://gtfs-data-test/report_gtfs_schedule/ reports/outputs/
-
-    # production
     - name: Copy production report data
-      if: ${{ github.ref == 'refs/heads/main' }}
+      if: ${{ github.event_name == 'tag' }}
       run: |
         gsutil -m rsync -r gs://gtfs-data/report_gtfs_schedule/ reports/outputs/
 
@@ -58,20 +50,17 @@ jobs:
 
     # deploy ----
 
-    # development
-    - name: Deploy development
-      if: ${{ github.ref == 'refs/heads/development' }}
-      uses: peaceiris/actions-gh-pages@v3
-      with:
-        github_token: ${{ secrets.GITHUB_TOKEN }}
-        publish_dir: ./website/build
-        publish_branch: development-build
-
-    # production
-    - name: Deploy production
-      if: ${{ github.ref == 'refs/heads/main' }}
-      uses: peaceiris/actions-gh-pages@v3
-      with:
-        github_token: ${{ secrets.GITHUB_TOKEN }}
-        publish_dir: ./website/build
-        publish_branch: production
+    - name: Deploy development to Netlify
+      if: ${{ github.event_name == 'push' }}
+      run: |
+        npm install netlify-cli
+        netlify deploy --site=cal-itp-reports --dir=./website/build --alias=development-build
+      env:
+        NETLIFY_AUTH_TOKEN: ${{ secrets.NETLIFY_AUTH_TOKEN }}
+    - name: Deploy production to Netlify
+      if: ${{ github.event_name == 'tag' }}
+      run: |
+        npm install netlify-cli
+        netlify deploy --site=cal-itp-reports --dir=./website/build
+      env:
+        NETLIFY_AUTH_TOKEN: ${{ secrets.NETLIFY_AUTH_TOKEN }}

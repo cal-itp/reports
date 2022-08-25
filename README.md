@@ -154,35 +154,32 @@ and open up a web browser, and navigate to:
 ### Pushing to google cloud - Development
 
 The next step is to update the development bucket in google cloud with the new data.
-
+In the case where data must be overwritten (please use caution!) a `-d` flag can be added to the command
+to "mirror" the buckets, i.e. delete destination data that isn't being copied
+from the source.
 ```shell
-gsutil -m rsync -r outputs/ gs://gtfs-data-test/report_gtfs_schedule/
+gsutil -m rsync -r [-d] outputs/ gs://gtfs-data-test/report_gtfs_schedule/
 ```
 
-In the case where data must be overwritten (please use caution!) a `-d` flag can be added to the above command:
+Once you can verify that the gtfs-data-test bucket has updated, you can merge your
+PR to main. This site can be viewed at `https://development-build--cal-itp-reports.netlify.app/`.
 
-```shell
-gsutil -m rsync -r -d outputs/ gs://gtfs-data-test/report_gtfs_schedule/
-```
-
-Once you can verify that the gtfs-data-test bucket has updated. You will need to merge any code changes into the `development` branch in github.
-The github action might have to be re-run if the code was pushed to development before syncing to google cloud.
-The build html is pushed automatically as `development-build`.
-This site can be viewed at `https://development-build--cal-itp-reports.netlify.app/`.
+>❗️In the event there are no code changes necessary for a monthly deploy,
+> you can produce empty commits with `git commit --allow-empty` and merge those
+> into the main branch.
 
 ### Pushing to google cloud - Production
 
-Assuming that all the data is correct in development. The next step is to sync the development bucket with the production bucket.
+Assuming that all the data is correct in development, you can sync the test data to production.
 
 ```shell
 gsutil -m rsync -r gs://gtfs-data-test/report_gtfs_schedule/ gs://gtfs-data/report_gtfs_schedule/
 ```
 
-In order to deploy the site, ensure the data was pushed to the production bucket, and merge any changes into the main branch.
+### Deploying the site to Netlify
+Once you've synced data to either development or production, you may deploy the
+appropriate environment to Netlify.
+* For development, pushing a commit (or merging a PR) to the `main` branch
+* For production, pushing a tag
 
-If there are no changes between development and production rerun the last github action workflow run on main.
-The production website should update shortly with the most recent month.
-
-### A note about Netlify
-
-Currently the reports site is deployed via netlify continuous deployments.If the website is not currently reflecting the most recent month even if the data is within the google cloud bucket, there is a chance that the deploy failed within the netlify dashboard. If so: please contact a system admin who will log into the dashboard and rerun the netlify deployment.
+You may want to monitor GitHub Actions to ensure your deploy succeeded.
