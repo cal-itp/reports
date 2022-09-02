@@ -201,37 +201,6 @@ Monthly GTFS Quality Reports: {{parameters["DATE_MONTH_YEAR"]}} {{parameters["AG
 
 </div>
 
-            <!-- validation errors -->
-
-            {% if validation_notices["data"] %}
-
-            <thead class="border-t">
-                <tr>
-                    <th class="pt-12" colspan="2">Cal-ITP validation errors observed</th>
-                    <th class="pt-12" colspan="3"> Number of errors</th>
-                </tr>
-                <tr>
-                    <th>Error Name</th>
-                    <th>Error Description</th>
-                    <th>{{ validation_notices["columns"][2]}}</th>
-                    <th>{{ validation_notices["columns"][3]}}</th>
-                    {% if validation_notices["columns"][4] %}
-                    <th>{{ validation_notices["columns"][4]}}</th>
-                    {% endif %}
-                </tr>
-            </thead>
-            <tbody>
-                {% for row in validation_notices["data"] %}
-                <tr>
-                    {% for col in row %}
-                    <td>{{ col }}</td>
-                    {% endfor %}
-                </tr>
-                {% endfor %}
-            </tbody>
-
-            {% endif %}
-
         </table>
     </div>
 
