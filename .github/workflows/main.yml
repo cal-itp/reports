@@ -54,7 +54,7 @@ jobs:
       if: ${{ github.event_name == 'push' }}
       run: |
         npm install netlify-cli
-        netlify deploy --site=cal-itp-reports --dir=./website/build --alias=development-build
+        netlify deploy --site=cal-itp-reports --dir=./website/build --alias=test
       env:
         NETLIFY_AUTH_TOKEN: ${{ secrets.NETLIFY_AUTH_TOKEN }}
     - name: Deploy production to Netlify
