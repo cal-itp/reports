@@ -61,6 +61,6 @@ jobs:
       if: ${{ startsWith(github.ref, 'refs/tags/') }}
       run: |
         npm install netlify-cli
-        netlify deploy --site=cal-itp-reports --dir=./website/build
+        netlify deploy --site=cal-itp-reports --dir=./website/build --prod
       env:
         NETLIFY_AUTH_TOKEN: ${{ secrets.NETLIFY_AUTH_TOKEN }}
