@@ -23,9 +23,19 @@
         <mj-text>Greetings from Cal-ITP. As part of our work with the GTFS feeds for agencies across the state, we prepare a monthly report with some basic statistics and validation results for your agency’s feed. <strong>You can view your report for {{month_name}}</strong> at <a href="{{url}}?utm_campaign=reports&amp;utm_source=reports-mailer&amp;utm_medium=email&amp;utm_content=report-link">{{url}}</a>.</mj-text>
         <mj-button href="{{url}}?utm_campaign=reports&amp;utm_source=reports-mailer&amp;utm_medium=email&amp;utm_content=report-button">View Report</mj-button>
         <mj-text>All previous reports are available at <a href="https://reports.calitp.org/?utm_campaign=reports&amp;utm_source=reports-mailer&amp;utm_medium=email&amp;utm_content=all-reports-link">https://reports.calitp.org/</a>.</mj-text>
-        <mj-text>We are actively looking for opportunities to help transit agencies address issues with their GTFS feeds. Do you have feedback for us? Let us know!</mj-text>
-        <mj-text>To provide feedback, please reply to this email or take our survey by clicking the link below.</mj-text>
-        <mj-button background-color="#f6bf16" color="#136C97" href="https://forms.gle/VtZhDHaEGpqXPgLs9">Take the Survey</mj-button>
+        <mj-text>Caltrans and the California Integrated Travel Project (Cal-ITP) are also pleased to announce the release of the draft candidate of the <a href="https://docs.google.com/document/d/1dX6ZoL_GsQIt5LG1wZEV5S6pYdD6jAwhKk1CRQoXU6k/edit#heading=h.gctumadr9r0m">California Transit Data Guidelines, Version 3</a>.</mj-text>
+        <mj-text>Formerly known as the California Minimum General Transit Feed Specification (GTFS) Guidelines, Version 3 builds off Version 2.1 to provide GTFS producers with an up-to-date reference document that features the characteristics of a high-quality GTFS feed needed to provide transit riders with the information they deserve.</mj-text>
+        <mj-text>The intent of the content in version 3 is mostly the same as or similar to Version 2.1. Noticeable differences include:</mj-text>
+        <mj-text>
+          <ul style="margin:0; margin-left: 25px; padding:0; font-family: Arial, sans-serif; color:#495055; font-size:16px; line-height:22px;" align="left" type="disc">
+            <li>A new document name</li>
+            <li>New organizational concepts</li>
+            <li>Greater detail of the reasoning behind each guideline</li>
+            <li>A greater presence of using GTFS data to represent demand-responsive services</li>
+          </ul>
+        </mj-text>
+        <mj-text>We want to hear from you! All GTFS producers and consumers are welcome and encouraged to provide feedback on the draft release candidate. <ml-text style="font-weight: bold">All feedback is due by 5 p.m. PDT on September 30, 2022</ml-text>. Instructions on how to provide feedback are included within the <a href="https://docs.google.com/document/d/1dX6ZoL_GsQIt5LG1wZEV5S6pYdD6jAwhKk1CRQoXU6k/edit#heading=h.gctumadr9r0m">draft document</a>.</mj-text> 
+        <mj-text>If you have any questions, please contact us at <a href="mailto:hello@calitp.org?subject=Feedback on new data guidelines">hello@calitp.org</a>—about these data guidelines, your monthly report, or any other type of technical support your agency might need. And be on the lookout for further status updates regarding Version 3 over the coming weeks.</mj-text>
         <mj-text>Thanks,</mj-text>
         <mj-text padding-top="0" padding-bottom="0" line-height="1px" color="#2EA8CE" mj-class="display-font" font-size="20px" padding-bottom="0">The Cal-ITP Team</mj-text>
         <mj-text padding-top="0"><a href="http://calitp.org?utm_campaign=reports&amp;utm_source=reports-mailer&amp;utm_medium=email&amp;utm_content=signature-link" style="font-size: 12px; letter-spacing: .03em; text-decoration: none; font-weight: bold;">calitp.org</a></mj-text>
