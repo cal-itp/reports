@@ -40,7 +40,7 @@ REPORT_LINK_BASE = f'https://reports.calitp.org/gtfs_schedule/{PUBLISH_DATE_YEAR
 # -
 # TODO: need to ensure that the test_emails.csv and production email sheet use the
 #       same column names
-tbl_report_emails = pd.read_csv(config["email_csv_path"], skiprows=1)
+tbl_report_emails = pd.read_csv(config["email_csv_path"])
 tbl_report_emails.columns = tbl_report_emails.columns.str.lower()
 tbl_report_emails.columns = tbl_report_emails.columns.str.replace(' ','_')
 report_emails = (
