@@ -20,6 +20,7 @@ Monthly GTFS Quality Reports: {{parameters["DATE_MONTH_YEAR"]}} {{parameters["AG
 {%- endblock -%}
 
 {% block content %}
+
 <div class="responsive-prose">
     <h1>
         Monthly GTFS Quality Report
@@ -75,8 +76,11 @@ Monthly GTFS Quality Reports: {{parameters["DATE_MONTH_YEAR"]}} {{parameters["AG
 
 <hr>
 
+{%- macro getJsonForAttribute(variable, attribute) %}
+    {{ variable|map(attribute=attribute)|list|tojson }}
+{% endmacro -%}
 
-<div class="flex flex-col lg:flex-row gap-12 lg:gap-16 xl:gap-24 2xl:gap-36">
+<div class="flex flex-col lg:flex-row gap-12 lg:gap-16 xl:gap-24 2xl:gap-36 mb-8">
     <div class="flex-1 responsive-prose">
         <h2>About the {{parameters["DATE_MONTH"]}} Daily Service Level&nbsp;Charts</h2>
         <ul>
@@ -88,23 +92,46 @@ Monthly GTFS Quality Reports: {{parameters["DATE_MONTH_YEAR"]}} {{parameters["AG
         </ul>
     </div>
 
-    <div class="flex-1 responsive-prose">
-        <h2>Service hours per weekday in the active&nbsp;feed:</h2>
-        <img src="2_service_hours_wk.png">
+    <div class="flex-1">
+        <div class="responsive-prose">
+            <h2>Service hours per weekday in the active&nbsp;feed</h2>
+        </div>
+
+        {% set weekday_hours = daily_service_hours|selectattr('weekday', 'in', range(0, 5))|list %}
+        <div class="hours-chart"
+            data-dates="{{ getJsonForAttribute(weekday_hours, 'service_date')|trim }}"
+            data-hours="{{ getJsonForAttribute(weekday_hours, 'ttl_service_hours')|trim }}"
+            data-color="#136C97"
+        ></div>
     </div>
 </div>
 
 <div class="flex flex-col lg:flex-row gap-12 lg:gap-16 xl:gap-24 2xl:gap-36">
-    <div class="flex-1 responsive-prose">
-        <h2>Service hours per Saturday in the active&nbsp;feed:</h2>
-        <img src="2_service_hours_sa.png">
+    <div class="flex-1">
+        <div class="responsive-prose">
+            <h2>Service hours per Saturday in the active&nbsp;feed</h2>
+        </div>
+
+        {% set sat_hours = daily_service_hours|selectattr('weekday', '==', 5)|list %}
+        <div class="hours-chart"
+            data-dates="{{ getJsonForAttribute(sat_hours, 'service_date')|trim }}"
+            data-hours="{{ getJsonForAttribute(sat_hours, 'ttl_service_hours')|trim }}"
+            data-color="#F6BF16"
+        ></div>
     </div>
 
-    <div class="flex-1 responsive-prose">
-        <h2>Service hours per Sunday in the active&nbsp;feed:</h2>
-        <img src="2_service_hours_su.png">
-    </div>
+    <div class="flex-1">
+        <div class="responsive-prose">
+            <h2>Service hours per Sunday in the active&nbsp;feed</h2>
+        </div>
 
+        {% set sun_hours = daily_service_hours|selectattr('weekday', '==', 6)|list %}
+        <div class="hours-chart"
+            data-dates="{{ getJsonForAttribute(sun_hours, 'service_date')|trim }}"
+            data-hours="{{ getJsonForAttribute(sun_hours, 'ttl_service_hours')|trim }}"
+            data-color="#5B559C"
+        ></div>
+    </div>
 </div>
 
 <hr>
@@ -122,9 +149,23 @@ Monthly GTFS Quality Reports: {{parameters["DATE_MONTH_YEAR"]}} {{parameters["AG
         </ul>
     </div>
 
-    <div class="flex-1 responsive-prose">
-        <h2>Changes from {{parameters["START_MONTH_DAY"]}} to {{parameters["END_MONTH_DAY"]}}</h2>
-        <img src="3_id_changes.png">
+    {%- macro getChangesByStatus(type, status) -%}
+        {% set data = (routes_changed if type == 'routes' else stops_changed) %}
+        {{ data|selectattr('status', '==', status)|map(attribute='percent')|first|default(0) }}
+    {%- endmacro -%}
+    <div class="flex-1">
+        <div class="responsive-prose">
+            <h2>Changes from {{parameters["START_MONTH_DAY"]}} to {{parameters["END_MONTH_DAY"]}}</h2>
+        </div>
+
+        <div id="changes-chart"
+            data-routes-added="{{ getChangesByStatus('routes', 'Added')|trim }}"
+            data-routes-removed="{{ getChangesByStatus('routes', 'Removed')|trim }}"
+            data-routes-unchanged="{{ getChangesByStatus('routes', 'Unchanged')|trim }}"
+            data-stops-added="{{ getChangesByStatus('stops', 'Added')|trim }}"
+            data-stops-removed="{{ getChangesByStatus('stops', 'Removed')|trim }}"
+            data-stops-unchanged="{{ getChangesByStatus('stops', 'Unchanged')|trim }}"
+        ></div>
     </div>
 </div>
 
@@ -211,6 +252,5 @@ Monthly GTFS Quality Reports: {{parameters["DATE_MONTH_YEAR"]}} {{parameters["AG
     {% endif %}
 
 </div>
-
 
 {% endblock %}
