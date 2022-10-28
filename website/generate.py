@@ -147,13 +147,6 @@ REPORT_BUILD_DIR = Path('build/gtfs_schedule')
 report_template = env.get_template('report.html.jinja')
 
 for year, month, entry in iter_report_entries(index_data["reports"]):
-
-    # DEV ONLY, PLEASE REMOVE ME ***************************
-    # Make this run much faster by only rendering one report
-    # if '2022/01/314' not in entry["report_path"]:
-    #     continue
-    # END DEV ONLY *****************************************
-
     p_report_path = Path(entry["report_path"])
     p_report_inputs = REPORT_OUTPUTS_DIR / p_report_path.parent / "data"
 
