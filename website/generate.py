@@ -118,10 +118,18 @@ def iter_report_entries(index):
             for entry in month["reports"]:
                 yield year, month, entry
 
+with open('../reports/outputs/rt_feed_ids.json', 'r') as f:
+    rt_feeds = json.loads(f.read())
+
+
 def fetch_report_data(report_dir):
     report_data = {}
 
-    # report data lives in {year}/{month}/{itp_id}/data
+
+    # report data lives in ../reports/outputs/{year}/{month}/{itp_id}/data
+    itp_id = int(str(report_dir).split('/')[-2])
+    report_data['has_rt_feed'] = itp_id in rt_feeds
+
     json_files = Path(report_dir).glob("*.json")
     for json_file in json_files:
         name = re.sub(r'^\d+_(.+).json$', r'\1', json_file.name)

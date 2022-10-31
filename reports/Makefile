@@ -15,6 +15,7 @@ sync-prod:
 
 generate_parameters:
 	python generate_ids.py
+	python rt_feeds.py rt.yml
 
 outputs/%/parameters.json: generate_parameters
 
