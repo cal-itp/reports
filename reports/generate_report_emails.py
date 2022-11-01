@@ -93,6 +93,7 @@ for emails, html_messages in all_emails_list:
     email = postmark.emails.Email(
         From=config['email_from'],
         To=emails,
+        Cc=config['cc_email'],
         Subject=config['email_subject'],
         HtmlBody=html_messages,
         TrackOpens=config['track_opens'],
