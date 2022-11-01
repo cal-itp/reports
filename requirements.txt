@@ -65,7 +65,7 @@ nest-asyncio==1.5.1
 nodeenv==1.6.0
 notebook==6.4.12
 numpy==1.22.0
-oauthlib==3.1.1
+oauthlib==3.2.1
 packaging==20.9
 pandas==1.1.4
 pandas-gbq==0.14.1
