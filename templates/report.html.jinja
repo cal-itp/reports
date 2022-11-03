@@ -52,8 +52,15 @@ Monthly GTFS Quality Reports: {{parameters["DATE_MONTH_YEAR"]}} {{parameters["AG
             {{ display_figure('Days With No Service', n_days_no_service.n) }}
             {{ display_figure('Routes', feed_info.n_routes) }}
             {{ display_figure('Stops', feed_info.n_stops) }}
+            {% if speedmap_url %}
             {{ display_figure('Has RT Feed', mark_exists(has_rt_feed)) }}
+            {% endif %}
         </div>
+        {% if speedmap_url %}
+        <div>
+          <a href="{{ speedmap_url }}">Speed Map</a>
+        </div>
+        {% endif %}
         {% if not feed_info.has_feed_info %}
         <div class="flex flex-row lg:flex-row flex-wrap gap-24">
             <ul>

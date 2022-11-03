@@ -119,8 +119,10 @@ def iter_report_entries(index):
                 yield year, month, entry
 
 with open('../reports/outputs/rt_feed_ids.json', 'r') as f:
-    rt_feeds = json.loads(f.read())
+    rt_feeds = dict(json.loads(f.read()))
 
+with open('../reports/outputs/speedmap_urls.json', 'r') as f:
+    speedmap_urls = dict(json.loads(f.read()))
 
 def fetch_report_data(report_dir):
     report_data = {}
@@ -129,6 +131,7 @@ def fetch_report_data(report_dir):
     # report data lives in ../reports/outputs/{year}/{month}/{itp_id}/data
     itp_id = int(str(report_dir).split('/')[-2])
     report_data['has_rt_feed'] = itp_id in rt_feeds
+    report_data['speedmap_url'] = speedmap_urls.get(itp_id)
 
     json_files = Path(report_dir).glob("*.json")
     for json_file in json_files:
