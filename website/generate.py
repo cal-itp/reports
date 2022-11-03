@@ -15,6 +15,8 @@ env = Environment(
     autoescape=select_autoescape()
 )
 
+# env.add_extension('jinja2.ext.debug')
+
 # Copied from https://jinja.palletsprojects.com/en/3.0.x/api/
 # used as filter to convert newlines into <br>
 @pass_eval_context
@@ -35,14 +37,22 @@ def nl2br(eval_ctx, value):
 def month_name(month_number):
     return calendar.month_name[month_number]
 
+def datetime_format(value, format="%H:%M %d-%m-%y"):
+    if isinstance(value, int):
+        return datetime.fromtimestamp(value / 1e3).strftime(format)
+    return value.strftime(format)
 
-env.filters = {**env.filters, "nl2br": nl2br, "month_name": month_name}
+env.filters = {
+    **env.filters,
+    "nl2br": nl2br,
+    "month_name": month_name,
+    "datetime_format": datetime_format,
+}
 
-
-def friendly_month(x): 
+def friendly_month(x):
     return datetime.strptime(x, "%Y-%m-%d").strftime("%B")
 
-def friendly_month_day(x): 
+def friendly_month_day(x):
     return datetime.strptime(x, "%Y-%m-%d").strftime("%B %d")
 
 def friendly_month_year(x):
