@@ -30,29 +30,7 @@ def check_if_rt_data_available():
     return rt_itp_ids_dict
 
 
-# failed attempt at dissecting catalog.yml to build urls for speedmaps
-def get_speedmap_data():
-    catalog = intake.open_catalog("./catalog.yml")
-    df = catalog.competitive_route_variability.read()
-    speedmap_data = []
-    used = {}
-    for index, district_number_and_name in enumerate(df.caltrans_district.iloc):
-        if district_number_and_name is None:
-            continue
-        if district_number_and_name in used:
-            continue
-        used[district_number_and_name] = True
-        district_number, name = district_number_and_name.split('-')
-        speedmap_data.append([
-            int(df.calitp_itp_id.iloc[index]), # calitp_id
-            district_number.strip(), # district_number
-            name.strip().lower().replace(' ','-'), # district_name
-        ])
-
-    return speedmap_data
-
-
-# Just scrape the actual speedmap site instead
+# Scrape the actual speedmap site to get the urls
 def get_speedmap_urls():
     response = requests.get('https://analysis.calitp.org/rt/README.html')
     html = response.content
