@@ -172,6 +172,9 @@ const changesChart = bb.generate({
         },
         order: '',
     },
+    interaction: {
+        enabled: false,
+    },
     onafterinit: function() {
         const { bars } = this.$.bar;
         const categories = this.categories();
