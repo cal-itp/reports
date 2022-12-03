@@ -22,7 +22,6 @@ The following steps are run within the `reports` folder.
   2. `outputs/YYYY/MM` for every agency
 - `make MONTH=02 all -j 15` runs the following commands:
   1. `papermill --log-level=ERROR -f outputs/YYYY/MM/AGENCY_NUM/parameters.json report.ipynb outputs/YYYY/MM/AGENCY_NUM/index.ipynb` - creates a copy of the `report.ipynb` file, runs queries in the `report.ipynb` file, and outputs `outputs/YYYY/MM/AGENCY_NUM/data` directories
-  2. `jupyter nbconvert --to html --TagRemovePreprocessor.remove_input_tags="{'hide', 'injected-parameters'}" --TagRemovePreprocessor.remove_single_output_tags="{'hide', 'injected-parameters'}" --no-input --no-prompt outputs/YYYY/MM/AGENCY_NUM/index.ipynb` - creates an `outputs/YYYY/MM/AGENCY_NUM/index.html` file
 
 The files in each `outputs/YYYY/MM/AGENCY_NUM/data` directory are used to generate the static HTML (see below).
 
