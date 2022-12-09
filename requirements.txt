@@ -9,7 +9,7 @@ backcall==0.2.0
 bleach==4.1.0
 cachetools==4.2.2
 calitp==0.0.15
-certifi==2021.5.30
+certifi==2022.12.7
 cffi==1.14.5
 cfgv==3.3.0
 chardet==4.0.0
