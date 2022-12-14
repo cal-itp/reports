@@ -1,0 +1,14 @@
+{% extends "layout/default.html.jinja" %}
+{% import 'macros.html.jinja' as macros %}
+
+{% block title %}FAQs: {{DATE_MONTH_YEAR}}{% endblock %}
+
+{% block content %}
+<div class="responsive-prose">
+    {# macros.breadcrumbs([
+        { 'url': '/', 'text': 'Home' },
+    ]) #}
+
+    <h1>Frequently Asked Questions</h1>
+</div>
+{% endblock %}

@@ -18,7 +18,7 @@ html {
 
 body {
     color: $text-color;
-    overflow: scroll; // prevent layout jumping when page height changes
+    overflow-y: scroll; // prevent layout jumping when page height changes
 }
 
 h1, h2, h3, h4 {
@@ -123,4 +123,26 @@ input[type="search"] {
                 hover:bg-itp-teal-light
                 p-4;
         }
+}
+
+.breadcrumbs {
+    a {
+        @apply text-itp-teal-bold;
+    }
+}
+
+nav,
+footer {
+    a {
+        &:hover,
+        &:focus {
+            @apply underline;
+        }
+    }
+}
+
+nav {
+    a {
+        @apply px-8 py-2;
+    }
 }

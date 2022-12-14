@@ -1,11 +1,7 @@
 module.exports = {
-  purge: {
-    enabled: process.env.NODE_ENV === 'production',
-    content: [
-      'build/**/*.html'
-    ],
-  },
-  darkMode: false, // or 'media' or 'class'
+  content: [
+    'build/**/*.html',
+  ],
   theme: {
     container: {
       center: true,
@@ -17,6 +13,7 @@ module.exports = {
     },
     extend: {
       colors: {
+        current: 'currentColor',
         'itp-teal': {
           DEFAULT: '#2EA8CE',
           bold: '#136C97',
@@ -60,9 +57,6 @@ module.exports = {
         },
       },
     }
-  },
-  variants: {
-    extend: {},
   },
   plugins: [
     require('@tailwindcss/typography'),

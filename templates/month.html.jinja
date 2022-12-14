@@ -5,6 +5,12 @@
 
 {% block content %}
 <div class="responsive-prose">
+    {{ macros.breadcrumbs([
+        { 'url': '/', 'text': 'Home' },
+        { 'url': '/#directory', 'text': 'Directory' },
+        { 'text': DATE_MONTH_YEAR },
+    ]) }}
+
     <h1>
         GTFS Quality Reports<br>
         <small>{{DATE_MONTH_YEAR}}</small>

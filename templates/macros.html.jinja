@@ -11,3 +11,20 @@
         <i class="fa-fw {{icon}} text-itp-teal"></i>
     </span>
 {% endmacro %}
+
+{% macro breadcrumbs(links) %}
+    <div class="breadcrumbs my-8">
+        {% for link in links %}
+            {% if not loop.first %}
+                <div class="inline-block w-5 text-center">
+                    <i class="far fa-angle-right text-muted"></i>
+                </div>
+            {% endif %}
+            {% if link.url %}
+                <a href="{{ link.url }}">{{ link.text }}</a>
+            {% else %}
+                {{ link.text }}
+            {% endif %}
+        {% endfor %}
+    </div>
+{% endmacro %}

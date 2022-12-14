@@ -30,22 +30,43 @@
 height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
 <!-- End Google Tag Manager (noscript) -->
     {% block logo %}
-    <div class="container pb-8">
-        <a href="{{SITE_DOMAIN}}/">
-            <img class="inline-block h-12 mt-6" src="{{SITE_DOMAIN}}{{SITE_PATH}}/images/calitp-logo.svg" alt="Cal-ITP">
-        </a>
-    </div>
+    <header class="container lg:pb-8 pt-8">
+        <nav class="flex items-baseline">
+            <a class="grow p-0" href="{{SITE_DOMAIN}}/">
+                <img class="inline-block h-12" src="{{SITE_DOMAIN}}{{SITE_PATH}}/images/calitp-logo.svg" alt="Cal-ITP">
+            </a>
+            <div class="grow-[5] flex items-baseline gap-4">
+                <a href="/mission">Mission</a>
+                <a href="/#directory">Directory</a>
+                <a href="/faqs">FAQs</a>
+                <a href="/glossary">Glossary</a>
+                <a class="ml-auto bg-itp-teal-bold text-white px-8 py-2 rounded" href="mailto:hello@calitp.org">Contact Us</a>
+            </div>
+        </div>
+    </header>
     {% endblock %}
 
-    {% block body %}
-    <div class="container my-12 mb-24">
-        {% block content %}{% endblock %}
-    </div>
-    {% endblock %}
+    <main class="bg-white">
+        {% block body %}
+        <div class="container my-12 mb-24">
+            {% block content %}{% endblock %}
+        </div>
+        {% endblock %}
+    </main>
 
-    <div class="bg-gray-800 pb-96">
-        <!-- Footer or overscroll area -->
-    </div>
+    <footer class="bg-gray-900 min-h-[50vh] text-white">
+        <div class="bg-gray-800 py-12 shadow-2xl">
+            <div class="container">
+                <div class="grid items-center justify-items-stretch lg:grid-flow-col">
+                    <div class="mb-4 lg:mb-0"><img class="inline-block h-12" src="/images/calitp-logo.svg" alt="Cal-ITP"></div>
+                    <div><a class="inline-block py-3" href="https://www.ca.gov/use/">Conditions of Use</a></div>
+                    <div><a class="inline-block py-3" href="mailto:hello@calitp.org">Contact Us</a></div>
+                    <div><a class="inline-block py-3" href="https://lp.constantcontactpages.com/su/eLbtFoE/calitp?website">Newsletter</a></div>
+                    <div><a class="inline-block py-3" href="https://dot.ca.gov/privacy-policy">Privacy Policy</a></div>
+                </div>
+            </div>
+        </div>
+    </footer>
 
     {% block js_bottom %}
     <script src="{{SITE_DOMAIN}}{{SITE_PATH}}/js/bundle.js"></script>
