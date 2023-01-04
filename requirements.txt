@@ -49,7 +49,7 @@ jupyter==1.0.0
 jupyterlab==3.4.4 
 jupyter-client==7.0.2
 jupyter-console==6.4.0
-jupyter-core==4.7.1
+jupyter-core==4.11.2
 jupyterlab-pygments==0.1.2
 jupyterlab-widgets==1.0.1
 libcst==0.3.20
