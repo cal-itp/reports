@@ -54,6 +54,7 @@ jupyterlab-pygments==0.1.2
 jupyterlab-widgets==1.0.1
 libcst==0.3.20
 MarkupSafe==2.0.1
+matplotlib==3.5.3
 matplotlib-inline==0.1.2
 mistune==0.8.4
 multidict==5.1.0
