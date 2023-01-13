@@ -90,11 +90,6 @@ input[type="search"] {
 .responsive-prose {
     @apply prose prose-sm sm:prose lg:prose-lg;
 
-    a {
-        color: inherit;
-        font: inherit;
-    }
-
     &.max-w-none {
         max-width: none;
     }
