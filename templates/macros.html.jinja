@@ -1,6 +1,6 @@
-{% macro anchor_link(target, iconCls, iconTitle) %}
+{% macro anchor_link(target, iconCls, iconTitle, linkCls) %}
     <small class="ml-2">
-        <a href="#{{ target }}">
+        <a href="#{{ target }}" class="{{ linkCls }}">
             <i title="{{ iconTitle }}" class="text-itp-slate-bold {{ iconCls }}"></i>
         </a>
     </small>
@@ -8,7 +8,7 @@
 
 {% macro list_group_icon(icon = 'fas fa-arrow-circle-right') %}
     <span class="inline-block w-5 mr-1">
-        <i class="fa-fw {{icon}} text-itp-teal"></i>
+        <i class="fa-fw {{ icon }} text-itp-teal"></i>
     </span>
 {% endmacro %}
 

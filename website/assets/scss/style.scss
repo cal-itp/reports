@@ -90,11 +90,6 @@ input[type="search"] {
 .responsive-prose {
     @apply prose prose-sm sm:prose lg:prose-lg;
 
-    a {
-        color: inherit;
-        font: inherit;
-    }
-
     &.max-w-none {
         max-width: none;
     }
@@ -143,6 +138,19 @@ footer {
 
 nav {
     a {
-        @apply px-8 py-2;
+        @apply inline-block px-8 py-2;
+    }
+}
+
+.faq-list {
+    &__q {
+        @apply font-semibold text-xl;
+    }
+}
+
+:target {
+    .faq-list__q,
+    > a {
+        @apply bg-itp-yellow-bold/30;
     }
 }

@@ -49,6 +49,9 @@ module.exports = {
         DEFAULT: {
           css: {
             color: '#333',
+            a: {
+              color: '#136C97',
+            },
             h1: {
               fontWeight: '900',
             },
