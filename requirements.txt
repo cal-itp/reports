@@ -115,7 +115,7 @@ patsy==0.5.3
 pbr==5.11.0
 pexpect==4.8.0
 pickleshare==0.7.5
-Pillow==9.2.0
+Pillow==9.3.0
 platformdirs==2.3.0
 plotnine==0.8.0
 pluggy==0.13.1
