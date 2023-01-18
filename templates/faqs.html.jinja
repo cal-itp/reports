@@ -1,0 +1,53 @@
+{% extends "layout/default.html.jinja" %}
+{% import 'macros.html.jinja' as macros %}
+
+{% block title %}FAQs: {{ DATE_MONTH_YEAR }}{% endblock %}
+
+{% block content %}
+    <div class="responsive-prose max-w-none">
+        {{ macros.breadcrumbs([
+        { 'url': '/', 'text': 'Home' },
+        { 'text': 'FAQs' },
+        ]) }}
+    </div>
+
+    <div class="responsive-prose">
+        <h1>Frequently Asked Questions</h1>
+
+        <p class="lead">
+            Need help interpreting your GTFS quality data reports or have a question
+            that you need answered pronto? Check for your question here or send it
+            to us at <a href="mailto:hello@calitp.com">hello@calitp.com</a>.
+        </p>
+    </div>
+
+    <div class="flex flex-col md:flex-row items-baseline gap-8 lg:gap-12 xl:gap-24">
+        <ul class="md:w-48 lg:w-64 xl:w-96" id="questions">
+            {% for question in questions %}
+                <li class="pt-4 leading-none" id="{{ question.q | html_id }}_q">
+                    <a href="#{{ question.q | html_id }}"
+                       class="text-itp-teal-bold text-sm hover:underline">{{ question.q }}</a>
+                </li>
+            {% endfor %}
+        </ul>
+
+        <div class="flex-1">
+            <div class="responsive-prose">
+                <dl class="faq-list">
+                    {% for question in questions %}
+                        <div class="faq-list__item pt-12" id="{{ question.q | html_id }}">
+                            <dt class="faq-list__q">
+                                {% set q_link %}{{ question.q | html_id }}_q{% endset %}
+                                {{ question.q }}
+                                {{ macros.anchor_link(q_link, 'fa-solid fa-arrow-turn-down-left', 'Back to question', '-ml-2 px-1') }}
+                            </dt>
+                            <dd class="faq-list__a">
+                                {% markdown %}{{ question.a }}{% endmarkdown %}
+                            </dd>
+                        </div>
+                    {% endfor %}
+                </dl>
+            </div>
+        </div>
+    </div>
+{% endblock %}
