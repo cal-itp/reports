@@ -3,19 +3,23 @@ import os
 import re
 import shutil
 import calendar
+import tomli
 
 from datetime import date, datetime
 from glob import glob
 from jinja2 import Environment, FileSystemLoader, select_autoescape, pass_eval_context
+from jinja_markdown import MarkdownExtension
 from markupsafe import Markup, escape
 from pathlib import Path
+from tqdm import tqdm
 
 env = Environment(
     loader=FileSystemLoader('../templates'),
-    autoescape=select_autoescape()
+    autoescape=select_autoescape(),
+    extensions=[
+        'jinja_markdown.MarkdownExtension',
+    ],
 )
-
-# env.add_extension('jinja2.ext.debug')
 
 # Copied from https://jinja.palletsprojects.com/en/3.0.x/api/
 # used as filter to convert newlines into <br>
@@ -45,12 +49,16 @@ def datetime_format(value, format="%H:%M %d-%m-%y"):
         return datetime.fromtimestamp(value / 1e3).strftime(format)
     return value.strftime(format)
 
+def string_to_html_id(s):
+    # does not guarantee uniqueness
+    return re.sub('[^(a-z)(A-Z)(0-9)._-]', '', s.lower().replace(' ', '-'))
 
 env.filters = {
     **env.filters,
     "nl2br": nl2br,
     "month_name": month_name,
     "datetime_format": datetime_format,
+    "html_id": string_to_html_id,
 }
 
 
@@ -81,9 +89,12 @@ global_data = {
     "PATH_GTFS_SCHEDULE": "gtfs_schedule"
 }
 
+print()
 
 ################################################################################
 # render index
+
+print('generating homepage')
 
 index_template = env.get_template('index.html.jinja')
 
@@ -99,7 +110,24 @@ with open('build/index.html', 'w') as file:
     file.write(index_html)
 
 ################################################################################
+# render other pages
+
+# FAQs
+print('generating FAQs')
+faqs_template = env.get_template('faqs.html.jinja')
+with open('data/faqs.toml', 'rb') as file:
+    faqs_content = tomli.load(file)
+faqs_html = faqs_template.render({**global_data, **faqs_content})
+
+if not os.path.exists('build/faqs'):
+    os.makedirs('build/faqs')
+with open('build/faqs/index.html', 'w') as file:
+    file.write(faqs_html)
+
+################################################################################
 # render monthly report index pages
+
+print("generating monthly indexes")
 
 month_template = env.get_template('month.html.jinja')
 
@@ -126,7 +154,16 @@ for year in index_data["reports"]:
 def iter_report_entries(index):
     for year in index:
         for month in year["months"]:
-            for entry in month["reports"]:
+            month_path = month["reports"][0]["report_path"][0:7].replace(
+                '/', '-')
+            for entry in tqdm(
+                month["reports"],
+                leave=False,
+                desc=f'        ↳ reports for {month_path}',
+                unit=" pages",
+                colour="cyan",
+            ):
+                # print(entry["report_path"])
                 yield year, month, entry
 
 
@@ -199,3 +236,21 @@ for year, month, entry in iter_report_entries(index_data["reports"]):
 
 ################################################################################
 # render all reports
+=======
+with tqdm(
+    total=len(list(iter_report_entries(index_data["reports"]))),
+    desc="generating individual reports",
+    unit=" pages",
+    colour="blue",
+) as pbar:
+    for year, month, entry in iter_report_entries(index_data["reports"]):
+        p_report_path = Path(entry["report_path"])
+        p_report_inputs = REPORT_OUTPUTS_DIR / p_report_path.parent / "data"
+
+        report_data = fetch_report_data(p_report_inputs)
+        report_html = report_template.render({**global_data, **report_data})
+        pbar.update(1)
+
+        p_final = REPORT_BUILD_DIR / p_report_path
+        p_final.parent.mkdir(parents=True, exist_ok=True)
+        p_final.write_text(report_html)

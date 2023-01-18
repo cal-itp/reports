@@ -1,66 +1,103 @@
 <!doctype html>
 <html lang="en">
-
-<head>
-    <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1">
-    <meta name="theme-color" content="rgba(31,41,55)">
+    <head>
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <meta name="theme-color" content="rgba(31,41,55)">
         <!-- Google Tag Manager -->
-    <script>(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':
-    new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],
-    j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
-    'https://www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);
-    })(window,document,'script','dataLayer','GTM-KXB2HS6');</script>
-    <!-- End Google Tag Manager -->
-    <title>{% block title %}Monthly GTFS Quality Report {% endblock %}</title>
-    {% block css %}
-    <link rel="stylesheet"
-        href="https://fonts.googleapis.com/css2?family=Poppins:wght@500;700&amp;family=Raleway:wght@800;900&amp;display=swap">
-    <link rel="stylesheet" href="{{SITE_DOMAIN}}{{SITE_PATH}}/css/style.min.css">
-    <link rel="stylesheet" href="{{SITE_DOMAIN}}{{SITE_PATH}}/js/bundle.css">
-    {% endblock %}
-    {% block js_top %}
-    <script src="https://kit.fontawesome.com/58160bfc03.js" crossorigin="anonymous"></script>
-    {% endblock %}
-</head>
+        <script>
+            (function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':
+            new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],
+            j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
+            'https://www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);
+            })(window,document,'script','dataLayer','GTM-KXB2HS6');
+        </script>
+        <!-- End Google Tag Manager -->
+        <title>
+            {% block title %}Monthly GTFS Quality Report{% endblock %}
+        </title>
 
-<body>
-<!-- Google Tag Manager (noscript) -->
-<noscript><iframe src="https://www.googletagmanager.com/ns.html?id=GTM-KXB2HS6"
-height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
-<!-- End Google Tag Manager (noscript) -->
-    {% block logo %}
-    <div class="container pb-8">
-        <a href="{{SITE_DOMAIN}}/">
-            <img class="inline-block h-12 mt-6" src="{{SITE_DOMAIN}}{{SITE_PATH}}/images/calitp-logo.svg" alt="Cal-ITP">
-        </a>
-    </div>
-    {% endblock %}
+        {% block css %}
+            {# djlint:off #}
+            <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Poppins:wght@500;700&amp;family=Raleway:wght@800;900&amp;display=swap">
+            <link rel="stylesheet" href="{{ SITE_DOMAIN }}{{ SITE_PATH }}/css/style.min.css">
+            <link rel="stylesheet" href="{{ SITE_DOMAIN }}{{ SITE_PATH }}/js/bundle.css">
+            {# djlint:on #}
+        {% endblock %}
 
-    {% block body %}
-    <div class="container my-12 mb-24">
-        {% block content %}{% endblock %}
-    </div>
-    {% endblock %}
+        {% block js_top %}
+            <script src="https://kit.fontawesome.com/58160bfc03.js"
+                    crossorigin="anonymous"></script>
+        {% endblock %}
+    </head>
 
-    <div class="bg-gray-800 pb-96">
-        <!-- Footer or overscroll area -->
-    </div>
+    <body>
+        <!-- Google Tag Manager (noscript) -->
+        <noscript>
+            <iframe src="https://www.googletagmanager.com/ns.html?id=GTM-KXB2HS6"
+                    height="0"
+                    width="0"
+                    style="display:none;
+                           visibility:hidden"></iframe>
+        </noscript>
+        <!-- End Google Tag Manager (noscript) -->
 
-    {% block js_bottom %}
-    <script src="{{SITE_DOMAIN}}{{SITE_PATH}}/js/bundle.js"></script>
-    {% endblock %}
+        {% block header %}
+            <header class="container lg:pb-8 pt-8">
+                <nav class="flex items-baseline">
+                    <a class="grow p-0" href="{{ SITE_DOMAIN }}/">
+                        <img class="inline-block h-12"
+                             src="{{ SITE_DOMAIN }}{{ SITE_PATH }}/images/calitp-logo.svg"
+                             alt="Cal-ITP">
+                    </a>
+                    <div class="grow-[5] flex items-baseline gap-4">
+                        <a href="/#directory">Directory</a>
+                        <a href="/faqs">FAQs</a>
+                        <a class="ml-auto bg-itp-teal-bold text-white px-8 py-2 rounded"
+                           href="mailto:hello@calitp.org">Contact
+                        Us</a>
+                    </div>
+                </nav>
+            </header>
+        {% endblock %}
 
-    {% block analytics %}
-    <!-- Global site tag (gtag.js) - Google Analytics -->
-    <script async src="https://www.googletagmanager.com/gtag/js?id=G-Q4W9YVZW3C"></script>
-    <script>
-        window.dataLayer = window.dataLayer || [];
-        function gtag() { dataLayer.push(arguments); }
-        gtag('js', new Date());
-        gtag('config', 'G-Q4W9YVZW3C');
-    </script>
-    {% endblock %}
-</body>
+        <main class="bg-white">
+            {% block body %}
+                <div class="container my-12 mb-24">
+                    {% block content %}{% endblock %}
+                </div>
+            {% endblock %}
+        </main>
 
+        {% block footer %}
+            <footer class="bg-gray-900 min-h-[50vh] text-white">
+                <div class="bg-gray-800 py-12 shadow-2xl">
+                    <div class="container">
+                        <div class="grid items-center justify-items-stretch lg:grid-flow-col">
+                            {# djlint:off #}
+                            <div class="mb-4 lg:mb-0"><img class="inline-block h-12" src="/images/calitp-logo.svg" alt="Cal-ITP"></div>
+                            <div><a class="inline-block py-3" href="https://www.ca.gov/use/">Conditions of Use</a></div>
+                            <div><a class="inline-block py-3" href="mailto:hello@calitp.org">Contact Us</a></div>
+                            <div><a class="inline-block py-3" href="https://lp.constantcontactpages.com/su/eLbtFoE/calitp?website">Newsletter</a></div>
+                            <div><a class="inline-block py-3" href="https://dot.ca.gov/privacy-policy">Privacy Policy</a></div>
+                            {# djlint:on #}
+                        </div>
+                    </div>
+                </div>
+            </footer>
+        {% endblock %}
+
+        {% block js_bottom %}<script src="{{SITE_DOMAIN }}{{SITE_PATH }}/js/bundle.js"></script>{% endblock %}
+
+        {% block analytics %}
+            <!-- Global site tag (gtag.js) - Google Analytics -->
+            <script async src="https://www.googletagmanager.com/gtag/js?id=G-Q4W9YVZW3C"></script>
+            <script>
+                window.dataLayer = window.dataLayer || [];
+                function gtag() { dataLayer.push(arguments); }
+                gtag('js', new Date());
+                gtag('config', 'G-Q4W9YVZW3C');
+            </script>
+        {% endblock %}
+    </body>
 </html>

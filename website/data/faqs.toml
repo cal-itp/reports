@@ -1,0 +1,307 @@
+[[questions]]
+q = "What is GTFS?"
+
+a="""
+The General Transit Feed Specification (GTFS) is the global standard for describing transit schedules and operations for use by trip-planning applications. GTFS is used by thousands of agencies worldwide and is by far the most common data standard produced by U.S. transit agencies.
+
+First created in 2006 through a public-private partnership between TriMet—the public transit agency in Portland, Oregon—and Google, the continued development and refinement of the GTFS specification is carried out by a global community of public and private GTFS data producers and consumers. Officially recognized additions and modifications of the spec are reviewed according to the [GTFS Extension Process](https://gtfs.org/schedule/changes/) and approval is facilitated by the independent nonprofit organization [MobilityData](http://mobilitydata.org/).
+
+[GTFS.org](https://gtfs.org/) is the central platform for the GTFS community to find documentation about the GTFS specification, best practices, resources, and further background information."""
+
+[[questions]]
+q = "How do transit riders and the public “see” this GTFS data?"
+
+a="""
+The most common ways for transit riders to see the data is via:
+
+* A consumer-facing application such as Google Maps, Apple Maps, or Transit App (through a web browser or phone interface)
+
+* Transit provider signage
+
+* Commercial displays (for example at coffee shops, offices, sports and events venues, and apartment buildings)
+
+California’s raw GTFS data can be seen:
+
+* On individual transit provider websites
+
+* Through feed aggregators: [MobilityData](https://github.com/MobilityData/mobility-database-catalogs) and [transit.land](https://transit.land/)"""
+
+[[questions]]
+q = "Why did Caltrans develop these Guidelines?"
+
+a="""
+Caltrans developed the California Transit Data Guidelines to ensure that data for transit providers in California meets the needs of travelers, as well as those who plan, manage, and operate the transportation network, including fare payment and other services contracted by providers. The Guidelines provide an ideal state of data quality to ensure that the transit network is understandable and accessible for people with all levels of ability.
+
+Read more on the [Transit Data Guidelines Development Process Page](https://preview-dot.dot.ca.gov/cal-itp/california-transit-data-guidelines-development-process-v3_0)."""
+
+[[questions]]
+q = "Does my organization need to follow the Guidelines?"
+
+a="""
+We recommend that transit providers follow these Guidelines in order to best serve the public by providing accurate, complete, and up-to-date transit information. Research shows that transit riders respond positively to high-quality transit information, both in terms of reducing perceived wait times and increasing ridership. See [The Data Transit Riders Want](https://transitcenter.org/publication/transit_data/), published by TransitCenter in 2018, for more information."""
+
+[[questions]]
+q = "How do I know if my organization is compliant with these Guidelines?"
+
+a="""
+Encourage the department or vendor providing your organization’s technical services to review the [Data Process Checklist](https://dot.ca.gov/cal-itp/california-transit-data-guidelines-v3_0#section-compliance). If you need assistance in assessment or have any questions, please contact [hello@calitp.org](mailto:hello@calitp.org)."""
+
+[[questions]]
+q = "How can I comply with these Guidelines if I don't already? How can I get help implementing these?"
+
+a="""
+There are a number of potential pathways toward meeting the Guidelines, depending on the current data pipeline. This can include:
+
+* Identifying funding for equipment
+
+* Adding these Guidelines in future vendor contracts and procurements
+
+* Collecting and maintaining additional data
+
+* Updating website language
+
+See [Tools and Resources](https://dot.ca.gov/cal-itp/california-transit-data-guidelines-v3_0#section-tools) for a list of specific offerings to help transit providers meet these Guidelines."""
+
+[[questions]]
+q = "How do I prioritize which Guidelines to focus on?"
+
+a="""
+The Guidelines describe the information that Transit Riders (and Providers) deserve and that is currently feasible within the GTFS specification. That said, providers should first focus on being Compliant for both GTFS Schedule Data and GTFS Realtime Data. Additionally, GTFS Schedule Data must be met first in order to provide any Realtime information to riders. Beyond the “Compliance” level, Guidelines can be prioritized based on provider appetite and resources."""
+
+[[questions]]
+q = "What is a “stable URL”?"
+
+a="""
+A stable (or “static”) URL (or “[permalink](https://en.wikipedia.org/wiki/Permalink)”) is one that doesn’t change. This is especially important for GTFS Schedule data because it assures data consumers that they can reliably access the latest version of data at all times. When new GTFS data is posted in a different location, it’s not obvious that the data from the old location is now invalid, which can result in transit riders being given out-of-date information, or none at all.
+
+The [GTFS Dataset Publishing & General Practices](http://gtfs.org/best-practices/#dataset-publishing--general-practices) provides guidance on the recommended practice of hosting GTFS data on a transit provider’s website. A consistent link to cloud storage or an FTP location would also satisfy these Guidelines.
+
+When possible:
+
+* The stable URL should use the transit provider’s domain rather than a vendor’s, which may change over time. Example: mytransitagency.gov/gtfs-current.zip
+
+* GTFS data representing future service or planned changes/augmentation to the GTFS data is reflected at another permalink to allow for back-and-forth troubleshooting ahead of time. Example: mytransitagency.gov/gtfs-future.zip
+
+Providing a static URL for the most recent data does not prevent storage of historical GTFS data on websites at different addresses. For example:
+
+* mytransitagency.gov/gtfs/us-ca-mytransitagency_current.zip
+
+* mytransitagency.gov/gtfs/us-ca-mytransitagency_2022-01-05_thru_2022-01-31_zip
+
+* mytransitagency.gov/gtfs/us-ca-mytransitagency_2022-02-01_thru_2022-03-15.zip
+
+Uploading a GTFS file to the Google Transit Partner portal does not satisfy the static URL Guideline, nor does hosting it on the transit provider website with a date or version in the file name or URL structure."""
+
+[[questions]]
+q = "Can a local or regional government impose guidelines that are stricter than these Guidelines?"
+
+a="""
+Yes. Caltrans welcomes the California transit community to provide more information than is specified in these Guidelines, as long as these additional or stricter requirements don’t conflict with or dilute these Guidelines.
+
+The Metropolitan Transportation Commission (MTC) in the Bay Area is one example of a regional agency that incorporates the state guidelines into their own data requirements used to make transit data consistent across the region. MTC maintains and publishes a regional transit data guidelines document to help Bay Area transit operators with providing the consistency of data expected."""
+
+[[questions]]
+q = "How do I publish GTFS for both present and future service?"
+
+a="""
+There are currently two generally acceptable methods to meet the requirement of describing planned service changes at least one week in advance of them happening:
+
+1. Publish two services in a single feed using [service_ids](https://gtfs.org/reference/static#calendartxt) Feature in the GTFS specification to distinguish them.
+
+2. Publish the “future” feed to a dedicated permalink; for example, Los Angeles Metro publishes their “future-service” feed to a different Git “branch” enabling a permalink download at [https://gitlab.com/LACMTA/gtfs_bus/-/blob/future-service/gtfs_bus.zip](https://gitlab.com/LACMTA/gtfs_bus/-/blob/future-service/gtfs_bus.zip)"""
+
+[[questions]]
+q = "How do I publish my GTFS data to aggregators?"
+
+a="""
+The Mobility Database and Transitland are the two largest and most stable feed repositories. Data consumers rely on these to find GTFS feeds for their applications, and being absent from these aggregators can preclude a transit provider from inclusion in maps and trip-planning applications. Transit providers and vendors can submit their feeds to these aggregators directly by following the instructions below:
+
+* TransitLand Atlas: [add a new feed](https://github.com/transitland/transitland-atlas#how-to-add-a-new-feed) or email [hello@transit.land](mailto:hello@transit.land)
+
+* Mobility Database: [add a new feed](https://github.com/MobilityData/mobility-database-catalogs) or fill out this [Google Form](https://database.mobilitydata.org/update-a-data-source)."""
+
+[[questions]]
+q = "How do I publish my GTFS data to trip-planning applications?"
+
+a="""
+Once published, transit providers will want to get their GTFS data into popular trip-planning applications for the general public to discover and use. Each application has its own process, and key applications are listed below:
+
+* Google Maps: [Access the Google Transit Data Partner dashboard](https://support.google.com/transitpartners/answer/6375243?hl=en)
+
+* Transit App: email [data@transitapp.com](mailto:data@transitapp.com)
+
+* Apple Maps: email [maps_data_validation@apple.com](mailto:maps_data_validation@apple.com)
+
+* Bing Maps: email [bingmapstransit@microsoft.com](mailto:bingmapstransit@microsoft.com)
+
+* Moovit: email [usa@moovit.com](mailto:usa@moovit.com)
+
+Contact the [Cal-ITP Helpdesk](https://dot.ca.gov/cal-itp/california-transit-data-guidelines-v3_0#section-helpdesk) if you need assistance getting your feed into trip planners."""
+
+[[questions]]
+q = "How do I select an open data license?"
+
+a="""
+Agency GTFS data should be explicitly offered under the latest version of the Open Data Commons Attributions ([ODC-BY](https://opendatacommons.org/licenses/by/)) or Creative Commons Attributions license (currently [CC-BY 3.0](https://creativecommons.org/licenses/by/3.0/)), which is consistent with the license required by the [National Transit Map](https://www.bts.gov/national-transit-map/how-participate). These licenses should be adopted as-is, without additional requirements that would add undue complexity down the line.
+
+Other “attribution” licenses are often attractive and are also fine to use; however, “share-alike” type licenses limit the use of the data by some user applications and should be avoided. See [Model Website Language](https://dot.ca.gov/cal-itp/website-model-language) for more information."""
+
+[[questions]]
+q = "What are the GTFS and GTFS Realtime Best Practices?"
+
+a="""
+The [GTFS Best Practices](https://gtfs.mobilitydata.org/best-practices/gtfs-schedule) and [GTFS Realtime Best Practices](https://gtfs.mobilitydata.org/best-practices/gtfs-realtime) are community-driven sets of requirements above and beyond the base GTFS specification to facilitate a more seamless customer experience. They are managed by [MobilityData](http://mobilitydata.io/)."""
+
+[[questions]]
+q = "What does it mean to have my data validated?"
+
+a="""
+Data validators can validate if the form and function of the dataset meet the data specification and fall within reasonable bounds (e.g., that a transit trip that arrives at a certain stop at “12:01:10” arrives at subsequent stops after “12:01:10” or it will raise an error). However, validators cannot evaluate if the data is correct (e.g., if the bus is scheduled to stop at “12:01” but the GTFS Schedule instead has “12:17”).
+
+There are currently three validator programs that may be used to validate GTFS data, all of which Caltrans uses and are open source and available for anyone to use (see note below):
+
+1. [Canonical GTFS Schedule Validator](https://github.com/MobilityData/gtfs-validator), maintained by MobilityData. This is the same validator used by Google and a number of others. [See here](#faq-howToRunValidator) for more information about running the validator on your own.
+
+2. [GTFS Realtime Validator](https://github.com/mobilitydata/gtfs-realtime-validator), maintained by MobilityData. This is the validator that Caltrans uses.
+
+3. [GTFS Fares v2 Validator](https://github.com/TransitApp/gtfs-fares-v2-validator), created by the Transit App.
+
+All of these validators offer useful insights, but each require a high level of comfort running technical applications. While Caltrans is developing user-friendly interfaces to make these both easier to use, any California transit provider can email [hello@calitp.org](mailto:hello@calitp.org) to request that Caltrans run these validators on their data and share the results."""
+
+[[questions]]
+q = "What is GTFS Fares v2? How can I create Fares v2 data?"
+
+a="""
+[GTFS-Fares 2.0](http://bit.ly/gtfs-fares) significantly expands the fare-related functionality of GTFS, including rush-hour fares, fare containers (such as physical cards and apps that can store purchased fares), and multiple-fare products (such as weekly and monthly passes). Over the past year, Caltrans has been working with transit providers to help them code and publish their fares. California transit providers that do not yet have their fares coded in the Fares v2 format should aim to do so via:
+
+* Asking your GTFS vendor, or
+
+* Emailing [hello@calitp.org](mailto:hello@calitp.org) to request additional assistance.
+
+Many simple fare structures can be represented with minimal effort.
+
+Key resources:
+
+* [Adopted Fares v2 Specification](https://gtfs.org/schedule/examples/fares-v2/)
+
+* [GTFS Fares v2 Validator](https://github.com/TransitApp/gtfs-fares-v2-validator) (created by TransitApp)"""
+
+[[questions]]
+q = "How can I create Pathways data?"
+
+a="""
+California transit providers that do not yet have stations and key pedestrian corridors coded in pathways format should aim to do so via:
+
+* Using tools and resources below to code it internally,
+
+* Asking your GTFS vendor, or
+
+* Emailing [hello@calitp.org](mailto:hello@calitp.org) to request additional assistance.
+
+Key Resources:
+
+* [GTFS Pathways Specification](http://bit.ly/gtfs-pathways)
+
+* [Limited Functionality Open Source Pathways Editor](https://github.com/kostjerry/gtfs-station-builder)"""
+
+[[questions]]
+q = "How can I create GTFS-Flex data?"
+
+a="""
+Over the past year, Caltrans has been working with Transit Providers to help them code and publish demand-responsive transit using the draft GTFS-Flex specification. California transit providers that do not yet have their demand-responsive coded in GTFS should aim to do so via:
+
+* Asking your GTFS vendor, or
+
+* Emailing [hello@calitp.org](mailto:hello@calitp.org) to request additional assistance. Caltrans staff is ready and available to assist with coding GTFS-Flex data. For small agencies, Caltrans may also be able to host their GTFS-Flex data on their behalf.
+
+Many simple demand-responsive service patterns can be represented with minimal effort and can be published within or separate from your fixed-route transit GTFS dataset.
+
+Key resources:
+
+* [Proposed GTFS-Flex specification](https://github.com/MobilityData/gtfs-flex)"""
+
+[[questions]]
+q = "What does a Transit Data Assessment look like?"
+
+a="""
+To see how the Guidelines look in the context of a real transit provider, review this [example](https://drive.google.com/file/d/1s4ZAdVwBR4WP_5SCixxZVKCF9COKpZA7/view?usp=sharing) of a recent assessment."""
+
+[[questions]]
+q = "Where can I get more support?"
+
+a="""
+Caltrans is here to help transit providers understand and successfully implement the Guidelines. Email [hello@calitp.org](mailto:hello@calitp.org) to get started."""
+
+[[questions]]
+q = "Can I see how my data stacks up against the Guidelines on a regular basis?"
+
+a="""
+Cal-ITP publishes monthly reports comparing a provider's GTFS Schedule feed to a subset of the Guidelines. New Features are planned to be added to the site that will expand the number of Guidelines the reports cover.
+
+To get added to the monthly distribution list, please email [hello@calitp.org](mailto:hello@calitp.org)."""
+
+[[questions]]
+q = "Why are files and fields that are “optional” according to the GTFS Reference included within these Guidelines?"
+
+a="""
+In the context of the GTFS Reference specification, optional means the field or file may be omitted for the dataset. Some fields or files are not applicable to certain transit providers and making these “required” would cause other issues. “Required” is reserved for instances where all feeds must include something regardless of service type, provider size, etc.
+
+Many of these “optional” fields and files enhance data quality and should be included wherever applicable. Additionally, many things classified as “optional” are considered a best practice by the community. Therefore, Caltrans has determined the Guidelines should cover “optional” files and fields."""
+
+[[questions]]
+q = "How do I determine whether or not a stop is “wheelchair accessible”? Is there a threshold by which to evaluate this?"
+
+a="""
+The decision as to whether or not a stop is wheelchair accessible is ultimately up to the transit provider. We recommend that providers think about whether or not they want to be responsible for publicly acknowledging that a stop is wheelchair accessible. Providers should make this decision with the end user in mind—should wheelchair users trust that they will be able to access a stop or not?
+
+The Cal-ITP team has also put together a resource about [wheelchair accessibility within GTFS data](https://drive.google.com/file/d/1G1eBMR3qOiB6oH-dYfDhGpuyEWUUfGSj/view?usp=share_link) to address common questions and provide examples of how this data is used in practice.
+
+Please also see the following [official documentation with tips for ADA compliance](https://www.transit.dot.gov/sites/fta.dot.gov/files/docs/Tips_for_ADA_Compliance_4-22-14.pdf)."""
+
+[[questions]]
+q = "Why should I make my data public?"
+
+a="""
+The GTFS standard is designed for data to be made publicly available so third parties can use the data for both trip planning and research and analysis efforts (e.g., to show coverage of public transit across a geographic area)
+
+Publicly publishing this data allows transit providers’ information to be included in products that riders use everyday. Riders expect and deserve to know where the bus is scheduled to be and where it is in realtime.
+
+Keeping GTFS data private makes it difficult for data consumers to access it and defeats the purpose of having it."""
+
+[[questions]]
+q = "Can I run the validator on my own?"
+
+a="""
+Caltrans strives to make it simple for transit providers to run the validator on their own. At any time, providers can look at their most recent report on [reports.calitp.org](https://reports.calitp.org/) or reach out to [hello@calitp.org](mailto:hello@calitp.org) to request validation results.
+
+MobilityData has also made a desktop application version of the GTFS Schedule validator available; the desktop app runs the validator and provides a report written as an HTML file that is easy to understand and share.
+
+The latest version of the validator (for Windows or Mac) can be downloaded from the [GTFS Schedule Validator website](http://gtfs.org/schedule/validate/).
+
+More [detailed information](https://mobilitydata.org/introducing-the-canonical-gtfs-schedule-validator-desktop-app/) is provided on the MobilityData website."""
+
+[[questions]]
+q = "How are the Feature groups organized?"
+
+a="""
+The Features are organized into 2 broader groups: “Compliance” and “Beyond Compliance.” The reason for the distinction is simply to call out what truly is minimally needed for a GTFS feed to exist and be visible to riders, in order to set a lower threshold for providers to meet. The “Beyond Compliance” group continues to convey the high-quality standards that transit providers should meet in order to give riders the data they deserve."""
+
+[[questions]]
+q = "Why should Compliance be prioritized?"
+
+a="""
+Compliance should be prioritized above other Feature groups because Compliance is the base threshold needed in order for you to have stable GTFS data that your riders can see. It does not matter how well your feed is performing in the “Beyond Compliance” categories if it does not check all the boxes for the Compliance Feature."""
+
+[[questions]]
+q = "What if I provide service in an area with low broadband/WiFi connection?"
+
+a="""
+We recognize that this is a challenge many small and rural operators face that inhibits the adoption of GTFS Realtime data. At Cal-ITP, we have started to better track the areas of the state facing these challenges and make note of them—and we are looking for ways that we can work with you to address this problem, including offering competitively priced [cellular data plans](https://www.camobilitymarketplace.org/contracts/view?contracts-filter-product=Data%20Plans) with broader regional coverage on our California Mobility Marketplace.
+
+The Guidelines are meant to help articulate where we ALL need to act in order to get riders the info they deserve. In this case, the burden for broadband is not solely on the transit provider."""
+
+[[questions]]
+q = "Is Compliance tied to state funding?"
+
+a="""
+No, Compliance in this context doesn’t have anything to do with state funding. It is simply the Guidelines’ way of setting a level that is truly the minimum to meet to have a viable level of GTFS data that is usable by riders."""
