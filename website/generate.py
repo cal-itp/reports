@@ -219,12 +219,6 @@ report_template = env.get_template('report.html.jinja')
 
 for year, month, entry in iter_report_entries(index_data["reports"]):
     p_report_path = Path(entry["report_path"])
-
-    # remove me
-    if not '2022/01/4/' in str(p_report_path):
-        continue
-    # / remove me
-
     p_report_inputs = REPORT_OUTPUTS_DIR / p_report_path.parent / "data"
 
     report_data = fetch_report_data(p_report_inputs)
@@ -236,7 +230,7 @@ for year, month, entry in iter_report_entries(index_data["reports"]):
 
 ################################################################################
 # render all reports
-=======
+
 with tqdm(
     total=len(list(iter_report_entries(index_data["reports"]))),
     desc="generating individual reports",
