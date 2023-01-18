@@ -49,11 +49,9 @@ def datetime_format(value, format="%H:%M %d-%m-%y"):
         return datetime.fromtimestamp(value / 1e3).strftime(format)
     return value.strftime(format)
 
-
 def string_to_html_id(s):
     # does not guarantee uniqueness
     return re.sub('[^(a-z)(A-Z)(0-9)._-]', '', s.lower().replace(' ', '-'))
-
 
 env.filters = {
     **env.filters,
@@ -169,10 +167,29 @@ def iter_report_entries(index):
                 yield year, month, entry
 
 
+rt_feed_path = '../reports/outputs/rt_feed_ids.json'
+if os.path.isfile(rt_feed_path):
+    with open(rt_feed_path, 'r') as f:
+        rt_feeds = dict(json.loads(f.read()))
+else:
+    rt_feeds = dict()
+
+speedmap_urls_path = '../reports/outputs/speedmap_urls.json'
+if os.path.isfile(speedmap_urls_path):
+    with open(speedmap_urls_path, 'r') as f:
+        speedmap_urls = dict(json.loads(f.read()))
+else:
+    speedmap_urls = dict()
+
+
 def fetch_report_data(report_dir):
     report_data = {}
 
-    # report data lives in {year}/{month}/{itp_id}/data
+    # report data lives in ../reports/outputs/{year}/{month}/{itp_id}/data
+    itp_id = int(str(report_dir).split('/')[-2])
+    report_data['has_rt_feed'] = itp_id in rt_feeds
+    report_data['speedmap_url'] = speedmap_urls.get(itp_id)
+
     json_files = Path(report_dir).glob("*.json")
     for json_file in json_files:
         name = re.sub(r'^\d+_(.+).json$', r'\1', json_file.name)
@@ -199,6 +216,20 @@ REPORT_OUTPUTS_DIR = Path("../reports/outputs")
 REPORT_BUILD_DIR = Path('build/gtfs_schedule')
 
 report_template = env.get_template('report.html.jinja')
+
+for year, month, entry in iter_report_entries(index_data["reports"]):
+    p_report_path = Path(entry["report_path"])
+    p_report_inputs = REPORT_OUTPUTS_DIR / p_report_path.parent / "data"
+
+    report_data = fetch_report_data(p_report_inputs)
+    report_html = report_template.render({**global_data, **report_data})
+
+    p_final = REPORT_BUILD_DIR / p_report_path
+    p_final.parent.mkdir(parents=True, exist_ok=True)
+    p_final.write_text(report_html)
+
+################################################################################
+# render all reports
 
 with tqdm(
     total=len(list(iter_report_entries(index_data["reports"]))),

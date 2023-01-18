@@ -44,6 +44,9 @@ module.exports = {
           bold: '#00896B',
           light: '#DCEFE7',
         },
+        'itp-red': {
+          DEFAULT: '#DD1C1A',
+        },
       },
       typography: {
         DEFAULT: {
