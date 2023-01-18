@@ -165,10 +165,6 @@ def iter_report_entries(index):
                 unit=" pages",
                 colour="cyan",
             ):
-                # debug
-                # if not entry["report_path"].startswith("2022/01"):
-                #     break
-                # end debug
                 # print(entry["report_path"])
                 yield year, month, entry
 
