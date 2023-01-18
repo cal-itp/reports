@@ -197,8 +197,5 @@ for year, month, entry in iter_report_entries(index_data["reports"]):
     p_final.parent.mkdir(parents=True, exist_ok=True)
     p_final.write_text(report_html)
 
-    for image in p_report_inputs.glob("*.png"):
-        shutil.copy(str(image), p_final.parent / image.name)
-
 ################################################################################
 # render all reports
