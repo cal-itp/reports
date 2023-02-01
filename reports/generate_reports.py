@@ -70,7 +70,7 @@ def generate_daily_service_hours(itp_id, date_start, date_end):
   return service_hours
   
 def get_param_data(itp_id, month, year):
-  param_data_path = f"../reports/outputs/{year}/{month}/{itp_id}/report.json"
+  param_data_path = f"../reports/outputs/{year}/{month}/{itp_id}/parameters.json"
   out_dir = Path(f"outputs/{year}/{month}/{itp_id}/data")
   out_dir.mkdir(parents=True, exist_ok=True)
 
@@ -100,6 +100,16 @@ def generate_file_check(itp_id, date_start):
     >> pipe(_.fillna(""))
   )
   return fc
+
+def generate_validation_severity(itp_id, date_start):
+  validation_severity = (
+    tbl.mart_gtfs_quality.fct_monthly_reports_site_organization_validation_codes()
+    >> filtr(_.organization_itp_id == itp_id)
+    >> filtr(_.publish_date == date_start)
+    >> select(_.code, _.severity)
+    >> collect()
+  )
+  return validation_severity.to_dict(orient="split")
 
 def generate_report_data_by_month(month, year, date_start, end_date):
   index = {}
@@ -139,15 +149,12 @@ def generate_report_data_by_month(month, year, date_start, end_date):
     if args.v:
       print(f"Generating file check for {report['itp_id']}") 
     file_check = generate_file_check(report['itp_id'], date_start) 
-    json.dump(to_rowspan_table(file_check, "category"), open("./4_file_check.json", "w"))
+    json.dump(to_rowspan_table(file_check, "category"), open(out_dir / "4_file_check.json", "w"))
 
     # 4_validation_severity.json
+    validation_severity = generate_validation_severity(report['itp_id', date_start])
+    json.dump(validation_severity, open(out_dir / "4_validation_severity.json", "w"))
 
-    # 5_validation_notices.json
-    validation_notices = (
-      tbl.fct_monthly_reports_site_organization_validation_codes()
-      >> filtr(_.organization_itp_id == report['itp_id'])
-      >> collect()
-    )
+
     if args.v:
       print(f"Generating validation notices for {report['itp_id']}")  

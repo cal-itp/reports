@@ -1,7 +1,6 @@
 from calitp.tables import tbl
 import pandas as pd
 from siuba import *
-import papermill as pm
 from pathlib import Path
 
 
@@ -49,8 +48,6 @@ all_ids = list(ids_with_feeds.organization_itp_id)
 " ".join(map(str,all_ids))
 
 # ## Save each report's parameters
-
-from pathlib import Path
 root_dir = Path("outputs")
 
 date_cols = ["publish_date", "date_start", "date_end"]
@@ -61,6 +58,6 @@ fixed_dates = (
 )
 
 for ii, row in fixed_dates.iterrows():
-    p_params = root_dir / row["dir_path"] / "report.json"
+    p_params = root_dir / row["dir_path"] / "parameters.json"
     p_params.parent.mkdir(parents=True, exist_ok=True)
     row.to_json(p_params)

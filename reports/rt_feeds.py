@@ -6,46 +6,37 @@ import requests
 import json
 from pathlib import Path
 import yaml
+from calitp.tables import tbl
+import pandas as pd
+from siuba import *
+from datetime import date, datetime
+import argparse
 
+monthArg = datetime.now().strftime('%m')
+yearArg = datetime.now().strftime('%Y')
+parser = argparse.ArgumentParser()
+parser.add_argument("--month", help="The month of the year in M notation. Defaults to current month.", type=int, default=monthArg)
+parser.add_argument("--year", help="The year in YYYY notation. Defaults to current year.", type=int, default=yearArg)
+parser.add_argument("-v", help="Use verbose output.", type=bool, nargs="?", const=True)
+args = parser.parse_args()
+month = args.month
+year = args.year
+date_start = f"{year}-{month}-01"
+
+# Scrape the actual speedmap site to get the urls
 GITHUB = 'https://raw.githubusercontent.com/cal-itp/'
-RT_YML_URL = f'{GITHUB}/data-analyses/main/portfolio/sites/rt.yml'
 AGENCIES_YML_URL = f'{GITHUB}/data-infra/main/airflow/data/agencies.yml'
 
-# Compare the ITP IDs for parallel corridors and RT
-# If URL available for RT analysis, embed in parameterized notebook
-def check_if_rt_data_available():
-    response = requests.get(RT_YML_URL)
-    response.raise_for_status()
-    analyses_data = yaml.load(response.content, yaml.Loader)
-
-    rt_chapters = analyses_data['parts'][0]["chapters"]
-
-    # Use a dict to capture what rank ITP ID is within that section
-    # need to use it to construct URL
-    rt_itp_ids_dict = {}
-
-    for x, chapter in enumerate(rt_chapters):
-        section_dict = chapter["sections"]
-        for i, list_item in enumerate(section_dict):
-            rt_itp_ids_dict[list_item["itp_id"]] = i
-
-    response = requests.get(AGENCIES_YML_URL)
-    response.raise_for_status()
-    agencies_yml = yaml.load(response.content, yaml.Loader)
-
-    for org, data in agencies_yml.items():
-        itp_id = data['itp_id']
-        if itp_id in rt_itp_ids_dict:
-            continue
-        for feed in data.get('feeds', []):
-            for feed_key, url in feed.items():
-                if itp_id in rt_itp_ids_dict:
-                    continue
-                if feed_key.startswith('gtfs_rt') and url:
-                    rt_itp_ids_dict[itp_id] = True
-
-    return rt_itp_ids_dict
-
+# Get feeds with rt for selected month
+def check_if_rt_data_available(date_start):
+    rt_feeds = (
+    tbl.mart_gtfs_quality.idx_monthly_reports_site()
+        >> filter(_.publish_date == date_start)
+        >> filter(_.has_rt == True)
+        >> select(_.organization_itp_id)
+        >> collect()
+    )
+    return rt_feeds.values.tolist()
 
 # Scrape the actual speedmap site to get the urls
 def get_speedmap_urls():
@@ -66,12 +57,14 @@ def get_speedmap_urls():
     return results
 
 if __name__ == "__main__":
-    feed_dict = check_if_rt_data_available()
+    feed = check_if_rt_data_available(date_start)
     with open('./outputs/rt_feed_ids.json', 'w') as f:
-        f.write(json.dumps(list(feed_dict.items())))
-        print('rt_feed_ids.json written')
+        f.write(json.dumps(feed))
+        if args.v:
+            print('rt_feed_ids.json written')
 
     speedmap_urls = get_speedmap_urls()
     with open('./outputs/speedmap_urls.json', 'w') as f:
         f.write(json.dumps(list(speedmap_urls.items())))
-        print('speedmap_urls.json written')
+        if args.v:
+            print('speedmap_urls.json written')
