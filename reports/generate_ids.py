@@ -21,7 +21,7 @@ df_report_index = (
             lambda d: f"{d.year}/{d.month:02d}/{d.organization_itp_id}", axis=1
         ),
         report_path=_.apply(
-            lambda d: f"{d.dir_path}/index.html", axis=1
+            lambda d: f"{d.dir_path}", axis=1
         ),
     )
 )
@@ -43,7 +43,6 @@ index_report = (
     )
 )
 
-
 index_report.to_json("outputs/index_report.json", orient="records")
 
 all_ids = list(ids_with_feeds.organization_itp_id)
@@ -62,7 +61,6 @@ fixed_dates = (
 )
 
 for ii, row in fixed_dates.iterrows():
-    p_params = root_dir / row["dir_path"] / "parameters.json"
+    p_params = root_dir / row["dir_path"] / "report.json"
     p_params.parent.mkdir(parents=True, exist_ok=True)
-    row.index = row.index.str.upper()
     row.to_json(p_params)
