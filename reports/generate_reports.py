@@ -60,6 +60,7 @@ def generate_daily_service_hours(itp_id, date_start, date_end):
     >> rename(last_arrival_ts = _.last_arrival_sec)
     >> rename(calitp_itp_id = _.organization_itp_id)
     >> rename(first_departure_ts = _.first_departure_sec)
+    >> rename(weekday = _.service_day_type)
     >> collect()
   )
   return service_hours
@@ -84,7 +85,6 @@ for report in month_index['reports']:
   json.dump(n_days_no_service, open(out_dir / "2_n_days_no_service.json", "w"))  
 
   # 2_daily_service_hours.json
-  # todo: missing "weekday", "calitp_url_number"
   if args.v:
     print(f"Generating service hours for {report['itp_id']}")
   service_hours = generate_daily_service_hours(report['itp_id'], date_start, date_end)
