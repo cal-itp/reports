@@ -222,7 +222,7 @@ def fetch_report_data(report_dir):
                 if (report_data[name]["earliest_feed_end_date"]):
                     report_data[name]["feed_end_date_m_d_y"] = friendly_month_day_year_from_int(report_data[name]["earliest_feed_end_date"])
                 else:
-                    report_data[name]["feed_end_date_m_d_y"] = ""
+                    report_data[name]["feed_end_date_m_d_y"] = "None"
 
     return report_data
 
@@ -242,7 +242,7 @@ with tqdm(
 ) as pbar:
     for year, month, entry in iter_report_entries(index_data["reports"]):
         p_report_path = Path(entry["report_path"])
-        p_report_inputs = REPORT_OUTPUTS_DIR / p_report_path
+        p_report_inputs = REPORT_OUTPUTS_DIR / p_report_path.parent
 
         report_data = fetch_report_data(p_report_inputs)
         report_html = report_template.render({**global_data, **report_data})
