@@ -1,8 +1,8 @@
-NOTEBOOKS=$(subst parameters.json,index.ipynb,$(wildcard outputs/2022/$(MONTH)/*/parameters.json))
+FILES= outputs/$(YEAR)/$(MONTH)/*/1_file_info.json
 
 .SECONDARY:
 
-all: $(NOTEBOOKS)
+all: $(FILES)
 
 clean:
 	rm -rf outputs/*
@@ -17,7 +17,7 @@ generate_parameters:
 	python generate_ids.py
 	python rt_feeds.py rt.yml
 
-outputs/%/parameters.json: generate_parameters
+outputs/index_report.json: generate_parameters
 
-outputs/%/index.ipynb: report.ipynb outputs/%/parameters.json
-	papermill --log-level=ERROR -f $(dir $@)parameters.json $< $@
+outputs/%/1_file_info.json:
+	python generate_reports_data.py -v --f $(dir $@)1_file_info.json
