@@ -243,7 +243,6 @@ with tqdm(
     for year, month, entry in iter_report_entries(index_data["reports"]):
         p_report_path = Path(entry["report_path"])
         p_report_inputs = REPORT_OUTPUTS_DIR / p_report_path.parent
-
         report_data = fetch_report_data(p_report_inputs)
         report_html = report_template.render({**global_data, **report_data})
         pbar.update(1)
