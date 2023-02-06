@@ -39,7 +39,7 @@
         Monthly GTFS Quality Report
         <br>
         <small>
-          {% if feed_info.has_feed_info %}
+          {% if feed_info.feed_publisher_url %}
             <a href="{{ feed_info.feed_publisher_url }}">{{ feed_info.feed_publisher_name }}</a>
           {% else %}
             {{ feed_info.feed_publisher_name }}
