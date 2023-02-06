@@ -14,8 +14,8 @@ sync-prod:
 	gsutil -m rsync -r -d outputs/ gs://gtfs-data/report_gtfs_schedule/
 
 generate_parameters:
-	python generate_ids.py
-	python rt_feeds.py rt.yml
+	python generate_index_report.py
+	python generate_rt_feeds.py
 
 outputs/index_report.json: generate_parameters
 
