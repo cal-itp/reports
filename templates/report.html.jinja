@@ -21,7 +21,7 @@
 {% endmacro %}
 
 {%- block title -%}
-    Monthly GTFS Quality Reports: {{ parameters["DATE_MONTH_YEAR"] }} {{ parameters["AGENCY_NAME"] }}
+    Monthly GTFS Quality Reports: {{ feed_info.date_month_year }} - {{ feed_info.feed_publisher_name }}
 {%- endblock -%}
 
 {% block content %}
@@ -31,8 +31,8 @@
     {{ macros.breadcrumbs([
         { 'url': '/', 'text': 'Home' },
         { 'url': '/#directory', 'text': 'Directory' },
-        { 'url': '../', 'text': parameters["DATE_MONTH_YEAR"] },
-        { 'text': parameters["AGENCY_NAME"] },
+        { 'url': '../', 'text': feed_info.date_month_year },
+        { 'text': feed_info.feed_publisher_name },
     ]) }}
 
     <h1>
@@ -40,12 +40,12 @@
         <br>
         <small>
           {% if feed_info.has_feed_info %}
-            <a href="{{ feed_info.feed_publisher_url }}">{{ parameters["AGENCY_NAME"] }}</a>
+            <a href="{{ feed_info.feed_publisher_url }}">{{ feed_info.feed_publisher_name }}</a>
           {% else %}
-            {{ parameters["AGENCY_NAME"] }}
+            {{ feed_info.feed_publisher_name }}
           {% endif %}
             &hairsp;&middot;&hairsp;
-            <span class="inline-block">{{parameters["DATE_MONTH_YEAR"]}}</span>
+            <span class="inline-block">{{ feed_info.date_month_year }}</span>
         </small>
     </h1>
     <p class="lead responsive-prose">
@@ -61,8 +61,8 @@
     <div class="flex-1 responsive-prose gap-12 lg:gap-16">
         <h2>Current GTFS Feed Info</h2>
         <div class="flex flex-row lg:flex-row flex-wrap gap-12">
-            {{ display_figure('Feed End Date', feed_info.feed_end_date) }}
-            {{ display_figure('Days With No Service', n_days_no_service.n) }}
+            {{ display_figure('Feed End Date', feed_info.feed_end_date_m_d_y) }}
+            {{ display_figure('Days With No Service', feed_info.no_service_days_ct) }}
             {{ display_figure('Routes', feed_info.n_routes) }}
             {{ display_figure('Stops', feed_info.n_stops) }}
             {% if has_rt_feed %}
@@ -118,7 +118,7 @@
 
     <div class="flex flex-col lg:flex-row gap-12 lg:gap-16 xl:gap-24 2xl:gap-36 mb-8">
         <div class="flex-1 responsive-prose">
-            <h2>About the {{ parameters["DATE_MONTH"] }} Daily Service Level&nbsp;Charts</h2>
+            <h2>About the {{ feed_info.date_month }} Daily Service Level&nbsp;Charts</h2>
             <ul>
                 <li>These charts show the total hours of transit service described by the active feed for each&nbsp;day.</li>
                 <li>
@@ -137,7 +137,7 @@
                 <h2>Service hours per weekday in the active&nbsp;feed</h2>
             </div>
 
-            {% set weekday_hours = daily_service_hours|selectattr('weekday', 'in', range(0, 5))|list %}
+            {% set weekday_hours = daily_service_hours|selectattr('weekday', '==', 'Weekday')|list %}
             <div class="hours-chart"
                  data-dates="{{ getJsonForAttribute(weekday_hours, 'service_date')|trim }}"
                  data-hours="{{ getJsonForAttribute(weekday_hours, 'ttl_service_hours')|trim }}"
@@ -152,7 +152,7 @@
                 <h2>Service hours per Saturday in the active&nbsp;feed</h2>
             </div>
 
-            {% set sat_hours = daily_service_hours|selectattr('weekday', '==', 5)|list %}
+            {% set sat_hours = daily_service_hours|selectattr('weekday', '==', 'Saturday')|list %}
             <div class="hours-chart"
                  data-dates="{{ getJsonForAttribute(sat_hours, 'service_date')|trim }}"
                  data-hours="{{ getJsonForAttribute(sat_hours, 'ttl_service_hours')|trim }}"
@@ -165,7 +165,7 @@
                 <h2>Service hours per Sunday in the active&nbsp;feed</h2>
             </div>
 
-            {% set sun_hours = daily_service_hours|selectattr('weekday', '==', 6)|list %}
+            {% set sun_hours = daily_service_hours|selectattr('weekday', '==', 'Sunday')|list %}
             <div class="hours-chart"
                  data-dates="{{ getJsonForAttribute(sun_hours, 'service_date')|trim }}"
                  data-hours="{{ getJsonForAttribute(sun_hours, 'ttl_service_hours')|trim }}"
@@ -179,7 +179,7 @@
     <div class="flex flex-col lg:flex-row gap-12 lg:gap-16 xl:gap-24 2xl:gap-36">
 
         <div class="flex-1 responsive-prose">
-            <h2>About the {{ parameters["DATE_MONTH"] }} Identifier Change&nbsp;Charts</h2>
+            <h2>About the {{ feed_info.date_month }} Identifier Change&nbsp;Charts</h2>
             <ul>
                 <li>These charts show the percentage of stop and route IDs that have changed since the previous&nbsp;month.</li>
                 <li>Stop and route IDs are important identifiers for GTFS feed consumers to correctly parse&nbsp;feeds.</li>
@@ -202,7 +202,7 @@
         <div class="flex-1">
             <div class="responsive-prose">
                 <h2>
-                    Changes from {{ parameters["START_MONTH_DAY"] }} to {{ parameters["END_MONTH_DAY"] }}
+                    Changes from {{ feed_info.start_month_day }} to {{ feed_info.end_month_day }}
                 </h2>
             </div>
 
@@ -275,9 +275,9 @@
 
                 <!-- validation severity errors -->
 
-                {% if validation_severity is not defined %}
+                {% if validation_codes is not defined %}
 
-                {% elif "data" in validation_severity %}
+                {% elif "data" in validation_codes %}
 
                     <thead class="border-t">
                         <tr>
@@ -293,15 +293,15 @@
                                 Error Description
                             </th>
                             <th>
-                                {{ validation_severity["columns"][2] | title }}
+                                {{ validation_codes["columns"][2] | title }}
                             </th>
                             <th>
-                                {{ validation_severity["columns"][3] }}
+                                {{ validation_codes["columns"][3] }}
                             </th>
                         </tr>
                     </thead>
                     <tbody>
-                        {% for row in validation_severity["data"] %}
+                        {% for row in validation_codes["data"] %}
                             <tr>
                                 {% for col in row %}
                                     <td>
@@ -326,14 +326,6 @@
 
     </table>
 </div>
-
-{% if not validation_notices["data"] %}
-
-    <p>
-        <b>No validation errors detected.</b>
-    </p>
-
-{% endif %}
 
 </div>
 
