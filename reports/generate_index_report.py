@@ -23,9 +23,9 @@ if (publish_date):
 df_report_index = (
     ids_with_feeds
     >> mutate(
-        date_start=_.publish_date.astype("datetime64[ns]"),
-        year=_.publish_date.dt.year,
-        month=_.publish_date.dt.month,
+        date_start=_.date_end.astype("datetime64[ns]"),
+        year=_.date_start.dt.year,
+        month=_.date_start.dt.month,
         dir_path=_.apply(
             lambda d: f"{d.year}/{d.month:02d}/{d.organization_itp_id}", axis=1
         ),
