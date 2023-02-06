@@ -1,19 +1,19 @@
 {% extends "layout/default.html.jinja" %}
 {% import 'macros.html.jinja' as macros %}
 
-{% block title %}Monthly GTFS Quality Reports: {{DATE_MONTH_YEAR}}{% endblock %}
+{% block title %}Monthly GTFS Quality Reports: {{date_month_year}}{% endblock %}
 
 {% block content %}
 <div class="responsive-prose">
     {{ macros.breadcrumbs([
         { 'url': '/', 'text': 'Home' },
         { 'url': '/#directory', 'text': 'Directory' },
-        { 'text': DATE_MONTH_YEAR },
+        { 'text': date_month_year },
     ]) }}
 
     <h1>
         GTFS Quality Reports<br>
-        <small>{{DATE_MONTH_YEAR}}</small>
+        <small>{{date_month_year}}</small>
     </h1>
 </div>
 

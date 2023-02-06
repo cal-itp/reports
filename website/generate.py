@@ -12,6 +12,11 @@ from jinja_markdown import MarkdownExtension
 from markupsafe import Markup, escape
 from pathlib import Path
 from tqdm import tqdm
+import argparse
+
+parser = argparse.ArgumentParser()
+parser.add_argument("-v", help="Use verbose output.", type=bool, nargs="?", const=True, default=False)
+args = parser.parse_args()
 
 env = Environment(
     loader=FileSystemLoader('../templates'),
@@ -23,7 +28,6 @@ env = Environment(
 
 # Copied from https://jinja.palletsprojects.com/en/3.0.x/api/
 # used as filter to convert newlines into <br>
-
 
 @pass_eval_context
 def nl2br(eval_ctx, value):
@@ -65,14 +69,23 @@ env.filters = {
 def friendly_month(x):
     return datetime.strptime(x, "%Y-%m-%d").strftime("%B")
 
+def friendly_month_from_int(x):
+    return datetime.fromtimestamp(x / 1e3).strftime("%B")
 
 def friendly_month_day(x):
     return datetime.strptime(x, "%Y-%m-%d").strftime("%B %d")
 
+def friendly_month_day_from_int(x):
+    return datetime.fromtimestamp(x / 1e3).strftime("%B %d")
 
 def friendly_month_year(x):
     return datetime.strptime(x, "%Y-%m-%d").strftime("%B %Y")
 
+def friendly_month_year_from_int(x):
+    return datetime.fromtimestamp(x / 1e3).strftime("%B %Y")
+
+def friendly_month_day_year_from_int(x):
+    return datetime.fromtimestamp(x / 1e3).strftime('%m-%d-%Y')
 
 def friendly_month_day_year_from_string(x):
     return datetime.strptime(x, '%Y%m%d').strftime('%m-%d-%Y')
@@ -94,7 +107,8 @@ print()
 ################################################################################
 # render index
 
-print('generating homepage')
+if args.v:
+    print('generating homepage')
 
 index_template = env.get_template('index.html.jinja')
 
@@ -113,7 +127,8 @@ with open('build/index.html', 'w') as file:
 # render other pages
 
 # FAQs
-print('generating FAQs')
+if args.v:
+    print('generating FAQs')
 faqs_template = env.get_template('faqs.html.jinja')
 with open('data/faqs.toml', 'rb') as file:
     faqs_content = tomli.load(file)
@@ -127,7 +142,8 @@ with open('build/faqs/index.html', 'w') as file:
 ################################################################################
 # render monthly report index pages
 
-print("generating monthly indexes")
+if args.v:
+    print("generating monthly indexes")
 
 month_template = env.get_template('month.html.jinja')
 
@@ -138,11 +154,11 @@ for year in index_data["reports"]:
             p_basedir / f"{year['year']}/{month['month']:02d}"
         )
 
-        DATE_MONTH_YEAR = friendly_month_year(
+        date_month_year = friendly_month_year(
             f"{year['year']}-{month['month']:02d}-01")
 
         month_html = month_template.render(
-            **global_data, year=year, month=month, DATE_MONTH_YEAR=DATE_MONTH_YEAR)
+            **global_data, year=year, month=month, date_month_year=date_month_year)
 
         p_month.mkdir(parents=True, exist_ok=True)
         (p_month / 'index.html').write_text(month_html)
@@ -163,7 +179,8 @@ def iter_report_entries(index):
                 unit=" pages",
                 colour="cyan",
             ):
-                # print(entry["report_path"])
+                if args.v:
+                    print(f"Creating report for {entry['report_path']}")
                 yield year, month, entry
 
 
@@ -184,49 +201,35 @@ else:
 
 def fetch_report_data(report_dir):
     report_data = {}
-
-    # report data lives in ../reports/outputs/{year}/{month}/{itp_id}/data
-    itp_id = int(str(report_dir).split('/')[-2])
+    # report data lives in ../reports/outputs/{year}/{month}/{itp_id}
+    itp_id = int(str(report_dir).split('/')[5])
     report_data['has_rt_feed'] = itp_id in rt_feeds
     report_data['speedmap_url'] = speedmap_urls.get(itp_id)
-
     json_files = Path(report_dir).glob("*.json")
     for json_file in json_files:
         name = re.sub(r'^\d+_(.+).json$', r'\1', json_file.name)
         with open(json_file, 'r') as file:
             report_data[name] = json.load(file)
-            if name == 'feed_info' and report_data[name]['feed_end_date'] is not None:
-                report_data[name]['feed_end_date'] = friendly_month_day_year_from_string(
-                    report_data[name]['feed_end_date'])
-
-    # parameters file lives in {year}/{month}/{itp_id}
-    parameters = json.load(open(Path(report_dir).parent / "parameters.json"))
-    parameters["DATE_MONTH_YEAR"] = friendly_month_year(
-        parameters["DATE_START"])
-    parameters["DATE_MONTH"] = friendly_month(parameters["DATE_START"])
-    parameters["START_MONTH_DAY"] = friendly_month_day(
-        parameters["DATE_START"])
-    parameters["END_MONTH_DAY"] = friendly_month_day(parameters["DATE_END"])
-    report_data["parameters"] = parameters
+            if name == 'feed_info':
+                report_data[name] = dict(report_data[name][0])
+                report_data[name]['date_month_year'] = friendly_month_year_from_int(
+                    report_data[name]['publish_date'])
+                report_data[name]['date_month'] = friendly_month_from_int(report_data[name]["publish_date"])
+                report_data[name]["start_month_day"] = friendly_month_day_from_int(
+                        report_data[name]["report_start_date"])
+                report_data[name]["end_month_day"] = friendly_month_day_from_int(report_data[name]["report_end_date"])
+                # Feed end date is not always provided
+                if (report_data[name]["earliest_feed_end_date"]):
+                    report_data[name]["feed_end_date_m_d_y"] = friendly_month_day_year_from_int(report_data[name]["earliest_feed_end_date"])
+                else:
+                    report_data[name]["feed_end_date_m_d_y"] = "None"
 
     return report_data
-
 
 REPORT_OUTPUTS_DIR = Path("../reports/outputs")
 REPORT_BUILD_DIR = Path('build/gtfs_schedule')
 
 report_template = env.get_template('report.html.jinja')
-
-for year, month, entry in iter_report_entries(index_data["reports"]):
-    p_report_path = Path(entry["report_path"])
-    p_report_inputs = REPORT_OUTPUTS_DIR / p_report_path.parent / "data"
-
-    report_data = fetch_report_data(p_report_inputs)
-    report_html = report_template.render({**global_data, **report_data})
-
-    p_final = REPORT_BUILD_DIR / p_report_path
-    p_final.parent.mkdir(parents=True, exist_ok=True)
-    p_final.write_text(report_html)
 
 ################################################################################
 # render all reports
@@ -239,7 +242,7 @@ with tqdm(
 ) as pbar:
     for year, month, entry in iter_report_entries(index_data["reports"]):
         p_report_path = Path(entry["report_path"])
-        p_report_inputs = REPORT_OUTPUTS_DIR / p_report_path.parent / "data"
+        p_report_inputs = REPORT_OUTPUTS_DIR / p_report_path.parent
 
         report_data = fetch_report_data(p_report_inputs)
         report_html = report_template.render({**global_data, **report_data})
