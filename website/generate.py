@@ -213,7 +213,7 @@ def fetch_report_data(report_dir):
             if name == 'feed_info':
                 report_data[name] = dict(report_data[name][0])
                 report_data[name]['date_month_year'] = friendly_month_year_from_int(
-                    report_data[name]['publish_date'])
+                    report_data[name]['report_start_date'])
                 report_data[name]['date_month'] = friendly_month_from_int(report_data[name]["publish_date"])
                 report_data[name]["start_month_day"] = friendly_month_day_from_int(
                         report_data[name]["report_start_date"])
