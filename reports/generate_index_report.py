@@ -1,13 +1,23 @@
-from calitp.tables import tbl
+from calitp.tables import tbls
 import pandas as pd
 from siuba import *
 from pathlib import Path
+import argparse
+from pathlib import Path
+import calendar
 
+parser = argparse.ArgumentParser()
+parser.add_argument("--publish_date", help="Supply a specific publish date for the report in YYYY-MM-01 format to generate an index for a single month for testing purposes.", type=str, nargs="?", default=False)
+
+args = parser.parse_args()
+publish_date = args.publish_date
 
 ids_with_feeds = (
-    tbl.mart_gtfs_quality.idx_monthly_reports_site()
+    tbls.mart_gtfs_quality.idx_monthly_reports_site()
     >> collect()
 )
+if (publish_date):
+    ids_with_feeds = (ids_with_feeds >> filter(_.publish_date == publish_date))
 
 # generate an index for the homepage
 df_report_index = (
@@ -20,7 +30,7 @@ df_report_index = (
             lambda d: f"{d.year}/{d.month:02d}/{d.organization_itp_id}", axis=1
         ),
         report_path=_.apply(
-            lambda d: f"{d.dir_path}", axis=1
+            lambda d: f"{d.dir_path}/index.html", axis=1
         ),
     )
 )
@@ -44,10 +54,6 @@ index_report = (
 
 index_report.to_json("outputs/index_report.json", orient="records")
 
-all_ids = list(ids_with_feeds.organization_itp_id)
-" ".join(map(str,all_ids))
-
-# ## Save each report's parameters
 root_dir = Path("outputs")
 
 date_cols = ["publish_date", "date_start", "date_end"]
@@ -57,7 +63,6 @@ fixed_dates = (
     >> mutate(**{name: _[name].astype(str) for name in date_cols})
 )
 
-for ii, row in fixed_dates.iterrows():
-    p_params = root_dir / row["dir_path"] / "parameters.json"
-    p_params.parent.mkdir(parents=True, exist_ok=True)
-    row.to_json(p_params)
+for ii, row in df_report_index.iterrows():
+    p_params = root_dir / row["dir_path"]
+    p_params.mkdir(parents=True, exist_ok=True)

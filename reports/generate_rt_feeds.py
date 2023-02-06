@@ -6,7 +6,7 @@ import requests
 import json
 from pathlib import Path
 import yaml
-from calitp.tables import tbl
+from calitp.tables import tbls
 import pandas as pd
 from siuba import *
 from datetime import date, datetime
@@ -30,7 +30,7 @@ AGENCIES_YML_URL = f'{GITHUB}/data-infra/main/airflow/data/agencies.yml'
 # Get feeds with rt for selected month
 def check_if_rt_data_available(date_start):
     rt_feeds = (
-    tbl.mart_gtfs_quality.idx_monthly_reports_site()
+    tbls.mart_gtfs_quality.idx_monthly_reports_site()
         >> filter(_.publish_date == date_start)
         >> filter(_.has_rt == True)
         >> select(_.organization_itp_id)
