@@ -64,10 +64,7 @@ def generate_feed_info(itp_id: int, publish_date):
       >> rename(n_stops = _.stop_ct)
       >> collect()
   )
-  if feed_info.empty:
-    return {"feed_info": False}
-  else:
-    return feed_info
+  return feed_info
 
 def generate_daily_service_hours(itp_id: int, date_start, date_end):
   service_hours = (
@@ -177,7 +174,12 @@ def dump_report_data(itp_id: int, month: str, year: int, publish_date, date_star
     if args.v:
       print(f"Generating feed info for {itp_id}")
     feed_info = generate_feed_info(itp_id, publish_date)
-    feed_info.to_json(out_dir / "1_feed_info.json", orient="records")
+    if (feed_info.empty):
+      if args.v:
+        print(f"ERROR: Could not find feed info for {itp_id}")
+      json.dump({"feed_info": False}, open(out_dir / "1_feed_info.json", "w"))
+    else:
+      feed_info.to_json(out_dir / "1_feed_info.json", orient="records")
 
     # 2_daily_service_hours.json
     if args.v:

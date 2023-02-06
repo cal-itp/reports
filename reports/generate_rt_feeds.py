@@ -23,17 +23,13 @@ month = args.month
 year = args.year
 date_start = f"{year}-{month}-01"
 
-# Scrape the actual speedmap site to get the urls
-GITHUB = 'https://raw.githubusercontent.com/cal-itp/'
-AGENCIES_YML_URL = f'{GITHUB}/data-infra/main/airflow/data/agencies.yml'
-
 # Get feeds with rt for selected month
 def check_if_rt_data_available(date_start):
     rt_feeds = (
     tbls.mart_gtfs_quality.idx_monthly_reports_site()
         >> filter(_.publish_date == date_start)
         >> filter(_.has_rt == True)
-        >> select(_.organization_itp_id)
+        >> select(_.organization_itp_id, _.has_rt)
         >> collect()
     )
     return rt_feeds.values.tolist()
