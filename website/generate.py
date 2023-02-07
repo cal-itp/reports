@@ -50,7 +50,7 @@ def month_name(month_number):
 
 def datetime_format(value, format="%H:%M %d-%m-%y"):
     if isinstance(value, int):
-        return datetime.fromtimestamp(value / 1e3).strftime(format)
+        return datetime.utcfromtimestamp(value / 1e3).strftime(format)
     return value.strftime(format)
 
 def string_to_html_id(s):
@@ -70,22 +70,22 @@ def friendly_month(x):
     return datetime.strptime(x, "%Y-%m-%d").strftime("%B")
 
 def friendly_month_from_int(x):
-    return datetime.fromtimestamp(x / 1e3).strftime("%B")
+    return datetime.utcfromtimestamp(x / 1e3).strftime("%B")
 
 def friendly_month_day(x):
     return datetime.strptime(x, "%Y-%m-%d").strftime("%B %d")
 
 def friendly_month_day_from_int(x):
-    return datetime.fromtimestamp(x / 1e3).strftime("%B %d")
+    return datetime.utcfromtimestamp(x / 1e3).strftime("%B %d")
 
 def friendly_month_year(x):
     return datetime.strptime(x, "%Y-%m-%d").strftime("%B %Y")
 
 def friendly_month_year_from_int(x):
-    return datetime.fromtimestamp(x / 1e3).strftime("%B %Y")
+    return datetime.utcfromtimestamp(x / 1e3).strftime("%B %Y")
 
 def friendly_month_day_year_from_int(x):
-    return datetime.fromtimestamp(x / 1e3).strftime('%m-%d-%Y')
+    return datetime.utcfromtimestamp(x / 1e3).strftime('%m-%d-%Y')
 
 def friendly_month_day_year_from_string(x):
     return datetime.strptime(x, '%Y%m%d').strftime('%m-%d-%Y')
