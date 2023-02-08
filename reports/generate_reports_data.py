@@ -1,21 +1,20 @@
+from calitp.tables import tbls
+from datetime import datetime, timedelta
+from pathlib import Path
+from siuba import filter as filtr, _, collect, pipe, select, rename, mutate, right_join, spread, arrange, if_else
+import argparse
 import os
 os.environ["CALITP_BQ_MAX_BYTES"] = str(800_000_000_000)
 import json
-import warnings
-from calitp.tables import tbls
-from datetime import datetime, timedelta
 import pandas as pd
-from siuba import filter as filtr, _, collect, pipe, select, rename, mutate, right_join, spread, arrange, if_else
-import argparse
-from pathlib import Path
-import calendar
+import warnings
 
 month_arg = datetime.now().strftime('%m')
 year_arg = datetime.now().strftime('%Y')
 parser = argparse.ArgumentParser()
 parser.add_argument("--month", help="The month of the year in M notation. Defaults to current month.", type=str, default=month_arg)
 parser.add_argument("--year", help="The year in YYYY notation. Defaults to current year.", type=int, default=year_arg)
-parser.add_argument("--file", help="A string path to a 1_feed_info.json file.", type=str, default=False)
+parser.add_argument("--file", help="A string path to a 1_feed_info.json file, ie outputs/YYYY/MM/DD/1_feed_info.json", type=str, default=False)
 parser.add_argument("-v", help="Use verbose output.", type=bool, nargs="?", const=True, default=False)
 
 args = parser.parse_args()
@@ -114,11 +113,11 @@ def generate_file_check(itp_id: int, publish_date):
   )
   return file_check
 
-def generate_validation_codes(itp_id, date_start):
+def generate_validation_codes(itp_id, publish_date):
   validation_codes = (
     tbls.mart_gtfs_quality.fct_monthly_reports_site_organization_validation_codes()
     >> filtr(_.organization_itp_id == itp_id)
-    >> filtr(_.publish_date == date_start)
+    >> filtr(_.publish_date == publish_date)
     >> select(_.code, _.human_readable_description, _.severity)
     >> collect()
   )
@@ -204,13 +203,13 @@ def dump_report_data(itp_id: int, month: str, year: int, publish_date, date_star
     # 4_file_check.json
     if args.v:
       print(f"Generating file check for {itp_id}") 
-    file_check = generate_file_check(itp_id, date_start) 
+    file_check = generate_file_check(itp_id, publish_date)
     json.dump(to_rowspan_table(file_check, "category"), open(out_dir / "4_file_check.json", "w"))
 
     # 5_validation_notices.json
     if args.v:
       print(f"Generating validation codes for {itp_id}") 
-    validation_codes = generate_validation_codes(itp_id, date_start)
+    validation_codes = generate_validation_codes(itp_id, publish_date)
     json.dump(validation_codes, open(out_dir / "5_validation_codes.json", "w"))
 
 # Generates all data by month
