@@ -1,0 +1,78 @@
+{
+  "$schema": "http://json-schema.org/draft-04/schema#",
+  "type": "array",
+  "items": [
+    {
+      "type": "object",
+      "properties": {
+        "organization_itp_id": {
+          "type": "integer"
+        },
+        "feed_publisher_name": {
+          "type": "string"
+        },
+        "feed_publisher_url": {
+           "anyOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "publish_date": {
+          "type": "integer"
+        },
+        "report_start_date": {
+          "type": "integer"
+        },
+        "report_end_date": {
+          "type": "integer"
+        },
+        "n_routes": {
+          "type": "integer"
+        },
+        "n_stops": {
+          "type": "integer"
+        },
+        "no_service_days_ct": {
+           "anyOf": [
+            {
+              "type": "integer"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "earliest_feed_end_date": {
+           "anyOf": [
+            {
+              "type": "number"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "has_feed_info": {
+          "type": "boolean"
+        }
+      },
+      "required": [
+        "organization_itp_id",
+        "feed_publisher_name",
+        "feed_publisher_url",
+        "publish_date",
+        "report_start_date",
+        "report_end_date",
+        "n_routes",
+        "n_stops",
+        "no_service_days_ct",
+        "earliest_feed_end_date",
+        "has_feed_info"
+      ]
+    }
+  ]
+}
