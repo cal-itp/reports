@@ -51,7 +51,7 @@ def month_name(month_number):
 
 def datetime_format(value, format="%H:%M %d-%m-%y"):
     if isinstance(value, int):
-        return datetime.fromtimestamp(value / 1e3).strftime(format)
+        return datetime.utcfromtimestamp(value / 1e3).strftime(format)
     return value.strftime(format)
 
 
@@ -74,7 +74,7 @@ def friendly_month(x):
 
 
 def friendly_month_from_int(x):
-    return datetime.fromtimestamp(x / 1e3).strftime("%B")
+    return datetime.utcfromtimestamp(x / 1e3).strftime("%B")
 
 
 def friendly_month_day(x):
@@ -82,7 +82,7 @@ def friendly_month_day(x):
 
 
 def friendly_month_day_from_int(x):
-    return datetime.fromtimestamp(x / 1e3).strftime("%B %d")
+    return datetime.utcfromtimestamp(x / 1e3).strftime("%B %d")
 
 
 def friendly_month_year(x):
@@ -90,7 +90,7 @@ def friendly_month_year(x):
 
 
 def friendly_month_year_from_int(x):
-    return datetime.fromtimestamp(x / 1e3).strftime("%B %Y")
+    return datetime.utcfromtimestamp(x / 1e3).strftime("%B %Y")
 
 
 def friendly_month_day_year_from_int(x):
