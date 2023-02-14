@@ -115,7 +115,7 @@ This can be done via:
 find ./outputs/2022/03 -mindepth 1 -maxdepth 1 -type d '!' -exec test -e "{}/data" ';' -print
 ```
 Where `2022/03` is the current month. Folders without a `data` subfolder will return, for example:
-```shell 
+```shell
 >./outputs/2022/03/274
 ```
  This should provide a list of ITPID folders that didn't complete reports generation for that month.
@@ -129,7 +129,7 @@ papermill -f outputs/2022/03/274/parameters.json report.ipynb outputs/2022/03/27
 Once every single report is generated, navigate to the website subfolder (i.e. `cd ../website`), install the npm dependencies, and build the website.
 
 ```shell
-npm install 
+npm install
 npm run build
 ```
 

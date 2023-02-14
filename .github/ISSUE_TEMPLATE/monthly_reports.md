@@ -29,7 +29,7 @@ python run_all_months.py
 
 From within the build subfolder
 
-```python  
+```python
 npm run build
 python -m http.server
 ```
@@ -61,7 +61,7 @@ This site can be viewed at https://development-build--cal-itp-reports.netlify.ap
 
 to push report data to the production bucket
 
-```python  
+```python
 make sync-prod
 ```
 
@@ -95,7 +95,7 @@ Obtain test emails from Cal-ITP technical lead (@evansiroky). Verify with Transi
 
 script execution in development
 
-```python  
+```python
 python generate_report_emails.py development
 ```
 
@@ -107,8 +107,8 @@ python generate_report_emails.py development
 
 Once emails have passed visual inspection, change config file for production
 
-```python  
-python generate_report_emails.py production 
+```python
+python generate_report_emails.py production
 ```
 
 pass prompt that asks if production is correct and verify email recipients are production

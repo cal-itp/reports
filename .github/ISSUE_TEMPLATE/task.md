@@ -1,6 +1,6 @@
 ---
-name: Task 
-about: An item to work on that can be described in a single issue. 
+name: Task
+about: An item to work on that can be described in a single issue.
 title: ''
 labels: ''
 assignees: ''

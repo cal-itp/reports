@@ -34,7 +34,7 @@
             <li>A greater presence of using GTFS data to represent demand-responsive services</li>
           </ul>
         </mj-text>
-        <mj-text>We want to hear from you! All GTFS producers and consumers are welcome and encouraged to provide feedback on the draft release candidate. <ml-text style="font-weight: bold">All feedback is due by 5 p.m. PDT on September 30, 2022</ml-text>. Instructions on how to provide feedback are included within the <a href="https://docs.google.com/document/d/1dX6ZoL_GsQIt5LG1wZEV5S6pYdD6jAwhKk1CRQoXU6k/edit#heading=h.gctumadr9r0m">draft document</a>.</mj-text> 
+        <mj-text>We want to hear from you! All GTFS producers and consumers are welcome and encouraged to provide feedback on the draft release candidate. <ml-text style="font-weight: bold">All feedback is due by 5 p.m. PDT on September 30, 2022</ml-text>. Instructions on how to provide feedback are included within the <a href="https://docs.google.com/document/d/1dX6ZoL_GsQIt5LG1wZEV5S6pYdD6jAwhKk1CRQoXU6k/edit#heading=h.gctumadr9r0m">draft document</a>.</mj-text>
         <mj-text>If you have any questions, please contact us at <a href="mailto:hello@calitp.org?subject=Feedback on new data guidelines">hello@calitp.org</a>—about these data guidelines, your monthly report, or any other type of technical support your agency might need. And be on the lookout for further status updates regarding Version 3 over the coming weeks.</mj-text>
         <mj-text>Thanks,</mj-text>
         <mj-text padding-top="0" padding-bottom="0" line-height="1px" color="#2EA8CE" mj-class="display-font" font-size="20px" padding-bottom="0">The Cal-ITP Team</mj-text>
