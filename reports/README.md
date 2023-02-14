@@ -4,7 +4,7 @@
 
 ```bash
 docker-compose run --service-ports calitp_reports make generate_parameters
-docker-compose run --service-ports calitp_reports make MONTH=02 all -j 8
+docker-compose run --service-ports calitp_reports make MONTH=02 YEAR=2023 all -j 8
 ```
 
 Subsitute `MONTH` var for desired month.
@@ -27,7 +27,7 @@ make generate_parameters
 # the build process is not computationally intensive, but requires waiting on
 # http requests to google bigquery
 make generate_parameters
-make MONTH=02 all -j 8
+make MONTH=02 YEAR=2023 all -j 8
 ```
 
 ## Using Postmark to send emails (SAFELY)
