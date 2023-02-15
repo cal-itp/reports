@@ -1,8 +1,8 @@
-NOTEBOOKS=$(subst parameters.json,index.ipynb,$(wildcard outputs/2022/$(MONTH)/*/parameters.json))
+FILES= outputs/$(YEAR)/$(MONTH)/*/1_file_info.json
 
 .SECONDARY:
 
-all: $(NOTEBOOKS)
+all: $(FILES)
 
 clean:
 	rm -rf outputs/*
@@ -14,10 +14,10 @@ sync-prod:
 	gsutil -m rsync -r -d outputs/ gs://gtfs-data/report_gtfs_schedule/
 
 generate_parameters:
-	python generate_ids.py
-	python rt_feeds.py rt.yml
+	python generate_index_report.py
+	python generate_rt_feeds.py
 
-outputs/%/parameters.json: generate_parameters
+outputs/index_report.json: generate_parameters
 
-outputs/%/index.ipynb: report.ipynb outputs/%/parameters.json
-	papermill --log-level=ERROR -f $(dir $@)parameters.json $< $@
+outputs/%/1_file_info.json:
+	python generate_reports_data.py -v --f $(dir $@)1_file_info.json
