@@ -119,7 +119,7 @@ find ./outputs/2023 -mindepth 3 -maxdepth 3 -type f '!' -exec test -e "1_feed_in
 If there is a missing month, an individual month can be run with the following command:
 
 ```shell
-python generate_reports_data.py -v --f outputs/YYYY/MM/AGENCY_NUM/1_file_info.json 
+python generate_reports_data.py -v --f outputs/YYYY/MM/AGENCY_NUM/1_file_info.json
 ```
 
 ### Build website
