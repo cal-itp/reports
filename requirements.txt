@@ -128,7 +128,7 @@ toml==0.10.2
 tomli==1.2.1
 tornado==6.1
 traitlets==5.3.0
-Twisted==18.9.0
+Twisted==22.10.0
 typing-inspect==0.7.1
 ujson==5.4.0
 urllib3==1.26.5
