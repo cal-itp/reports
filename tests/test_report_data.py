@@ -1,12 +1,8 @@
-import json
 import os
 import sys
 
-from jsonschema import validate
-
 sys.path.append(os.path.abspath("../reports"))
-from generate_reports_data import generate_data_by_file_path
-from validate_reports import validate_files
+from validate_reports import validate_files  # noqa: E402
 
 test_file = "outputs/2022/11/91/1_file_info.json"
 
