@@ -1,0 +1,19 @@
+[
+  {
+    "year": 2022,
+    "first_month": 11,
+    "last_month": 11,
+    "months": [
+      {
+        "month": 11,
+        "reports": [
+          {
+            "agency_name": "City of Delano",
+            "itp_id": 91,
+            "report_path": "2022\/11\/91\/index.html"
+          }
+        ]
+      }
+    ]
+  }
+]
