@@ -1,0 +1,63 @@
+{
+  "$schema": "http://json-schema.org/draft-04/schema#",
+  "type": "array",
+  "items": [
+    {
+      "type": "object",
+      "properties": {
+        "service_date": {
+          "type": "integer"
+        },
+        "n_routes": {
+          "type": "integer"
+        },
+        "calitp_itp_id": {
+          "type": "integer"
+        },
+        "n_trips": {
+          "type": "integer"
+        },
+        "ttl_service_hours": {
+          "type": "number"
+        },
+        "first_departure_ts": {
+           "anyOf": [
+            {
+              "type": "number"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "last_arrival_ts": {
+           "anyOf": [
+            {
+              "type": "number"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "n_stop_times": {
+          "type": "integer"
+        },
+        "weekday": {
+          "type": "string"
+        }
+      },
+      "required": [
+        "service_date",
+        "n_routes",
+        "calitp_itp_id",
+        "n_trips",
+        "ttl_service_hours",
+        "first_departure_ts",
+        "last_arrival_ts",
+        "n_stop_times",
+        "weekday"
+      ]
+    }
+  ]
+}

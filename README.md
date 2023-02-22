@@ -106,19 +106,20 @@ This will create data for one month within the reports/outputs folder.
 Note that running too many threads (i.e. parallel queries, such as `30` or more) may not complete successfully if many other BigQuery queries are happening simultaneously: [BigQuery has a limit of 100 concurrent queries](https://cloud.google.com/bigquery/quotas).
 If this is the case, try rerunning with fewer threads (i.e. `make all -j 8`).
 
-If this still isn't successful, check each folder to see if both an index.html and 'data' folder exist.
-This can be done via:
+#### Validating the report creation
+
+After generation, the reports can be validated by running ``python validate_reports.py``. This examines all of the output folders and ensures that the generated files are present and that they follow the same schema.
+
+Additionally, you can see if there are any missing files by running:
+
 ```shell
-find ./outputs/2022/03 -mindepth 1 -maxdepth 1 -type d '!' -exec test -e "{}/data" ';' -print
+find ./outputs/2023 -mindepth 3 -maxdepth 3 -type f '!' -exec test -e "1_feed_info.json" ';' -print
 ```
-Where `2022/03` is the current month. Folders without a `data` subfolder will return, for example:
+
+If there is a missing month, an individual month can be run with the following command:
+
 ```shell
->./outputs/2022/03/274
-```
- This should provide a list of ITPID folders that didn't complete reports generation for that month.
- For each folder, simply rereun the papermill generation for that particular ITPID:
-```shell
-papermill -f outputs/2022/03/274/parameters.json report.ipynb outputs/2022/03/274/index.ipynb
+python generate_reports_data.py -v --f outputs/YYYY/MM/AGENCY_NUM/1_file_info.json
 ```
 
 ### Build website
@@ -148,6 +149,10 @@ python -m http.server
 ```
 and open up a web browser, and navigate to:
 [localhost:8000](localhost:8000)
+
+### Testing
+
+Tests can be run locally from the ``tests`` directory by running ``python test_report_data.py``. These tests are run on commits through a github action.
 
 ### Pushing to google cloud - Development
 

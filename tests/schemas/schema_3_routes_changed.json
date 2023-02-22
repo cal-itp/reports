@@ -1,0 +1,29 @@
+{
+  "$schema": "http://json-schema.org/draft-04/schema#",
+  "type": "array",
+  "items": [
+    {
+      "type": "object",
+      "properties": {
+        "organization_itp_id": {
+          "type": "integer"
+        },
+        "status": {
+          "type": "string"
+        },
+        "n": {
+          "type": "integer"
+        },
+        "percent": {
+          "type": "number"
+        }
+      },
+      "required": [
+        "organization_itp_id",
+        "status",
+        "n",
+        "percent"
+      ]
+    }
+  ]
+}
