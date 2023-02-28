@@ -123,7 +123,6 @@ def generate_daily_service_hours(itp_id: int, date_start, date_end):
             _.n_stop_times,
             _.service_day_type,
         )
-        >> rename(service_date=_.activity_date)
         >> rename(last_arrival_ts=_.last_arrival_sec)
         >> rename(calitp_itp_id=_.organization_itp_id)
         >> rename(first_departure_ts=_.first_departure_sec)
