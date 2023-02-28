@@ -110,10 +110,10 @@ def generate_daily_service_hours(itp_id: int, date_start, date_end):
     service_hours = (
         tbls.mart_gtfs_quality.fct_daily_reports_site_organization_scheduled_service_summary()
         >> filtr(_.organization_itp_id == itp_id)
-        >> filtr(_.service_date >= date_start)
-        >> filtr(_.service_date <= date_end)
+        >> filtr(_.activity_date >= date_start)
+        >> filtr(_.activity_date <= date_end)
         >> select(
-            _.service_date,
+            _.activity_date,
             _.n_routes,
             _.organization_itp_id,
             _.n_trips,

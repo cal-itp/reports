@@ -139,7 +139,7 @@
 
             {% set weekday_hours = daily_service_hours|selectattr('weekday', '==', 'Weekday')|list %}
             <div class="hours-chart"
-                 data-dates="{{ getJsonForAttribute(weekday_hours, 'service_date')|trim }}"
+                 data-dates="{{ getJsonForAttribute(weekday_hours, 'activity_date')|trim }}"
                  data-hours="{{ getJsonForAttribute(weekday_hours, 'ttl_service_hours')|trim }}"
                  data-color="#136C97">
             </div>
@@ -154,7 +154,7 @@
 
             {% set sat_hours = daily_service_hours|selectattr('weekday', '==', 'Saturday')|list %}
             <div class="hours-chart"
-                 data-dates="{{ getJsonForAttribute(sat_hours, 'service_date')|trim }}"
+                 data-dates="{{ getJsonForAttribute(sat_hours, 'activity_date')|trim }}"
                  data-hours="{{ getJsonForAttribute(sat_hours, 'ttl_service_hours')|trim }}"
                  data-color="#F6BF16">
             </div>
@@ -167,7 +167,7 @@
 
             {% set sun_hours = daily_service_hours|selectattr('weekday', '==', 'Sunday')|list %}
             <div class="hours-chart"
-                 data-dates="{{ getJsonForAttribute(sun_hours, 'service_date')|trim }}"
+                 data-dates="{{ getJsonForAttribute(sun_hours, 'activity_date')|trim }}"
                  data-hours="{{ getJsonForAttribute(sun_hours, 'ttl_service_hours')|trim }}"
                  data-color="#5B559C">
             </div>
