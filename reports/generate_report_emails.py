@@ -52,8 +52,11 @@ report_emails = (
         calitp_itp_id=_.itp_id.astype(int),
         report_url=REPORT_LINK_BASE + "/" + _.itp_id.astype(str) + "/",
     )
+
 )
 report_emails
+print(report_emails["report_url"])
+
 
 print("Using server token: " + config["hubspot_server_token"])
 # +
@@ -67,30 +70,34 @@ else:
 if config.getboolean("show_prompt"):
     result = input(
         f"""
-You are about to email the following {report_emails.count()} addresses: {", ".join(report_emails)}
+You are about to email the following {report_emails["main_email"].count()} addresses: {", ".join(report_emails.main_email)}
 To continue, type yes."""
     )
     if result != "yes":
         raise Exception("Need yes to continue")
 
-for email in report_emails:
+for _, email in report_emails.iterrows():
+    report_url = report_emails["report_url"][1]
+    main_email = report_emails["main_email"][1]
+    print(main_email)
     message = {
         "from": config["email_from"],
-        "to": email,
+        "to": main_email,
         "replyTo": [config["email_from"]],
     }
-    custom_properties = {"month_name": PUBLISH_DATE_MONTH, "url": email.report_url}
+    custom_properties = {
+        "month_name": PUBLISH_DATE_MONTH, 
+        "url": report_url
+    }
     public_single_send_request_egg = PublicSingleSendRequestEgg(
         email_id=config["email_id"],
         message=message,
         custom_properties=custom_properties,
     )
     try:
-        api_response = (
-            hubspot_client.marketing.transactional.single_send_api.send_email(
+        api_response = hubspot_client.marketing.transactional.single_send_api.send_email(
                 public_single_send_request_egg=public_single_send_request_egg
             )
-        )
         print(api_response)
     except ApiException as e:
         print("Exception when calling single_send_api->send_email: %s\n" % e)
