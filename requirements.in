@@ -5,3 +5,4 @@ MarkupSafe==2.1.1
 postmarker==0.18.2
 pre-commit==3.0.4
 tomli==2.0.1
+hubspot-api-client==7.5.0
