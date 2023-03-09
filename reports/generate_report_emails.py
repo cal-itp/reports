@@ -34,11 +34,10 @@ config = parser[config_section_name]
 SERVER_TOKEN = config["hubspot_server_token"]
 hubspot_client = hubspot.Client.create(access_token=SERVER_TOKEN)
 PUBLISH_DATE_YEAR = config["year"]
-PUBLISH_DATE_MONTH = config["month"]
+PUBLISH_DATE_MONTH_NAME = config["month_name"]
+PUBLISH_DATE_MONTH_INT = config["month"]
 
-REPORT_LINK_BASE = (
-    f"https://reports.calitp.org/gtfs_schedule/{PUBLISH_DATE_YEAR}/{PUBLISH_DATE_MONTH}"
-)
+REPORT_LINK_BASE = f"https://reports.calitp.org/gtfs_schedule/{PUBLISH_DATE_YEAR}/{PUBLISH_DATE_MONTH_INT}"
 # -
 # TODO: need to ensure that the test_emails.csv and production email sheet use the
 #       same column names
@@ -78,7 +77,10 @@ for index, email in report_emails.iterrows():
         "to": email["main_email"],
         "replyTo": [config["email_from"]],
     }
-    custom_properties = {"month_name": PUBLISH_DATE_MONTH, "url": email["report_url"]}
+    custom_properties = {
+        "month_name": PUBLISH_DATE_MONTH_NAME,
+        "url": email["report_url"],
+    }
     public_single_send_request_egg = PublicSingleSendRequestEgg(
         email_id=config["email_id"],
         message=message,
