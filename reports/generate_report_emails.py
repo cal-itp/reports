@@ -55,7 +55,10 @@ report_emails = (
 
 )
 report_emails
+print(report_emails["report_url"])
 
+
+print("Using server token: " + config["hubspot_server_token"])
 # +
 # generate mjml template
 stream = os.popen("npx mjml ../templates/email/report.mjml -s")
