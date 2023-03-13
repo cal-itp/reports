@@ -5,7 +5,7 @@ import hubspot
 import pandas as pd
 from hubspot.marketing.transactional import ApiException, PublicSingleSendRequestEgg
 
-# (TODO: update this section to remove outdated info) This script generates a email body using mjml. The result itself has templated variables
+# This script generates a email body using mjml. The result itself has templated variables
 # of form {{SOME_VARIABLE_NAME}}, so we will use jinja to complete these email bodies
 from jinja2 import Environment, StrictUndefined
 from siuba import _, collect, mutate
