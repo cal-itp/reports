@@ -1,0 +1,41 @@
+<mjml>
+  <mj-head>
+    <mj-font name="Nunito Sans" href="https://fonts.googleapis.com/css2?family=Nunito+Sans:wght@400;800" />
+    <mj-font name="Raleway" href="https://fonts.googleapis.com/css2?family=Raleway:wght@700" />
+    <mj-attributes>
+      <mj-all color="#323A45" font-family="'Nunito Sans', Verdana, sans-serif" font-size="16px" line-height="1.3333" />
+      <mj-button background-color="#2ea8ce" color="white" font-weight="bold" font-family="Raleway, Verdana, sans-serif" />
+      <mj-class name="display-font" font-family="Raleway, Verdana, sans-serif" font-weight="bold" />
+    </mj-attributes>
+    <mj-style> a { color: #136C97; } .small-print a { color: inherit; } </mj-style>
+  </mj-head>
+  <mj-body background-color="#eee">
+    <mj-section padding-bottom="8px" padding-top="8px">
+      <mj-column>
+        <mj-image padding-left="10px" src="https://www.calitp.org/images/calitp_logo_MAIN.png" href="https://calitp.org?utm_campaign=reports&amp;utm_source=reports-mailer&amp;utm_medium=email&amp;utm_content=logo-link" width="108px" alt="Cal-ITP" align="left" />
+      </mj-column>
+    </mj-section>
+    <mj-section background-color="#fff">
+      <mj-column>
+        <mj-text padding-top="0" padding-bottom="0" color="#136C97" mj-class="display-font">
+          <h2>Hello!</h2>
+        </mj-text>
+        <mj-text>Greetings from Cal-ITP. As part of our work with the GTFS feeds for agencies across the state, we prepare a monthly report with some basic statistics and validation results for your agency’s feed. <strong>You can view your report for {{month_name}}</strong> at <a href="{{url}}?utm_campaign=reports&amp;utm_source=reports-mailer&amp;utm_medium=email&amp;utm_content=report-link">{{url}}</a>.</mj-text>
+        <mj-button href="{{url}}?utm_campaign=reports&amp;utm_source=reports-mailer&amp;utm_medium=email&amp;utm_content=report-button">View Report</mj-button>
+        <mj-text>All previous reports are available at <a href="https://reports.calitp.org/?utm_campaign=reports&amp;utm_source=reports-mailer&amp;utm_medium=email&amp;utm_content=all-reports-link">https://reports.calitp.org/</a>.</mj-text>
+        <mj-text>As a reminder, you’ll now see your agency labeled by organization name, rather than the name of your transit service itself. For example, you’ll see names like City of Santa Monica instead of Big Blue Bus, or San Francisco Bay Area Rapid Transit District instead of BART.</mj-text>
+        <mj-text>Additionally, we upgraded to the most recent version of the canonical validator, and the validation section of your report may have changed as a result.</mj-text>
+        <mj-text>If you have any questions about your monthly report, please contact us at <a href="mailto:hello@calitp.org?subject=Feedback on new data guidelines">hello@calitp.org</a>.</mj-text>
+        <mj-text>Thanks,</mj-text>
+        <mj-text padding-top="3px" padding-bottom="10px" line-height="1px" color="#2EA8CE" mj-class="display-font" font-size="20px" padding-bottom="0">The Cal-ITP Team</mj-text>
+        <mj-text padding-top="0"><a href="http://calitp.org?utm_campaign=reports&amp;utm_source=reports-mailer&amp;utm_medium=email&amp;utm_content=signature-link" style="font-size: 12px; letter-spacing: .03em; text-decoration: none; font-weight: bold;">calitp.org</a></mj-text>
+      </mj-column>
+    </mj-section>
+    <mj-section>
+      <mj-column>
+        <mj-text css-class="small-print" font-size="12px" color="#5D707C">Visit <a href="http://camobilitymarketplace.org/">CAMobilityMarketplace.org</a> for a catalog of code-compliant products and services for Transit&nbsp;Providers.</mj-text>
+        <mj-text css-class="small-print" font-size="12px" color="#2EA8CE">Subscribe to our <a href="https://lp.constantcontactpages.com/su/eLbtFoE/calitp?source_id=a41b99cd-7f28-4be8-a286-f9e75fc7bbce&amp;source_type=em&amp;c=">Mobility Newsletter</a> for the latest Cal-ITP and Caltrans&nbsp;updates.</mj-text>
+      </mj-column>
+    </mj-section>
+  </mj-body>
+</mjml>
