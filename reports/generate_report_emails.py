@@ -35,10 +35,11 @@ config = parser[config_section_name]
 SERVER_TOKEN = config["postmark_server_token"]
 postmark = PostmarkClient(server_token=SERVER_TOKEN)
 PUBLISH_DATE_YEAR = config["year"]
-PUBLISH_DATE_MONTH_NAME = config["month_name"]
-PUBLISH_DATE_MONTH_INT = config["month"]
+PUBLISH_DATE_MONTH = config["month"]
 
-REPORT_LINK_BASE = f"https://reports.calitp.org/gtfs_schedule/{PUBLISH_DATE_YEAR}/{PUBLISH_DATE_MONTH_INT}"
+REPORT_LINK_BASE = (
+    f"https://reports.calitp.org/gtfs_schedule/{PUBLISH_DATE_YEAR}/{PUBLISH_DATE_MONTH}"
+)
 # -
 # TODO: need to ensure that the test_emails.csv and production email sheet use the
 #       same column names
@@ -105,10 +106,7 @@ for _, email in report_emails.iterrows():
         "to": main_email,
         "replyTo": [config["email_from"]],
     }
-    custom_properties = {
-        "month_name": PUBLISH_DATE_MONTH, 
-        "url": report_url
-    }
+    custom_properties = {"month_name": PUBLISH_DATE_MONTH, "url": email["report_url"]}
     public_single_send_request_egg = PublicSingleSendRequestEgg(
         email_id=config["email_id"],
         message=message,
