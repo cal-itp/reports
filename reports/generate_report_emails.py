@@ -54,7 +54,10 @@ report_emails = (
     )
 )
 report_emails
+print(report_emails["report_url"])
 
+
+print("Using server token: " + config["hubspot_server_token"])
 # +
 # Double check if we're on development that it is going to the sandbox ----
 if config.getboolean("is_development"):
