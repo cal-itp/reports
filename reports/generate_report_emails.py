@@ -55,7 +55,6 @@ report_emails = (
 )
 report_emails
 
-
 # +
 # generate mjml template
 stream = os.popen("npx mjml ../templates/email/report.mjml -s")
@@ -87,25 +86,31 @@ else:
 if config.getboolean("show_prompt"):
     result = input(
         f"""
-You are about to email the following {all_emails.count()} addresses: {", ".join(all_emails)}
+You are about to email the following {report_emails.count()} addresses: {", ".join(report_emails)}
 To continue, type yes."""
     )
     if result != "yes":
         raise Exception("Need yes to continue")
 
-
-for emails, html_messages in all_emails_list:
-    email = postmark.emails.Email(
-        From=config["email_from"],
-        To=emails,
-        Cc=config["cc_email"],
-        Subject=config["email_subject"],
-        HtmlBody=html_messages,
-        TrackOpens=config["track_opens"],
-        TrackLinks=config["track_links"],
+for email in report_emails:
+    message = {
+        "from": config["email_from"],
+        "to": email,
+        "replyTo": [config["email_from"]],
+    }
+    custom_properties = {"month_name": PUBLISH_DATE_MONTH, "url": email.report_url}
+    public_single_send_request_egg = PublicSingleSendRequestEgg(
+        email_id=config["email_id"],
+        message=message,
+        custom_properties=custom_properties,
     )
     print(f"sending to emails: {emails}")
     try:
-        email.send()
-    except BaseException as err:
-        print(f"failure to print to {emails}: {err}")
+        api_response = (
+            hubspot_client.marketing.transactional.single_send_api.send_email(
+                public_single_send_request_egg=public_single_send_request_egg
+            )
+        )
+        print(api_response)
+    except ApiException as e:
+        print("Exception when calling single_send_api->send_email: %s\n" % e)
