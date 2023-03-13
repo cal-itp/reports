@@ -5,7 +5,7 @@ import sys
 
 import pandas as pd
 
-# (TODO: update this section to remove outdated info) This script generates a email body using mjml. The result itself has templated variables
+# This script generates a email body using mjml. The result itself has templated variables
 # of form {{SOME_VARIABLE_NAME}}, so we will use jinja to complete these email bodies
 from jinja2 import Environment, StrictUndefined
 from postmarker.core import PostmarkClient
