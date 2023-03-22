@@ -1,4 +1,5 @@
 import argparse
+import json
 from pathlib import Path
 
 from calitp.tables import tbls
@@ -29,9 +30,10 @@ df_report_index = ids_with_feeds >> mutate(
         lambda d: f"{d.year}/{d.month:02d}/{d.organization_itp_id}", axis=1
     ),
     report_path=_.apply(lambda d: f"{d.dir_path}/index.html", axis=1),
+    feeds=_.feeds.apply(json.loads),
 )
 
-cols_to_keep = ["agency_name", "itp_id", "report_path"]
+cols_to_keep = ["agency_name", "itp_id", "report_path", "feeds"]
 
 index_report = (
     df_report_index
