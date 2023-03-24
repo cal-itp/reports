@@ -25,8 +25,6 @@
 {%- endblock -%}
 
 {% block content %}
-
-
     <div class="responsive-prose max-w-none">
         {{ macros.breadcrumbs([
         { 'url': '/', 'text': 'Home' },
@@ -109,18 +107,23 @@
     </div>
 
     {% call macros.render_dialog('feed-info-modal', 'Source URLs') %}
-        <pre class="whitespace-pre-wrap !my-0">Feed URL(s) go here</pre>
-    {% endcall %}
+        <div class="prose-ul:m-0 prose-li:m-0 prose-li:p-0 prose-p:m-0">
+            <ul>
+                {%- for feed in feeds -%}
+                    <li>
+                        <a href="{{ feed.string_url | escape }}" rel="external" target="_blank">{{ feed.gtfs_dataset_name }}</a>
+                    </li>
+                {% endfor %}
+            </ul>
 
-    {# Commented out until an ultimate resolution can be found for
-  https://github.com/cal-itp/reports/issues/44
-<div class="my-8">
-    <a class="btn responsive-prose mr-4 mb-4" href="{{ status.gtfs_schedule_url }}">
-        <i class="fas fa-link mr-1 text-itp-slate-bold"></i>
-        Download Feed
-    </a>
-</div>
-#}
+            <div class="mt-4 flex items-baseline gap-3 max-w-sm">
+                <i class="text-sm fa-solid fa-triangle-exclamation text-itp-yellow"></i>
+                <p class="text-sm text-itp-slate-bold">
+                    Note: Links may lead directly to downloads and/or to resources that require&nbsp;authentication
+                </p>
+            </div>
+        </div>
+    {% endcall %}
 
     <hr>
 
@@ -189,12 +192,13 @@
     <hr>
 
     <div class="flex flex-col lg:flex-row gap-12 lg:gap-16 xl:gap-24 2xl:gap-36">
-
         <div class="flex-1 responsive-prose">
             <h2>About the {{ feed_info.date_month }} Identifier Change&nbsp;Charts</h2>
             <ul>
                 <li>These charts show the percentage of stop and route IDs that have changed since the previous&nbsp;month.</li>
-                <li>Stop and route IDs are important identifiers for GTFS feed consumers to correctly parse&nbsp;feeds.</li>
+                <li>
+                    Stop and route IDs are important identifiers for GTFS feed consumers to correctly parse&nbsp;feeds.
+                </li>
                 <li>
                     It is a <a href="https://gtfs.org/schedule/best-practices/#dataset-publishing-general-practices">GTFS Best Practice</a> to keep these consistent between feed versions whenever&nbsp;possible.
                 </li>
@@ -323,6 +327,7 @@
                             </tr>
                         {% endfor %}
                     </tbody>
+
                 {% else %}
 
                     <p>
@@ -330,15 +335,7 @@
                     </p>
 
                 {% endif %}
-
-            </div>
-
-
+            </table>
         </div>
-
-    </table>
-</div>
-
-</div>
-
+    </div>
 {% endblock %}

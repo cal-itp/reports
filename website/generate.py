@@ -264,6 +264,7 @@ with tqdm(
         p_report_path = Path(entry["report_path"])
         p_report_inputs = REPORT_OUTPUTS_DIR / p_report_path.parent
         report_data = fetch_report_data(p_report_inputs)
+        report_data["feeds"] = entry["feeds"]
         report_html = report_template.render({**global_data, **report_data})
         pbar.update(1)
 
