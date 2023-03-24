@@ -1,4 +1,5 @@
-@import 'charts';
+@import "animations";
+@import "charts";
 
 @tailwind base;
 @tailwind components;
@@ -10,7 +11,7 @@
     }
 }
 
-$text-color: #323A45;
+$text-color: #323a45;
 
 html {
     scroll-behavior: smooth;
@@ -21,7 +22,10 @@ body {
     overflow-y: scroll; // prevent layout jumping when page height changes
 }
 
-h1, h2, h3, h4 {
+h1,
+h2,
+h3,
+h4 {
     @apply font-serif;
 
     small {
@@ -31,8 +35,7 @@ h1, h2, h3, h4 {
 
 .btn,
 a.btn {
-    @apply
-        border
+    @apply border
         border-itp-slate
         font-semibold
         inline-block
@@ -49,35 +52,32 @@ a.btn {
     text-decoration: none !important;
 }
 
-input, select {
-    @apply
-        border
+input,
+select {
+    @apply border
         bg-white
         px-4 py-2
         rounded;
 }
 
 input {
-    @apply
-        shadow-inner;
+    @apply shadow-inner;
 }
 
 select {
-    @apply
-        appearance-none
+    @apply appearance-none
         pr-9
         shadow;
 
     /*! icon from bootstrap | https://github.com/twbs/bootstrap/blob/8f11c52919fb9b7142ebf9b5797f9cc1538194d2/scss/_variables.scss#L930 */
     background-image: url("data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 16'><path fill='none' stroke='%23343a40' stroke-linecap='round' stroke-linejoin='round' stroke-width='2' d='m2 5 6 6 6-6'/></svg>");
-    background-position: right .75rem center;
+    background-position: right 0.75rem center;
     background-repeat: no-repeat;
-    background-size: 1em .75em;
+    background-size: 1em 0.75em;
 }
 
 input[type="search"] {
-    @apply
-        rounded-full
+    @apply rounded-full
         pl-12;
 
     /*! icon from font awesome | https://fontawesome.com/v5.15/icons/search?style=solid */
@@ -100,24 +100,21 @@ input[type="search"] {
 }
 
 .text-muted {
-    @apply
-        text-itp-slate-bold
+    @apply text-itp-slate-bold
         text-opacity-60;
 }
 
 .list-group {
-    @apply
-        bg-white
+    @apply bg-white
         divide-solid divide-y
         overflow-hidden
         rounded-md;
 
-        &__link {
-            @apply
-                block
+    &__link {
+        @apply block
                 hover:bg-itp-teal-light
                 p-4;
-        }
+    }
 }
 
 .breadcrumbs {
@@ -152,5 +149,13 @@ nav {
     .faq-list__q,
     > a {
         @apply bg-itp-yellow-bold/30;
+    }
+}
+
+dialog {
+    animation: gentle-scale-in 0.5s cubic-bezier(0.075, 0.82, 0.165, 1);
+
+    &::backdrop {
+        animation: fade-in 250ms;
     }
 }
