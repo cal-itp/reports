@@ -6,7 +6,7 @@ import json
 from datetime import datetime
 
 import requests
-from calitp.tables import tbls
+from calitp_data_analysis.tables import tbls
 from siuba import _, collect, filter, select
 
 monthArg = datetime.now().strftime("%m")
