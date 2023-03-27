@@ -2,7 +2,7 @@ import argparse
 import json
 from pathlib import Path
 
-from calitp.tables import tbls
+from calitp_data_analysis.tables import tbls
 from siuba import _, arrange, collect, group_by, mutate, rename, summarize
 
 parser = argparse.ArgumentParser()

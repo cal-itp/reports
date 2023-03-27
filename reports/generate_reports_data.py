@@ -5,7 +5,7 @@ import warnings
 from datetime import datetime, timedelta
 from pathlib import Path
 
-from calitp.tables import tbls
+from calitp_data_analysis.tables import tbls
 from siuba import _, arrange, collect
 from siuba import filter as filtr
 from siuba import if_else, mutate, pipe, rename, select, spread
