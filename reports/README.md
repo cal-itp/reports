@@ -3,8 +3,8 @@
 ## Running from outside the container
 
 ```bash
-docker-compose run --service-ports calitp_reports make generate_parameters
-docker-compose run --service-ports calitp_reports make MONTH=02 YEAR=2023 all -j 8
+docker-compose run --service-ports reports make generate_parameters
+docker-compose run --service-ports reports make MONTH=02 YEAR=2023 all -j 8
 ```
 
 Subsitute `MONTH` var for desired month.

@@ -1,6 +1,8 @@
 # Mac specific
 .DS_Store
 
+.bash_history
+
 # node ------------------------------------------------------------------------
 node_modules
 

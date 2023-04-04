@@ -17,7 +17,6 @@ async-timeout==4.0.2
 attrs==22.2.0
     # via
     #   aiohttp
-    #   fiona
     #   jsonschema
 backcall==0.2.0
     # via ipython
@@ -27,13 +26,10 @@ cachetools==5.3.0
     # via google-auth
 calitp-data==2023.2.13.1
     # via calitp-data-analysis
-calitp-data-analysis==2023.3.3
+calitp-data-analysis==2023.4.3
     # via -r requirements.in
 certifi==2022.12.7
-    # via
-    #   fiona
-    #   pyproj
-    #   requests
+    # via requests
 cfgv==3.3.1
     # via pre-commit
 charset-normalizer==3.1.0
@@ -41,15 +37,7 @@ charset-normalizer==3.1.0
     #   aiohttp
     #   requests
 click==8.1.3
-    # via
-    #   click-plugins
-    #   cligj
-    #   fiona
-    #   pip-tools
-click-plugins==1.1.1
-    # via fiona
-cligj==0.7.2
-    # via fiona
+    # via pip-tools
 db-dtypes==1.0.5
     # via pandas-gbq
 decorator==5.1.1
@@ -62,8 +50,6 @@ executing==1.2.0
     # via stack-data
 filelock==3.10.7
     # via virtualenv
-fiona==1.9.2
-    # via geopandas
 frozenlist==1.3.3
     # via
     #   aiohttp
@@ -76,8 +62,6 @@ future==0.18.3
     # via sqlalchemy-bigquery
 gcsfs==2022.5.0
     # via calitp-data
-geopandas==0.12.2
-    # via calitp-data-analysis
 google-api-core[grpc]==2.11.0
     # via
     #   google-cloud-bigquery
@@ -141,9 +125,7 @@ idna==3.4
     #   requests
     #   yarl
 importlib-metadata==6.1.0
-    # via
-    #   fiona
-    #   markdown
+    # via markdown
 ipython==8.11.0
     # via calitp-data-analysis
 jedi==0.18.2
@@ -168,8 +150,6 @@ multidict==6.0.4
     # via
     #   aiohttp
     #   yarl
-munch==2.5.0
-    # via fiona
 nodeenv==1.7.0
     # via pre-commit
 numpy==1.24.2
@@ -178,7 +158,6 @@ numpy==1.24.2
     #   pandas
     #   pandas-gbq
     #   pyarrow
-    #   shapely
     #   siuba
 oauthlib==3.2.2
     # via requests-oauthlib
@@ -186,21 +165,18 @@ packaging==23.0
     # via
     #   build
     #   db-dtypes
-    #   geopandas
     #   google-cloud-bigquery
     #   sqlalchemy-bigquery
 pandas==1.5.3
     # via
+    #   calitp-data-analysis
     #   db-dtypes
-    #   geopandas
     #   pandas-gbq
     #   siuba
 pandas-gbq==0.19.1
     # via calitp-data-analysis
 parso==0.8.3
     # via jedi
-pendulum==2.1.2
-    # via calitp-data-analysis
 pexpect==4.8.0
     # via ipython
 pickleshare==0.7.5
@@ -250,8 +226,6 @@ pygments==2.14.0
     #   jinja-markdown
 pymdown-extensions==9.10
     # via jinja-markdown
-pyproj==3.4.1
-    # via geopandas
 pyproject-hooks==1.0.0
     # via build
 pyrsistent==0.19.3
@@ -260,11 +234,8 @@ python-dateutil==2.8.2
     # via
     #   google-cloud-bigquery
     #   pandas
-    #   pendulum
 pytz==2023.2
     # via pandas
-pytzdata==2020.1
-    # via pendulum
 pyyaml==6.0
     # via
     #   pre-commit
@@ -282,8 +253,6 @@ requests-oauthlib==1.3.1
     # via google-auth-oauthlib
 rsa==4.9
     # via google-auth
-shapely==2.0.1
-    # via geopandas
 siuba==0.4.2
     # via calitp-data-analysis
 six==1.16.0
@@ -291,7 +260,6 @@ six==1.16.0
     #   asttokens
     #   google-auth
     #   jsonschema
-    #   munch
     #   python-dateutil
 sqlalchemy==1.4.47
     # via
@@ -306,8 +274,6 @@ tomli==2.0.1
     #   -r requirements.in
     #   build
     #   pyproject-hooks
-tqdm==4.65.0
-    # via calitp-data-analysis
 traitlets==5.9.0
     # via
     #   ipython

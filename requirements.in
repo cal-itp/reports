@@ -1,4 +1,4 @@
-calitp-data-analysis==2023.3.3
+calitp-data-analysis==2023.4.3
 jinja_markdown==1.210911
 jsonschema==3.2.0
 MarkupSafe==2.1.1
