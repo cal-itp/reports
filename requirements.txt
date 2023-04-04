@@ -274,6 +274,8 @@ tomli==2.0.1
     #   -r requirements.in
     #   build
     #   pyproject-hooks
+tqdm==4.65.0
+    # via -r requirements.in
 traitlets==5.9.0
     # via
     #   ipython

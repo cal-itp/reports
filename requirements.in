@@ -6,3 +6,4 @@ postmarker==0.18.2
 pre-commit==3.0.4
 tomli==2.0.1
 pip-tools==6.12.3
+tqdm==4.65.0
