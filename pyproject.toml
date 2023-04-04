@@ -1,0 +1,25 @@
+[tool.poetry]
+name = "reports"
+version = "0.1.0"
+description = ""
+authors = ["Andrew Vaccaro <andrew.v@jarv.us>"]
+readme = "README.md"
+
+[tool.poetry.dependencies]
+python = "~3.9"
+calitp-data-analysis = "2023.4.3"
+tqdm = "^4.65.0"
+snakemake = "^7.25.0"
+tomli = "^2.0.1"
+postmarker = "^1.0"
+markupsafe = "^2.1.2"
+jsonschema = "^4.17.3"
+jinja-markdown = "^1.210911"
+
+
+[tool.poetry.group.dev.dependencies]
+pre-commit = "^3.2.2"
+
+[build-system]
+requires = ["poetry-core"]
+build-backend = "poetry.core.masonry.api"
