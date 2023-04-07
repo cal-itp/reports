@@ -10,12 +10,11 @@ cd reports
 # Generate parameters.json files.
 make generate_parameters
 
+# view data generation helptext
+poetry run python generate_reports_data.py generate-data --help
+
 # should produce notebooks, html and other assets in e.g. outputs/2021/05/10
-# replace -j 8 with the number of notebooks to build in parallel
-# the build process is not computationally intensive, but requires waiting on
-# http requests to google bigquery
-make generate_parameters
-make MONTH=02 YEAR=2023 all -j 8
+poetry run python generate_reports_data.py generate-data --year 2021 --month 05
 ```
 
 ## Using Postmark to send emails (SAFELY)
