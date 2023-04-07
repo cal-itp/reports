@@ -1,52 +1,25 @@
-import argparse
 import json
 import os
-import warnings
 from datetime import datetime, timedelta
 from pathlib import Path
 
-from calitp_data_analysis.tables import tbls
+import typer
+
+# from calitp_data_analysis.tables import tbls
+from calitp_data_analysis.sql import get_engine
 from siuba import _, arrange, collect
 from siuba import filter as filtr
 from siuba import if_else, mutate, pipe, rename, select, spread
+from siuba.sql import LazyTbl
+
+app = typer.Typer()
 
 os.environ["CALITP_BQ_MAX_BYTES"] = str(800_000_000_000)
 
-month_arg = datetime.now().strftime("%m")
-year_arg = datetime.now().strftime("%Y")
-parser = argparse.ArgumentParser()
-parser.add_argument(
-    "--month",
-    help="The month of the year in M notation. Defaults to current month.",
-    type=str,
-    default=month_arg,
-)
-parser.add_argument(
-    "--year",
-    help="The year in YYYY notation. Defaults to current year.",
-    type=int,
-    default=year_arg,
-)
-parser.add_argument(
-    "--file",
-    help="A string path to a 1_feed_info.json file, ie outputs/YYYY/MM/DD/1_feed_info.json",
-    type=str,
-    default=False,
-)
-parser.add_argument(
-    "-v", help="Use verbose output.", type=bool, nargs="?", const=True, default=False
-)
-
-args = parser.parse_args()
-month = args.month
-year = args.year
-file = args.file
+engine = get_engine()
 
 # Cached array of all report paths.
 index_report_file_path = "outputs/index_report.json"
-
-if not args.v:
-    warnings.filterwarnings("ignore")
 
 
 # Functions
@@ -78,7 +51,7 @@ def get_dates_year_month(year: int, month: int) -> list:
 
 def generate_feed_info(itp_id: int, publish_date):
     feed_info = (
-        tbls.mart_gtfs_quality.idx_monthly_reports_site()
+        LazyTbl(engine, "mart_gtfs_quality.idx_monthly_reports_site")
         >> filtr(_.publish_date == publish_date)
         >> filtr(_.organization_itp_id == itp_id)
         >> select(
@@ -108,7 +81,10 @@ def generate_feed_info(itp_id: int, publish_date):
 
 def generate_daily_service_hours(itp_id: int, date_start, date_end):
     service_hours = (
-        tbls.mart_gtfs_quality.fct_daily_reports_site_organization_scheduled_service_summary()
+        LazyTbl(
+            engine,
+            "mart_gtfs_quality.fct_daily_reports_site_organization_scheduled_service_summary",
+        )
         >> filtr(_.organization_itp_id == itp_id)
         >> filtr(_.activity_date >= date_start)
         >> filtr(_.activity_date <= date_end)
@@ -136,7 +112,10 @@ def generate_file_check(itp_id: int, publish_date):
     importance = ["Visual display", "Navigation", "Fares", "Technical contacts"]
 
     file_check = (
-        tbls.mart_gtfs_quality.fct_monthly_reports_site_organization_file_checks()
+        LazyTbl(
+            engine,
+            "mart_gtfs_quality.fct_monthly_reports_site_organization_file_checks",
+        )
         >> filtr(_.organization_itp_id == itp_id)
         >> filtr(_.publish_date == publish_date)
         >> select(_.date_checked, _.reason, _.filename, _.file_present)
@@ -157,7 +136,10 @@ def generate_file_check(itp_id: int, publish_date):
 
 def generate_validation_codes(itp_id, publish_date):
     validation_codes = (
-        tbls.mart_gtfs_quality.fct_monthly_reports_site_organization_validation_codes()
+        LazyTbl(
+            engine,
+            "mart_gtfs_quality.fct_monthly_reports_site_organization_validation_codes",
+        )
         >> filtr(_.organization_itp_id == itp_id)
         >> filtr(_.publish_date == publish_date)
         >> select(_.code, _.human_readable_description, _.severity)
@@ -180,28 +162,20 @@ def change_id_query(itp_id: int, publish_date):
 
 def generate_routes_changed(change_query):
     routes_changed = (
-        tbls.mart_gtfs_quality.fct_monthly_route_id_changes() >> change_query
+        LazyTbl(engine, "mart_gtfs_quality.fct_monthly_route_id_changes")
+        >> change_query
     )
     return routes_changed
 
 
 def generate_stops_changed(change_query):
     routes_changed = (
-        tbls.mart_gtfs_quality.fct_monthly_stop_id_changes() >> change_query
+        LazyTbl(engine, "mart_gtfs_quality.fct_monthly_stop_id_changes") >> change_query
     )
     return routes_changed
 
 
-# Generate data by "outputs/YYYY/MM/ITP_ID/1_feed_info.json"
-def generate_data_by_file_path(file_path):
-    items = file_path.split("/")
-    year, month, itp_id = int(items[1]), items[2], items[3]
-    dates = get_dates_year_month(year, int(month))
-    date_start, date_end, publish_date = dates[0], dates[1], dates[2]
-    dump_report_data(int(itp_id), month, year, publish_date, date_start, date_end)
-
-
-def get_month_index(file_path):
+def get_month_index(file_path, year, month):
     index = {}
     with open(file_path) as file:
         index = json.load(file)
@@ -214,7 +188,13 @@ def get_month_index(file_path):
 
 
 def dump_report_data(
-    itp_id: int, month: str, year: int, publish_date, date_start, date_end
+    itp_id: int,
+    month: str,
+    year: int,
+    publish_date,
+    date_start,
+    date_end,
+    verbose=False,
 ):
     out_dir = Path(f"outputs/{year}/{month}/{itp_id}")
     out_dir.mkdir(parents=True, exist_ok=True)
@@ -223,18 +203,18 @@ def dump_report_data(
     month = int(month)
 
     # 1_feed_info.json
-    if args.v:
+    if verbose:
         print(f"Generating feed info for {itp_id}")
     feed_info = generate_feed_info(itp_id, publish_date)
     if feed_info.empty:
-        if args.v:
+        if verbose:
             print(f"ERROR: Could not find feed info for {itp_id}")
         json.dump({"feed_info": False}, open(out_dir / "1_feed_info.json", "w"))
     else:
         feed_info.to_json(out_dir / "1_feed_info.json", orient="records")
 
     # 2_daily_service_hours.json
-    if args.v:
+    if verbose:
         print(f"Generating service hours for {itp_id}")
     service_hours = generate_daily_service_hours(itp_id, date_start, date_end)
     service_hours.to_json(out_dir / "2_daily_service_hours.json", orient="records")
@@ -242,19 +222,19 @@ def dump_report_data(
     change_query = change_id_query(itp_id, publish_date)
 
     # 3_stops_changed.json
-    if args.v:
+    if verbose:
         print(f"Generating stops changed for {itp_id}")
     stops_changed = generate_stops_changed(change_query)
     stops_changed.to_json(out_dir / "3_stops_changed.json", orient="records")
 
     # 3_routes_changed.json
-    if args.v:
+    if verbose:
         print(f"Generating routes changed for {itp_id}")
     routes_changed = generate_routes_changed(change_query)
     routes_changed.to_json(out_dir / "3_routes_changed.json", orient="records")
 
     # 4_file_check.json
-    if args.v:
+    if verbose:
         print(f"Generating file check for {itp_id}")
     file_check = generate_file_check(itp_id, publish_date)
     json.dump(
@@ -263,7 +243,7 @@ def dump_report_data(
     )
 
     # 5_validation_notices.json
-    if args.v:
+    if verbose:
         print(f"Generating validation codes for {itp_id}")
     validation_codes = generate_validation_codes(itp_id, publish_date)
     json.dump(validation_codes, open(out_dir / "5_validation_codes.json", "w"))
@@ -271,25 +251,72 @@ def dump_report_data(
 
 # Generates all data by month
 def generate_report_data_by_year_month(
-    month, year, publish_date, date_start, end_date, index_report_file_path
+    year,
+    month,
+    publish_date,
+    date_start,
+    end_date,
+    index_report_file_path,
+    verbose=False,
 ):
     month_index = get_month_index(index_report_file_path)
     for report in month_index["reports"]:
         dump_report_data(
-            int(month_index["itp_id"]), month, year, publish_date, date_start, end_date
+            int(month_index["itp_id"]),
+            month,
+            year,
+            publish_date,
+            date_start,
+            end_date,
+            verbose=verbose,
         )
 
 
+# Generate data by "outputs/YYYY/MM/ITP_ID/1_feed_info.json"
+@app.command()
+def generate_data_by_file_path(file):
+    print(f"Generating data for file: {file}")
+    items = file.split("/")
+    year, month, itp_id = int(items[1]), items[2], items[3]
+    dates = get_dates_year_month(year, int(month))
+    date_start, date_end, publish_date = dates[0], dates[1], dates[2]
+    dump_report_data(int(itp_id), month, year, publish_date, date_start, date_end)
+
+
+@app.command()
+def generate_data_by_year_month(year, month, verbose=False):
+    print(f"Generating data for month: {month}")
+    dates = get_dates_year_month(year, month)
+    date_start, date_end, publish_date = dates[0], dates[1], dates[2]
+    generate_report_data_by_year_month(
+        year, month, publish_date, date_start, date_end, verbose=verbose
+    )
+
+
+@app.command()
+def generate_data_by_folder(
+    directory: Path = typer.Argument(
+        ...,
+        exists=True,
+        file_okay=False,
+    ),
+    dry_run: bool = False,
+):
+    years = [p for p in directory.iterdir() if p.is_dir()]
+
+    for year in years:
+        months = [p for p in year.iterdir() if p.is_dir()]
+
+        for month in months:
+            itp_ids = [p for p in month.iterdir() if p.is_dir()]
+
+            for itp_id in itp_ids:
+                filepath = itp_id / Path("1_file_info.json")
+                if dry_run:
+                    print(f"Would be populating {filepath}")
+                else:
+                    generate_data_by_file_path(file=str(filepath))
+
+
 if __name__ == "__main__":
-    if file:
-        if args.v:
-            print(f"Generating data for file: {file}")
-        generate_data_by_file_path(file)
-    else:
-        if args.v:
-            print(f"Generating data for month: {month}")
-            dates = get_dates_year_month(year, month)
-            date_start, date_end, publish_date = dates[0], dates[1], dates[2]
-            generate_report_data_by_year_month(
-                month, year, publish_date, date_start, date_end
-            )
+    app()
