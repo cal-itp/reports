@@ -11,6 +11,7 @@ This repository is set up in two pieces:
 
 ## To Get Started
 
+<<<<<<< HEAD
 ### Set up Google Cloud credentials
 
 Set up [google cloud authentication credentials](https://cloud.google.com/docs/authentication/getting-started).
@@ -47,6 +48,8 @@ If google credentials are already configured on the host, the local credential f
 See [this screencast](https://www.loom.com/share/b45317053ff54b9fbb46b8159947c379) for a full walkthrough of building the reports.
 
 ### Generating the Reports Data
+
+> Many of the commands in this README must be executed within the poetry environment of this project. Either prefix commands with `poetry run`, or open a shell inside the poetry-managed venv with `poetry shell` and execute commands normally.
 
 The following takes place within the reports subfolder, i.e. (`cd reports`).
 
