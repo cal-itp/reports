@@ -12,6 +12,7 @@ from siuba import _, arrange, collect
 from siuba import filter as filtr
 from siuba import if_else, mutate, pipe, rename, select, spread
 from siuba.sql import LazyTbl
+from tqdm import tqdm
 
 app = typer.Typer()
 
@@ -329,8 +330,9 @@ def dump_report_data(
 
 # Generate data by "outputs/YYYY/MM/ITP_ID/1_feed_info.json"
 @app.command()
-def generate_data_by_file_path(file, verbose=False):
-    print(f"Generating data for file: {file}")
+def generate_data_by_file_path(file, pbar=None, verbose=False):
+    print_func = pbar.write if pbar else print
+    print_func(f"Generating data for file: {file}")
     items = file.split("/")
     year, month, itp_id = int(items[1]), items[2], items[3]
     dates = get_dates_year_month(year, int(month))
@@ -362,18 +364,23 @@ def generate_data_by_folder(
 ):
     years = [p for p in directory.iterdir() if p.is_dir()]
 
-    for year in years:
+    for year in tqdm(years):
         months = [p for p in year.iterdir() if p.is_dir()]
 
-        for month in months:
+        for month in tqdm(months):
             itp_ids = [p for p in month.iterdir() if p.is_dir()]
 
-            for itp_id in itp_ids:
+            pbar = tqdm(itp_ids)
+            for itp_id in pbar:
                 filepath = itp_id / Path("1_file_info.json")
                 if dry_run:
                     print(f"Would be populating {filepath}")
                 else:
-                    generate_data_by_file_path(file=str(filepath), verbose=verbose)
+                    generate_data_by_file_path(
+                        file=str(filepath),
+                        pbar=pbar,
+                        verbose=verbose,
+                    )
 
 
 if __name__ == "__main__":
