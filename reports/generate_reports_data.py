@@ -1,6 +1,7 @@
 import json
 import os
 from datetime import datetime, timedelta
+from functools import cache
 from pathlib import Path
 
 import typer
@@ -49,11 +50,10 @@ def get_dates_year_month(year: int, month: int) -> list:
     return [date_start, date_end, publish_date]
 
 
-def generate_feed_info(itp_id: int, publish_date):
-    feed_info = (
+@cache
+def _feed_info():
+    return (
         LazyTbl(engine, "mart_gtfs_quality.idx_monthly_reports_site")
-        >> filtr(_.publish_date == publish_date)
-        >> filtr(_.organization_itp_id == itp_id)
         >> select(
             _.organization_itp_id,
             _.organization_name,
@@ -76,18 +76,23 @@ def generate_feed_info(itp_id: int, publish_date):
         >> rename(n_stops=_.stop_ct)
         >> collect()
     )
-    return feed_info
 
 
-def generate_daily_service_hours(itp_id: int, date_start, date_end):
-    service_hours = (
+def generate_feed_info(itp_id: int, publish_date):
+    return (
+        _feed_info()
+        >> filtr(_.publish_date == publish_date)
+        >> filtr(_.organization_itp_id == itp_id)
+    )
+
+
+@cache
+def _daily_service_hours():
+    return (
         LazyTbl(
             engine,
             "mart_gtfs_quality.fct_daily_reports_site_organization_scheduled_service_summary",
         )
-        >> filtr(_.organization_itp_id == itp_id)
-        >> filtr(_.activity_date >= date_start)
-        >> filtr(_.activity_date <= date_end)
         >> select(
             _.activity_date,
             _.n_routes,
@@ -105,21 +110,44 @@ def generate_daily_service_hours(itp_id: int, date_start, date_end):
         >> rename(weekday=_.service_day_type)
         >> collect()
     )
-    return service_hours
+
+
+def generate_daily_service_hours(itp_id: int, date_start, date_end):
+    return (
+        _daily_service_hours()
+        >> filtr(_.calitp_itp_id == itp_id)
+        >> filtr(_.activity_date >= date_start)
+        >> filtr(_.activity_date <= date_end)
+    )
+
+
+@cache
+def _file_check():
+    return (
+        LazyTbl(
+            engine,
+            "mart_gtfs_quality.fct_monthly_reports_site_organization_file_checks",
+        )
+        >> select(
+            _.organization_itp_id,
+            _.publish_date,
+            _.date_checked,
+            _.reason,
+            _.filename,
+            _.file_present,
+        )
+        >> collect()
+    )
 
 
 def generate_file_check(itp_id: int, publish_date):
     importance = ["Visual display", "Navigation", "Fares", "Technical contacts"]
 
     file_check = (
-        LazyTbl(
-            engine,
-            "mart_gtfs_quality.fct_monthly_reports_site_organization_file_checks",
-        )
+        _file_check()
         >> filtr(_.organization_itp_id == itp_id)
         >> filtr(_.publish_date == publish_date)
         >> select(_.date_checked, _.reason, _.filename, _.file_present)
-        >> collect()
         >> rename(success=_.file_present)
         >> rename(name=_.filename)
         >> rename(category=_.reason)
@@ -134,43 +162,72 @@ def generate_file_check(itp_id: int, publish_date):
     return file_check
 
 
-def generate_validation_codes(itp_id, publish_date):
-    validation_codes = (
+@cache
+def _validation_codes():
+    return (
         LazyTbl(
             engine,
             "mart_gtfs_quality.fct_monthly_reports_site_organization_validation_codes",
         )
+        >> select(
+            _.organization_itp_id,
+            _.publish_date,
+            _.code,
+            _.human_readable_description,
+            _.severity,
+        )
+        >> collect()
+    )
+
+
+def generate_validation_codes(itp_id, publish_date):
+    return (
+        _validation_codes()
         >> filtr(_.organization_itp_id == itp_id)
         >> filtr(_.publish_date == publish_date)
         >> select(_.code, _.human_readable_description, _.severity)
-        >> collect()
-    )
-    return validation_codes.to_dict(orient="split")
+    ).to_dict(orient="split")
 
 
-def change_id_query(itp_id: int, publish_date):
-    change_query = (
-        filtr(_.organization_itp_id == itp_id)
-        >> filtr(_.publish_date == publish_date)
-        >> select(_.organization_itp_id, _.change_status, _.n)
-        >> rename(status="change_status")
-        >> mutate(percent=_.n / _.n.sum())
-        >> collect()
-    )
-    return change_query
+change_query = (
+    select(_.organization_itp_id, _.publish_date, _.change_status, _.n)
+    >> rename(status="change_status")
+    >> mutate(percent=_.n / _.n.sum())
+)
 
 
-def generate_routes_changed(change_query):
-    routes_changed = (
+@cache
+def _routes_changed():
+    return (
         LazyTbl(engine, "mart_gtfs_quality.fct_monthly_route_id_changes")
         >> change_query
+        >> collect()
+    )
+
+
+def generate_routes_changed(itp_id: int, publish_date):
+    routes_changed = (
+        _routes_changed()
+        >> filtr(_.organization_itp_id == itp_id)
+        >> filtr(_.publish_date == publish_date)
     )
     return routes_changed
 
 
-def generate_stops_changed(change_query):
+@cache
+def _stops_changed():
+    return (
+        LazyTbl(engine, "mart_gtfs_quality.fct_monthly_stop_id_changes")
+        >> change_query
+        >> collect()
+    )
+
+
+def generate_stops_changed(itp_id: int, publish_date):
     routes_changed = (
-        LazyTbl(engine, "mart_gtfs_quality.fct_monthly_stop_id_changes") >> change_query
+        _stops_changed()
+        >> filtr(_.organization_itp_id == itp_id)
+        >> filtr(_.publish_date == publish_date)
     )
     return routes_changed
 
@@ -219,18 +276,16 @@ def dump_report_data(
     service_hours = generate_daily_service_hours(itp_id, date_start, date_end)
     service_hours.to_json(out_dir / "2_daily_service_hours.json", orient="records")
 
-    change_query = change_id_query(itp_id, publish_date)
-
     # 3_stops_changed.json
     if verbose:
         print(f"Generating stops changed for {itp_id}")
-    stops_changed = generate_stops_changed(change_query)
+    stops_changed = generate_stops_changed(itp_id, publish_date)
     stops_changed.to_json(out_dir / "3_stops_changed.json", orient="records")
 
     # 3_routes_changed.json
     if verbose:
         print(f"Generating routes changed for {itp_id}")
-    routes_changed = generate_routes_changed(change_query)
+    routes_changed = generate_routes_changed(itp_id, publish_date)
     routes_changed.to_json(out_dir / "3_routes_changed.json", orient="records")
 
     # 4_file_check.json
@@ -250,47 +305,49 @@ def dump_report_data(
 
 
 # Generates all data by month
-def generate_report_data_by_year_month(
-    year,
-    month,
-    publish_date,
-    date_start,
-    end_date,
-    index_report_file_path,
-    verbose=False,
-):
-    month_index = get_month_index(index_report_file_path)
-    for report in month_index["reports"]:
-        dump_report_data(
-            int(month_index["itp_id"]),
-            month,
-            year,
-            publish_date,
-            date_start,
-            end_date,
-            verbose=verbose,
-        )
+# def generate_report_data_by_year_month(
+#     year,
+#     month,
+#     publish_date,
+#     date_start,
+#     end_date,
+#     index_report_file_path,
+#     verbose=False,
+# ):
+#     month_index = get_month_index(index_report_file_path)
+#     for report in month_index["reports"]:
+#         dump_report_data(
+#             int(month_index["itp_id"]),
+#             month,
+#             year,
+#             publish_date,
+#             date_start,
+#             end_date,
+#             verbose=verbose,
+#         )
 
 
 # Generate data by "outputs/YYYY/MM/ITP_ID/1_feed_info.json"
 @app.command()
-def generate_data_by_file_path(file):
+def generate_data_by_file_path(file, verbose=False):
     print(f"Generating data for file: {file}")
     items = file.split("/")
     year, month, itp_id = int(items[1]), items[2], items[3]
     dates = get_dates_year_month(year, int(month))
     date_start, date_end, publish_date = dates[0], dates[1], dates[2]
-    dump_report_data(int(itp_id), month, year, publish_date, date_start, date_end)
-
-
-@app.command()
-def generate_data_by_year_month(year, month, verbose=False):
-    print(f"Generating data for month: {month}")
-    dates = get_dates_year_month(year, month)
-    date_start, date_end, publish_date = dates[0], dates[1], dates[2]
-    generate_report_data_by_year_month(
-        year, month, publish_date, date_start, date_end, verbose=verbose
+    dump_report_data(
+        int(itp_id), month, year, publish_date, date_start, date_end, verbose=verbose
     )
+
+
+# @app.command()
+# def generate_data_by_year_month(year, month, verbose=False):
+#     print(f"Generating data for month: {month}")
+#     dates = get_dates_year_month(year, month)
+#     date_start, date_end, publish_date = dates[0], dates[1], dates[2]
+#     generate_report_data_by_year_month(
+#         year, month, publish_date, date_start, date_end, verbose=verbose
+#     )
 
 
 @app.command()
@@ -301,6 +358,7 @@ def generate_data_by_folder(
         file_okay=False,
     ),
     dry_run: bool = False,
+    verbose: bool = False,
 ):
     years = [p for p in directory.iterdir() if p.is_dir()]
 
@@ -315,7 +373,7 @@ def generate_data_by_folder(
                 if dry_run:
                     print(f"Would be populating {filepath}")
                 else:
-                    generate_data_by_file_path(file=str(filepath))
+                    generate_data_by_file_path(file=str(filepath), verbose=verbose)
 
 
 if __name__ == "__main__":
