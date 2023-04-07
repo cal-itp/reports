@@ -3,15 +3,14 @@ import os
 from datetime import datetime, timedelta
 from functools import cache
 from pathlib import Path
+from typing import Optional
 
 import typer
-
-# from calitp_data_analysis.tables import tbls
-from calitp_data_analysis.sql import get_engine
-from siuba import _, arrange, collect
-from siuba import filter as filtr
-from siuba import if_else, mutate, pipe, rename, select, spread
-from siuba.sql import LazyTbl
+from calitp_data_analysis.sql import get_engine  # type: ignore
+from siuba import _, arrange, collect  # type: ignore
+from siuba import filter as filtr  # type: ignore
+from siuba import if_else, mutate, pipe, rename, select, spread  # type: ignore
+from siuba.sql import LazyTbl  # type: ignore
 from tqdm import tqdm
 
 app = typer.Typer()
@@ -257,9 +256,6 @@ def dump_report_data(
     out_dir = Path(f"outputs/{year}/{month}/{itp_id}")
     out_dir.mkdir(parents=True, exist_ok=True)
 
-    # The directory structure currently uses strings for months.
-    month = int(month)
-
     # 1_feed_info.json
     if verbose:
         print(f"Generating feed info for {itp_id}")
@@ -330,10 +326,10 @@ def dump_report_data(
 
 # Generate data by "outputs/YYYY/MM/ITP_ID/1_feed_info.json"
 @app.command()
-def generate_data_by_file_path(file, pbar=None, verbose=False):
+def generate_data_by_file_path(feed_dir, pbar=None, verbose=False):
     print_func = pbar.write if pbar else print
-    print_func(f"Generating data for file: {file}")
-    items = file.split("/")
+    print_func(f"Generating data for file: {feed_dir}")
+    items = feed_dir.split("/")
     year, month, itp_id = int(items[1]), items[2], items[3]
     dates = get_dates_year_month(year, int(month))
     date_start, date_end, publish_date = dates[0], dates[1], dates[2]
@@ -353,31 +349,51 @@ def generate_data_by_file_path(file, pbar=None, verbose=False):
 
 
 @app.command()
-def generate_data_by_folder(
-    directory: Path = typer.Argument(
-        ...,
+def generate_data(
+    directory: Path = typer.Option(
+        default="outputs",
         exists=True,
         file_okay=False,
     ),
+    year: Optional[str] = None,
+    month: Optional[str] = None,
+    itp_id: Optional[str] = None,
     dry_run: bool = False,
     verbose: bool = False,
 ):
-    years = [p for p in directory.iterdir() if p.is_dir()]
+    if month and not year:
+        raise ValueError("if providing a month, must also provide a year")
 
-    for year in tqdm(years):
-        months = [p for p in year.iterdir() if p.is_dir()]
+    if itp_id and not (month and year):
+        raise ValueError("if providing an itp_id, must also provide a month and year")
 
-        for month in tqdm(months):
-            itp_ids = [p for p in month.iterdir() if p.is_dir()]
+    years = (
+        [directory / Path(year)]
+        if year
+        else [p for p in directory.iterdir() if p.is_dir()]
+    )
 
-            pbar = tqdm(itp_ids)
+    for year_dir in tqdm(years):
+        month_dirs = (
+            [year_dir / Path(month)]
+            if month
+            else [p for p in year_dir.iterdir() if p.is_dir()]
+        )
+
+        for month_dir in tqdm(month_dirs):
+            itp_id_dirs = (
+                [month_dir / Path(itp_id)]
+                if itp_id
+                else [p for p in month_dir.iterdir() if p.is_dir()]
+            )
+
+            pbar = tqdm(itp_id_dirs)
             for itp_id in pbar:
-                filepath = itp_id / Path("1_file_info.json")
                 if dry_run:
-                    print(f"Would be populating {filepath}")
+                    print(f"Would be populating {itp_id}")
                 else:
                     generate_data_by_file_path(
-                        file=str(filepath),
+                        feed_dir=str(itp_id),
                         pbar=pbar,
                         verbose=verbose,
                     )
