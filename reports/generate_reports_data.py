@@ -381,14 +381,14 @@ def generate_data(
             else [p for p in year_dir.iterdir() if p.is_dir()]
         )
 
-        for month_dir in tqdm(month_dirs, desc=year_dir.stem):
+        for month_dir in tqdm(month_dirs, desc=year_dir.stem, leave=False):
             itp_id_dirs = (
                 [month_dir / Path(itp_id)]
                 if itp_id
                 else [p for p in month_dir.iterdir() if p.is_dir()]
             )
 
-            pbar = tqdm(itp_id_dirs, desc=month_dir.stem)
+            pbar = tqdm(itp_id_dirs, desc=month_dir.stem, leave=False)
             for itp_id_dir in pbar:
                 if dry_run:
                     print(f"Would be populating {itp_id_dir}")
