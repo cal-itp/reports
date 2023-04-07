@@ -327,8 +327,9 @@ def dump_report_data(
 # Generate data by "outputs/YYYY/MM/ITP_ID/1_feed_info.json"
 @app.command()
 def generate_data_by_file_path(feed_dir, pbar=None, verbose=False):
-    print_func = pbar.write if pbar else print
-    print_func(f"Generating data for file: {feed_dir}")
+    if verbose:
+        print_func = pbar.write if pbar else print
+        print_func(f"Generating data for file: {feed_dir}")
     items = feed_dir.split("/")
     year, month, itp_id = int(items[1]), items[2], items[3]
     dates = get_dates_year_month(year, int(month))
@@ -380,20 +381,20 @@ def generate_data(
             else [p for p in year_dir.iterdir() if p.is_dir()]
         )
 
-        for month_dir in tqdm(month_dirs):
+        for month_dir in tqdm(month_dirs, desc=year_dir.stem):
             itp_id_dirs = (
                 [month_dir / Path(itp_id)]
                 if itp_id
                 else [p for p in month_dir.iterdir() if p.is_dir()]
             )
 
-            pbar = tqdm(itp_id_dirs)
-            for itp_id in pbar:
+            pbar = tqdm(itp_id_dirs, desc=month_dir.stem)
+            for itp_id_dir in pbar:
                 if dry_run:
-                    print(f"Would be populating {itp_id}")
+                    print(f"Would be populating {itp_id_dir}")
                 else:
                     generate_data_by_file_path(
-                        feed_dir=str(itp_id),
+                        feed_dir=str(itp_id_dir),
                         pbar=pbar,
                         verbose=verbose,
                     )
