@@ -189,11 +189,9 @@ def generate_validation_codes(itp_id, publish_date):
     ).to_dict(orient="split")
 
 
-change_query = (
-    select(_.organization_itp_id, _.publish_date, _.change_status, _.n)
-    >> rename(status="change_status")
-    >> mutate(percent=_.n / _.n.sum())
-)
+change_query = select(
+    _.organization_itp_id, _.publish_date, _.change_status, _.n
+) >> rename(status="change_status")
 
 
 @cache
@@ -210,6 +208,7 @@ def generate_routes_changed(itp_id: int, publish_date):
         _routes_changed()
         >> filtr(_.organization_itp_id == itp_id)
         >> filtr(_.publish_date == publish_date)
+        >> mutate(percent=_.n / _.n.sum())
     )
     return routes_changed
 
@@ -228,6 +227,7 @@ def generate_stops_changed(itp_id: int, publish_date):
         _stops_changed()
         >> filtr(_.organization_itp_id == itp_id)
         >> filtr(_.publish_date == publish_date)
+        >> mutate(percent=_.n / _.n.sum())
     )
     return routes_changed
 
@@ -263,7 +263,8 @@ def dump_report_data(
     if feed_info.empty:
         if verbose:
             print(f"ERROR: Could not find feed info for {itp_id}")
-        json.dump({"feed_info": False}, open(out_dir / "1_feed_info.json", "w"))
+        with open(out_dir / "1_feed_info.json", "w") as f:
+            json.dump({"feed_info": False}, f)
     else:
         feed_info.to_json(out_dir / "1_feed_info.json", orient="records")
 
@@ -289,16 +290,15 @@ def dump_report_data(
     if verbose:
         print(f"Generating file check for {itp_id}")
     file_check = generate_file_check(itp_id, publish_date)
-    json.dump(
-        to_rowspan_table(file_check, "category"),
-        open(out_dir / "4_file_check.json", "w"),
-    )
+    with open(out_dir / "4_file_check.json", "w") as f:
+        json.dump(to_rowspan_table(file_check, "category"), f)
 
     # 5_validation_notices.json
     if verbose:
         print(f"Generating validation codes for {itp_id}")
     validation_codes = generate_validation_codes(itp_id, publish_date)
-    json.dump(validation_codes, open(out_dir / "5_validation_codes.json", "w"))
+    with open(out_dir / "5_validation_codes.json", "w") as f:
+        json.dump(validation_codes, f)
 
 
 # Generates all data by month
