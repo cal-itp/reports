@@ -13,8 +13,6 @@ from siuba import if_else, mutate, pipe, rename, select, spread  # type: ignore
 from siuba.sql import LazyTbl  # type: ignore
 from tqdm import tqdm
 
-app = typer.Typer()
-
 os.environ["CALITP_BQ_MAX_BYTES"] = str(800_000_000_000)
 
 engine = get_engine()
@@ -325,7 +323,6 @@ def dump_report_data(
 
 
 # Generate data by "outputs/YYYY/MM/ITP_ID/1_feed_info.json"
-@app.command()
 def generate_data_by_file_path(feed_dir, pbar=None, verbose=False):
     if verbose:
         print_func = pbar.write if pbar else print
@@ -349,7 +346,6 @@ def generate_data_by_file_path(feed_dir, pbar=None, verbose=False):
 #     )
 
 
-@app.command()
 def generate_data(
     directory: Path = typer.Option(
         default="outputs",
@@ -401,4 +397,4 @@ def generate_data(
 
 
 if __name__ == "__main__":
-    app()
+    typer.run(generate_data)
