@@ -34,9 +34,3 @@ RUN echo "deb [signed-by=/usr/share/keyrings/cloud.google.gpg] \
 
 COPY ../requirements.txt /tmp/requirements.txt
 RUN pip install -r /tmp/requirements.txt
-
-# Add reports user
-RUN useradd -ms /bin/bash reports
-USER reports
-
-WORKDIR /home/reports

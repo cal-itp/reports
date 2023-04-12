@@ -20,15 +20,18 @@
     // "postCreateCommand": "pip3 install --user -r requirements.txt",
 
     // Comment out connect as root instead. More info: https://aka.ms/vscode-remote/containers/non-root.
-    "remoteUser": "reports",
+    "remoteUser": "vscode",
     "portsAttributes": {
         "8000": {
             "label": "reports website"
         }
     },
+    "containerEnv": {
+        "CLOUDSDK_CONFIG": "/home/vscode/.gcloud_config"
+    },
     "mounts": [
         // "source=${localEnv:HOME}${localEnv:USERPROFILE},target=/host-home-folder,type=bind,consistency=cached"
-        "source=${localEnv:HOME}/.config/gcloud,target=/home/reports/.config/gcloud,type=bind,consistency=cached"
+        "source=${localEnv:HOME}/.config/gcloud,target=/home/vscode/.gcloud_config,type=bind,consistency=cached"
     ],
     // Set *default* container specific settings.json values on container create.
     "settings": {
