@@ -11,7 +11,6 @@ This repository is set up in two pieces:
 
 ## To Get Started
 
-<<<<<<< HEAD
 ### Set up Google Cloud credentials
 
 Set up [google cloud authentication credentials](https://cloud.google.com/docs/authentication/getting-started).
