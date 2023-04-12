@@ -28,3 +28,25 @@
         {% endfor %}
     </div>
 {% endmacro %}
+
+{% macro render_dialog(id, title, class="
+    backdrop:backdrop-blur-sm
+    bg-white border
+    md:min-w-[24rem] max-w-3xl
+    !my-8 p-8
+    responsive-prose
+    rounded-xl shadow-xl
+    ") %}
+    <dialog id="{{ id }}" class="{{ class }}">
+        <header class="flex items-baseline justify-between">
+            <h3 class="!mt-0">{{ title }}</h3>
+            <form method="dialog" class="ml-4">
+                <button class="btn" aria-label="Close">
+                    <i class="fas fa-times"></i>
+                </button>
+            </form>
+        </header>
+
+        {{ caller() }}
+    </dialog>
+{% endmacro %}

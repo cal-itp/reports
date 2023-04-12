@@ -5,10 +5,12 @@
     "version": "0.2.0",
     "configurations": [
         {
-            "type": "pwa-msedge",
+            "name": "Python: Current File (Integrated Terminal)",
+            "type": "python",
             "request": "launch",
-            "name": "Open index.html",
-            "file": "/home/ryon/projects/cal-itp-reports/templates/index.html"
-        }
+            "program": "${file}",
+            "console": "integratedTerminal",
+            "cwd": "${fileDirname}"
+        },
     ]
 }

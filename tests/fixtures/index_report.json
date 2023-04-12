@@ -10,7 +10,13 @@
           {
             "agency_name": "City of Delano",
             "itp_id": 91,
-            "report_path": "2022\/11\/91\/index.html"
+            "report_path": "2022\/11\/91\/index.html",
+            "feeds": [
+              {
+                "gtfs_dataset_name": "Delano Schedule",
+                "string_url": "https:\/\/data.trilliumtransit.com\/gtfs\/delano-ca-us\/delano-ca-us.zip"
+              }
+            ]
           }
         ]
       }
