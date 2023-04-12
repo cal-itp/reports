@@ -2,7 +2,7 @@
 
 GTFS data quality reports for California transit providers
 
-## Repository structure
+#### Repository structure
 
 This repository is set up in two pieces:
 
