@@ -28,7 +28,7 @@ Note that with a user account authentication, the environment variable `CALITP_S
 
 1. `source .venv/bin/activate` to activate Python virtual environment
 2. `pip install -r requirements.txt` to download Python dependencies
-3. `npm install` to download npm dependencies
+3. (from `website/`) `npm install` to download npm dependencies
 
 #### with Docker-compose
 
