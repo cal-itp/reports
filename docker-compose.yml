@@ -1,17 +1,12 @@
 version: '3'
 
 services:
-  calitp_reports:
-    container_name: calitp-reports
-    build:
-      context: .
-      dockerfile: config/docker/Dockerfile
+  reports:
+    build: .
     volumes:
       - $HOME/.config/gcloud:/home/reports/.config/gcloud
-      - $PWD:/home/reports/app
+      - $PWD:/home/reports/
     ports:
-      # To run container jupyter notebooks on the host
-      - 8891:8891
       # To access the website via host port 8000 when completed
       - 8000:8000
     environment:

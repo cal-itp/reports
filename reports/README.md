@@ -1,33 +1,20 @@
 # Generating reports
 
-## Running from outside the container
-
-```bash
-docker-compose run --service-ports calitp_reports make generate_parameters
-docker-compose run --service-ports calitp_reports make MONTH=02 YEAR=2023 all -j 8
-```
-
-Subsitute `MONTH` var for desired month.
-
-## Manually inside the container
+## Running from inside the container
 
 ```
 docker-compose run reports /bin/bash
 
-# inside container
-
-. venv/bin/activate
-cd app
+cd reports
 
 # Generate parameters.json files.
 make generate_parameters
 
+# view data generation helptext
+poetry run python generate_reports_data.py generate-data --help
+
 # should produce notebooks, html and other assets in e.g. outputs/2021/05/10
-# replace -j 8 with the number of notebooks to build in parallel
-# the build process is not computationally intensive, but requires waiting on
-# http requests to google bigquery
-make generate_parameters
-make MONTH=02 YEAR=2023 all -j 8
+poetry run python generate_reports_data.py generate-data --year 2021 --month 05
 ```
 
 ## Using Postmark to send emails (SAFELY)
@@ -41,6 +28,6 @@ We are currently using the postmark API to send the reports via email to their r
 4. Script execution
     - Within the reports subfolder run script with the config section name as an argument. It will be development or production depending on the need. For example:  `python generate_report_emails.py development`
 5. Pass prompt checks.
-    - Before sending out an email,  the `is_developement` config boolean will be checked to make sure it is going to the sandbox server. If you have the necessary permissions and have in production selected in the config file, a prompt will remind you that you are in production and it will print out your email recipients. Once all checks have been passed safely, the script will send out the emails.
+    - Before sending out an email,  the `is_development` config boolean will be checked to make sure it is going to the sandbox server. If you have the necessary permissions and have in production selected in the config file, a prompt will remind you that you are in production and it will print out your email recipients. Once all checks have been passed safely, the script will send out the emails.
 6. Verify emails successfully sent.
-    - In postmark account, within the tracking tab it will display email status and other helpful information like if the email has been opened etc.
+    - In Postmark account, within the tracking tab it will display email status and other helpful information like if the email has been opened etc.

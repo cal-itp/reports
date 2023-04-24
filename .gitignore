@@ -1,8 +1,11 @@
 # Mac specific
 .DS_Store
 
+.bash_history
+
 # node ------------------------------------------------------------------------
 node_modules
+.npm
 
 # python ----------------------------------------------------------------------
 # https://github.com/github/gitignore/blob/master/Python.gitignore
