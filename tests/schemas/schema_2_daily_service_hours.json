@@ -5,7 +5,7 @@
     {
       "type": "object",
       "properties": {
-        "activity_date": {
+        "service_date": {
           "type": "integer"
         },
         "n_routes": {
@@ -48,7 +48,7 @@
         }
       },
       "required": [
-        "activity_date",
+        "service_date",
         "n_routes",
         "calitp_itp_id",
         "n_trips",

@@ -92,7 +92,7 @@ def _daily_service_hours():
             "mart_gtfs_quality.fct_daily_reports_site_organization_scheduled_service_summary",
         )
         >> select(
-            _.activity_date,
+            _.service_date,
             _.n_routes,
             _.organization_itp_id,
             _.n_trips,
@@ -114,8 +114,8 @@ def generate_daily_service_hours(itp_id: int, date_start, date_end):
     return (
         _daily_service_hours()
         >> filtr(_.calitp_itp_id == itp_id)
-        >> filtr(_.activity_date >= date_start)
-        >> filtr(_.activity_date <= date_end)
+        >> filtr(_.service_date >= date_start)
+        >> filtr(_.service_date <= date_end)
     )
 
 
