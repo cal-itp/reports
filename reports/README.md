@@ -12,10 +12,11 @@ cd reports
 make parameters
 
 # view data generation helptext
-# "poetry run" unnecessary in devcontainer
+# ("poetry run" unnecessary in devcontainer)
 poetry run python generate_reports_data.py --help
 
 # should produce notebooks, html and other assets in e.g. outputs/2021/05/10
+# ("poetry run" unnecessary in devcontainer)
 poetry run python generate_reports_data.py --year 2021 --month 05
 ```
 
