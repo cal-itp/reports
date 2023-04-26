@@ -3,18 +3,20 @@
 ## Running from inside the container
 
 ```
+# unnecessary in devcontainer:
 docker-compose run reports /bin/bash
 
 cd reports
 
 # Generate parameters.json files.
-make generate_parameters
+make parameters
 
 # view data generation helptext
-poetry run python generate_reports_data.py generate-data --help
+# "poetry run" unnecessary in devcontainer
+poetry run python generate_reports_data.py --help
 
 # should produce notebooks, html and other assets in e.g. outputs/2021/05/10
-poetry run python generate_reports_data.py generate-data --year 2021 --month 05
+poetry run python generate_reports_data.py --year 2021 --month 05
 ```
 
 ## Using Postmark to send emails (SAFELY)
