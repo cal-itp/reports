@@ -36,10 +36,19 @@
         "n_stops": {
           "type": "integer"
         },
+        "schedule_vendors": {
+          "type": "array"
+        },
+        "rt_vendors": {
+          "type": "array"
+        },
         "no_service_days_ct": {
            "anyOf": [
             {
               "type": "integer"
+            },
+            {
+              "type": "number"
             },
             {
               "type": "null"

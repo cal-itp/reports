@@ -7,7 +7,6 @@ from typing import Optional
 
 import typer
 from calitp_data_analysis.sql import get_engine  # type: ignore
-from calitp_data_analysis.tables import tbls
 from siuba import _, arrange, collect  # type: ignore
 from siuba import filter as filtr  # type: ignore
 from siuba import (  # type: ignore
@@ -60,10 +59,16 @@ def get_dates_year_month(year: int, month: int) -> list:
 @cache
 def _feed_info():
     return (
-        tbls.mart_gtfs_quality.idx_monthly_reports_site()
+        LazyTbl(
+            engine,
+            "mart_gtfs_quality.idx_monthly_reports_site",
+        )
         >> left_join(
             _,
-            tbls.mart_gtfs_quality.fct_monthly_reports_site_organization_gtfs_vendors(),
+            LazyTbl(
+                engine,
+                "mart_gtfs_quality.fct_monthly_reports_site_organization_gtfs_vendors",
+            ),
             ["organization_itp_id", "date_start", "organization_name"],
         )
         >> select(
