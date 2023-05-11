@@ -242,34 +242,37 @@
 
         <div class="overflow-x-auto -mx-8 px-8">
             <table>
-                <!-- file checks -->
+                <!-- guideline checks -->
                 <thead>
                     <tr>
                         <th colspan="2">
-                            Do the following files/fields exist?
+                            GTFS Guideline Compliance
                         </th>
                         <th class="whitespace-nowrap">
-                            {{ file_check["columns"][2] }}
+                            {{ guideline_check["columns"][2] }}
                         </th>
                         <th class="whitespace-nowrap">
-                            {{ file_check["columns"][3] }}
+                            {{ guideline_check["columns"][3] }}
                         </th>
-                        {% if file_check["columns"][4] %}
+                        <!-- What is this for? -->
+                        {% if guideline_check["columns"][4] %}
                             <th class="whitespace-nowrap">
-                                {{ file_check["columns"][4] }}
+                                {{ guideline_check["columns"][4] }}
                             </th>
                         {% endif %}
                     </tr>
                 </thead>
                 <tbody>
-                    {% for row in file_check["data"] %}
+                    {% for row in guideline_check["data"] %}
                         <tr>
-                            {% set rowspan = file_check["rowspan"][loop.index0] %}
+                            <!-- I think this is the category, and can be removed for now -->
+                            {% set rowspan = guideline_check["rowspan"][loop.index0] %}
                             {% if rowspan %}
                                 <th class="font-normal text-itp-slate-bold" rowspan="{{ rowspan }}">
                                     {{ row[0] }}
                                 </th>
                             {% endif %}
+                            <!-- check name -->
                             <td>
                                 {{ row[1] }}
                             </td>
@@ -280,6 +283,7 @@
                             <td>
                                 {{ mark_exists(row[3])}}
                             </td>
+                            <!-- What is this for? -->
                             {% if row[4] %}
                                 <td>
                                     {{ mark_exists(row[4])}}

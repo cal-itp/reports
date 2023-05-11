@@ -120,45 +120,44 @@ def generate_daily_service_hours(itp_id: int, date_start, date_end):
 
 
 @cache
-def _file_check():
+def _guideline_check():
     return (
         LazyTbl(
             engine,
-            "mart_gtfs_quality.fct_monthly_reports_site_organization_file_checks",
+            "mart_gtfs_quality.fct_monthly_reports_site_organization_guideline_checks",
         )
         >> select(
             _.organization_itp_id,
             _.publish_date,
             _.date_checked,
-            _.reason,
-            _.filename,
-            _.file_present,
+            _.feature,
+            _.check,
+            _.status,
         )
         >> collect()
     )
 
 
-def generate_file_check(itp_id: int, publish_date):
-    importance = ["Visual display", "Navigation", "Fares", "Technical contacts"]
+def generate_guideline_check(itp_id: int, publish_date):
+    # importance = ["Visual display", "Navigation", "Fares", "Technical contacts"]
 
-    file_check = (
-        _file_check()
+    guideline_check = (
+        _guideline_check()
         >> filtr(_.organization_itp_id == itp_id)
         >> filtr(_.publish_date == publish_date)
-        >> select(_.date_checked, _.reason, _.filename, _.file_present)
-        >> rename(success=_.file_present)
-        >> rename(name=_.filename)
-        >> rename(category=_.reason)
+        >> select(_.date_checked, _.feature, _.check, _.status)
+        >> rename(feature=_.feature)
+        >> rename(check=_.check)
+        >> rename(status=_.status)
         >> mutate(
-            success=if_else(_.success == True, "✅", ""),  # noqa: E712
+            # success=if_else(_.success == True, "✅", ""),  # noqa: E712
             date_checked=_.date_checked.astype(str),
         )
         >> spread(_.date_checked, _.success)
-        >> arrange(_.category.apply(importance.index))
+        # >> arrange(_.category.apply(importance.index))
         >> pipe(_.fillna(""))
     )
-    return file_check
-
+    return guideline_check
 
 @cache
 def _validation_codes():
@@ -284,12 +283,12 @@ def dump_report_data(
     routes_changed = generate_routes_changed(itp_id, publish_date)
     routes_changed.to_json(out_dir / "3_routes_changed.json", orient="records")
 
-    # 4_file_check.json
+    # 4_guideline_check.json
     if verbose:
-        print(f"Generating file check for {itp_id}")
-    file_check = generate_file_check(itp_id, publish_date)
-    with open(out_dir / "4_file_check.json", "w") as f:
-        json.dump(to_rowspan_table(file_check, "category"), f)
+        print(f"Generating guideline check for {itp_id}")
+    guideline_check = generate_guideline_check(itp_id, publish_date)
+    with open(out_dir / "4_guideline_check.json", "w") as f:
+        json.dump(to_rowspan_table(guideline_check, "category"), f)
 
     # 5_validation_notices.json
     if verbose:
