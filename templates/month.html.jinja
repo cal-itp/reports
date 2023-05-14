@@ -18,22 +18,58 @@
         </h1>
     </div>
 
-    {# Alpine.js component #}
-    <div class="my-12"
-         x-data="{ resultsCount: null, rawQuery: '', get query() { return this.rawQuery.trim().toLowerCase(); }, }"
-         x-init="$watch('query', () => { $nextTick(() => { if (query == '') { resultsCount = null; } else { resultsCount = document.querySelectorAll('#report-list li[data-report]:not([hidden])').length; } }); })">
+    {# `filters` defined in monthFilters.js #}
+    <div class="my-12" x-data="filters">
+        <div class="flex flex-wrap gap-4">
+            <label for="agency" class="sr-only">Agency</label>
+            <input id="agency"
+                   class="w-full sm:flex-[2_1_0] lg:flex-initial lg:max-w-sm"
+                   type="search"
+                   spellcheck="false"
+                   placeholder="Search for an agency&hellip;"
+                   x-model="rawQuery">
 
-        <input class="w-full sm:max-w-sm"
-               type="search"
-               spellcheck="false"
-               placeholder="Search for an agency&hellip;"
-               x-model="rawQuery">
+            {% set all_vendors = schedule_vendors.union(rt_vendors)|reject('eq', 'TO CONFIRM')|sort %}
+            <label for="vendor" class="sr-only">Vendor</label>
+            <select id="vendor"
+                    x-model="selectedVendor"
+                    class="w-full sm:flex-1 lg:flex-initial lg:max-w-md lg:w-auto">
+                <option value="" selected>
+                    All vendors
+                </option>
+                <optgroup label="Filter by vendor&hellip;">
+                    {% for vendor in all_vendors %}
+                        <option>
+                            {{ vendor }}
+                        </option>
+                    {% endfor %}
+                </optgroup>
+            </select>
+        </div>
 
-        <ul id="report-list" class="list-group border shadow-sm max-w-prose mt-4">
+        <ul id="report-list"
+            class="list-group border shadow-sm lg:max-w-prose mt-4">
+
+            <li x-show="hiddenCount > 0">
+                <div class="bg-itp-yellow-light/30 px-4 py-3 flex items-baseline justify-between gap-2">
+                    <div>
+                        Showing <strong x-text="resultsCountFormatted"></strong>
+                        <span x-text="resultsCount === 1 ? 'report' : 'reports'"></span>,
+
+                        hiding <strong x-text="hiddenCountFormatted"></strong>
+                    </div>
+
+                    <button class="btn" @click="clearFilters">Clear filters</button>
+                </div>
+            </li>
+
             {% set crnt_entries = month["reports"] %}
             {% for entry in crnt_entries -%}
-                <li data-report
-                    :hidden="query.length > 0 && !('{{ entry.agency_name }}'.toLowerCase().includes(query))">
+                <li x-bind="reportItem"
+                    {% if loop.first %}:class="{ '!border-t-0': hiddenCount <=0 }"{% endif %}
+                    data-agency-name="{{ entry.agency_name }}"
+                    data-schedule-vendors="{{ entry.schedule_vendors|tojson|forceescape }}"
+                    data-rt-vendors="{{ entry.rt_vendors|tojson|forceescape }}">
                     <a class="list-group__link"
                        href="{{ SITE_PATH }}/{{ PATH_GTFS_SCHEDULE }}/{{ entry['report_path'] }}">
                         {# use flex so wrapped items will stay aligned next to icon #}
@@ -44,11 +80,6 @@
                     </a>
                 </li>
             {% endfor %}
-            <li :hidden="resultsCount !== 0">
-                <div class="p-4">
-                    No reports match <strong class="whitespace-pre" x-text="rawQuery"></strong>
-                </div>
-            </li>
         </ul>
     </div>
     {# /component #}
