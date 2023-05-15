@@ -36,10 +36,16 @@
         "n_stops": {
           "type": "integer"
         },
+        "schedule_vendors": {
+          "type": "array"
+        },
+        "rt_vendors": {
+          "type": "array"
+        },
         "no_service_days_ct": {
            "anyOf": [
             {
-              "type": "integer"
+              "type": "number"
             },
             {
               "type": "null"
@@ -71,7 +77,9 @@
         "n_stops",
         "no_service_days_ct",
         "earliest_feed_end_date",
-        "has_feed_info"
+        "has_feed_info",
+        "schedule_vendors",
+        "rt_vendors"
       ]
     }
   ]
