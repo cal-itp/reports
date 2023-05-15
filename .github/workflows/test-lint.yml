@@ -1,7 +1,8 @@
-name: Test and Lint
+name: Lint and test
 
 on:
   push:
+  pull_request:
 
 jobs:
   lint:
@@ -44,7 +45,7 @@ jobs:
         run: npm install && npm run build && cat build/index.html | grep "Monthly GTFS Quality Reports"
 
       # if tests succeed and we're on a PR, publish just the test data to Netlify
-      - name: Deploy docs preview to Netlify
+      - name: Deploy site with test data to Netlify
         if: ${{ github.event_name == 'pull_request' }}
         run: |
           npm install -g netlify-cli
