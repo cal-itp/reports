@@ -51,9 +51,8 @@ jobs:
         if: ${{ github.event_name == 'pull_request' }}
         run: |
           npm install -g netlify-cli
-          netlify deploy --dir=docs/_build/html --alias=${GITHUB_REPOSITORY#*/}-${PR_NUMBER}
+          netlify deploy --site=cal-itp-reports --dir=./website/build --alias=PR-${PR_NUMBER}
         env:
-          NETLIFY_SITE_ID: ${{ secrets.NETLIFY_SITE_ID }}
           NETLIFY_AUTH_TOKEN: ${{ secrets.NETLIFY_AUTH_TOKEN }}
           PR_NUMBER: ${{ github.event.number }}
 
@@ -63,12 +62,12 @@ jobs:
         with:
           issue-number: ${{ github.event.number }}
           comment-author: 'github-actions[bot]'
-          body-includes: --cal-itp-previews.netlify.app
+          body-includes: --cal-itp-reports.netlify.app
 
       - uses: peter-evans/create-or-update-comment@v2
         if: ${{ github.event_name == 'pull_request' }}
         with:
           comment-id: ${{ steps.fc.outputs.comment-id }}
           issue-number: ${{ github.event.number }}
-          body: "Preview url: https://${{github.event.repository.name}}-${{ github.event.number }}--cal-itp-previews.netlify.app"
+          body: "Preview url: https://PR-${{ github.event.number }}--cal-itp-reports.netlify.app"
           edit-mode: replace
