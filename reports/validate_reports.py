@@ -40,7 +40,7 @@ files = [
     "2_daily_service_hours.json",
     "3_routes_changed.json",
     "3_stops_changed.json",
-    "4_file_check.json",
+    "4_guideline_check.json",
     "5_validation_codes.json",
 ]
 

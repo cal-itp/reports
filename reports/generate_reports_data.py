@@ -22,16 +22,6 @@ index_report_file_path = "outputs/index_report.json"
 
 
 # Functions
-def to_rowspan_table(df, span_col):
-    d = df.to_dict(orient="split")
-    row_span = df.groupby(span_col)[span_col].transform("count")
-    not_first = df[span_col].duplicated()
-
-    row_span[not_first] = 0
-
-    d["rowspan"] = row_span.tolist()
-    return d
-
 
 def get_dates_year_month(year: int, month: int) -> list:
     start_dt = datetime(year, month, 1)
@@ -288,7 +278,7 @@ def dump_report_data(
         print(f"Generating guideline check for {itp_id}")
     guideline_check = generate_guideline_check(itp_id, publish_date)
     with open(out_dir / "4_guideline_check.json", "w") as f:
-        json.dump(to_rowspan_table(guideline_check, "category"), f)
+        json.dump(guideline_check.to_dict(orient="records"), f)
 
     # 5_validation_notices.json
     if verbose:
