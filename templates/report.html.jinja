@@ -245,21 +245,16 @@
                 <!-- guideline checks -->
                 <thead>
                     <tr>
-                        <th colspan="2">
-                            GTFS Guideline Compliance
+                        <th class="whitespace-nowrap">
+                            {{ guideline_check["columns"][0] }}
+                        </th>
+
+                        <th class="whitespace-nowrap">
+                            {{ guideline_check["columns"][1] }}
                         </th>
                         <th class="whitespace-nowrap">
                             {{ guideline_check["columns"][2] }}
                         </th>
-                        <th class="whitespace-nowrap">
-                            {{ guideline_check["columns"][3] }}
-                        </th>
-                        <!-- What is this for? -->
-                        {% if guideline_check["columns"][4] %}
-                            <th class="whitespace-nowrap">
-                                {{ guideline_check["columns"][4] }}
-                            </th>
-                        {% endif %}
                     </tr>
                 </thead>
                 <tbody>
@@ -272,23 +267,13 @@
                                     {{ row[0] }}
                                 </th>
                             {% endif %}
-                            <!-- check name -->
-                            <td>
-                                {{ row[1] }}
-                            </td>
                             <!-- these are the date columns -->
+                            <td>
+                                {{ mark_exists(row[1])}}
+                            </td>
                             <td>
                                 {{ mark_exists(row[2])}}
                             </td>
-                            <td>
-                                {{ mark_exists(row[3])}}
-                            </td>
-                            <!-- What is this for? -->
-                            {% if row[4] %}
-                                <td>
-                                    {{ mark_exists(row[4])}}
-                                </td>
-                            {% endif %}
                         </tr>
                     {% endfor %}
                 </tbody>

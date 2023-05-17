@@ -6,6 +6,7 @@ from pathlib import Path
 from typing import Optional
 
 import typer
+import pandas as pd
 from calitp_data_analysis.sql import get_engine  # type: ignore
 from siuba import _, arrange, collect  # type: ignore
 from siuba import filter as filtr  # type: ignore
@@ -142,22 +143,27 @@ def generate_guideline_check(itp_id: int, publish_date):
     importance = ["GTFS schedule feed downloads successfully",
 "A GTFS Schedule feed is listed",
 "No errors in MobilityData GTFS Schedule Validator",
-"GTFS Schedule feed ingested by Google Maps and/or a combination of Apple Maps, Transit App, Bing Maps, Moovit or local Open Trip Planner services"]
+"GTFS Schedule feed ingested by Google Maps and/or a combination of Apple Maps, Transit App, Bing Maps, Moovit or local Open Trip Planner services",
+"GTFS Schedule feed is published at a stable URI (permalink) from which it can be “fetched” automatically by trip-planning applications",
+"Includes an open license that allows commercial use of GTFS Schedule feed"
+]
 
     guideline_check = (
         _guideline_check()
         >> filtr(_.organization_itp_id == itp_id)
         >> filtr(_.publish_date == publish_date)
-        >> select(_.date_checked, _.feature, _.check, _.status)
+        >> select(_.date_checked, _.check, _.status)
         >> rename(feature=_.feature)
         >> rename(check=_.check)
         >> rename(status=_.status)
         >> mutate(
-            status=if_else(_.status == "PASS", "✅", ""),  # noqa: E712
+            status=if_else(_.status == "PASS", "✅", if_else(_.status == "FAIL", "❌", "")),  # noqa: E712
             date_checked=_.date_checked.astype(str),
         )
         >> spread(_.date_checked, _.status)
-        >> arrange(_.category.apply(importance.index))
+        # >> dropna(subset=['check'])
+        >> pipe(lambda df: df.dropna(subset=['check']))
+        >> arrange(_.check.apply(importance.index))
         >> pipe(_.fillna(""))
     )
     return guideline_check
