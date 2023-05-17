@@ -153,9 +153,6 @@ def generate_guideline_check(itp_id: int, publish_date):
         >> filtr(_.organization_itp_id == itp_id)
         >> filtr(_.publish_date == publish_date)
         >> select(_.date_checked, _.check, _.status)
-        >> rename(feature=_.feature)
-        >> rename(check=_.check)
-        >> rename(status=_.status)
         >> mutate(
             status=if_else(_.status == "PASS", "✅", if_else(_.status == "FAIL", "❌", "")),  # noqa: E712
             date_checked=_.date_checked.astype(str),
