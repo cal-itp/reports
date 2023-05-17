@@ -139,7 +139,10 @@ def _guideline_check():
 
 
 def generate_guideline_check(itp_id: int, publish_date):
-    # importance = ["Visual display", "Navigation", "Fares", "Technical contacts"]
+    importance = ["GTFS schedule feed downloads successfully",
+"A GTFS Schedule feed is listed",
+"No errors in MobilityData GTFS Schedule Validator",
+"GTFS Schedule feed ingested by Google Maps and/or a combination of Apple Maps, Transit App, Bing Maps, Moovit or local Open Trip Planner services"]
 
     guideline_check = (
         _guideline_check()
@@ -150,11 +153,11 @@ def generate_guideline_check(itp_id: int, publish_date):
         >> rename(check=_.check)
         >> rename(status=_.status)
         >> mutate(
-            # success=if_else(_.success == True, "✅", ""),  # noqa: E712
+            status=if_else(_.status == "PASS", "✅", ""),  # noqa: E712
             date_checked=_.date_checked.astype(str),
         )
-        >> spread(_.date_checked, _.success)
-        # >> arrange(_.category.apply(importance.index))
+        >> spread(_.date_checked, _.status)
+        >> arrange(_.category.apply(importance.index))
         >> pipe(_.fillna(""))
     )
     return guideline_check
@@ -288,7 +291,7 @@ def dump_report_data(
         print(f"Generating guideline check for {itp_id}")
     guideline_check = generate_guideline_check(itp_id, publish_date)
     with open(out_dir / "4_guideline_check.json", "w") as f:
-        json.dump(to_rowspan_table(guideline_check, "category"), f)
+        json.dump(to_rowspan_table(guideline_check, "check"), f)
 
     # 5_validation_notices.json
     if verbose:
