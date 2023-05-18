@@ -9,15 +9,7 @@ import typer
 from calitp_data_analysis.sql import get_engine  # type: ignore
 from siuba import _, arrange, collect  # type: ignore
 from siuba import filter as filtr  # type: ignore
-from siuba import (  # type: ignore
-    if_else,
-    left_join,
-    mutate,
-    pipe,
-    rename,
-    select,
-    spread,
-)
+from siuba import mutate, pipe, rename, select, spread  # type: ignore
 from siuba.sql import LazyTbl  # type: ignore
 from tqdm import tqdm
 
@@ -170,8 +162,14 @@ def generate_file_check(itp_id: int, publish_date):
         >> rename(success=_.file_present)
         >> rename(name=_.filename)
         >> rename(category=_.reason)
+    )
+
+    file_check.success = file_check.success.apply(lambda v: "✅" if v else "")
+    # replacing this in mutate call
+    #     success=if_else(_.success == True, "✅", ""),  # noqa: E712
+    file_check = (
+        file_check
         >> mutate(
-            success=if_else(_.success == True, "✅", ""),  # noqa: E712
             date_checked=_.date_checked.astype(str),
         )
         >> spread(_.date_checked, _.success)
