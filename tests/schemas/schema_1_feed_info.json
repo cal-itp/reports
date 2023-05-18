@@ -39,7 +39,7 @@
         "no_service_days_ct": {
            "anyOf": [
             {
-              "type": "integer"
+              "type": "number"
             },
             {
               "type": "null"
