@@ -35,7 +35,8 @@ h4 {
 
 .btn,
 a.btn {
-    @apply border
+    @apply bg-white
+        border
         border-itp-slate
         font-semibold
         inline-block
@@ -57,7 +58,11 @@ select {
     @apply border
         bg-white
         px-4 py-2
-        rounded;
+        rounded
+        focus:outline-none
+        focus:ring-4
+        focus:ring-opacity-30
+        focus:ring-itp-teal;
 }
 
 input {
@@ -113,6 +118,8 @@ input[type="search"] {
     &__link {
         @apply block
                 hover:bg-itp-teal-light
+                focus:bg-itp-teal-light
+                outline-none
                 p-4;
     }
 }
