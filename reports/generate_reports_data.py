@@ -6,7 +6,6 @@ from pathlib import Path
 from typing import Optional
 
 import typer
-import pandas as pd
 from calitp_data_analysis.sql import get_engine  # type: ignore
 from siuba import _, arrange, collect  # type: ignore
 from siuba import filter as filtr  # type: ignore
@@ -154,6 +153,8 @@ def generate_guideline_check(itp_id: int, publish_date):
         >> filtr(_.publish_date == publish_date)
         >> select(_.date_checked, _.check, _.status)
         >> mutate(
+        # Note that nulls and FAILs will both show up as fails in this case
+            status=_.status == "PASS",
             date_checked=_.date_checked.astype(str),
         )
         >> spread(_.date_checked, _.status)
@@ -292,8 +293,8 @@ def dump_report_data(
     if verbose:
         print(f"Generating guideline check for {itp_id}")
     guideline_check = generate_guideline_check(itp_id, publish_date)
-    # print(guideline_check)
-    print(guideline_check.to_string(index=False))
+    # for debugging:
+    # print(guideline_check.to_string(index=False))
 
 
     with open(out_dir / "4_guideline_check.json", "w") as f:

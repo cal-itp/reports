@@ -269,10 +269,10 @@
                             {% endif %}
                             <!-- these are the date columns -->
                             <td>
-                                {{ mark_exists(row[1], row[1])}}
+                                {{ mark_exists(row[1], not row[1])}}
                             </td>
                             <td>
-                                {{ mark_exists(row[2], row[2])}}
+                                {{ mark_exists(row[2], not row[2])}}
                             </td>
                         </tr>
                     {% endfor %}
