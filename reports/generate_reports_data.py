@@ -154,15 +154,14 @@ def generate_guideline_check(itp_id: int, publish_date):
         >> filtr(_.publish_date == publish_date)
         >> select(_.date_checked, _.check, _.status)
         >> mutate(
-            status=if_else(_.status == "PASS", "✅", if_else(_.status == "FAIL", "❌", "")),  # noqa: E712
             date_checked=_.date_checked.astype(str),
         )
         >> spread(_.date_checked, _.status)
-        # >> dropna(subset=['check'])
         >> pipe(lambda df: df.dropna(subset=['check']))
         >> arrange(_.check.apply(importance.index))
         >> pipe(_.fillna(""))
     )
+
     return guideline_check
 
 @cache
@@ -293,6 +292,10 @@ def dump_report_data(
     if verbose:
         print(f"Generating guideline check for {itp_id}")
     guideline_check = generate_guideline_check(itp_id, publish_date)
+    # print(guideline_check)
+    print(guideline_check.to_string(index=False))
+
+
     with open(out_dir / "4_guideline_check.json", "w") as f:
         json.dump(to_rowspan_table(guideline_check, "check"), f)
 
