@@ -154,7 +154,7 @@ def generate_guideline_check(itp_id: int, publish_date):
         >> select(_.date_checked, _.check, _.status)
         >> mutate(
         # Note that nulls and FAILs will both show up as fails in this case
-            status=_.status == "PASS",
+            status= _.status == "PASS",
             date_checked=_.date_checked.astype(str),
         )
         >> spread(_.date_checked, _.status)
