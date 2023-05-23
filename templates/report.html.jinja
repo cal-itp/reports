@@ -242,11 +242,11 @@
 
         <div class="overflow-x-auto -mx-8 px-8">
             <table>
-                <!-- guideline checks -->
+                <!-- column headers -->
                 <thead>
                     <tr>
                         <th class="whitespace-nowrap">
-                            {{ guideline_check["columns"][0] }}
+                            GTFS Guideline Check
                         </th>
 
                         <th class="whitespace-nowrap">
@@ -267,7 +267,9 @@
                                     {{ row[0] }}
                                 </th>
                             {% endif %}
-                            <!-- these are the date columns -->
+                            <!-- these columns contain boolean values...    -->
+                            <!-- mark_exists(True,False) will show a green check -->
+                            <!-- mark_exists(False,True) will show a red x -->
                             <td>
                                 {{ mark_exists(row[1], not row[1])}}
                             </td>
