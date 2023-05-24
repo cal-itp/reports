@@ -1,6 +1,10 @@
 {% extends "layout/default.html.jinja" %}
 {% import 'macros.html.jinja' as macros %}
 
+<!-- mark_exists(True,False) will show a green check -->
+<!-- mark_exists(False,True) will show a red cross -->
+<!-- mark_exists(False,False) will show a white circle -->
+
 {% macro mark_exists(entry, showCross = false) %}
     {% if entry %}
         <i title="present" class="fas fa-lg fa-check-circle text-itp-green"></i>&ZeroWidthSpace;
@@ -8,6 +12,19 @@
         <i title="missing" class="fas fa-lg fa-ban text-itp-red/40"></i>&ZeroWidthSpace;
     {% else %}
         <i title="missing" class="far fa-lg fa-circle text-itp-slate-light"></i>&ZeroWidthSpace;
+    {% endif %}
+{% endmacro %}
+
+<!-- show_check_status("PASS") will show a green check -->
+<!-- show_check_status("FAIL") will show a red cross -->
+<!-- show_check_status([anything else]) will show a white circle -->
+{% macro show_check_status(status) %}
+    {% if status == "PASS" %}
+        {{ mark_exists(true) }}
+    {% elif status == "FAIL" %}
+        {{ mark_exists(false,true) }}
+    {% else %}
+        {{ mark_exists(false,false)}}
     {% endif %}
 {% endmacro %}
 
@@ -237,16 +254,27 @@
 
     <div class="responsive-prose max-w-none">
         <h2>
-            Consistency with the California GTFS Minimum Guidelines
+            Consistency with the California Transit Data Guidelines
         </h2>
-
+        <p>
+            The following checks measure adherence the GTFS Schedule Compliance portion of the California Transit Data Guidelines
+            <a href="https://dot.ca.gov/cal-itp/california-transit-data-guidelines">California Transit Data Guidelines</a>.
+        </p>
+        <p>
+            The following symbols are used to denote each check's outcome on the given date:
+            <ul>
+                <li> <i class="fas fa-lg fa-check-circle text-itp-green"></i> Pass </li>
+                <li> <i title="missing" class="fas fa-lg fa-ban text-itp-red/40"></i> Fail </li>
+                <li> <i class="far fa-lg fa-circle text-itp-slate-light"></i> Not applicable/data unavailble </li>
+            </ul>
+        </p>
         <div class="overflow-x-auto -mx-8 px-8">
             <table>
                 <!-- column headers -->
                 <thead>
                     <tr>
-                        <th class="whitespace-nowrap">
-                            GTFS Guideline Check
+                        <th colspan="2">
+                            GTFS Schedule Compliance Check
                         </th>
 
                         <th class="whitespace-nowrap">
@@ -260,21 +288,14 @@
                 <tbody>
                     {% for row in guideline_check["data"] %}
                         <tr>
-                            <!-- I think this is the category, and can be removed for now -->
-                            {% set rowspan = guideline_check["rowspan"][loop.index0] %}
-                            {% if rowspan %}
-                                <th class="font-normal text-itp-slate-bold" rowspan="{{ rowspan }}">
-                                    {{ row[0] }}
-                                </th>
-                            {% endif %}
-                            <!-- these columns contain boolean values...    -->
-                            <!-- mark_exists(True,False) will show a green check -->
-                            <!-- mark_exists(False,True) will show a red x -->
-                            <td>
-                                {{ mark_exists(row[1], not row[1])}}
+                            <td colspan="2">
+                                {{ row[0] }}
                             </td>
                             <td>
-                                {{ mark_exists(row[2], not row[2])}}
+                                {{ show_check_status(row[1]) }}
+                            </td>
+                            <td>
+                                {{ show_check_status(row[2]) }}
                             </td>
                         </tr>
                     {% endfor %}
@@ -289,7 +310,7 @@
                     <thead class="border-t">
                         <tr>
                             <th class="pt-12" colspan="2">
-                                Validation errors observed
+                                MobilityData GTFS Schedule Validator notices observed
                             </th>
                         </tr>
                         <tr>

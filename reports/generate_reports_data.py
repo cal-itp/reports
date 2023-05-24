@@ -139,12 +139,13 @@ def _guideline_check():
 
 
 def generate_guideline_check(itp_id: int, publish_date):
-    importance = ["GTFS schedule feed downloads successfully",
+    importance = [
 "A GTFS Schedule feed is listed",
+"GTFS schedule feed downloads successfully",
 "No errors in MobilityData GTFS Schedule Validator",
-"GTFS Schedule feed ingested by Google Maps and/or a combination of Apple Maps, Transit App, Bing Maps, Moovit or local Open Trip Planner services",
 "GTFS Schedule feed is published at a stable URI (permalink) from which it can be “fetched” automatically by trip-planning applications",
-"Includes an open license that allows commercial use of GTFS Schedule feed"
+"Includes an open license that allows commercial use of GTFS Schedule feed",
+"GTFS Schedule feed ingested by Google Maps and/or a combination of Apple Maps, Transit App, Bing Maps, Moovit or local Open Trip Planner services",
 ]
 
     guideline_check = (
@@ -153,8 +154,7 @@ def generate_guideline_check(itp_id: int, publish_date):
         >> filtr(_.publish_date == publish_date)
         >> select(_.date_checked, _.check, _.status)
         >> mutate(
-        # Note that nulls and FAILs will both show up as fails in this case
-            status= _.status == "PASS",
+            # status = _.status.apply(lambda x: True if x == "PASS" else (False if x == "FAIL" else None)),
             date_checked=_.date_checked.astype(str),
         )
         >> spread(_.date_checked, _.status)
