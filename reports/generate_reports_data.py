@@ -9,7 +9,7 @@ import typer
 from calitp_data_analysis.sql import get_engine  # type: ignore
 from siuba import _, arrange, collect  # type: ignore
 from siuba import filter as filtr  # type: ignore
-from siuba import if_else, mutate, pipe, rename, select, spread  # type: ignore
+from siuba import mutate, pipe, rename, select, spread  # type: ignore
 from siuba.sql import LazyTbl  # type: ignore
 from tqdm import tqdm
 
@@ -140,13 +140,13 @@ def _guideline_check():
 
 def generate_guideline_check(itp_id: int, publish_date):
     importance = [
-"A GTFS Schedule feed is listed",
-"GTFS schedule feed downloads successfully",
-"No errors in MobilityData GTFS Schedule Validator",
-"GTFS Schedule feed is published at a stable URI (permalink) from which it can be “fetched” automatically by trip-planning applications",
-"Includes an open license that allows commercial use of GTFS Schedule feed",
-"GTFS Schedule feed ingested by Google Maps and/or a combination of Apple Maps, Transit App, Bing Maps, Moovit or local Open Trip Planner services",
-]
+        "A GTFS Schedule feed is listed",
+        "GTFS schedule feed downloads successfully",
+        "No errors in MobilityData GTFS Schedule Validator",
+        "GTFS Schedule feed is published at a stable URI (permalink) from which it can be “fetched” automatically by trip-planning applications",
+        "Includes an open license that allows commercial use of GTFS Schedule feed",
+        "GTFS Schedule feed ingested by Google Maps and/or a combination of Apple Maps, Transit App, Bing Maps, Moovit or local Open Trip Planner services",
+    ]
 
     guideline_check = (
         _guideline_check()
@@ -163,6 +163,7 @@ def generate_guideline_check(itp_id: int, publish_date):
     )
 
     return guideline_check
+
 
 @cache
 def _validation_codes():
@@ -294,7 +295,6 @@ def dump_report_data(
     guideline_check = generate_guideline_check(itp_id, publish_date)
     # for debugging:
     # print(guideline_check.to_string(index=False))
-
 
     with open(out_dir / "4_guideline_check.json", "w") as f:
         json.dump(to_rowspan_table(guideline_check, "check"), f)
