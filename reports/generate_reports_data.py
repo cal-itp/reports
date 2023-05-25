@@ -157,6 +157,9 @@ def generate_guideline_check(itp_id: int, publish_date):
             date_checked=_.date_checked.astype(str),
         )
         >> spread(_.date_checked, _.status)
+
+        # removes null check values from fct_monthly_reports_site_organization_guideline_checks
+        # TODO: fix this issue upstream
         >> pipe(lambda df: df.dropna(subset=['check']))
         >> arrange(_.check.apply(importance.index))
         >> pipe(_.fillna(""))
