@@ -1,7 +1,10 @@
-name: Test and Lint
+name: Lint and test
 
 on:
   push:
+    branches:
+      - main
+  pull_request:
 
 jobs:
   lint:
@@ -42,3 +45,29 @@ jobs:
       - name: Run website build
         working-directory: ./website
         run: npm install && npm run build && cat build/index.html | grep "Monthly GTFS Quality Reports"
+
+      # if tests succeed and we're on a PR, publish just the test data to Netlify
+      - name: Deploy site with test data to Netlify
+        if: ${{ github.event_name == 'pull_request' }}
+        run: |
+          npm install -g netlify-cli
+          netlify deploy --site=cal-itp-reports --dir=./website/build --alias=PR-${PR_NUMBER}
+        env:
+          NETLIFY_AUTH_TOKEN: ${{ secrets.NETLIFY_AUTH_TOKEN }}
+          PR_NUMBER: ${{ github.event.number }}
+
+      - uses: peter-evans/find-comment@v2
+        if: ${{ github.event_name == 'pull_request' }}
+        id: fc
+        with:
+          issue-number: ${{ github.event.number }}
+          comment-author: 'github-actions[bot]'
+          body-includes: --cal-itp-reports.netlify.app
+
+      - uses: peter-evans/create-or-update-comment@v2
+        if: ${{ github.event_name == 'pull_request' }}
+        with:
+          comment-id: ${{ steps.fc.outputs.comment-id }}
+          issue-number: ${{ github.event.number }}
+          body: "Preview url: https://PR-${{ github.event.number }}--cal-itp-reports.netlify.app"
+          edit-mode: replace

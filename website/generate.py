@@ -150,28 +150,6 @@ if not os.path.exists("build/faqs"):
 with open("build/faqs/index.html", "w") as file:
     file.write(faqs_html)
 
-################################################################################
-# render monthly report index pages
-
-if args.v:
-    print("generating monthly indexes")
-
-month_template = env.get_template("month.html.jinja")
-
-p_basedir = Path(f"build/{global_data['PATH_GTFS_SCHEDULE']}")
-for year in index_data["reports"]:
-    for month in year["months"]:
-        p_month = p_basedir / f"{year['year']}/{month['month']:02d}"
-
-        date_month_year = friendly_month_year(f"{year['year']}-{month['month']:02d}-01")
-
-        month_html = month_template.render(
-            **global_data, year=year, month=month, date_month_year=date_month_year
-        )
-
-        p_month.mkdir(parents=True, exist_ok=True)
-        (p_month / "index.html").write_text(month_html)
-
 
 ################################################################################
 # render individual reports
@@ -251,6 +229,9 @@ REPORT_BUILD_DIR = Path("build/gtfs_schedule")
 
 report_template = env.get_template("report.html.jinja")
 
+all_rt_vendors = set()
+all_schedule_vendors = set()
+
 ################################################################################
 # render all reports
 
@@ -265,9 +246,47 @@ with tqdm(
         p_report_inputs = REPORT_OUTPUTS_DIR / p_report_path.parent
         report_data = fetch_report_data(p_report_inputs)
         report_data["feeds"] = entry["feeds"]
+
+        # track vendors
+        rt_vendors = report_data["feed_info"]["rt_vendors"]
+        schedule_vendors = report_data["feed_info"]["schedule_vendors"]
+        # add info to individual entry
+        entry["rt_vendors"] = rt_vendors
+        entry["schedule_vendors"] = schedule_vendors
+        # add to list of all
+        all_rt_vendors.update(rt_vendors)
+        all_schedule_vendors.update(schedule_vendors)
+
         report_html = report_template.render({**global_data, **report_data})
         pbar.update(1)
 
         p_final = REPORT_BUILD_DIR / p_report_path
         p_final.parent.mkdir(parents=True, exist_ok=True)
         p_final.write_text(report_html)
+
+################################################################################
+# render monthly report index pages
+
+if args.v:
+    print("generating monthly indexes")
+
+month_template = env.get_template("month.html.jinja")
+
+p_basedir = Path(f"build/{global_data['PATH_GTFS_SCHEDULE']}")
+for year in index_data["reports"]:
+    for month in year["months"]:
+        p_month = p_basedir / f"{year['year']}/{month['month']:02d}"
+
+        date_month_year = friendly_month_year(f"{year['year']}-{month['month']:02d}-01")
+
+        month_html = month_template.render(
+            **global_data,
+            year=year,
+            month=month,
+            date_month_year=date_month_year,
+            rt_vendors=all_rt_vendors,
+            schedule_vendors=all_schedule_vendors,
+        )
+
+        p_month.mkdir(parents=True, exist_ok=True)
+        (p_month / "index.html").write_text(month_html)

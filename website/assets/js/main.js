@@ -1,5 +1,7 @@
-import Alpine from 'alpinejs'
+import Alpine from 'alpinejs';
 
-window.Alpine = Alpine
+import filters from './monthFilters';
+Alpine.data('filters', filters);
 
-Alpine.start()
+window.Alpine = Alpine;
+Alpine.start();

@@ -29,9 +29,9 @@
 {% endmacro %}
 
 {% macro display_figure(label, value) %}
-    <figure>
+    <figure class="display-figure !m-0">
         <div class="text-2xl text-itp-teal-bold">{{ value }}</div>
-        <figcaption class="text-itp-slate-bold">
+        <figcaption class="!mt-0 text-itp-slate-bold">
             {{ label }}
         </figcaption>
     </figure>
@@ -75,11 +75,11 @@
 
     <div class="flex-1 responsive-prose gap-12 lg:gap-16">
         <h2>Current GTFS Feed Info</h2>
-        <div class="flex flex-row lg:flex-row flex-wrap gap-12">
+        <div class="flex flex-row lg:flex-row flex-wrap gap-12 !my-12">
             {{ display_figure('Feed End Date', feed_info.feed_end_date_m_d_y) }}
             {{ display_figure('Days With No Service', feed_info.no_service_days_ct) }}
-            {{ display_figure('Routes', feed_info.n_routes) }}
-            {{ display_figure('Stops', feed_info.n_stops) }}
+            {{ display_figure('Routes', '{:,}'.format(feed_info.n_routes)) }}
+            {{ display_figure('Stops', '{:,}'.format(feed_info.n_stops)) }}
             {% if has_rt_feed %}
                 {{ display_figure('Has RT Feed', mark_exists(true)) }}
             {% else %}
@@ -141,6 +141,34 @@
             </div>
         </div>
     {% endcall %}
+
+    <hr>
+
+    {% set schedule_vendors = feed_info['schedule_vendors']|reject('eq', 'TO CONFIRM')|list %}
+    {% set rt_vendors = feed_info['rt_vendors']|reject('eq', 'TO CONFIRM')|list %}
+    <div class="flex-1 responsive-prose max-w-none gap-12 lg:gap-16">
+        <h2>Technology Vendors</h2>
+        {% if schedule_vendors or rt_vendors %}
+            <div class="flex flex-row lg:flex-row flex-wrap gap-12 !my-12">
+                {# vendors in both categories #}
+                {% for vendor in schedule_vendors if vendor in rt_vendors %}
+                    {{ display_figure('GTFS Static &amp; Realtime', vendor) }}
+                {% endfor %}
+
+                {# schedule-only vendors #}
+                {% for vendor in schedule_vendors if vendor not in rt_vendors %}
+                    {{ display_figure('GTFS Static', vendor) }}
+                {% endfor %}
+
+                {# rt-only vendors #}
+                {% for vendor in rt_vendors if vendor not in schedule_vendors %}
+                    {{ display_figure('Realtime', vendor) }}
+                {% endfor %}
+            </div>
+        {% else %}
+            {{ display_figure('No vendor information available') }}
+        {% endif %}
+    </div>
 
     <hr>
 
