@@ -51,7 +51,18 @@ def get_dates_year_month(year: int, month: int) -> list:
 @cache
 def _feed_info():
     return (
-        LazyTbl(engine, "mart_gtfs_quality.idx_monthly_reports_site")
+        LazyTbl(
+            engine,
+            "mart_gtfs_quality.idx_monthly_reports_site",
+        )
+        >> left_join(
+            _,
+            LazyTbl(
+                engine,
+                "mart_gtfs_quality.fct_monthly_reports_site_organization_gtfs_vendors",
+            ),
+            ["organization_itp_id", "date_start", "organization_name"],
+        )
         >> select(
             _.organization_itp_id,
             _.organization_name,
@@ -63,6 +74,8 @@ def _feed_info():
             _.stop_ct,
             _.no_service_days_ct,
             _.earliest_feed_end_date,
+            _.schedule_vendors,
+            _.rt_vendors,
         )
         >> mutate(has_feed_info=True)
         >> rename(feed_publisher_name=_.organization_name)
