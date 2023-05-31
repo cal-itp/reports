@@ -1,11 +1,11 @@
 import json
 import os
-import numpy as np
 from datetime import datetime, timedelta
 from functools import cache
 from pathlib import Path
 from typing import Optional
 
+import numpy as np
 import typer
 from calitp_data_analysis.sql import get_engine  # type: ignore
 from siuba import _, arrange, collect  # type: ignore
@@ -171,7 +171,7 @@ def generate_guideline_check(itp_id: int, publish_date):
         >> select(_.date_checked, _.check, _.reports_status, _.is_manual)
         >> mutate(
             date_checked=_.date_checked.astype(str),
-            check=np.where(_.is_manual, _.check + '*', _.check),
+            check=np.where(_.is_manual, _.check + "*", _.check),
         )
         >> spread(_.date_checked, _.reports_status)
         >> arrange(_.check.apply(importance.index))
