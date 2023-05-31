@@ -1,5 +1,6 @@
 import json
 import os
+import numpy as np
 from datetime import datetime, timedelta
 from functools import cache
 from pathlib import Path
@@ -9,10 +10,9 @@ import typer
 from calitp_data_analysis.sql import get_engine  # type: ignore
 from siuba import _, arrange, collect  # type: ignore
 from siuba import filter as filtr  # type: ignore
-from siuba import if_else, left_join, mutate, pipe, rename, select, spread  # type: ignore
+from siuba import left_join, mutate, pipe, rename, select, spread  # type: ignore
 from siuba.sql import LazyTbl  # type: ignore
 from tqdm import tqdm
-import numpy as np
 
 
 os.environ["CALITP_BQ_MAX_BYTES"] = str(800_000_000_000)
@@ -171,7 +171,7 @@ def generate_guideline_check(itp_id: int, publish_date):
         >> select(_.date_checked, _.check, _.reports_status, _.is_manual)
         >> mutate(
             date_checked=_.date_checked.astype(str),
-            check=np.where(_.is_manual, _.check + '*', _.check)
+            check=np.where(_.is_manual, _.check + '*', _.check),
         )
         >> spread(_.date_checked, _.reports_status)
         >> arrange(_.check.apply(importance.index))
