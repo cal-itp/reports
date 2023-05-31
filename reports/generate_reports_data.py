@@ -14,7 +14,6 @@ from siuba import left_join, mutate, pipe, rename, select, spread  # type: ignor
 from siuba.sql import LazyTbl  # type: ignore
 from tqdm import tqdm
 
-
 os.environ["CALITP_BQ_MAX_BYTES"] = str(800_000_000_000)
 
 engine = get_engine()
