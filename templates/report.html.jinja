@@ -296,6 +296,9 @@
                 <li> <i class="far fa-lg fa-circle text-itp-slate-light"></i> Not applicable/data unavailable </li>
             </ul>
         </p>
+        <p>
+            Checks marked with an astrix (*) are periodically performed manually. We can update these on request, so let us know if one of them looks off.
+        </p>
         <div class="overflow-x-auto -mx-8 px-8">
             <table>
                 <!-- column headers -->
@@ -306,10 +309,10 @@
                         </th>
 
                         <th class="whitespace-nowrap">
-                            {{ guideline_check["columns"][1] }}
+                            {{ guideline_check["columns"][2] }}
                         </th>
                         <th class="whitespace-nowrap">
-                            {{ guideline_check["columns"][2] }}
+                            {{ guideline_check["columns"][3] }}
                         </th>
                     </tr>
                 </thead>
@@ -320,10 +323,10 @@
                                 {{ row[0] }}
                             </td>
                             <td>
-                                {{ show_check_status(row[1]) }}
+                                {{ show_check_status(row[2]) }}
                             </td>
                             <td>
-                                {{ show_check_status(row[2]) }}
+                                {{ show_check_status(row[3]) }}
                             </td>
                         </tr>
                     {% endfor %}

@@ -9,9 +9,11 @@ import typer
 from calitp_data_analysis.sql import get_engine  # type: ignore
 from siuba import _, arrange, collect  # type: ignore
 from siuba import filter as filtr  # type: ignore
-from siuba import left_join, mutate, pipe, rename, select, spread  # type: ignore
+from siuba import if_else, left_join, mutate, pipe, rename, select, spread  # type: ignore
 from siuba.sql import LazyTbl  # type: ignore
 from tqdm import tqdm
+import numpy as np
+
 
 os.environ["CALITP_BQ_MAX_BYTES"] = str(800_000_000_000)
 
@@ -145,7 +147,8 @@ def _guideline_check():
             _.date_checked,
             _.feature,
             _.check,
-            _.status,
+            _.reports_status,
+            _.is_manual,
         )
         >> collect()
     )
@@ -156,24 +159,21 @@ def generate_guideline_check(itp_id: int, publish_date):
         "A GTFS Schedule feed is listed",
         "GTFS schedule feed downloads successfully",
         "No errors in MobilityData GTFS Schedule Validator",
-        "GTFS Schedule feed is published at a stable URI (permalink) from which it can be “fetched” automatically by trip-planning applications",
-        "Includes an open license that allows commercial use of GTFS Schedule feed",
-        "GTFS Schedule feed ingested by Google Maps and/or a combination of Apple Maps, Transit App, Bing Maps, Moovit or local Open Trip Planner services",
+        "GTFS Schedule feed is published at a stable URI (permalink) from which it can be “fetched” automatically by trip-planning applications*",
+        "Includes an open license that allows commercial use of GTFS Schedule feed*",
+        "GTFS Schedule feed ingested by Google Maps and/or a combination of Apple Maps, Transit App, Bing Maps, Moovit or local Open Trip Planner services*",
     ]
 
     guideline_check = (
         _guideline_check()
         >> filtr(_.organization_itp_id == itp_id)
         >> filtr(_.publish_date == publish_date)
-        >> select(_.date_checked, _.check, _.status)
+        >> select(_.date_checked, _.check, _.reports_status, _.is_manual)
         >> mutate(
             date_checked=_.date_checked.astype(str),
+            check=np.where(_.is_manual, _.check + '*', _.check)
         )
-        >> spread(_.date_checked, _.status)
-
-        # removes null check values from fct_monthly_reports_site_organization_guideline_checks
-        # TODO: fix this issue upstream
-        >> pipe(lambda df: df.dropna(subset=['check']))
+        >> spread(_.date_checked, _.reports_status)
         >> arrange(_.check.apply(importance.index))
         >> pipe(_.fillna(""))
     )
