@@ -5,6 +5,7 @@ from functools import cache
 from pathlib import Path
 from typing import Optional
 
+import numpy as np
 import typer
 from calitp_data_analysis.sql import get_engine  # type: ignore
 from siuba import _, arrange, collect  # type: ignore
@@ -133,50 +134,50 @@ def generate_daily_service_hours(itp_id: int, date_start, date_end):
 
 
 @cache
-def _file_check():
+def _guideline_check():
     return (
         LazyTbl(
             engine,
-            "mart_gtfs_quality.fct_monthly_reports_site_organization_file_checks",
+            "mart_gtfs_quality.fct_monthly_reports_site_organization_guideline_checks",
         )
         >> select(
             _.organization_itp_id,
             _.publish_date,
             _.date_checked,
-            _.reason,
-            _.filename,
-            _.file_present,
+            _.feature,
+            _.check,
+            _.reports_status,
+            _.is_manual,
         )
         >> collect()
     )
 
 
-def generate_file_check(itp_id: int, publish_date):
-    importance = ["Visual display", "Navigation", "Fares", "Technical contacts"]
+def generate_guideline_check(itp_id: int, publish_date):
+    importance = [
+        "A GTFS Schedule feed is listed",
+        "GTFS schedule feed downloads successfully",
+        "No errors in MobilityData GTFS Schedule Validator",
+        "GTFS Schedule feed is published at a stable URI (permalink) from which it can be “fetched” automatically by trip-planning applications*",
+        "Includes an open license that allows commercial use of GTFS Schedule feed*",
+        "GTFS Schedule feed ingested by Google Maps and/or a combination of Apple Maps, Transit App, Bing Maps, Moovit or local Open Trip Planner services*",
+    ]
 
-    file_check = (
-        _file_check()
+    guideline_check = (
+        _guideline_check()
         >> filtr(_.organization_itp_id == itp_id)
         >> filtr(_.publish_date == publish_date)
-        >> select(_.date_checked, _.reason, _.filename, _.file_present)
-        >> rename(success=_.file_present)
-        >> rename(name=_.filename)
-        >> rename(category=_.reason)
-    )
-
-    file_check.success = file_check.success.apply(lambda v: "✅" if v else "")
-    # replacing this in mutate call
-    #     success=if_else(_.success == True, "✅", ""),  # noqa: E712
-    file_check = (
-        file_check
+        >> select(_.date_checked, _.check, _.reports_status, _.is_manual)
         >> mutate(
             date_checked=_.date_checked.astype(str),
+            check=np.where(_.is_manual, _.check + "*", _.check),
         )
-        >> spread(_.date_checked, _.success)
-        >> arrange(_.category.apply(importance.index))
+        >> spread(_.date_checked, _.reports_status)
+        >> arrange(_.check.apply(importance.index))
         >> pipe(_.fillna(""))
     )
-    return file_check
+
+    return guideline_check
 
 
 @cache
@@ -303,12 +304,15 @@ def dump_report_data(
     routes_changed = generate_routes_changed(itp_id, publish_date)
     routes_changed.to_json(out_dir / "3_routes_changed.json", orient="records")
 
-    # 4_file_check.json
+    # 4_guideline_check.json
     if verbose:
-        print(f"Generating file check for {itp_id}")
-    file_check = generate_file_check(itp_id, publish_date)
-    with open(out_dir / "4_file_check.json", "w") as f:
-        json.dump(to_rowspan_table(file_check, "category"), f)
+        print(f"Generating guideline check for {itp_id}")
+    guideline_check = generate_guideline_check(itp_id, publish_date)
+    # for debugging:
+    # print(guideline_check.to_string(index=False))
+
+    with open(out_dir / "4_guideline_check.json", "w") as f:
+        json.dump(to_rowspan_table(guideline_check, "check"), f)
 
     # 5_validation_notices.json
     if verbose:
