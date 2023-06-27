@@ -310,10 +310,10 @@
                         </th>
 
                         <th class="whitespace-nowrap">
-                            {{ guideline_check["columns"][2] }}
+                            {{ guideline_check["columns"][3] }}
                         </th>
                         <th class="whitespace-nowrap">
-                            {{ guideline_check["columns"][3] }}
+                            {{ guideline_check["columns"][4] }}
                         </th>
                     </tr>
                 </thead>
@@ -324,10 +324,10 @@
                                 {{ row[0] }}
                             </td>
                             <td>
-                                {{ show_check_status(row[2]) }}
+                                {{ show_check_status(row[3]) }}
                             </td>
                             <td>
-                                {{ show_check_status(row[3]) }}
+                                {{ show_check_status(row[4]) }}
                             </td>
                         </tr>
                     {% endfor %}
