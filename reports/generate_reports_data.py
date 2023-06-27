@@ -155,7 +155,6 @@ def _guideline_check():
 
 
 def generate_guideline_check(itp_id: int, publish_date):
-
     guideline_check = (
         _guideline_check()
         >> filtr(_.organization_itp_id == itp_id)
