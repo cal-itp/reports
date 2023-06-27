@@ -160,7 +160,9 @@ def generate_guideline_check(itp_id: int, publish_date):
         _guideline_check()
         >> filtr(_.organization_itp_id == itp_id)
         >> filtr(_.publish_date == publish_date)
-        >> select(_.date_checked, _.check, _.reports_status, _.is_manual, _.reports_order)
+        >> select(
+            _.date_checked, _.check, _.reports_status, _.is_manual, _.reports_order
+        )
         >> mutate(
             date_checked=_.date_checked.astype(str),
             check=np.where(_.is_manual, _.check + "*", _.check),
