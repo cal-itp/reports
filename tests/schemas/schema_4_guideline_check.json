@@ -55,21 +55,7 @@
               "type": "boolean"
             },
             {
-              "type": "string"
-            },
-            {
-              "type": "string"
-            }
-          ]
-        },
-        {
-          "type": "array",
-          "items": [
-            {
-              "type": "string"
-            },
-            {
-              "type": "boolean"
+              "type": "integer"
             },
             {
               "type": "string"
@@ -89,21 +75,7 @@
               "type": "boolean"
             },
             {
-              "type": "string"
-            },
-            {
-              "type": "string"
-            }
-          ]
-        },
-        {
-          "type": "array",
-          "items": [
-            {
-              "type": "string"
-            },
-            {
-              "type": "boolean"
+              "type": "integer"
             },
             {
               "type": "string"
@@ -123,6 +95,9 @@
               "type": "boolean"
             },
             {
+              "type": "integer"
+            },
+            {
               "type": "string"
             },
             {
@@ -138,6 +113,49 @@
             },
             {
               "type": "boolean"
+            },
+            {
+              "type": "integer"
+            },
+            {
+              "type": "string"
+            },
+            {
+              "type": "string"
+            }
+          ]
+        },
+        {
+          "type": "array",
+          "items": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "boolean"
+            },
+            {
+              "type": "integer"
+            },
+            {
+              "type": "string"
+            },
+            {
+              "type": "string"
+            }
+          ]
+        },
+        {
+          "type": "array",
+          "items": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "boolean"
+            },
+            {
+              "type": "integer"
             },
             {
               "type": "string"
