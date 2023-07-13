@@ -302,7 +302,9 @@ def dump_report_data(
     # 4_guideline_checks_schedule.json
     if verbose:
         print(f"Generating schedule guideline checks for {itp_id}")
-    guideline_checks_schedule = generate_guideline_check(itp_id, publish_date, feature="Compliance (Schedule)")
+    guideline_checks_schedule = generate_guideline_check(
+        itp_id, publish_date, feature="Compliance (Schedule)"
+    )
     # for debugging:
     # print(guideline_check.to_string(index=False))
 
