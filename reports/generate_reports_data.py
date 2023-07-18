@@ -154,11 +154,12 @@ def _guideline_check():
     )
 
 
-def generate_guideline_check(itp_id: int, publish_date):
+def generate_guideline_check(itp_id: int, publish_date, feature):
     guideline_check = (
         _guideline_check()
         >> filtr(_.organization_itp_id == itp_id)
         >> filtr(_.publish_date == publish_date)
+        >> filtr(_.feature == feature)
         >> select(
             _.date_checked, _.check, _.reports_status, _.is_manual, _.reports_order
         )
@@ -298,15 +299,17 @@ def dump_report_data(
     routes_changed = generate_routes_changed(itp_id, publish_date)
     routes_changed.to_json(out_dir / "3_routes_changed.json", orient="records")
 
-    # 4_guideline_check.json
+    # 4_guideline_checks_schedule.json
     if verbose:
-        print(f"Generating guideline check for {itp_id}")
-    guideline_check = generate_guideline_check(itp_id, publish_date)
+        print(f"Generating schedule guideline checks for {itp_id}")
+    guideline_checks_schedule = generate_guideline_check(
+        itp_id, publish_date, feature="Compliance (Schedule)"
+    )
     # for debugging:
     # print(guideline_check.to_string(index=False))
 
-    with open(out_dir / "4_guideline_check.json", "w") as f:
-        json.dump(to_rowspan_table(guideline_check, "check"), f)
+    with open(out_dir / "4_guideline_checks_schedule.json", "w") as f:
+        json.dump(to_rowspan_table(guideline_checks_schedule, "check"), f)
 
     # 5_validation_notices.json
     if verbose:

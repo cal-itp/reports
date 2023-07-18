@@ -310,15 +310,15 @@
                         </th>
 
                         <th class="whitespace-nowrap">
-                            {{ guideline_check["columns"][3] }}
+                            {{ guideline_checks_schedule["columns"][3] }}
                         </th>
                         <th class="whitespace-nowrap">
-                            {{ guideline_check["columns"][4] }}
+                            {{ guideline_checks_schedule["columns"][4] }}
                         </th>
                     </tr>
                 </thead>
                 <tbody>
-                    {% for row in guideline_check["data"] %}
+                    {% for row in guideline_checks_schedule["data"] %}
                         <tr>
                             <td colspan="2">
                                 {{ row[0] }}
