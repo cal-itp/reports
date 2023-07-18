@@ -79,7 +79,7 @@ Execute `python generate_reports_data.py --year=2023 --month=02` to populate tho
 * 2_daily_service_hours.json
 * 3_routes_changed.json
 * 3_stops_changed.json
-* 4_guideline_check.json
+* 4_guideline_checks_schedule.json
 * 5_validation_codes.json
 
 These files are used to generate the static HTML (see below).
