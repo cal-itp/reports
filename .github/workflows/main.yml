@@ -43,6 +43,11 @@ jobs:
       run: |
         gsutil -m rsync -r gs://gtfs-data/report_gtfs_schedule/ reports/outputs/
 
+    # Re-run data ----
+    - name: Run report data
+      run: |
+        make data
+
     # build ----
     - name: Build
       run: npm run build
