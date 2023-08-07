@@ -55,7 +55,7 @@
               "type": "boolean"
             },
             {
-              "type": "integer"
+              "type": "number"
             },
             {
               "type": "string"
@@ -75,7 +75,7 @@
               "type": "boolean"
             },
             {
-              "type": "integer"
+              "type": "number"
             },
             {
               "type": "string"
@@ -95,7 +95,7 @@
               "type": "boolean"
             },
             {
-              "type": "integer"
+              "type": "number"
             },
             {
               "type": "string"
@@ -115,7 +115,7 @@
               "type": "boolean"
             },
             {
-              "type": "integer"
+              "type": "number"
             },
             {
               "type": "string"
@@ -135,7 +135,7 @@
               "type": "boolean"
             },
             {
-              "type": "integer"
+              "type": "number"
             },
             {
               "type": "string"
@@ -155,7 +155,7 @@
               "type": "boolean"
             },
             {
-              "type": "integer"
+              "type": "number"
             },
             {
               "type": "string"
