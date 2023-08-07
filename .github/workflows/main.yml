@@ -47,6 +47,9 @@ jobs:
     - name: Run report data
       run: |
         make data
+      working-directory: reports
+      with:
+        service_account_key: ${{ secrets.GCP_SA_KEY }}
 
     # build ----
     - name: Build
