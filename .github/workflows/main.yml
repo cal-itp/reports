@@ -48,8 +48,8 @@ jobs:
       run: |
         make data
       working-directory: reports
-      with:
-        service_account_key: ${{ secrets.GCP_SA_KEY }}
+      env:
+        GCP_SA_KEY: ${{ secrets.GCP_SA_KEY }}
 
     # build ----
     - name: Build
