@@ -59,7 +59,7 @@ report_emails
 
 # +
 # generate mjml template
-stream = os.popen("npx mjml ../templates/email/report.mjml -s")
+stream = os.popen("npx mjml ../templates/email/report.mjml -s --yes")
 mjml_template = stream.read()
 
 
