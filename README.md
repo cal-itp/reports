@@ -60,10 +60,10 @@ make clean
 
 #### Fetch existing report data
 Run the gsutil rsync to update all the locally stored reports.
-Note that `gtfs-data-test` can be replaced with `gtfs-data` for testing on production data:
+Note that `test-calitp-reports-data` can be replaced with `calitp-reports-data` for testing on production data:
 
 ```shell
-gsutil -m rsync -r gs://gtfs-data-test/report_gtfs_schedule outputs
+gsutil -m rsync -r gs://test-calitp-reports-data/report_gtfs_schedule outputs
 ```
 
 #### Generate the index file and create the outputs folder structure
@@ -154,10 +154,10 @@ In the case where data must be overwritten (please use caution!) a `-d` flag can
 to "mirror" the buckets, i.e. delete destination data that isn't being copied
 from the source.
 ```shell
-gsutil -m rsync -r [-d] outputs/ gs://gtfs-data-test/report_gtfs_schedule/
+gsutil -m rsync -r [-d] outputs/ gs://test-calitp-reports-data/report_gtfs_schedule/
 ```
 
-Once you can verify that the gtfs-data-test bucket has updated, you can merge your
+Once you can verify that the test-calitp-reports-data bucket has updated, you can merge your
 PR to main. This site can be viewed at `https://development-build--cal-itp-reports.netlify.app/`.
 
 >❗️In the event there are no code changes necessary for a monthly deploy,
@@ -169,7 +169,7 @@ PR to main. This site can be viewed at `https://development-build--cal-itp-repor
 Assuming that all the data is correct in development, you can sync the test data to production.
 
 ```shell
-gsutil -m rsync -r gs://gtfs-data-test/report_gtfs_schedule/ gs://gtfs-data/report_gtfs_schedule/
+gsutil -m rsync -r gs://test-calitp-reports-data/report_gtfs_schedule/ gs://calitp-reports-data/report_gtfs_schedule/
 ```
 
 ### Deploying the site to Netlify

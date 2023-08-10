@@ -33,15 +33,26 @@ jobs:
         service_account_key: ${{ secrets.GCP_SA_KEY }}
         export_default_credentials: true
 
+    # Run data ----
+    - name: Run report data
+      if: ${{ github.ref == 'refs/heads/main' }}
+      run: |
+        make parameters
+        make data
+      working-directory: reports
+      with:
+        service_account_key: ${{ secrets.GCP_SA_KEY }}
+        export_default_credentials: true
+
     # copy data ----
     - name: Copy development report data
       if: ${{ github.ref == 'refs/heads/main' }}
       run: |
-        gsutil -m rsync -r gs://gtfs-data-test/report_gtfs_schedule/ reports/outputs/
+        gsutil -m rsync -r reports/outputs/ gs://test-calitp-reports-data/report_gtfs_schedule/
     - name: Copy production report data
       if: ${{ startsWith(github.ref, 'refs/tags/') }}
       run: |
-        gsutil -m rsync -r gs://gtfs-data/report_gtfs_schedule/ reports/outputs/
+        gsutil -m rsync -r gs://test-calitp-reports-data/report_gtfs_schedule/ gs://calitp-reports-data/report_gtfs_schedule/
 
     # build ----
     - name: Build
@@ -49,7 +60,6 @@ jobs:
       working-directory: website
 
     # deploy ----
-
     - name: Deploy development to Netlify
       if: ${{ github.ref == 'refs/heads/main' }}
       run: |

@@ -46,7 +46,7 @@ make sync
 Github actions automatically build and deploy any changes to the `development` branch. May need to re-run github actions. If on the main branch, need to sync development and main branch.
 
 ```python
-gsutil -m rsync -r -d gs://gtfs-data-test/report_gtfs_schedule/ gs://gtfs-data/report_gtfs_schedule/
+gsutil -m rsync -r -d gs://test-calitp-reports-data/report_gtfs_schedule/ gs://calitp-reports-data/report_gtfs_schedule/
 ```
 
 The built HTML is pushed automatically as `development-build`.
@@ -68,7 +68,7 @@ make sync-prod
 or to copy from the dev to prod.
 
 ```python
-gsutil -m rsync -r -d gs://gtfs-data-test/report_gtfs_schedule/ gs://gtfs-data/report_gtfs_schedule/
+gsutil -m rsync -r -d gs://test-calitp-reports-data/report_gtfs_schedule/ gs://calitp-reports-data/report_gtfs_schedule/
 ```
 
 In order to deploy the site, ensure the data was pushed to the production bucket,
@@ -76,7 +76,7 @@ and merge any changes into the main branch.
 
 If there are no changes between development and production rerun the last github action workflow run on main.
 
-- [ ] Verify github action is using gtfs-data (production) rather than gtfs-data-test (development)
+- [ ] Verify github action is using calitp-reports-data (production) rather than test-calitp-reports-data (development)
 - [ ] Verify in the github action that it is copying production report data
 - [ ] Verify that production site has been updated with most up to date month
 
