@@ -36,13 +36,10 @@ jobs:
     # Run data ----
     - name: Run report data
       if: ${{ github.ref == 'refs/heads/main' }}
+      working-directory: reports
       run: |
         make parameters
         make data
-      working-directory: reports
-      with:
-        service_account_key: ${{ secrets.GCP_SA_KEY }}
-        export_default_credentials: true
 
     # copy data ----
     - name: Copy development report data
