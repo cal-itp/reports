@@ -49,16 +49,16 @@ def get_speedmap_urls():
     html = response.content
     results = {}
     for line in html.decode("utf-8").split("\n"):
-        if 'class="reference internal" href="district_' not in line:
+        if "reference internal' href='/rt/district" not in line:
             continue
-        href = line.split('href="')[-1].split('"')[0]
+        href = line.split("href='")[-1].split("'")[0]
         if "itp_id_" not in href or "__speedmaps__district_" not in line:
             continue
-        itp_id = href.split("itp_id_")[-1].split(".")[0]
+        itp_id = href.split("itp_id_")[-1].split(".")[0].split("'")[0]
         if not itp_id.isdigit():
             print(f"WARNING: skipping url because itp_id is not a number: {itp_id}")
             continue
-        results[int(itp_id)] = f"https://analysis.calitp.org/rt/{href}"
+        results[int(itp_id)] = f"https://analysis.calitp.org{href}"
     return results
 
 
