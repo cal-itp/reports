@@ -50,6 +50,7 @@ jobs:
       if: ${{ startsWith(github.ref, 'refs/tags/') }}
       run: |
         gsutil -m rsync -r gs://test-calitp-reports-data/report_gtfs_schedule/ gs://calitp-reports-data/report_gtfs_schedule/
+        gsutil -m rsync -r gs://gtfs-data/report_gtfs_schedule/ reports/outputs/
 
     # build ----
     - name: Build
