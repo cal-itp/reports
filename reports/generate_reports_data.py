@@ -165,6 +165,7 @@ def generate_guideline_check(itp_id: int, publish_date, feature):
         )
         >> mutate(
             date_checked=_.date_checked.astype(str),
+            reports_order=_.reports_order.astype(int),
             check=np.where(_.is_manual, _.check + "*", _.check),
         )
         >> spread(_.date_checked, _.reports_status)
@@ -305,11 +306,19 @@ def dump_report_data(
     guideline_checks_schedule = generate_guideline_check(
         itp_id, publish_date, feature="Compliance (Schedule)"
     )
-    # for debugging:
-    # print(guideline_check.to_string(index=False))
 
     with open(out_dir / "4_guideline_checks_schedule.json", "w") as f:
         json.dump(to_rowspan_table(guideline_checks_schedule, "check"), f)
+
+    # 4_guideline_checks_rt.json
+    if verbose:
+        print(f"Generating RT guideline checks for {itp_id}")
+    guideline_checks_rt = generate_guideline_check(
+        itp_id, publish_date, feature="Compliance (RT)"
+    )
+
+    with open(out_dir / "4_guideline_checks_rt.json", "w") as f:
+        json.dump(to_rowspan_table(guideline_checks_rt, "check"), f)
 
     # 5_validation_notices.json
     if verbose:
