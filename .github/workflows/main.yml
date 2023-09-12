@@ -1,6 +1,16 @@
 name: Build and deploy to Netlify
 
 on:
+  workflow_dispatch:
+    inputs:
+      site_target:
+        description: 'Deploy to development or production Reports site?'
+        required: true
+        default: 'dev'
+        type: choice
+        options:
+          - dev
+          - prod
   push:
     tags:
       - '*'
@@ -35,7 +45,7 @@ jobs:
 
     # Run data ----
     - name: Run report data
-      if: ${{ github.ref == 'refs/heads/main' }}
+      if: ${{ github.ref == 'refs/heads/main' || github.event_name == 'workflow_dispatch'}}
       working-directory: reports
       run: |
         make parameters
@@ -43,7 +53,7 @@ jobs:
 
     # copy data ----
     - name: Copy development report data
-      if: ${{ github.ref == 'refs/heads/main' }}
+      if: ${{ github.ref == 'refs/heads/main' || github.event_name == 'workflow_dispatch'}}
       run: |
         gsutil -m rsync -r reports/outputs/ gs://test-calitp-reports-data/report_gtfs_schedule/
     - name: Copy production report data
@@ -59,14 +69,14 @@ jobs:
 
     # deploy ----
     - name: Deploy development to Netlify
-      if: ${{ github.ref == 'refs/heads/main' }}
+      if: ${{ github.ref == 'refs/heads/main' || inputs.site_target == 'dev'}}
       run: |
         npm install netlify-cli
         netlify deploy --site=cal-itp-reports --dir=./website/build --alias=test
       env:
         NETLIFY_AUTH_TOKEN: ${{ secrets.NETLIFY_AUTH_TOKEN }}
     - name: Deploy production to Netlify
-      if: ${{ startsWith(github.ref, 'refs/tags/') }}
+      if: ${{ startsWith(github.ref, 'refs/tags/' || inputs.site_target == 'prod') }}
       run: |
         npm install netlify-cli
         netlify deploy --site=cal-itp-reports --dir=./website/build --prod
