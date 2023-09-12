@@ -177,5 +177,6 @@ Once you've synced data to either development or production, you may deploy the
 appropriate environment to Netlify.
 * For development, pushing a commit (or merging a PR) to the `main` branch
 * For production, pushing a tag
+* Alternatively, manually start the workflow and select development or production
 
 You may want to monitor GitHub Actions to ensure your deploy succeeded.
