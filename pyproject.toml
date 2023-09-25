@@ -14,7 +14,7 @@ markupsafe = "^2.1.2"
 jsonschema = "^4.17.3"
 jinja-markdown = "^1.210911"
 typer = "^0.7.0"
-calitp-data-analysis = "2023.7.31"
+calitp-data-analysis = "2023.9.18"
 
 
 [tool.poetry.group.dev.dependencies]
