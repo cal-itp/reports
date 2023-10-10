@@ -71,7 +71,7 @@ def _generate_template(report_url):
 
 
 html_messages = report_emails.report_url.apply(_generate_template)
-all_emails = report_emails.main_email
+all_emails = report_emails.email
 all_emails_list = list(zip(all_emails, html_messages))
 
 print("Using server token (Sandbox is f38...): " + config["postmark_server_token"])
