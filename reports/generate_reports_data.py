@@ -6,8 +6,9 @@ from pathlib import Path
 from typing import Optional
 
 import numpy as np
+import pandas as pd
 import typer
-from calitp_data_analysis.sql import get_engine  # type: ignore
+from calitp_data_analysis.sql import get_engine, query_sql  # type: ignore
 from siuba import _, arrange, collect  # type: ignore
 from siuba import filter as filtr  # type: ignore
 from siuba import left_join, mutate, pipe, rename, select, spread  # type: ignore
@@ -131,6 +132,33 @@ def generate_daily_service_hours(itp_id: int, date_start, date_end):
         >> filtr(_.service_date >= date_start)
         >> filtr(_.service_date <= date_end)
     )
+
+
+@cache
+def _rt_completeness():
+    return query_sql(
+        """
+            SELECT
+                    organization_itp_id as calitp_itp_id,
+                    DATETIME(service_date) as service_date,
+                    percent_of_trips_with_TU_messages, percent_of_trips_with_VP_messages
+                    FROM `cal-itp-data-infra.mart_gtfs_quality.fct_daily_trip_updates_vehicle_positions_completeness`
+                     """,
+        as_df=True,
+    )
+
+
+def generate_rt_completeness(itp_id: int, date_start: str, date_end: str):
+    df = _rt_completeness()
+    date_start = pd.to_datetime(date_start)
+    date_end = pd.to_datetime(date_end)
+
+    # Filter the DataFrame based on the conditions
+    return df[
+        (df["calitp_itp_id"] == itp_id)
+        & (df["service_date"] >= date_start)
+        & (df["service_date"] <= date_end)
+    ]
 
 
 @cache
@@ -287,6 +315,12 @@ def dump_report_data(
         print(f"Generating service hours for {itp_id}")
     service_hours = generate_daily_service_hours(itp_id, date_start, date_end)
     service_hours.to_json(out_dir / "2_daily_service_hours.json", orient="records")
+
+    # 2_gtfs_rt_completeness.json
+    if verbose:
+        print(f"Generating rt_complete for {itp_id}")
+    rt_complete = generate_rt_completeness(itp_id, date_start, date_end)
+    rt_complete.to_json(out_dir / "2_gtfs_rt_completeness.json", orient="records")
 
     # 3_stops_changed.json
     if verbose:

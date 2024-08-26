@@ -73,7 +73,9 @@
     </div>
 
     <hr>
-
+    {%- macro getJsonForAttribute(variable, attribute) %}
+        {{ variable|map(attribute=attribute)|list|tojson }}
+    {% endmacro -%}
     <div class="flex-1 responsive-prose gap-12 lg:gap-16">
         <h2>Current GTFS Feed Info</h2>
         <div class="flex flex-row lg:flex-row flex-wrap gap-12 !my-12">
@@ -106,7 +108,33 @@
             </div>
         {% endif %}
     </div>
+    {% if has_rt_feed %}
+    <div class="flex flex-col lg:flex-row gap-12 lg:gap-16 xl:gap-24 2xl:gap-36">
+        <div class="flex-1">
+            <div class="responsive-prose">
+                <h2>GTFS-RT Trip Updates Completeness by day</h2>
+            </div>
+            {% set tu_hours = gtfs_rt_completeness|list %}
+            <div class="rt-chart"
+                 data-dates="{{ getJsonForAttribute(tu_hours, 'service_date')|trim }}"
+                 data-hours="{{ getJsonForAttribute(tu_hours, 'percent_of_trips_with_TU_messages')|trim }}"
+                 data-color="#F6BF16">
+            </div>
+        </div>
+        <div class="flex-1">
+            <div class="responsive-prose">
+                <h2>GTFS-RT Vehicle Positions Completeness by day</h2>
+            </div>
+            {% set vp_hours = gtfs_rt_completeness|list %}
+            <div class="rt-chart"
+                 data-dates="{{ getJsonForAttribute(vp_hours, 'service_date')|trim }}"
+                 data-hours="{{ getJsonForAttribute(vp_hours, 'percent_of_trips_with_VP_messages')|trim }}"
+                 data-color="#5B559C">
+            </div>
+        </div>
 
+    </div>
+    {% endif %}
     <div class="responsive-prose max-w-none">
         <div class="my-8 flex gap-4">
             <button type="button"
@@ -172,10 +200,6 @@
     </div>
 
     <hr>
-
-    {%- macro getJsonForAttribute(variable, attribute) %}
-        {{ variable|map(attribute=attribute)|list|tojson }}
-    {% endmacro -%}
 
     <div class="flex flex-col lg:flex-row gap-12 lg:gap-16 xl:gap-24 2xl:gap-36 mb-8">
         <div class="flex-1 responsive-prose">

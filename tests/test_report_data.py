@@ -15,6 +15,7 @@ generate_data_by_file_path(test_file)
 files = [
     "1_feed_info.json",
     "2_daily_service_hours.json",
+    "2_gtfs_rt_completeness.json",
     "3_routes_changed.json",
     "3_stops_changed.json",
     "4_file_check.json",
