@@ -120,8 +120,9 @@
                  data-hours="{{ getJsonForAttribute(tu_hours, 'percent_of_trips_with_TU_messages')|trim }}"
                  data-color="#F6BF16"
                  data-y-axis-label="% of trips with messages"
-                 data-tooltip-value-label="% trips"
-                 data-chart-type="area">
+                 data-tooltip-value-label="%"
+                 data-chart-type="area"
+                 data-chart-collabel="trip_update_completeness">
             </div>
         </div>
         <div class="flex-1">
@@ -134,8 +135,9 @@
                  data-hours="{{ getJsonForAttribute(vp_hours, 'percent_of_trips_with_VP_messages')|trim }}"
                  data-color="#5B559C"
                  data-y-axis-label="% of trips with messages"
-                 data-tooltip-value-label="percent trips"
-                 data-chart-type="area">
+                 data-tooltip-value-label="percent"
+                 data-chart-type="area"
+                 data-chart-collabel="vehicle_position_completeness">
             </div>
         </div>
     </div>
@@ -150,8 +152,9 @@
                  data-hours="{{ getJsonForAttribute(tu_age, 'avg_median_trip_update_message_age')|trim }}"
                  data-color="#F6BF16"
                  data-y-axis-label="Average of Median Trip Update Message Age"
-                 data-tooltip-value-label="avg median age"
-                 data-chart-type="line">
+                 data-tooltip-value-label="seconds"
+                 data-chart-type="line"
+                 data-chart-collabel="avg_median_age">
             </div>
         </div>
         <div class="flex-1">
@@ -164,8 +167,9 @@
                  data-hours="{{ getJsonForAttribute(vp_age, 'avg_median_vehicle_message_age')|trim }}"
                  data-color="#5B559C"
                  data-y-axis-label="Average of Median Vehicle Message Age"
-                 data-tooltip-value-label="avg median age"
-                 data-chart-type="line">
+                 data-tooltip-value-label="seconds"
+                 data-chart-type="line"
+                 data-chart-collabel="avg_median_age">
             </div>
         </div>
 

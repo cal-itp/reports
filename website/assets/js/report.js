@@ -12,6 +12,7 @@ hoursCharts.forEach((chartEl) => {
     const hours = JSON.parse(chartEl.dataset.hours);
     const chartType = chartEl.dataset.chartType || 'line'; // Get chart type from dataset, default to 'line'
     const color = chartEl.dataset.color;
+    const colLabel = chartEl.dataset.chartCollabel || 'hours';
 
     const chart = bb.generate({
         bindto: chartEl,
@@ -23,10 +24,10 @@ hoursCharts.forEach((chartEl) => {
             xFormat: "%Q",
             columns: [
                 ["Date"].concat(dates),
-                ["Hours"].concat(hours),
+                [colLabel].concat(hours),
             ],
             types: {
-                Hours: chartType === 'area' ? area() : line()
+                [colLabel]: chartType === 'area' ? area() : line()
             }
         },
         area: {
@@ -72,7 +73,6 @@ hoursCharts.forEach((chartEl) => {
                     year: 'numeric',
                     timeZone: 'UTC',
                 }).format(x),
-                // value: (x) => twoDecimals.format(x),
                 // Get the tooltip value label from the chart element's dataset
                 value: (x) => `${twoDecimals.format(x)} ${chartEl.dataset.tooltipValueLabel || 'hours'}` 
             },
