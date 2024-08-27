@@ -162,6 +162,86 @@ def generate_rt_completeness(itp_id: int, date_start: str, date_end: str):
 
 
 @cache
+def _median_tu_age():
+    return query_sql(
+        """
+SELECT
+  -- mas.base64_url, #Issues are here, this is producing orgs without proper cal-itp ids, they don't exist down the chain
+  organization_name,
+  organization_itp_id as calitp_itp_id,
+DATETIME(DATE_TRUNC(mas.dt, DAY)) as service_date,
+  AVG(mas.median_trip_update_message_age) AS avg_median_trip_update_message_age
+
+FROM `mart_gtfs_quality.fct_daily_trip_updates_message_age_summary` mas
+
+LEFT JOIN `mart_transit_database.dim_gtfs_datasets` dgd 
+  ON mas.base64_url = dgd.base64_url
+LEFT JOIN `mart_transit_database.dim_provider_gtfs_data` dpgd 
+  ON dgd.key = dpgd.trip_updates_gtfs_dataset_key
+
+WHERE mas.dt < DATE_TRUNC(CURRENT_DATE('America/Los_Angeles'), DAY)
+AND organization_itp_id is not null
+
+GROUP BY 1, 2, 3
+""",
+        as_df=True,
+    )
+
+
+def generate_ave_median_tu_age(itp_id: int, date_start, date_end):
+    df = _median_tu_age()
+    date_start = pd.to_datetime(date_start)
+    date_end = pd.to_datetime(date_end)
+
+    # Filter the DataFrame based on the conditions
+    return df[
+        (df["calitp_itp_id"] == itp_id)
+        & (df["service_date"] >= date_start)
+        & (df["service_date"] <= date_end)
+    ]
+
+
+@cache
+def _median_vp_age():
+    return query_sql(
+        """
+SELECT
+  -- mas.base64_url, #Issues are here, this is producing orgs without proper cal-itp ids
+  organization_name,
+  organization_itp_id as calitp_itp_id,
+  DATETIME(DATE_TRUNC(mas.dt, DAY)) AS service_date,
+  AVG(mas.median_vehicle_message_age) AS avg_median_vehicle_message_age
+
+FROM `mart_gtfs_quality.fct_daily_vehicle_positions_message_age_summary` mas
+
+LEFT JOIN `mart_transit_database.dim_gtfs_datasets` dgd 
+  ON mas.base64_url = dgd.base64_url
+LEFT JOIN `mart_transit_database.dim_provider_gtfs_data` dpgd 
+  ON dgd.key = dpgd.vehicle_positions_gtfs_dataset_key
+
+WHERE mas.dt < DATE_TRUNC(CURRENT_DATE('America/Los_Angeles'), DAY)
+AND organization_itp_id is not null
+
+GROUP BY 1, 2, 3
+""",
+        as_df=True,
+    )
+
+
+def generate_ave_median_vp_age(itp_id: int, date_start, date_end):
+    df = _median_vp_age()
+    date_start = pd.to_datetime(date_start)
+    date_end = pd.to_datetime(date_end)
+
+    # Filter the DataFrame based on the conditions
+    return df[
+        (df["calitp_itp_id"] == itp_id)
+        & (df["service_date"] >= date_start)
+        & (df["service_date"] <= date_end)
+    ]
+
+
+@cache
 def _guideline_check():
     return (
         LazyTbl(
@@ -321,6 +401,18 @@ def dump_report_data(
         print(f"Generating rt_complete for {itp_id}")
     rt_complete = generate_rt_completeness(itp_id, date_start, date_end)
     rt_complete.to_json(out_dir / "2_gtfs_rt_completeness.json", orient="records")
+
+    # 2_tu_message_age.json
+    if verbose:
+        print(f"Generating tu_age for {itp_id}")
+    ave_median_tu_age = generate_ave_median_tu_age(itp_id, date_start, date_end)
+    ave_median_tu_age.to_json(out_dir / "2_ave_median_tu_age.json", orient="records")
+
+    # 2_vp_message_age.json
+    if verbose:
+        print(f"Generating vp_age for {itp_id}")
+    ave_median_vp_age = generate_ave_median_vp_age(itp_id, date_start, date_end)
+    ave_median_vp_age.to_json(out_dir / "2_ave_median_vp_age.json", orient="records")
 
     # 3_stops_changed.json
     if verbose:

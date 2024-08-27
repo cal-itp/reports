@@ -1,4 +1,4 @@
-import bb, { bar, area } from 'billboard.js';
+import bb, { bar, area, line } from 'billboard.js';
 
 const twoDecimals = new Intl.NumberFormat('default', { maximumFractionDigits: 2});
 
@@ -10,6 +10,7 @@ const hoursCharts = document.querySelectorAll('.hours-chart');
 hoursCharts.forEach((chartEl) => {
     const dates = JSON.parse(chartEl.dataset.dates);
     const hours = JSON.parse(chartEl.dataset.hours);
+    const chartType = chartEl.dataset.chartType || 'line'; // Get chart type from dataset, default to 'line'
     const color = chartEl.dataset.color;
 
     const chart = bb.generate({
@@ -25,7 +26,7 @@ hoursCharts.forEach((chartEl) => {
                 ["Hours"].concat(hours),
             ],
             types: {
-                Hours: area(),
+                Hours: chartType === 'area' ? area() : line()
             }
         },
         area: {
@@ -49,7 +50,7 @@ hoursCharts.forEach((chartEl) => {
             y: {
                 label: {
                     position: "outer-middle",
-                    text: "Total service hours"
+                    text: chartEl.dataset.yAxisLabel || "Total service hours" // Default to "Total service hours" if not provided
                 },
                 tick: {
                     culling: {
@@ -71,97 +72,9 @@ hoursCharts.forEach((chartEl) => {
                     year: 'numeric',
                     timeZone: 'UTC',
                 }).format(x),
-                value: (x) => twoDecimals.format(x),
-            },
-        },
-
-        onafterinit: function () {
-            const { circles } = this.$;
-
-            circles.each(function (circle, i) {
-                const labelDate = circle.x.toLocaleString('en-US', {
-                    month: "short",
-                    day: "numeric",
-                });
-                const labelValue = `${twoDecimals.format(circle.value)} hours`;
-                this.setAttribute('tabindex', 0);
-                this.setAttribute('aria-label', `${labelDate}: ${labelValue}`);
-            });
-        }
-    })
-});
-
-// rt CHARTS
-// *****************************************************************************
-// I only changed one attribute when making this, y-label-text.  Need to figure out how to make it a variable
-
-const rtCharts = document.querySelectorAll('.rt-chart');
-
-rtCharts.forEach((chartEl) => {
-    const dates = JSON.parse(chartEl.dataset.dates);
-    const hours = JSON.parse(chartEl.dataset.hours);
-    const color = chartEl.dataset.color;
-
-    const chart = bb.generate({
-        bindto: chartEl,
-        color: {
-            pattern: [color]
-        },
-        data: {
-            x: "Date",
-            xFormat: "%Q",
-            columns: [
-                ["Date"].concat(dates),
-                ["Hours"].concat(hours),
-            ],
-            types: {
-                Hours: area(),
-            }
-        },
-        area: {
-            linearGradient: true,
-        },
-        axis: {
-            x: {
-                label: {
-                    position: "outer-center",
-                    text: "Service date"
-                },
-                localtime: false,
-                tick: {
-                    fit: false,
-                    format: "%-m/%-d",
-                    outer: false,
-                    rotate: -30,
-                },
-                type: "timeseries",
-            },
-            y: {
-                label: {
-                    position: "outer-middle",
-                    text: "% of trips with messages"
-                },
-                tick: {
-                    culling: {
-                        max: 6,
-                    },
-                    outer: false,
-                },
-            },
-        },
-        legend: {
-            show: false
-        },
-        tooltip: {
-            format: {
-                title: (x) => Intl.DateTimeFormat('default', {
-                    weekday: 'short',
-                    month: 'long',
-                    day: 'numeric',
-                    year: 'numeric',
-                    timeZone: 'UTC',
-                }).format(x),
-                value: (x) => twoDecimals.format(x),
+                // value: (x) => twoDecimals.format(x),
+                // Get the tooltip value label from the chart element's dataset
+                value: (x) => `${twoDecimals.format(x)} ${chartEl.dataset.tooltipValueLabel || 'hours'}` 
             },
         },
 

@@ -112,28 +112,64 @@
     <div class="flex flex-col lg:flex-row gap-12 lg:gap-16 xl:gap-24 2xl:gap-36">
         <div class="flex-1">
             <div class="responsive-prose">
-                <h2>GTFS-RT Trip Updates Completeness by day</h2>
+                <h2>Trip Updates Completeness by day</h2>
             </div>
             {% set tu_hours = gtfs_rt_completeness|list %}
-            <div class="rt-chart"
+            <div class="hours-chart"
                  data-dates="{{ getJsonForAttribute(tu_hours, 'service_date')|trim }}"
                  data-hours="{{ getJsonForAttribute(tu_hours, 'percent_of_trips_with_TU_messages')|trim }}"
-                 data-color="#F6BF16">
+                 data-color="#F6BF16"
+                 data-y-axis-label="% of trips with messages"
+                 data-tooltip-value-label="% trips"
+                 data-chart-type="area">
             </div>
         </div>
         <div class="flex-1">
             <div class="responsive-prose">
-                <h2>GTFS-RT Vehicle Positions Completeness by day</h2>
+                <h2>Vehicle Positions Completeness by day</h2>
             </div>
             {% set vp_hours = gtfs_rt_completeness|list %}
-            <div class="rt-chart"
+            <div class="hours-chart"
                  data-dates="{{ getJsonForAttribute(vp_hours, 'service_date')|trim }}"
                  data-hours="{{ getJsonForAttribute(vp_hours, 'percent_of_trips_with_VP_messages')|trim }}"
-                 data-color="#5B559C">
+                 data-color="#5B559C"
+                 data-y-axis-label="% of trips with messages"
+                 data-tooltip-value-label="percent trips"
+                 data-chart-type="area">
+            </div>
+        </div>
+    </div>
+    <div class="flex flex-col lg:flex-row gap-12 lg:gap-16 xl:gap-24 2xl:gap-36">
+        <div class="flex-1">
+            <div class="responsive-prose">
+                <h2>Median Trip Update Message Age</h2>
+            </div>
+            {% set tu_age = ave_median_tu_age|list %}
+            <div class="hours-chart"
+                 data-dates="{{ getJsonForAttribute(tu_age, 'service_date')|trim }}"
+                 data-hours="{{ getJsonForAttribute(tu_age, 'avg_median_trip_update_message_age')|trim }}"
+                 data-color="#F6BF16"
+                 data-y-axis-label="Average of Median Trip Update Message Age"
+                 data-tooltip-value-label="avg median age"
+                 data-chart-type="line">
+            </div>
+        </div>
+        <div class="flex-1">
+            <div class="responsive-prose">
+                <h2>Median Vehicle Positions Message Age</h2>
+            </div>
+            {% set vp_age = ave_median_vp_age|list %}
+            <div class="hours-chart"
+                 data-dates="{{ getJsonForAttribute(vp_age, 'service_date')|trim }}"
+                 data-hours="{{ getJsonForAttribute(vp_age, 'avg_median_vehicle_message_age')|trim }}"
+                 data-color="#5B559C"
+                 data-y-axis-label="Average of Median Vehicle Message Age"
+                 data-tooltip-value-label="avg median age"
+                 data-chart-type="line">
             </div>
         </div>
 
-    </div>
+    </div>    
     {% endif %}
     <div class="responsive-prose max-w-none">
         <div class="my-8 flex gap-4">
@@ -226,7 +262,8 @@
             <div class="hours-chart"
                  data-dates="{{ getJsonForAttribute(weekday_hours, 'service_date')|trim }}"
                  data-hours="{{ getJsonForAttribute(weekday_hours, 'ttl_service_hours')|trim }}"
-                 data-color="#136C97">
+                 data-color="#136C97"
+                 data-chart-type="area">
             </div>
         </div>
     </div>
@@ -241,7 +278,8 @@
             <div class="hours-chart"
                  data-dates="{{ getJsonForAttribute(sat_hours, 'service_date')|trim }}"
                  data-hours="{{ getJsonForAttribute(sat_hours, 'ttl_service_hours')|trim }}"
-                 data-color="#F6BF16">
+                 data-color="#F6BF16"
+                 data-chart-type="area">
             </div>
         </div>
 
@@ -254,7 +292,8 @@
             <div class="hours-chart"
                  data-dates="{{ getJsonForAttribute(sun_hours, 'service_date')|trim }}"
                  data-hours="{{ getJsonForAttribute(sun_hours, 'ttl_service_hours')|trim }}"
-                 data-color="#5B559C">
+                 data-color="#5B559C"
+                 data-chart-type="area">
             </div>
         </div>
     </div>
