@@ -74,7 +74,7 @@ hoursCharts.forEach((chartEl) => {
                     timeZone: 'UTC',
                 }).format(x),
                 // Get the tooltip value label from the chart element's dataset
-                value: (x) => `${twoDecimals.format(x)} ${chartEl.dataset.tooltipValueLabel || 'hours'}` 
+                value: (x) => `${twoDecimals.format(x)} ${chartEl.dataset.tooltipValueLabel || 'hours'}`
             },
         },
 

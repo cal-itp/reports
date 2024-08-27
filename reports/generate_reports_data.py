@@ -174,9 +174,9 @@ DATETIME(DATE_TRUNC(mas.dt, DAY)) as service_date,
 
 FROM `mart_gtfs_quality.fct_daily_trip_updates_message_age_summary` mas
 
-LEFT JOIN `mart_transit_database.dim_gtfs_datasets` dgd 
+LEFT JOIN `mart_transit_database.dim_gtfs_datasets` dgd
   ON mas.base64_url = dgd.base64_url
-LEFT JOIN `mart_transit_database.dim_provider_gtfs_data` dpgd 
+LEFT JOIN `mart_transit_database.dim_provider_gtfs_data` dpgd
   ON dgd.key = dpgd.trip_updates_gtfs_dataset_key
 
 WHERE mas.dt < DATE_TRUNC(CURRENT_DATE('America/Los_Angeles'), DAY)
@@ -214,9 +214,9 @@ SELECT
 
 FROM `mart_gtfs_quality.fct_daily_vehicle_positions_message_age_summary` mas
 
-LEFT JOIN `mart_transit_database.dim_gtfs_datasets` dgd 
+LEFT JOIN `mart_transit_database.dim_gtfs_datasets` dgd
   ON mas.base64_url = dgd.base64_url
-LEFT JOIN `mart_transit_database.dim_provider_gtfs_data` dpgd 
+LEFT JOIN `mart_transit_database.dim_provider_gtfs_data` dpgd
   ON dgd.key = dpgd.vehicle_positions_gtfs_dataset_key
 
 WHERE mas.dt < DATE_TRUNC(CURRENT_DATE('America/Los_Angeles'), DAY)
