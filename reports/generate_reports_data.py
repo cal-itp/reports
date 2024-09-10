@@ -11,7 +11,7 @@ import typer
 from calitp_data_analysis.sql import get_engine, query_sql  # type: ignore
 from siuba import _, arrange, collect  # type: ignore
 from siuba import filter as filtr  # type: ignore
-from siuba import left_join, mutate, pipe, rename, select, spread  # type: ignore
+from siuba import mutate, pipe, rename, select, spread  # type: ignore
 from siuba.sql import LazyTbl  # type: ignore
 from tqdm import tqdm
 
@@ -52,42 +52,32 @@ def get_dates_year_month(year: int, month: int) -> list:
 
 @cache
 def _feed_info():
-    return (
-        LazyTbl(
-            engine,
-            "mart_gtfs_quality.idx_monthly_reports_site",
-        )
-        >> left_join(
-            _,
-            LazyTbl(
-                engine,
-                "mart_gtfs_quality.fct_monthly_reports_site_organization_gtfs_vendors",
-            ),
-            ["organization_itp_id", "date_start", "organization_name"],
-        )
-        >> select(
-            _.organization_itp_id,
-            _.organization_name,
-            _.organization_website,
-            _.publish_date,
-            _.date_start,
-            _.date_end,
-            _.route_ct,
-            _.stop_ct,
-            _.no_service_days_ct,
-            _.earliest_feed_end_date,
-            _.schedule_vendors,
-            _.rt_vendors,
-        )
-        >> mutate(has_feed_info=True)
-        >> rename(feed_publisher_name=_.organization_name)
-        >> rename(feed_publisher_url=_.organization_website)
-        >> rename(report_start_date=_.date_start)
-        >> rename(report_end_date=_.date_end)
-        >> rename(has_feed_info=_.true)
-        >> rename(n_routes=_.route_ct)
-        >> rename(n_stops=_.stop_ct)
-        >> collect()
+    return query_sql(
+        """
+SELECT
+  idx.`organization_itp_id`,
+  idx.`organization_name` AS `feed_publisher_name`,
+  idx.`organization_website` AS `feed_publisher_url`,
+  idx.`publish_date`,
+  idx.`date_start` AS `report_start_date`,
+  idx.`date_end` AS `report_end_date`,
+  EXTRACT(MONTH FROM LAG(idx.date_start) OVER (PARTITION BY idx.organization_itp_id ORDER BY idx.date_start)) AS month_for_previous_entry,
+  EXTRACT(YEAR FROM LAG(idx.date_start) OVER (PARTITION BY idx.organization_itp_id ORDER BY idx.date_start)) AS year_for_previous_entry,
+  EXTRACT(MONTH FROM LEAD(idx.date_start) OVER (PARTITION BY idx.organization_itp_id ORDER BY idx.date_start)) AS month_for_next_entry,
+  EXTRACT(YEAR FROM LEAD(idx.date_start) OVER (PARTITION BY idx.organization_itp_id ORDER BY idx.date_start)) AS year_for_next_entry,
+  idx.`route_ct` AS `n_routes`,
+  idx.`stop_ct` AS `n_stops`,
+  idx.`no_service_days_ct`,
+  idx.`earliest_feed_end_date`,
+  fct.`schedule_vendors`,
+  fct.`rt_vendors`,
+  true AS `has_feed_info`
+FROM `mart_gtfs_quality.idx_monthly_reports_site` AS idx
+LEFT OUTER JOIN `mart_gtfs_quality.fct_monthly_reports_site_organization_gtfs_vendors` AS fct
+  ON idx.`organization_itp_id` = fct.`organization_itp_id`
+  AND idx.`date_start` = fct.`date_start`;
+""",
+        as_df=True,
     )
 
 
