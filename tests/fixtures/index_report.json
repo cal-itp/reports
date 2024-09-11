@@ -1,22 +1,18 @@
 [
   {
-    "year": 2022,
-    "first_month": 11,
-    "last_month": 11,
+    "year": 2024,
+    "first_month": 7,
+    "last_month": 7,
     "months": [
       {
-        "month": 11,
+        "month": 7,
         "reports": [
           {
-            "agency_name": "City of Delano",
-            "itp_id": 91,
-            "report_path": "2022\/11\/91\/index.html",
-            "feeds": [
-              {
-                "gtfs_dataset_name": "Delano Schedule",
-                "string_url": "https:\/\/data.trilliumtransit.com\/gtfs\/delano-ca-us\/delano-ca-us.zip"
-              }
-            ]
+            "agency_name": "City and County of San Francisco",
+            "itp_id": 282,
+            "report_path": "2024\/07\/282\/index.html",
+            "feeds":[
+                {"gtfs_dataset_name":"Bay Area 511 Muni Alerts","string_url":"https:\/\/api.511.org\/transit\/servicealerts?agency=SF"},{"gtfs_dataset_name":"Bay Area 511 Muni TripUpdates","string_url":"https:\/\/api.511.org\/transit\/tripupdates?agency=SF"},{"gtfs_dataset_name":"Bay Area 511 Muni Schedule","string_url":"https:\/\/api.511.org\/transit\/datafeeds?operator_id=SF"},{"gtfs_dataset_name":"Bay Area 511 Muni VehiclePositions","string_url":"https:\/\/api.511.org\/transit\/vehiclepositions?agency=SF"}]
           }
         ]
       }
