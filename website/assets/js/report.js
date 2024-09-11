@@ -1,15 +1,18 @@
-import bb, { bar, area } from 'billboard.js';
+import bb, { bar, area, line } from 'billboard.js';
+
+const twoDecimals = new Intl.NumberFormat('default', { maximumFractionDigits: 2});
 
 // HOURS CHARTS
 // *****************************************************************************
 
 const hoursCharts = document.querySelectorAll('.hours-chart');
-const twoDecimals = new Intl.NumberFormat('default', { maximumFractionDigits: 2});
 
 hoursCharts.forEach((chartEl) => {
     const dates = JSON.parse(chartEl.dataset.dates);
     const hours = JSON.parse(chartEl.dataset.hours);
+    const chartType = chartEl.dataset.chartType || 'line'; // Get chart type from dataset, default to 'line'
     const color = chartEl.dataset.color;
+    const colLabel = chartEl.dataset.chartCollabel || 'hours';
 
     const chart = bb.generate({
         bindto: chartEl,
@@ -21,10 +24,10 @@ hoursCharts.forEach((chartEl) => {
             xFormat: "%Q",
             columns: [
                 ["Date"].concat(dates),
-                ["Hours"].concat(hours),
+                [colLabel].concat(hours),
             ],
             types: {
-                Hours: area(),
+                [colLabel]: chartType === 'area' ? area() : line()
             }
         },
         area: {
@@ -48,7 +51,7 @@ hoursCharts.forEach((chartEl) => {
             y: {
                 label: {
                     position: "outer-middle",
-                    text: "Total service hours"
+                    text: chartEl.dataset.yAxisLabel || "Total service hours" // Default to "Total service hours" if not provided
                 },
                 tick: {
                     culling: {
@@ -70,7 +73,8 @@ hoursCharts.forEach((chartEl) => {
                     year: 'numeric',
                     timeZone: 'UTC',
                 }).format(x),
-                value: (x) => twoDecimals.format(x),
+                // Get the tooltip value label from the chart element's dataset
+                value: (x) => `${twoDecimals.format(x)} ${chartEl.dataset.tooltipValueLabel || 'hours'}`
             },
         },
 
@@ -89,7 +93,6 @@ hoursCharts.forEach((chartEl) => {
         }
     })
 });
-
 
 // CHANGES CHART
 // *****************************************************************************
