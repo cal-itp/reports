@@ -41,7 +41,7 @@ jobs:
         working-directory: ./tests
         run: python test_report_data.py
       - name: Prepare website build
-        run: cp -r tests/outputs/2022 reports/outputs/. && cp tests/fixtures/* reports/outputs/.
+        run: cp -r tests/outputs/2024 reports/outputs/. && cp tests/fixtures/* reports/outputs/.
       - name: Run website build
         working-directory: ./website
         run: npm install && npm run build && cat build/index.html | grep "Monthly GTFS Quality Reports"
