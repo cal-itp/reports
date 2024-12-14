@@ -196,23 +196,28 @@ def _median_vp_age():
     return query_sql(
         """
 SELECT
-  -- mas.base64_url, #Issues are here, this is producing orgs without proper cal-itp ids
-  organization_name,
-  organization_itp_id as calitp_itp_id,
-  DATETIME(DATE_TRUNC(mas.dt, DAY)) AS service_date,
-  AVG(mas.median_vehicle_message_age) AS avg_median_vehicle_message_age
-
-FROM `mart_gtfs_quality.fct_daily_vehicle_positions_message_age_summary` mas
-
-LEFT JOIN `mart_transit_database.dim_gtfs_datasets` dgd
-  ON mas.base64_url = dgd.base64_url
-LEFT JOIN `mart_transit_database.dim_provider_gtfs_data` dpgd
-  ON dgd.key = dpgd.vehicle_positions_gtfs_dataset_key
-
-WHERE mas.dt < DATE_TRUNC(CURRENT_DATE('America/Los_Angeles'), DAY)
-AND organization_itp_id is not null
-
-GROUP BY 1, 2, 3
+    organization_name,
+    organization_itp_id AS calitp_itp_id,
+    dt AS service_date,
+    AVG(pls.median_vehicle_message_age) AS avg_median_vehicle_message_age
+FROM
+    `cal-itp-data-infra.mart_gtfs_quality.fct_daily_vehicle_positions_latency_statistics` pls
+LEFT JOIN
+    `cal-itp-data-infra.mart_transit_database.dim_provider_gtfs_data` dpg
+    ON pls.gtfs_dataset_key = dpg.vehicle_positions_gtfs_dataset_key
+    AND dt BETWEEN DATE(_valid_from) AND DATE(_valid_to)
+WHERE
+    organization_itp_id IS NOT NULL
+    AND public_customer_facing_or_regional_subfeed_fixed_route = TRUE
+    AND dt < DATE_TRUNC(CURRENT_DATE('America/Los_Angeles'), DAY)
+GROUP BY
+    organization_name,
+    organization_itp_id,
+    dt
+ORDER BY
+    organization_name,
+    organization_itp_id,
+    dt;
 """,
         as_df=True,
     )
