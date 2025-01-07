@@ -195,28 +195,28 @@ def generate_ave_median_tu_age(itp_id: int, date_start, date_end):
 def _median_vp_age():
     return query_sql(
         """
-SELECT 
+SELECT
     organization_name,
     organization_itp_id AS calitp_itp_id,
     dt AS service_date,
     AVG(pls.median_vehicle_message_age) AS avg_median_vehicle_message_age
-FROM 
+FROM
     `cal-itp-data-infra.mart_gtfs_quality.fct_daily_vehicle_positions_latency_statistics` pls
-LEFT JOIN 
+LEFT JOIN
     `cal-itp-data-infra.mart_transit_database.dim_provider_gtfs_data` dpg
     ON pls.gtfs_dataset_key = dpg.vehicle_positions_gtfs_dataset_key
     AND dt BETWEEN DATE(_valid_from) AND DATE(_valid_to)
-WHERE 
+WHERE
     organization_itp_id IS NOT NULL
     AND public_customer_facing_or_regional_subfeed_fixed_route = TRUE
     AND dt < DATE_TRUNC(CURRENT_DATE('America/Los_Angeles'), DAY)
-GROUP BY 
-    organization_name, 
-    organization_itp_id, 
+GROUP BY
+    organization_name,
+    organization_itp_id,
     dt
-ORDER BY 
-    organization_name, 
-    organization_itp_id, 
+ORDER BY
+    organization_name,
+    organization_itp_id,
     dt;
 """,
         as_df=True,
