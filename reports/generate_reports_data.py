@@ -139,12 +139,12 @@ def _rt_completeness():
 
 
 def generate_rt_completeness(itp_id: int, date_start: str, date_end: str):
-    df = _rt_completeness()
+    df = _rt_completeness()  # service_date format: datetime64, 'YYYY-MM-DD 00:00:00'
     date_start = pd.to_datetime(date_start)
     date_end = pd.to_datetime(date_end)
 
     # Filter the DataFrame based on the conditions
-    return df[
+    return df[  # Why doesn't this comparison fail? like the other comparisons?
         (df["calitp_itp_id"] == itp_id)
         & (df["service_date"] >= date_start)
         & (df["service_date"] <= date_end)
@@ -179,9 +179,16 @@ GROUP BY 1, 2, 3
 
 
 def generate_ave_median_tu_age(itp_id: int, date_start, date_end):
-    df = _median_tu_age()
-    date_start = pd.to_datetime(date_start)
-    date_end = pd.to_datetime(date_end)
+    """
+    Args:
+        itp_id (int): The ITP ID to filter the DataFrame.
+        date_start (str): The start date of the range in 'YYYY-MM-DD' format.
+        date_end (str): The end date of the range in 'YYYY-MM-DD' format.
+    """
+    df = _median_tu_age()  # service_date format: datetime64[ns], 2025-01-05 00:00:00
+
+    date_start = pd.Timestamp(date_start)
+    date_end = pd.Timestamp(date_end)
 
     # Filter the DataFrame based on the conditions
     return df[
@@ -224,9 +231,16 @@ ORDER BY
 
 
 def generate_ave_median_vp_age(itp_id: int, date_start, date_end):
-    df = _median_vp_age()
-    date_start = pd.to_datetime(date_start)
-    date_end = pd.to_datetime(date_end)
+    """
+    Args:
+       itp_id (int): The ITP ID to filter the DataFrame.
+       date_start (str): The start date of the range in 'YYYY-MM-DD' format.
+       date_end (str): The end date of the range in 'YYYY-MM-DD' format.
+    """
+    df = _median_vp_age()  # service_date format: object, 'YYYY-MM-DD'
+    df["service_date"] = pd.to_datetime(df["service_date"])
+    date_start = pd.Timestamp(date_start)
+    date_end = pd.Timestamp(date_end)
 
     # Filter the DataFrame based on the conditions
     return df[
