@@ -25,7 +25,7 @@
         <mj-text>All previous reports are available at <a href="https://reports.calitp.org/?utm_campaign=reports&amp;utm_source=reports-mailer&amp;utm_medium=email&amp;utm_content=all-reports-link">https://reports.calitp.org/</a>.</mj-text>
         <mj-text>If you have any questions about your monthly report, recent changes, or would like technical assistance with your GTFS feed(s), please contact us at <a href="mailto:hello@calitp.org?subject=Feedback - Monthly GTFS Report">hello@calitp.org</a>.</mj-text>
         <mj-text>Thanks,</mj-text>
-        <mj-text padding-top="3px" padding-bottom="10px" line-height="1px" color="#2EA8CE" mj-class="display-font" font-size="20px" padding-bottom="0">The Cal-ITP Team</mj-text>
+        <mj-spacer height="10px" /> <mj-text padding-top="3px" padding-bottom="10px" line-height="1.2" color="#2EA8CE" mj-class="display-font" font-size="20px">The Cal-ITP Team</mj-text>
         <mj-text padding-top="0"><a href="http://calitp.org?utm_campaign=reports&amp;utm_source=reports-mailer&amp;utm_medium=email&amp;utm_content=signature-link" style="font-size: 12px; letter-spacing: .03em; text-decoration: none; font-weight: bold;">calitp.org</a></mj-text>
       </mj-column>
     </mj-section>

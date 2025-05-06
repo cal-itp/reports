@@ -67,18 +67,18 @@ jobs:
       run: npm run build
       working-directory: website
 
-    # deploy ----
+    # deploy ----https://docs.netlify.com/cli/get-started/.  -g is not recommended but it should be okay in this situation
     - name: Deploy development to Netlify
       if: ${{ (github.event_name == 'push' && github.ref == 'refs/heads/main') || (github.event_name == 'workflow_dispatch' && inputs.site_target == 'dev')}}
       run: |
-        npm install netlify-cli
+        npm install netlify-cli -g
         netlify deploy --site=cal-itp-reports --dir=./website/build --alias=test
       env:
         NETLIFY_AUTH_TOKEN: ${{ secrets.NETLIFY_AUTH_TOKEN }}
     - name: Deploy production to Netlify
       if: ${{ (github.event_name == 'push' && startsWith(github.ref, 'refs/tags/')) || (github.event_name == 'workflow_dispatch' && inputs.site_target == 'prod')}}
       run: |
-        npm install netlify-cli
+        npm install netlify-cli -g
         netlify deploy --site=cal-itp-reports --dir=./website/build --prod
       env:
         NETLIFY_AUTH_TOKEN: ${{ secrets.NETLIFY_AUTH_TOKEN }}
