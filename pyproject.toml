@@ -1,6 +1,6 @@
 [tool.poetry]
 name = "reports"
-version = "0.1.0"
+version = "0.2.0"
 description = ""
 authors = ["Andrew Vaccaro <andrew.v@jarv.us>"]
 readme = "README.md"
@@ -20,7 +20,7 @@ hubspot-api-client = "11.0.0"
 jupyter = "^1.0.0"
 pandas = "<2"
 numpy = "<2.0.0"
-nodeenv = "^1.6.0"
+nodeenv = "^1.8.0"
 
 [tool.poetry.group.dev.dependencies]
 pre-commit = "^3.2.2"
