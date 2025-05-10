@@ -561,4 +561,10 @@ def generate_data(
 
 
 if __name__ == "__main__":
-    typer.run(generate_data)
+    try:
+        typer.run(generate_data)
+    finally:
+        if "engine" in globals() and engine is not None:
+            print("Disposing of database engine...")
+            engine.dispose()
+            print("Database engine disposed.")

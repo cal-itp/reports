@@ -1,4 +1,4 @@
-FROM python:3.9
+FROM python:3.11
 
 # Install npm/node for creating reports website
 RUN curl -fsSL https://deb.nodesource.com/setup_16.x | bash - \
