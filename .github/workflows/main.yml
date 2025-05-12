@@ -1,4 +1,4 @@
-name: Build and deploy website to GCS
+name: Build and deploy to Netlify
 
 on:
   workflow_dispatch:
@@ -29,10 +29,9 @@ jobs:
       uses: actions/setup-python@v5
       with:
         python-version: 3.11
-    - name: Setup Node.js
-      uses: actions/setup-node@v4
+    - uses: actions/setup-node@v4
       with:
-        node-version: 20
+        node-version: '20'
     - name: Install python packages
       run: |
         pip install -r requirements.txt
@@ -63,27 +62,21 @@ jobs:
         gsutil -m rsync -r gs://test-calitp-reports-data/report_gtfs_schedule/ gs://calitp-reports-data/report_gtfs_schedule/
         gsutil -m rsync -r gs://calitp-reports-data/report_gtfs_schedule/ reports/outputs/
 
-    # - name: Install Netlify CLI
-      # run: npm install --location=global netlify-cli@21.x.x
-    # build ----
     - name: Build website
       run: npm run build
       working-directory: website
 
-    # Deploy to Netlify ----
-    - name: Deploy to Netlify (Development)
+    - name: Deploy development to Netlify
       if: ${{ (github.event_name == 'push' && github.ref == 'refs/heads/main') || (github.event_name == 'workflow_dispatch' && inputs.site_target == 'dev')}}
       run: |
-        netlify deploy \
-            --alias="${GITHUB_REPOSITORY#*/}-${{ github.event.number }}" \
-            --auth=${{ secrets.NETLIFY_AUTH_TOKEN }} \
-            --dir="./website/build" \
-            --site=${{ secrets.NETLIFY_PREVIEW_APP_SITE_ID }}
-    - name: Deploy to Netlify (Production)
+        npm install --location=global netlify-cli@21.x.x
+        netlify deploy --site=cal-itp-reports --dir=./website/build --alias=test
+      env:
+        NETLIFY_AUTH_TOKEN: ${{ secrets.NETLIFY_AUTH_TOKEN }}
+    - name: Deploy production to Netlify
       if: ${{ (github.event_name == 'push' && startsWith(github.ref, 'refs/tags/')) || (github.event_name == 'workflow_dispatch' && inputs.site_target == 'prod')}}
       run: |
-        netlify deploy \
-            --prod
-            --auth=${{ secrets.NETLIFY_AUTH_TOKEN }} \
-            --dir="./website/build" \
-            --site=cal-itp-reports
+        npm install --location=global netlify-cli@21.x.x
+        netlify deploy --site=cal-itp-reports --dir=./website/build --prod
+      env:
+        NETLIFY_AUTH_TOKEN: ${{ secrets.NETLIFY_AUTH_TOKEN }}
