@@ -1,4 +1,4 @@
-name: Build and deploy to Netlify
+name: Build and deploy website to GCS
 
 on:
   workflow_dispatch:
@@ -22,21 +22,22 @@ jobs:
     runs-on: ubuntu-latest
     steps:
     - name: Check out repo
-      uses: actions/checkout@v2
+      uses: actions/checkout@v4
       with:
         fetch-depth: 0
     - name: Set up Python
-      uses: actions/setup-python@v1
+      uses: actions/setup-python@v5
       with:
-        python-version: 3.9
-    - uses: actions/setup-node@v4
+        python-version: 3.11
+    - name: Setup Node.js
+      uses: actions/setup-node@v4
       with:
-        node-version: '20'
+        node-version: 20
     - name: Install python packages
       run: |
         pip install -r requirements.txt
     - name: Install node packages
-      run: npm install
+      run: npm install --location=global netlify-cli@17.x.x
       working-directory: website
     - uses: google-github-actions/setup-gcloud@v0
       with:
@@ -52,33 +53,37 @@ jobs:
         make data
 
     # copy data ----
-    - name: Copy development report data
+    - name: Copy development report data to GCS
       if: ${{ (github.event_name == 'push' && github.ref == 'refs/heads/main') || (github.event_name == 'workflow_dispatch' && inputs.site_target == 'dev')}}
       run: |
         gsutil -m rsync -r reports/outputs/ gs://test-calitp-reports-data/report_gtfs_schedule/
-    - name: Copy production report data
+    - name: Copy production report data to GCS and local
       if: ${{ (github.event_name == 'push' && startsWith(github.ref, 'refs/tags/')) || (github.event_name == 'workflow_dispatch' && inputs.site_target == 'prod')}}
       run: |
         gsutil -m rsync -r gs://test-calitp-reports-data/report_gtfs_schedule/ gs://calitp-reports-data/report_gtfs_schedule/
         gsutil -m rsync -r gs://calitp-reports-data/report_gtfs_schedule/ reports/outputs/
 
+    # - name: Install Netlify CLI
+      # run: npm install --location=global netlify-cli@21.x.x
     # build ----
-    - name: Build
+    - name: Build website
       run: npm run build
       working-directory: website
 
-    # deploy ----https://docs.netlify.com/cli/get-started/.  -g is not recommended but it should be okay in this situation
-    - name: Deploy development to Netlify
+    # Deploy to Netlify ----
+    - name: Deploy to Netlify (Development)
       if: ${{ (github.event_name == 'push' && github.ref == 'refs/heads/main') || (github.event_name == 'workflow_dispatch' && inputs.site_target == 'dev')}}
       run: |
-        npm install netlify-cli -g
-        netlify deploy --site=cal-itp-reports --dir=./website/build --alias=test
-      env:
-        NETLIFY_AUTH_TOKEN: ${{ secrets.NETLIFY_AUTH_TOKEN }}
-    - name: Deploy production to Netlify
+        netlify deploy \
+            --alias="${GITHUB_REPOSITORY#*/}-${{ github.event.number }}" \
+            --auth=${{ secrets.NETLIFY_AUTH_TOKEN }} \
+            --dir="./website/build" \
+            --site=${{ secrets.NETLIFY_PREVIEW_APP_SITE_ID }}
+    - name: Deploy to Netlify (Production)
       if: ${{ (github.event_name == 'push' && startsWith(github.ref, 'refs/tags/')) || (github.event_name == 'workflow_dispatch' && inputs.site_target == 'prod')}}
       run: |
-        npm install netlify-cli -g
-        netlify deploy --site=cal-itp-reports --dir=./website/build --prod
-      env:
-        NETLIFY_AUTH_TOKEN: ${{ secrets.NETLIFY_AUTH_TOKEN }}
+        netlify deploy \
+            --prod
+            --auth=${{ secrets.NETLIFY_AUTH_TOKEN }} \
+            --dir="./website/build" \
+            --site=cal-itp-reports
