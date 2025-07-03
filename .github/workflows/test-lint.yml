@@ -5,6 +5,10 @@ on: pull_request
 env:
   PYTHON_VERSION: '3.11'
   POETRY_VERSION: '2.0.1'
+  SERVICE_ACCOUNT: 'github-actions-service-account@cal-itp-data-infra.iam.gserviceaccount.com'
+  WORKLOAD_IDENTITY_PROVIDER: 'projects/1005246706141/locations/global/workloadIdentityPools/github-actions/providers/reports'
+  PROJECT_ID: 'cal-itp-data-infra'
+  REPORTS_DATA_BUCKET: 'calitp-reports-data'
 
 jobs:
   lint:
@@ -25,6 +29,11 @@ jobs:
   test:
     name: test
     runs-on: ubuntu-latest
+
+    permissions:
+      contents: read
+      id-token: write
+
     steps:
       - name: Checkout
         uses: actions/checkout@v4

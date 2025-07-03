@@ -11,7 +11,7 @@ env:
   PYTHON_VERSION: '3.11'
   POETRY_VERSION: '2.0.1'
   SERVICE_ACCOUNT: 'github-actions-service-account@cal-itp-data-infra.iam.gserviceaccount.com'
-  WORKLOAD_IDENTITY_PROVIDER: 'projects/1005246706141/locations/global/workloadIdentityPools/github-actions/providers/gtfs-calitp-org'
+  WORKLOAD_IDENTITY_PROVIDER: 'projects/1005246706141/locations/global/workloadIdentityPools/github-actions/providers/reports'
   PROJECT_ID: 'cal-itp-data-infra'
   REPORTS_DATA_BUCKET: 'calitp-reports-data'
 
@@ -70,6 +70,12 @@ jobs:
       - name: Install dependencies
         working-directory: website
         run: poetry install
+
+      - name: Cache data
+        uses: actions/cache@v4
+        with:
+          path: reports/outputs
+          key: ${{ runner.os }}-reports-outputs
 
       - name: Download latest data
         run: gsutil -m rsync -r gs://${{ env.REPORTS_DATA_BUCKET }}/report_gtfs_schedule/ ./reports/outputs/
