@@ -86,7 +86,7 @@ jobs:
           key: ${{ runner.os }}-reports-outputs
 
       - name: Download latest data
-        run: gsutil -m rsync -q -r gs://${{ env.REPORTS_DATA_BUCKET }}/report_gtfs_schedule/ ./reports/outputs/
+        run: gsutil -m rsync -r gs://${{ env.REPORTS_DATA_BUCKET }}/report_gtfs_schedule/ ./reports/outputs/ 1> /dev/null
 
       - name: Build website
         working-directory: website
