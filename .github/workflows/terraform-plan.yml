@@ -1,30 +1,30 @@
-name: Lint and test
+name: Terraform Plan
 
-on: pull_request
+on:
+  pull_request:
+    paths:
+      - 'iac/**'
+      - 'website/**'
+      - 'templates/**'
 
 env:
   PYTHON_VERSION: '3.11'
   POETRY_VERSION: '2.0.1'
+  SERVICE_ACCOUNT: 'github-actions-service-account@cal-itp-data-infra.iam.gserviceaccount.com'
+  WORKLOAD_IDENTITY_PROVIDER: 'projects/1005246706141/locations/global/workloadIdentityPools/github-actions/providers/gtfs-calitp-org'
+  PROJECT_ID: 'cal-itp-data-infra'
+  REPORTS_DATA_BUCKET: 'calitp-reports-data'
 
 jobs:
-  lint:
-    name: lint
+  plan:
+    name: Plan
     runs-on: ubuntu-latest
-    steps:
-      - name: Checkout
-        uses: actions/checkout@v4
 
-      - name: Setup Python
-        uses: actions/setup-python@v5
-        with:
-          python-version: ${{ env.PYTHON_VERSION }}
+    permissions:
+      contents: read
+      id-token: write
+      pull-requests: write
 
-      - name: Run pre-commit
-        uses: pre-commit/action@v3.0.1
-
-  test:
-    name: test
-    runs-on: ubuntu-latest
     steps:
       - name: Checkout
         uses: actions/checkout@v4
@@ -56,6 +56,11 @@ jobs:
         with:
           poetry-version: ${{ env.POETRY_VERSION }}
 
+      - name: Setup node
+        uses: actions/setup-node@v4
+        with:
+          node-version-file: 'website/package.json'
+
       - name: Cache Python packages
         uses: actions/cache@v3
         with:
@@ -66,21 +71,27 @@ jobs:
         working-directory: website
         run: poetry install
 
-      - name: Setup node
-        uses: actions/setup-node@v4
-        with:
-          node-version-file: 'website/package.json'
+      - name: Download latest data
+        run: gsutil -m rsync -r gs://${{ env.REPORTS_DATA_BUCKET }}/report_gtfs_schedule/ ./reports/outputs/
 
-      - name: Run data tests
-        working-directory: tests
-        run: poetry run python test_report_data.py
-
-      - name: Prepare website build
-        run: cp -r tests/outputs/2024 reports/outputs/. && cp tests/fixtures/* reports/outputs/.
-
-      - name: Run website build
+      - name: Build website
         working-directory: website
         run: poetry run npm run build
 
-      - name: Assert website name
-        run: cat build/index.html | grep "Monthly GTFS Quality Reports"
+      - name: Terraform Formatting
+        uses: dflook/terraform-fmt-check@v2
+        with:
+          path: iac/
+
+      - name: Terraform Validation
+        uses: dflook/terraform-validate@v2
+        with:
+          path: iac/
+
+      - name: Terraform Plan
+        uses: dflook/terraform-plan@v2
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        with:
+          add_github_comment: changes-only
+          path: iac/

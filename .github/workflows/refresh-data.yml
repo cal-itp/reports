@@ -1,30 +1,28 @@
-name: Lint and test
+name: Refresh Data
 
-on: pull_request
+on:
+  schedule:
+    - cron: '0 0 1 * *'
+  workflow_dispatch:
 
 env:
   PYTHON_VERSION: '3.11'
   POETRY_VERSION: '2.0.1'
+  SERVICE_ACCOUNT: 'github-actions-service-account@cal-itp-data-infra.iam.gserviceaccount.com'
+  WORKLOAD_IDENTITY_PROVIDER: 'projects/1005246706141/locations/global/workloadIdentityPools/github-actions/providers/gtfs-calitp-org'
+  PROJECT_ID: 'cal-itp-data-infra'
+  REPORTS_DATA_BUCKET: 'calitp-reports-data'
 
 jobs:
-  lint:
-    name: lint
+  plan:
+    name: Apply
     runs-on: ubuntu-latest
-    steps:
-      - name: Checkout
-        uses: actions/checkout@v4
 
-      - name: Setup Python
-        uses: actions/setup-python@v5
-        with:
-          python-version: ${{ env.PYTHON_VERSION }}
+    permissions:
+      contents: read
+      id-token: write
+      pull-requests: write
 
-      - name: Run pre-commit
-        uses: pre-commit/action@v3.0.1
-
-  test:
-    name: test
-    runs-on: ubuntu-latest
     steps:
       - name: Checkout
         uses: actions/checkout@v4
@@ -71,16 +69,33 @@ jobs:
         with:
           node-version-file: 'website/package.json'
 
-      - name: Run data tests
-        working-directory: tests
-        run: poetry run python test_report_data.py
+      - name: Compile report parameters
+        working-directory: reports
+        run: make parameters
 
-      - name: Prepare website build
-        run: cp -r tests/outputs/2024 reports/outputs/. && cp tests/fixtures/* reports/outputs/.
+      - name: Compile report data
+        working-directory: reports
+        run: make data
 
-      - name: Run website build
+      - name: Upload data
+        uses: google-github-actions/upload-cloud-storage@v2
+        with:
+          path: './reports/outputs/'
+          glob: '*'
+          parent: false
+          process_gcloudignore: false
+          destination: ${{ env.REPORTS_DATA_BUCKET }}/report_gtfs_schedule
+          headers: |-
+            content-type: 'application/json'
+
+      - name: Build website
         working-directory: website
         run: poetry run npm run build
 
-      - name: Assert website name
-        run: cat build/index.html | grep "Monthly GTFS Quality Reports"
+      - name: Terraform Apply
+        uses: dflook/terraform-apply@v2
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        with:
+          auto_approve: true
+          path: iac/
