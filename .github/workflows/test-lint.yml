@@ -98,4 +98,5 @@ jobs:
         run: poetry run npm run build
 
       - name: Assert website name
+        working-directory: website
         run: cat build/index.html | grep "Monthly GTFS Quality Reports"
