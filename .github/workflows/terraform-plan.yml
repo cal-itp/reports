@@ -69,9 +69,13 @@ jobs:
           path: ~/.local
           key: python-cache-${{ runner.os }}-python-${{ env.PYTHON_VERSION }}-lock-${{ hashFiles('warehouse/poetry.lock') }}-${{ hashFiles('.github/workflows/*.yml') }}
 
-      - name: Install dependencies
+      - name: Install python dependencies
         working-directory: website
         run: poetry install
+
+      - name: Install node dependencies
+        working-directory: website
+        run: npm install
 
       - name: Cache data
         uses: actions/cache@v4
