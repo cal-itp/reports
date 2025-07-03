@@ -59,7 +59,9 @@ jobs:
       - name: Setup node
         uses: actions/setup-node@v4
         with:
-          node-version-file: 'website/package.json'
+          node-version-file: website/package.json
+          cache: npm
+          cache-dependency-path: website/package-lock.json
 
       - name: Cache Python packages
         uses: actions/cache@v3
