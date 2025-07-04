@@ -107,3 +107,4 @@ jobs:
         with:
           add_github_comment: changes-only
           path: iac/
+          parallelism: 100
