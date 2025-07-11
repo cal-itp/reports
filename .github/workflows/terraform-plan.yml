@@ -1,6 +1,11 @@
-name: Lint and test
+name: Terraform Plan
 
-on: pull_request
+on:
+  pull_request:
+    paths:
+      - 'iac/**'
+      - 'website/**'
+      - 'templates/**'
 
 env:
   PYTHON_VERSION: '3.11'
@@ -11,28 +16,14 @@ env:
   REPORTS_DATA_BUCKET: 'calitp-reports-data'
 
 jobs:
-  lint:
-    name: lint
-    runs-on: ubuntu-latest
-    steps:
-      - name: Checkout
-        uses: actions/checkout@v4
-
-      - name: Setup Python
-        uses: actions/setup-python@v5
-        with:
-          python-version: ${{ env.PYTHON_VERSION }}
-
-      - name: Run pre-commit
-        uses: pre-commit/action@v3.0.1
-
-  test:
-    name: test
+  plan:
+    name: Plan
     runs-on: ubuntu-latest
 
     permissions:
       contents: read
       id-token: write
+      pull-requests: write
 
     steps:
       - name: Checkout
@@ -65,18 +56,18 @@ jobs:
         with:
           poetry-version: ${{ env.POETRY_VERSION }}
 
-      - name: Cache Python packages
-        uses: actions/cache@v3
-        with:
-          path: ~/.local
-          key: python-cache-${{ runner.os }}-python-${{ env.PYTHON_VERSION }}-lock-${{ hashFiles('warehouse/poetry.lock') }}-${{ hashFiles('.github/workflows/*.yml') }}
-
       - name: Setup node
         uses: actions/setup-node@v4
         with:
           node-version-file: website/package.json
           cache: npm
           cache-dependency-path: website/package-lock.json
+
+      - name: Cache Python packages
+        uses: actions/cache@v3
+        with:
+          path: ~/.local
+          key: python-cache-${{ runner.os }}-python-${{ env.PYTHON_VERSION }}-lock-${{ hashFiles('warehouse/poetry.lock') }}-${{ hashFiles('.github/workflows/*.yml') }}
 
       - name: Install python dependencies
         working-directory: website
@@ -86,17 +77,34 @@ jobs:
         working-directory: website
         run: npm install
 
-      - name: Run data tests
-        working-directory: tests
-        run: poetry run python test_report_data.py
+      - name: Cache data
+        uses: actions/cache@v4
+        with:
+          path: reports/outputs
+          key: ${{ runner.os }}-reports-outputs
 
-      - name: Prepare website build
-        run: cp -r tests/outputs/2024 reports/outputs/. && cp tests/fixtures/* reports/outputs/.
+      - name: Download latest data
+        run: gsutil -m rsync -r gs://${{ env.REPORTS_DATA_BUCKET }}/report_gtfs_schedule/ ./reports/outputs/ 1> /dev/null
 
-      - name: Run website build
+      - name: Build website
         working-directory: website
         run: poetry run npm run build
 
-      - name: Assert website name
-        working-directory: website
-        run: cat build/index.html | grep "Monthly GTFS Quality Reports"
+      - name: Terraform Formatting
+        uses: dflook/terraform-fmt-check@v2
+        with:
+          path: iac/
+
+      - name: Terraform Validation
+        uses: dflook/terraform-validate@v2
+        with:
+          path: iac/
+
+      - name: Terraform Plan
+        uses: dflook/terraform-plan@v2
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        with:
+          add_github_comment: changes-only
+          path: iac/
+          parallelism: 100
