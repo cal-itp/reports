@@ -67,7 +67,6 @@ jobs:
           cache-dependency-path: website/package-lock.json
 
       - name: Install python dependencies
-        working-directory: website
         run: poetry install
 
       - name: Install node dependencies
