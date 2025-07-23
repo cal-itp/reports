@@ -69,7 +69,7 @@ jobs:
         uses: actions/cache@v3
         with:
           path: ~/.local
-          key: python-cache-${{ runner.os }}-python-${{ env.PYTHON_VERSION }}-lock-${{ hashFiles('warehouse/poetry.lock') }}-${{ hashFiles('.github/workflows/*.yml') }}
+          key: python-cache-${{ runner.os }}-python-${{ env.PYTHON_VERSION }}-lock-${{ hashFiles('poetry.lock') }}-${{ hashFiles('.github/workflows/*.yml') }}
 
       - name: Install python dependencies
         working-directory: website
