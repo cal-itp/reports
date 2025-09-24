@@ -2,7 +2,7 @@
 name = "reports"
 version = "0.2.0"
 description = ""
-authors = ["Andrew Vaccaro <andrew.v@jarv.us>"]
+authors = ["vevetron"]
 readme = "README.md"
 
 [tool.poetry.dependencies]
