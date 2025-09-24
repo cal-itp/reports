@@ -95,7 +95,7 @@ jobs:
         run: poetry run npm run build
 
       - name: Terraform Apply
-        uses: dflook/terraform-apply@v2
+        uses: dflook/terraform-apply@v1
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         with:
