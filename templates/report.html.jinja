@@ -37,6 +37,12 @@
     </figure>
 {% endmacro %}
 
+{% macro status_class(s) -%}
+  {%- if s == 'PASS' -%}text-itp-green
+  {%- elif s == 'FAIL' -%}text-itp-red/40
+  {%- endif -%}
+{%- endmacro %}
+
 {%- block title -%}
     Monthly GTFS Quality Reports: {{ feed_info.date_month_year }} - {{ feed_info.feed_publisher_name }}
 {%- endblock -%}
@@ -453,6 +459,52 @@
                             </td>
                             <td>
                                 {{ show_check_status(row[4]) }}
+                            </td>
+                        </tr>
+                    {% endfor %}
+                </tbody>
+
+                <!-- column headers -->
+                <thead class="border-t">
+                    <tr>
+                        <th class="pt-12" colspan="2">
+                            Beyond Compliance Check
+                        </th>
+                    </tr>
+                    <tr>
+                        <th colspan="2">
+                            Accessibility
+                        </th>
+
+                        <th class="whitespace-nowrap">
+                            {{ guideline_checks_accessibility["columns"][3] }}
+                        </th>
+                        <th class="whitespace-nowrap">
+                            {{ guideline_checks_accessibility["columns"][4] }}
+                        </th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for row in guideline_checks_accessibility["data"] %}
+                        <tr>
+                            <td colspan="2">
+                                {{ row[0] }}
+                            </td>
+                            <td>
+                                {% set s = row[3] %}
+                                {{ show_check_status(s) }}
+                                {% set v = row[5] %}
+                                {% if (v is number or (v is string and v|trim != '')) and s in ['PASS','FAIL'] %}
+                                  <span class="percentage {{ status_class(s) }}">{{ v }}%</span>
+                                {% endif %}
+                            </td>
+                            <td>
+                                {% set s = row[4] %}
+                                {{ show_check_status(s) }}
+                                {% set v = row[6] %}
+                                {% if (v is number or (v is string and v|trim != '')) and s in ['PASS','FAIL'] %}
+                                  <span class="percentage {{ status_class(s) }}">{{ v }}%</span>
+                                {% endif %}
                             </td>
                         </tr>
                     {% endfor %}

@@ -11,7 +11,7 @@ import typer
 from calitp_data_analysis.sql import get_engine, query_sql  # type: ignore
 from siuba import _, arrange, collect  # type: ignore
 from siuba import filter as filtr  # type: ignore
-from siuba import mutate, pipe, rename, select, spread  # type: ignore
+from siuba import gather, mutate, pipe, rename, select, spread  # type: ignore
 from siuba.sql import LazyTbl  # type: ignore
 from tqdm import tqdm
 
@@ -266,6 +266,7 @@ def _guideline_check():
             _.reports_status,
             _.is_manual,
             _.reports_order,
+            _.percentage,
         )
         >> collect()
     )
@@ -277,15 +278,34 @@ def generate_guideline_check(itp_id: int, publish_date, feature):
         >> filtr(_.organization_itp_id == itp_id)
         >> filtr(_.publish_date == publish_date)
         >> filtr(_.feature == feature)
+        >> filtr(~_.reports_order.isna())  # <-- filter out NAs
         >> select(
-            _.date_checked, _.check, _.reports_status, _.is_manual, _.reports_order
+            _.date_checked,
+            _.check,
+            _.reports_status,
+            _.is_manual,
+            _.reports_order,
+            _.percentage,
         )
         >> mutate(
             date_checked=_.date_checked.astype(str),
             reports_order=_.reports_order.astype(int),
             check=np.where(_.is_manual, _.check + "*", _.check),
         )
-        >> spread(_.date_checked, _.reports_status)
+        >> gather("metric", "value", _.reports_status, _.percentage)
+        >> mutate(date_stat=_.date_checked + "_" + _.metric)
+        >> mutate(date_stat=_.date_stat.str.replace("_reports_status$", "", regex=True))
+        >> select(-_.date_checked, -_.metric)
+        >> spread(_.date_stat, _.value)
+        >> pipe(
+            lambda d: d
+            if (d.empty or d.shape[1] < 6)
+            else d[
+                d.columns[:4].tolist()
+                + [d.columns[5], d.columns[4]]
+                + d.columns[6:].tolist()
+            ]
+        )
         >> arrange(_.reports_order)
         >> pipe(_.fillna(""))
     )
@@ -455,6 +475,16 @@ def dump_report_data(
     with open(out_dir / "4_guideline_checks_rt.json", "w") as f:
         json.dump(to_rowspan_table(guideline_checks_rt, "check"), f)
 
+    # 4_guideline_checks_accessibility.json
+    if verbose:
+        print(f"Generating Accessibility guideline checks for {itp_id}")
+    guideline_checks_accessibility = generate_guideline_check(
+        itp_id, publish_date, feature="Accurate Accessibility Data"
+    )
+
+    with open(out_dir / "4_guideline_checks_accessibility.json", "w") as f:
+        json.dump(to_rowspan_table(guideline_checks_accessibility, "check"), f)
+
     # 5_validation_notices.json
     if verbose:
         print(f"Generating validation codes for {itp_id}")
@@ -491,7 +521,9 @@ def generate_data_by_file_path(feed_dir, pbar=None, verbose=False):
     if verbose:
         print_func = pbar.write if pbar else print
         print_func(f"Generating data for file: {feed_dir}")
-    items = feed_dir.split("/")
+    # Use Path.parts for cross-platform compatibility (works on Windows and Linux)
+    # items = feed_dir.split("/")
+    items = Path(feed_dir).parts
     year, month, itp_id = int(items[1]), items[2], items[3]
     dates = get_dates_year_month(year, int(month))
     date_start, date_end, publish_date = dates[0], dates[1], dates[2]
