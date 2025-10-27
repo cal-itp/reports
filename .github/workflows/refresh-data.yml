@@ -2,7 +2,7 @@ name: Refresh Data
 
 on:
   schedule:
-    - cron: '@weekly'  # Runs at 00:00 on Sunday
+    - cron: '0 0 * * 0'  # weekly at 00:00 UTC on Sunday
   workflow_dispatch:
 
 env:
