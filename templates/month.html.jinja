@@ -68,8 +68,10 @@
                 <li x-bind="reportItem"
                     {% if loop.first %}:class="{ '!border-t-0': hiddenCount <=0 }"{% endif %}
                     data-agency-name="{{ entry.agency_name }}"
-                    data-schedule-vendors="{{ entry.schedule_vendors|tojson|forceescape }}"
-                    data-rt-vendors="{{ entry.rt_vendors|tojson|forceescape }}">
+{#                     data-schedule-vendors="{{ entry.schedule_vendors|tojson|forceescape }}" #}
+{#                     data-rt-vendors="{{ entry.rt_vendors|tojson|forceescape }}"> #}
+                    data-schedule-vendors="{{ (entry.schedule_vendors | default([])) | tojson | forceescape }}"
+                    data-rt-vendors="{{ (entry.rt_vendors | default([])) | tojson | forceescape }}">
                     <a class="list-group__link"
                        href="{{ SITE_PATH }}/{{ PATH_GTFS_SCHEDULE }}/{{ entry['report_path'] }}">
                         {# use flex so wrapped items will stay aligned next to icon #}
