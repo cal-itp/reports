@@ -9,7 +9,7 @@
     {% if entry %}
         <i title="present" class="fas fa-lg fa-check-circle text-itp-green"></i>&ZeroWidthSpace;
     {% elif showCross %}
-        <i title="missing" class="fas fa-lg fa-ban text-itp-red/40"></i>&ZeroWidthSpace;
+        <i title="missing" class="fas fa-lg fa-ban text-itp-red/70"></i>&ZeroWidthSpace;
     {% else %}
         <i title="missing" class="far fa-lg fa-circle text-itp-slate-light"></i>&ZeroWidthSpace;
     {% endif %}
@@ -39,7 +39,7 @@
 
 {% macro status_class(s) -%}
   {%- if s == 'PASS' -%}text-itp-green
-  {%- elif s == 'FAIL' -%}text-itp-red/40
+  {%- elif s == 'FAIL' -%}text-itp-red/70
   {%- endif -%}
 {%- endmacro %}
 
@@ -391,7 +391,7 @@
             The following symbols are used to denote each check's outcome on the given date:
             <ul>
                 <li> <i class="fas fa-lg fa-check-circle text-itp-green"></i> Pass </li>
-                <li> <i class="fas fa-lg fa-ban text-itp-red/40"></i> Fail </li>
+                <li> <i class="fas fa-lg fa-ban text-itp-red/70"></i> Fail </li>
                 <li> <i class="far fa-lg fa-circle text-itp-slate-light"></i> Not applicable/data unavailable </li>
             </ul>
         </p>
@@ -464,51 +464,68 @@
                     {% endfor %}
                 </tbody>
 
-                <!-- column headers -->
-                <thead class="border-t">
-                    <tr>
-                        <th class="pt-12" colspan="2">
-                            Beyond Compliance Check
-                        </th>
-                    </tr>
-                    <tr>
-                        <th colspan="2">
-                            Accessibility
-                        </th>
-
-                        <th class="whitespace-nowrap">
-                            {{ guideline_checks_accessibility["columns"][3] }}
-                        </th>
-                        <th class="whitespace-nowrap">
-                            {{ guideline_checks_accessibility["columns"][4] }}
-                        </th>
-                    </tr>
-                </thead>
-                <tbody>
-                    {% for row in guideline_checks_accessibility["data"] %}
+                {% if guideline_checks_accessibility is defined and guideline_checks_accessibility %}
+                    <!-- column headers -->
+                    <thead class="border-t">
                         <tr>
-                            <td colspan="2">
-                                {{ row[0] }}
-                            </td>
-                            <td>
-                                {% set s = row[3] %}
-                                {{ show_check_status(s) }}
-                                {% set v = row[5] %}
-                                {% if (v is number or (v is string and v|trim != '')) and s in ['PASS','FAIL'] %}
-                                  <span class="percentage {{ status_class(s) }}">{{ v }}%</span>
-                                {% endif %}
-                            </td>
-                            <td>
-                                {% set s = row[4] %}
-                                {{ show_check_status(s) }}
-                                {% set v = row[6] %}
-                                {% if (v is number or (v is string and v|trim != '')) and s in ['PASS','FAIL'] %}
-                                  <span class="percentage {{ status_class(s) }}">{{ v }}%</span>
-                                {% endif %}
+                            <th class="pt-12" colspan="2">
+                                Beyond Compliance Check
+                            </th>
+                        </tr>
+                        <tr>
+                            <th colspan="2">
+                                Accessibility
+                            </th>
+
+                            <th class="whitespace-nowrap">
+                                {{ guideline_checks_accessibility["columns"][3] }}
+                            </th>
+                            <th class="whitespace-nowrap">
+                                {{ guideline_checks_accessibility["columns"][4] }}
+                            </th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {% for row in guideline_checks_accessibility["data"] %}
+                            <tr>
+                                <td colspan="2">
+                                    {{ row[0] }}
+                                </td>
+                                <td>
+                                    {% set s = row[3] %}
+                                    {{ show_check_status(s) }}
+                                    {% set v = row[5] %}
+                                    {% if (v is number or (v is string and v|trim != '')) and s in ['PASS','FAIL'] %}
+                                        <span class="percentage {{ status_class(s) }}">{{ v }}%</span>
+                                    {% endif %}
+                                </td>
+                                <td>
+                                    {% set s = row[4] %}
+                                    {{ show_check_status(s) }}
+                                    {% set v = row[6] %}
+                                    {% if (v is number or (v is string and v|trim != '')) and s in ['PASS','FAIL'] %}
+                                        <span class="percentage {{ status_class(s) }}">{{ v }}%</span>
+                                    {% endif %}
+                                </td>
+                            </tr>
+                        {% endfor %}
+                    </tbody>
+                {% else %}
+                    <thead class="border-t">
+                        <tr>
+                            <th class="pt-12" colspan="4">
+                                Beyond Compliance Check
+                            </th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td colspan="4" class="text-center text-itp-slate-light py-4">
+                                Accessibility data unavailable for this report.
                             </td>
                         </tr>
-                    {% endfor %}
-                </tbody>
+                    </tbody>
+                {% endif %}
 
                 <!-- validation severity errors -->
 

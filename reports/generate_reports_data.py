@@ -9,9 +9,9 @@ import numpy as np
 import pandas as pd
 import typer
 from calitp_data_analysis.sql import get_engine, query_sql  # type: ignore
-from siuba import _, arrange, collect  # type: ignore
+from siuba import _, arrange, collect  # type: ignore; , spread # type: ignore
 from siuba import filter as filtr  # type: ignore
-from siuba import gather, mutate, pipe, rename, select, spread  # type: ignore
+from siuba import mutate, pipe, rename, select  # type: ignore; , spread # type: ignore
 from siuba.sql import LazyTbl  # type: ignore
 from tqdm import tqdm
 
@@ -250,7 +250,6 @@ def generate_ave_median_vp_age(itp_id: int, date_start, date_end):
     ]
 
 
-@cache
 def _guideline_check():
     return (
         LazyTbl(
@@ -272,13 +271,67 @@ def _guideline_check():
     )
 
 
+def availability_checks(df: pd.DataFrame) -> pd.DataFrame:
+    """
+    Replaces the siuba version for accessibility checks step
+    using pure pandas operations.
+    """
+    if df.empty:
+        return df
+
+    # === Filter out NAs in reports_order ===
+    df = df[~df["reports_order"].isna()].copy()
+
+    # === Cast reports_order to int ===
+    df["reports_order"] = df["reports_order"].astype(int)
+
+    # === Melt (gather) ===
+    melted = df.melt(
+        id_vars=["date_checked", "check", "is_manual", "reports_order"],
+        value_vars=["reports_status", "percentage"],
+        var_name="metric",
+        value_name="value",
+    )
+
+    # Build combined date_stat field
+    melted["date_stat"] = melted["date_checked"] + "_" + melted["metric"]
+    melted["date_stat"] = melted["date_stat"].str.replace(
+        "_reports_status$", "", regex=True
+    )
+
+    # Drop redundant columns
+    melted = melted.drop(columns=["date_checked", "metric"])
+
+    # Pivot (spread)
+    df_pivot = (
+        melted.pivot_table(
+            index=["check", "is_manual", "reports_order"],
+            columns="date_stat",
+            values="value",
+            aggfunc="first",
+        )
+        .reset_index()
+        .fillna("")
+    )
+
+    # Flatten columns
+    df_pivot.columns = [str(c) for c in df_pivot.columns]
+
+    # Reorder columns (swap 4th and 5th)
+    if df_pivot.shape[1] >= 6:
+        cols = df_pivot.columns.tolist()
+        cols = cols[:4] + [cols[5], cols[4]] + cols[6:]
+        df_pivot = df_pivot[cols]
+
+    return df_pivot
+
+
 def generate_guideline_check(itp_id: int, publish_date, feature):
     guideline_check = (
         _guideline_check()
         >> filtr(_.organization_itp_id == itp_id)
         >> filtr(_.publish_date == publish_date)
         >> filtr(_.feature == feature)
-        >> filtr(~_.reports_order.isna())  # <-- filter out NAs
         >> select(
             _.date_checked,
             _.check,
@@ -289,28 +342,42 @@ def generate_guideline_check(itp_id: int, publish_date, feature):
         )
         >> mutate(
             date_checked=_.date_checked.astype(str),
-            reports_order=_.reports_order.astype(int),
             check=np.where(_.is_manual, _.check + "*", _.check),
         )
-        >> gather("metric", "value", _.reports_status, _.percentage)
-        >> mutate(date_stat=_.date_checked + "_" + _.metric)
-        >> mutate(date_stat=_.date_stat.str.replace("_reports_status$", "", regex=True))
-        >> select(-_.date_checked, -_.metric)
-        >> spread(_.date_stat, _.value)
-        >> pipe(
-            lambda d: d
-            if (d.empty or d.shape[1] < 6)
-            else d[
-                d.columns[:4].tolist()
-                + [d.columns[5], d.columns[4]]
-                + d.columns[6:].tolist()
-            ]
-        )
+        >> pipe(availability_checks)
         >> arrange(_.reports_order)
         >> pipe(_.fillna(""))
     )
 
     return guideline_check
+
+
+# def generate_guideline_check(itp_id: int, publish_date, feature):
+#     guideline_check = (
+#         _guideline_check()
+#         >> filtr(_.organization_itp_id == itp_id)
+#         >> filtr(_.publish_date == publish_date)
+#         >> filtr(_.feature == feature)
+#         >> filtr(~_.reports_order.isna())   # <-- filter out NAs
+#         >> select(_.date_checked, _.check, _.reports_status, _.is_manual, _.reports_order, _.percentage
+#         )
+#         >> mutate(
+#             date_checked=_.date_checked.astype(str),
+#              reports_order = _.reports_order.astype(int),
+#             check=np.where(_.is_manual, _.check + "*", _.check),
+#         )
+#         >> gather("metric", "value", _.reports_status, _.percentage)
+#         >> mutate(date_stat = _.date_checked + "_" + _.metric)
+#         >> mutate(date_stat=_.date_stat.str.replace("_reports_status$", "", regex=True))
+#         >> select(-_.date_checked, -_.metric)
+#         >> spread(_.date_stat, _.value)
+#         >> pipe(lambda d: d if (d.empty or d.shape[1] < 6)
+#                else d[d.columns[:4].tolist() + [d.columns[5], d.columns[4]] + d.columns[6:].tolist()])
+#         >> arrange(_.reports_order)
+#         >> pipe(_.fillna(""))
+#     )
+
+#     return guideline_check
 
 
 @cache
