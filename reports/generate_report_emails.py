@@ -37,9 +37,7 @@ postmark = PostmarkClient(server_token=SERVER_TOKEN)
 PUBLISH_DATE_YEAR = config["year"]
 PUBLISH_DATE_MONTH = config["month"]
 
-REPORT_LINK_BASE = (
-    f"https://reports.dds.dot.ca.gov/gtfs_schedule/{PUBLISH_DATE_YEAR}/{PUBLISH_DATE_MONTH}"
-)
+REPORT_LINK_BASE = f"https://reports.dds.dot.ca.gov/gtfs_schedule/{PUBLISH_DATE_YEAR}/{PUBLISH_DATE_MONTH}"
 # -
 # TODO: need to ensure that the test_emails.csv and production email sheet use the
 #       same column names
