@@ -106,7 +106,7 @@ def friendly_month_day_year_from_string(x):
 
 
 global_data = {
-    # "SITE_DOMAIN": "https://reports.calitp.org",
+    # "SITE_DOMAIN": "https://reports.dds.dot.ca.gov",
     "SITE_PATH": "",
     "SITE_DOMAIN": "",
     # "SITE_PATH": "",
