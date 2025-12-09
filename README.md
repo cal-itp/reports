@@ -51,7 +51,7 @@ Set up [google cloud authentication credentials](https://cloud.google.com/docs/a
 Specifically, download the SDK/CLI at the above link, install it, create a new terminal/source a .zshrc and be sure to run both
 
 1. `gcloud init`
-2. `gcloud auth application-default login`
+2. `gcloud auth application-default login --login-config=login.json`
 
 Note that with a user account authentication, the environment variable `CALITP_SERVICE_KEY_PATH` should be unset.
 
@@ -103,25 +103,40 @@ These commands perform the following:
   - Bundled with [Rollup](https://rollupjs.org/guide/en/)
 - Build scripts via [NPM](https://www.npmjs.com/)
 
-It is worth mentioning that `npm run build` will currently only execute if you have data from previous months. Run ``npm run dev`` for verbose output and to see which month is failing, which can help with troubleshooting.
+It is worth mentioning that `npm run build` will currently only execute if you have data from previous months.
 
 Note that the error:
 ```shell
 jinja2.exceptions.UndefinedError: 'feed_info' is undefined
 ```
-Is often due to a lack of generated reports. This can be remedied for prior months by rsyncing the reports from the upstream source (see [Fetching report data](#fetching-report-data)), and ensuring every single ITPID has a corresponding generated report for the current month (see [Generating reports](#generating-reports)).
+Is often due to a lack of generated reports. This can be remedied for prior months by rsyncing the reports from the upstream source, and ensuring every single ITPID has a corresponding generated report for the current month (see [Generating reports](#generating-reports)).
+ ```shell
+make fetch-prod-data
+```
 
 #### Viewing the website (not possible via JupyterHub)
 
-To check that everything is rendered appropriately, go into the website/build (i.e. `cd build`) directory:
+To check that everything is rendered appropriately:
 
  ```shell
-python -m http.server
+poetry run npm run serve
 ```
 and open up a web browser, and navigate to:
 [localhost:8000](localhost:8000)
 
+To watch for changes to templates, js, and styles and serve them to a browser run:
+ ```shell
+poetry run npm run dev
+```
+and navigate to:
+[localhost:8000](localhost:8000)
+
 Unfortunately it's not possible to do this if running on JupyterHub.
+
+If you would like to preview the website at [reports-staging.dds.dot.ca.gov/build](https://reports-staging.dds.dot.ca.gov/build) you can push your local build with:
+ ```shell
+poetry run npm run sync-staging
+```
 
 ### Implementation details
 
@@ -152,13 +167,13 @@ Execute `make parameters` to generate the following artifacts.
 This is rarely required since by default, the commands above will quickly generate reports data for all months. However, it remains possible to run gsutil rsync to update all the locally stored reports.
 
 ```shell
-gsutil -m rsync -r gs://calitp-reports-data/report_gtfs_schedule outputs
+make fetch-prod-data
 ```
 
 
 #### Run reports data selectively
 
-Also unnecesssary if using the defualt commands, it is possible to selectively run a single month's reports. Execute `poetry run python generate_reports_data.py --year=2023 --month=02` to populate those output folders for a given month with the following files (per folder).
+Also unnecessary if using the default commands, it is possible to selectively run a single month's reports. Execute `poetry run python generate_reports_data.py --year=2023 --month=02` to populate those output folders for a given month with the following files (per folder).
 * 1_feed_info.json
 * 2_daily_service_hours.json
 * 3_routes_changed.json
