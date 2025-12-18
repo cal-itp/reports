@@ -116,12 +116,16 @@ def _daily_service_hours():
 
 
 def generate_daily_service_hours(itp_id: int, date_start, date_end):
-    return (
-        _daily_service_hours()
-        >> filtr(_.calitp_itp_id == itp_id)
-        >> filtr(_.service_date >= date_start)
-        >> filtr(_.service_date <= date_end)
-    )
+    df = _daily_service_hours()
+    df["service_date"] = pd.to_datetime(df["service_date"])
+    date_start = pd.Timestamp(date_start)
+    date_end = pd.Timestamp(date_end)
+
+    return df[  # Why doesn't this comparison fail? like the other comparisons?
+        (df["calitp_itp_id"] == itp_id)
+        & (df["service_date"] >= date_start)
+        & (df["service_date"] <= date_end)
+    ]
 
 
 @cache
