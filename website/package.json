@@ -27,6 +27,7 @@
     "@rollup/plugin-terser": "^0.2.0",
     "@tailwindcss/typography": "^0.5.8",
     "autoprefixer": "^10.4.13",
+    "concurrently": "^9.2.1",
     "copyfiles": "^2.4.1",
     "cssnano": "^5.0.6",
     "hash-files": "^1.1.1",
@@ -44,6 +45,7 @@
   },
   "scripts": {
     "build": "NODE_ENV=production npm-run-all clean html css images js cache-bust",
+    "dev": "concurrently 'npm run watch' 'npm run serve'; echo 'preview at: http://localhost:8000'",
     "cache-bust": "node cacheBuster.js",
     "clean": "rm -rf build/",
     "html": "echo 'processing html...'; if python3 generate.py; then echo 'html ready'; else echo 'html failed' && exit 1; fi",
@@ -54,7 +56,9 @@
     "css:sass": "sass --no-source-map assets/scss:build/css",
     "images": "copyfiles --up 2 assets/images/**/*.{jpeg,jpg,png,gif,svg} build/images",
     "js": "rollup --config",
-    "watch": "npm-watch"
+    "watch": "npm-watch",
+    "serve": "python -m http.server -d build",
+    "sync-staging": "gcloud storage rsync build gs://calitp-reports-staging/ --recursive --delete-unmatched-destination-objects --checksums-only"
   },
   "watch": {
     "html_css": {
