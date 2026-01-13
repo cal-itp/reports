@@ -2,7 +2,7 @@
 
 ## Why reports?
 
-[reports.calitp.org](https://reports.calitp.org/) exists to provide a snapshot of transit service information and transit data quality information for agencies across California. It also serves to connect agencies and other stakeholders with technical assistance from Cal-ITP and Caltrans.
+[reports.dds.dot.ca.gov](https://reports.dds.dot.ca.gov/) exists to provide a snapshot of transit service information and transit data quality information for agencies across California. It also serves to connect agencies and other stakeholders with technical assistance from Cal-ITP and Caltrans.
 
 ## When and how to generate reports
 
