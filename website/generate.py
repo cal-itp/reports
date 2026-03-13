@@ -247,6 +247,13 @@ with tqdm(
         report_data = fetch_report_data(p_report_inputs)
         report_data["feeds"] = entry["feeds"]
 
+        # Skip if feed_info.json is missing
+        if "feed_info" not in report_data:
+            if args.v:
+                print(f"Skipping {entry['report_path']} — no feed_info.json found")
+            pbar.update(1)
+            continue
+
         # track vendors
         rt_vendors = report_data["feed_info"]["rt_vendors"]
         schedule_vendors = report_data["feed_info"]["schedule_vendors"]
